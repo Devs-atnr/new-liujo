@@ -1,15 +1,68 @@
 /* ==========================================================================
-   LIU JO COLLECTION PAGE (PLP) - LUXURY STYLING
-   Clean filters, 3:4 portrait product grid, column toggles, minimal typography
+   LIU JO COLLECTION PAGE (PLP) - LUXURY ITALIAN STYLING
+   Pixel-perfect parity with liujo.com
+   Breadcrumbs, editorial banner, sticky filter strip, grid column togglers & 3:4 portrait cards
    ========================================================================== */
 
-/* Collection Banner */
+/* 1. BREADCRUMBS */
+.liujo-plp-breadcrumbs {
+  max-width: var(--liujo-container-max, 1440px);
+  margin: 0 auto;
+  padding: 18px 24px 6px;
+}
+
+.liujo-breadcrumbs-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.liujo-breadcrumbs-list a {
+  font-family: var(--liujo-font-main);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--liujo-mid-gray, #777);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.liujo-breadcrumbs-list a:hover {
+  color: var(--liujo-black, #111);
+}
+
+.liujo-bc-sep {
+  font-size: 10px;
+  color: #ccc;
+}
+
+.liujo-bc-current {
+  font-family: var(--liujo-font-main);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--liujo-black, #111);
+}
+
+.liujo-item-count {
+  font-weight: 500;
+  color: var(--liujo-mid-gray, #888);
+  margin-left: 2px;
+}
+
+/* 2. COLLECTION BANNER */
 .collection-hero {
   text-align: center;
-  padding: 40px 20px 30px;
-  background-color: var(--liujo-white);
-  border-bottom: 1px solid var(--liujo-border-gray);
-  margin-bottom: 24px;
+  padding: 24px 20px 32px;
+  background-color: var(--liujo-white, #fff);
+  border-bottom: 1px solid var(--liujo-border-gray, #e5e5e5);
+  margin-bottom: 0;
 }
 
 .collection-hero__title {
@@ -18,91 +71,305 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--liujo-black);
-  margin-bottom: 10px;
+  color: var(--liujo-black, #111);
+  margin: 0 0 10px;
 }
 
 .collection-hero__description {
+  font-family: var(--liujo-font-main);
   font-size: 13px;
   letter-spacing: 0.03em;
-  color: var(--liujo-mid-gray);
-  max-width: 650px;
+  color: var(--liujo-mid-gray, #666);
+  max-width: 680px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
-/* Facets & Filter Bar */
+/* 3. FACETS & FILTER BAR */
 .facets-container {
-  max-width: var(--liujo-container-max);
+  max-width: var(--liujo-container-max, 1440px);
   margin: 0 auto;
-  padding: 0 20px 20px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--liujo-border-gray, #e5e5e5);
+  background-color: var(--liujo-white, #fff);
+  position: sticky;
+  top: var(--liujo-header-height-desk, 80px);
+  z-index: 20;
 }
 
 .facets__form {
-  border-bottom: 1px solid var(--liujo-border-gray);
-  padding-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.facets__wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .facets__summary {
+  font-family: var(--liujo-font-main);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--liujo-black);
+  color: var(--liujo-black, #111);
+  cursor: pointer;
+  padding: 6px 0;
 }
 
 .facet-filters__sort {
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  border: 1px solid var(--liujo-border-gray);
+  font-family: var(--liujo-font-main);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--liujo-border-gray, #dcdcdc);
   border-radius: 0;
   padding: 8px 16px;
-  font-family: var(--liujo-font-main);
-  text-transform: uppercase;
+  background-color: var(--liujo-white, #fff);
+  color: var(--liujo-black, #111);
+  cursor: pointer;
 }
 
-/* Product Grid */
+/* Grid Column Toggler */
+.liujo-grid-toggler {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.liujo-grid-toggle-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--liujo-border-gray, #dcdcdc);
+  background-color: var(--liujo-white, #fff);
+  color: var(--liujo-black, #111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.liujo-grid-toggle-btn:hover {
+  border-color: var(--liujo-black, #000);
+}
+
+.liujo-grid-toggle-btn.is-active {
+  background-color: var(--liujo-black, #000);
+  border-color: var(--liujo-black, #000);
+  color: var(--liujo-white, #fff);
+}
+
+.liujo-grid-toggle-btn svg {
+  fill: currentColor;
+}
+
+/* 4. PRODUCT GRID */
 #product-grid {
-  max-width: var(--liujo-container-max);
+  max-width: var(--liujo-container-max, 1440px);
   margin: 0 auto;
-  padding: 0 16px 60px;
-}
-
-.product-grid {
-  gap: 24px 16px;
+  padding: 28px 24px 60px;
+  gap: 36px 18px;
 }
 
 @media (min-width: 990px) {
-  .product-grid {
+  #product-grid.product-grid {
     grid-template-columns: repeat(4, 1fr) !important;
   }
-}
 
-@media (max-width: 767px) {
-  .product-grid {
+  /* Compact View on Desktop (2 columns) */
+  #product-grid.product-grid.grid--compact {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 16px 8px;
+    gap: 48px 32px;
   }
 }
 
+@media (max-width: 989px) {
+  #product-grid.product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    padding: 20px 16px 48px;
+    gap: 24px 10px;
+  }
+
+  /* Compact View on Mobile (1 column full width) */
+  #product-grid.product-grid.grid--mobile-compact {
+    grid-template-columns: 1fr !important;
+    gap: 32px;
+  }
+}
+
+/* 5. PRODUCT CARD LUXURY FORMATTING */
 .card-wrapper {
+  position: relative;
   transition: transform 0.3s ease;
 }
 
-.card--standard .card__inner {
+.card--standard .card__inner,
+.card--card .card__inner {
   aspect-ratio: 3 / 4 !important;
-  background-color: var(--liujo-light-gray);
+  background-color: var(--liujo-light-gray, #f7f7f7);
   border-radius: 0 !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-wrapper:hover .card__media img:first-child {
+  transform: scale(1.02);
+}
+
+/* Wishlist Button on Cards */
+.liujo-wishlist-trigger {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  color: var(--liujo-black, #111);
+  transition: all 0.2s ease;
+}
+
+.liujo-wishlist-trigger:hover,
+.liujo-wishlist-trigger.is-active {
+  background-color: var(--liujo-white, #fff);
+  color: var(--liujo-accent-pink, #C4184E);
+  transform: scale(1.1);
+}
+
+.liujo-wishlist-trigger.is-active svg {
+  fill: currentColor;
+}
+
+/* Card Information */
+.card__information {
+  padding: 12px 2px 0 !important;
+}
+
+.card-information .caption-with-letter-spacing {
+  font-family: var(--liujo-font-main);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--liujo-mid-gray, #888);
+  margin-bottom: 2px;
 }
 
 .card__heading {
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.02em !important;
-  color: var(--liujo-black) !important;
-  text-transform: none !important;
+  font-family: var(--liujo-font-main) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--liujo-black, #111) !important;
+  line-height: 1.35;
+  margin: 0 0 4px !important;
 }
 
-.card-information {
-  padding-top: 10px !important;
+.card__heading a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.card__heading a:hover {
+  opacity: 0.75;
+}
+
+.card-information .price {
+  font-family: var(--liujo-font-main);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--liujo-black, #111);
+  margin-top: 4px;
+}
+
+.card-information .price--on-sale .price-item--sale {
+  color: var(--liujo-black, #111);
+}
+
+.card-information .price--on-sale .price-item--regular {
+  font-size: 11.5px;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 6px;
+}
+
+/* Luxury Badges on Cards */
+.card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 4;
+}
+
+.card__badge .badge {
+  border-radius: 0 !important;
+  font-family: var(--liujo-font-main) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 4px 8px !important;
+  background-color: var(--liujo-black, #000) !important;
+  color: var(--liujo-white, #fff) !important;
+  border: none !important;
+}
+
+/* 6. MINIMALIST PAGINATION */
+.pagination__list {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  list-style: none;
+  padding: 40px 0;
+  margin: 0;
+}
+
+.pagination__item {
+  min-width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--liujo-border-gray, #dcdcdc);
+  font-family: var(--liujo-font-main);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--liujo-black, #111);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.pagination__item:hover,
+.pagination__item--current {
+  background-color: var(--liujo-black, #000);
+  border-color: var(--liujo-black, #000);
+  color: var(--liujo-white, #fff) !important;
 }

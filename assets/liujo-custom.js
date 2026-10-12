@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initLiuJoFooterAccordions();
   initLiuJoWishlist();
   initLiuJoAnnouncementBar();
+  initLiuJoSizeGuideModal();
+  initLiuJoGridToggler();
+  initLiuJoMobileStickyCart();
 });
 
 // 1. VIDEO CONTROLS
@@ -214,6 +217,18 @@ function initLiuJoWishlist() {
     } catch (e) {}
   }
 
+  function updateBtnUI(btn, isInList) {
+    if (isInList) {
+      btn.classList.add('is-active');
+      const textSpan = btn.querySelector('.liujo-wishlist-btn-text');
+      if (textSpan) textSpan.textContent = 'In Wishlist';
+    } else {
+      btn.classList.remove('is-active');
+      const textSpan = btn.querySelector('.liujo-wishlist-btn-text');
+      if (textSpan) textSpan.textContent = 'Add to Wishlist';
+    }
+  }
+
   const currentWishlist = getWishlist();
   if (wishlistCountBadge) {
     wishlistCountBadge.textContent = currentWishlist.length;
@@ -222,9 +237,8 @@ function initLiuJoWishlist() {
 
   wishlistTriggers.forEach(btn => {
     const productId = btn.getAttribute('data-product-id');
-    if (currentWishlist.includes(productId)) {
-      btn.classList.add('is-active');
-    }
+    const isIn = currentWishlist.includes(productId);
+    updateBtnUI(btn, isIn);
 
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -232,10 +246,10 @@ function initLiuJoWishlist() {
       let list = getWishlist();
       if (list.includes(productId)) {
         list = list.filter(id => id !== productId);
-        btn.classList.remove('is-active');
+        updateBtnUI(btn, false);
       } else {
         list.push(productId);
-        btn.classList.add('is-active');
+        updateBtnUI(btn, true);
       }
       setWishlist(list);
     });
@@ -253,4 +267,139 @@ function initLiuJoAnnouncementBar() {
     currentIndex = (currentIndex + 1) % slides.length;
     slides[currentIndex].style.display = 'block';
   }, 4500);
+}
+
+// 7. SIZE GUIDE MODAL
+function initLiuJoSizeGuideModal() {
+  const modal = document.getElementById('LiuJoSizeGuideModal');
+  if (!modal) return;
+
+  const openTriggers = document.querySelectorAll('[data-size-modal-open]');
+  const closeTriggers = document.querySelectorAll('[data-size-modal-close]');
+
+  openTriggers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  closeTriggers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) {
+      modal.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    }
+  });
+}
+
+// 8. PLP GRID COLUMN TOGGLER
+function initLiuJoGridToggler() {
+  const togglers = document.querySelectorAll('[data-liujo-grid-toggler]');
+  const grid = document.getElementById('product-grid');
+  if (!grid || !togglers.length) return;
+
+  const savedDesktopCols = sessionStorage.getItem('liujo_grid_cols_desktop') || '4';
+  const savedMobileCols = sessionStorage.getItem('liujo_grid_cols_mobile') || '2';
+
+  if (savedDesktopCols === '2') {
+    grid.classList.add('grid--compact');
+    updateActiveButtons('2', false);
+  }
+  if (savedMobileCols === '1') {
+    grid.classList.add('grid--mobile-compact');
+    updateActiveButtons('1', true);
+  }
+
+  togglers.forEach(container => {
+    const buttons = container.querySelectorAll('.liujo-grid-toggle-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const cols = btn.getAttribute('data-grid-cols');
+        const isMobile = window.innerWidth < 990;
+
+        if (isMobile) {
+          if (cols === '1') {
+            grid.classList.add('grid--mobile-compact');
+            sessionStorage.setItem('liujo_grid_cols_mobile', '1');
+          } else {
+            grid.classList.remove('grid--mobile-compact');
+            sessionStorage.setItem('liujo_grid_cols_mobile', '2');
+          }
+          updateActiveButtons(cols, true);
+        } else {
+          if (cols === '2') {
+            grid.classList.add('grid--compact');
+            sessionStorage.setItem('liujo_grid_cols_desktop', '2');
+          } else {
+            grid.classList.remove('grid--compact');
+            sessionStorage.setItem('liujo_grid_cols_desktop', '4');
+          }
+          updateActiveButtons(cols, false);
+        }
+      });
+    });
+  });
+
+  function updateActiveButtons(cols, isMobile) {
+    togglers.forEach(container => {
+      const buttons = container.querySelectorAll('.liujo-grid-toggle-btn');
+      buttons.forEach(b => {
+        const bCols = b.getAttribute('data-grid-cols');
+        const bIsMobile = b.classList.contains('large-up-hide');
+        if (bIsMobile === isMobile) {
+          if (bCols === cols) {
+            b.classList.add('is-active');
+          } else {
+            b.classList.remove('is-active');
+          }
+        }
+      });
+    });
+  }
+}
+
+// 9. MOBILE STICKY BUY BAR
+function initLiuJoMobileStickyCart() {
+  const stickyBar = document.querySelector('[data-liujo-sticky-cart]');
+  if (!stickyBar) return;
+
+  const mainSubmitBtn = document.querySelector('.product-form__submit');
+  const stickySubmitBtn = stickyBar.querySelector('[data-liujo-sticky-submit]');
+
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth >= 990) {
+      stickyBar.classList.remove('is-visible');
+      return;
+    }
+
+    if (mainSubmitBtn) {
+      const rect = mainSubmitBtn.getBoundingClientRect();
+      if (rect.bottom < 0) {
+        stickyBar.classList.add('is-visible');
+      } else {
+        stickyBar.classList.remove('is-visible');
+      }
+    } else if (window.scrollY > 450) {
+      stickyBar.classList.add('is-visible');
+    } else {
+      stickyBar.classList.remove('is-visible');
+    }
+  }, { passive: true });
+
+  if (stickySubmitBtn && mainSubmitBtn) {
+    stickySubmitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      mainSubmitBtn.click();
+    });
+  }
 }

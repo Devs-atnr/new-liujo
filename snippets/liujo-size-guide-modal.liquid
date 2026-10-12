@@ -1,0 +1,120 @@
+{% comment %}
+  LIU JO SIZE GUIDE MODAL SNIPPET
+  Interactive popup modal with international size conversion chart and measuring guide.
+{% endcomment %}
+
+<div id="LiuJoSizeGuideModal" class="liujo-modal" role="dialog" aria-modal="true" aria-labelledby="LiuJoSizeGuideTitle" hidden>
+  <div class="liujo-modal-backdrop" data-size-modal-close></div>
+  <div class="liujo-modal-dialog">
+    <div class="liujo-modal-header">
+      <h2 id="LiuJoSizeGuideTitle" class="liujo-modal-title">Size Guide & Conversion Chart</h2>
+      <button type="button" class="liujo-modal-close" data-size-modal-close aria-label="Close Size Guide">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="liujo-modal-body">
+      <div class="liujo-size-table-wrapper">
+        <table class="liujo-size-table">
+          <thead>
+            <tr>
+              <th>IT</th>
+              <th>EU</th>
+              <th>US</th>
+              <th>UK</th>
+              <th>Bust (cm)</th>
+              <th>Waist (cm)</th>
+              <th>Hips (cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>38</strong> (XXS)</td>
+              <td>34</td>
+              <td>2</td>
+              <td>6</td>
+              <td>80 - 83</td>
+              <td>62 - 65</td>
+              <td>88 - 91</td>
+            </tr>
+            <tr>
+              <td><strong>40</strong> (XS)</td>
+              <td>36</td>
+              <td>4</td>
+              <td>8</td>
+              <td>84 - 87</td>
+              <td>66 - 69</td>
+              <td>92 - 95</td>
+            </tr>
+            <tr>
+              <td><strong>42</strong> (S)</td>
+              <td>38</td>
+              <td>6</td>
+              <td>10</td>
+              <td>88 - 91</td>
+              <td>70 - 73</td>
+              <td>96 - 99</td>
+            </tr>
+            <tr>
+              <td><strong>44</strong> (M)</td>
+              <td>40</td>
+              <td>8</td>
+              <td>12</td>
+              <td>92 - 95</td>
+              <td>74 - 77</td>
+              <td>100 - 103</td>
+            </tr>
+            <tr>
+              <td><strong>46</strong> (L)</td>
+              <td>42</td>
+              <td>10</td>
+              <td>14</td>
+              <td>96 - 100</td>
+              <td>78 - 82</td>
+              <td>104 - 108</td>
+            </tr>
+            <tr>
+              <td><strong>48</strong> (XL)</td>
+              <td>44</td>
+              <td>12</td>
+              <td>16</td>
+              <td>101 - 105</td>
+              <td>83 - 87</td>
+              <td>109 - 113</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="liujo-size-guide-tips">
+        <h4 class="liujo-size-tips-title">How To Take Your Measurements</h4>
+        <div class="liujo-size-tips-grid">
+          <div class="liujo-size-tip-item">
+            <span class="liujo-tip-number">1</span>
+            <div>
+              <strong>Bust:</strong>
+              <p>Measure horizontally around the fullest part of your bust, keeping the tape level.</p>
+            </div>
+          </div>
+          <div class="liujo-size-tip-item">
+            <span class="liujo-tip-number">2</span>
+            <div>
+              <strong>Waist:</strong>
+              <p>Measure horizontally around your natural waistline, at the narrowest part of your torso.</p>
+            </div>
+          </div>
+          <div class="liujo-size-tip-item">
+            <span class="liujo-tip-number">3</span>
+            <div>
+              <strong>Hips:</strong>
+              <p>Measure horizontally around the fullest point of your hips with feet held together.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -748,6 +748,33 @@
       </script>
     </div>
   </product-component>
+
+  <!-- Liu Jo Mobile Sticky Buy Bar -->
+  <div class="liujo-mobile-sticky-cart large-up-hide" data-liujo-sticky-cart>
+    <div class="liujo-sticky-cart-info">
+      {%- if product.featured_media != blank -%}
+        <img
+          src="{{ product.featured_media | image_url: width: 80, height: 106 }}"
+          alt="{{ product.title | escape }}"
+          width="40"
+          height="53"
+          style="object-fit: cover; border-radius: 0; flex-shrink: 0;"
+          loading="lazy"
+        >
+      {%- endif -%}
+      <div style="min-width: 0;">
+        <div class="liujo-sticky-cart-title">{{ product.title | escape }}</div>
+        <div class="liujo-sticky-cart-price">{{ product.selected_or_first_available_variant.price | money }}</div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="liujo-sticky-cart-submit"
+      data-liujo-sticky-submit
+    >
+      Shop Now
+    </button>
+  </div>
 </product-info>
 
 {% schema %}

@@ -421,6 +421,39 @@
               </div>
             </div>
           {%- endif -%}
+
+          <!-- Liu Jo Grid Column Toggler (Desktop: 2 col vs 4 col, Mobile: 1 col vs 2 col) -->
+          <div class="liujo-grid-toggler" data-liujo-grid-toggler>
+            <!-- Desktop Toggles -->
+            <button type="button" class="liujo-grid-toggle-btn small-hide" data-grid-cols="2" aria-label="2 Columns View" title="2 Columns">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <rect x="1" y="2" width="6" height="12" rx="1"></rect>
+                <rect x="9" y="2" width="6" height="12" rx="1"></rect>
+              </svg>
+            </button>
+            <button type="button" class="liujo-grid-toggle-btn small-hide is-active" data-grid-cols="4" aria-label="4 Columns View" title="4 Columns">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <rect x="1" y="2" width="2.5" height="12" rx="0.5"></rect>
+                <rect x="5" y="2" width="2.5" height="12" rx="0.5"></rect>
+                <rect x="9" y="2" width="2.5" height="12" rx="0.5"></rect>
+                <rect x="13" y="2" width="2.5" height="12" rx="0.5"></rect>
+              </svg>
+            </button>
+
+            <!-- Mobile Toggles -->
+            <button type="button" class="liujo-grid-toggle-btn large-up-hide medium-hide" data-grid-cols="1" aria-label="1 Column View" title="1 Column">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <rect x="2" y="2" width="12" height="12" rx="1"></rect>
+              </svg>
+            </button>
+            <button type="button" class="liujo-grid-toggle-btn large-up-hide medium-hide is-active" data-grid-cols="2" aria-label="2 Columns View" title="2 Columns">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <rect x="1" y="2" width="6" height="12" rx="1"></rect>
+                <rect x="9" y="2" width="6" height="12" rx="1"></rect>
+              </svg>
+            </button>
+          </div>
+
           <div class="product-count light" role="status">
             <h2 class="product-count__text text-body">
               <span id="ProductCountDesktop">

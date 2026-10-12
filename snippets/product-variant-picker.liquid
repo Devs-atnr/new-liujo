@@ -49,7 +49,18 @@
         </fieldset>
       {%- elsif picker_type == 'button' -%}
         <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
+          <div class="liujo-option-header-row">
+            <legend class="form__label">
+              {{ option.name }}:
+              <span data-selected-value>{{ option.selected_value }}</span>
+            </legend>
+            {%- assign option_name_downcase = option.name | downcase -%}
+            {%- if option_name_downcase contains 'size' or option_name_downcase contains 'taglia' -%}
+              <button type="button" class="liujo-size-guide-link" data-size-modal-open>
+                Size Guide
+              </button>
+            {%- endif -%}
+          </div>
           {% render 'product-variant-options',
             option: option,
             block: block,
