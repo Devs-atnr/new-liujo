@@ -92,148 +92,19 @@
           <!-- 1. WOMEN -->
           <div class="liujo-header__nav-item" data-nav-category="women">
             <a href="/collections/all" class="liujo-header__nav-link">WOMEN</a>
-            <div class="liujo-megamenu">
-              <div class="liujo-megamenu__container liujo-megamenu__container--5col">
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">NEW ARRIVALS</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">The Gigi Hadid Edit <sup class="liujo-megamenu__badge">NEW</sup></a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Spring Summer 2026</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Iconic Denim</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">New In Shoes</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">CLOTHING</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jackets & Blazers</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shirts & Blouses</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Knitwear</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">JEANS</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Bottom Up Denim</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Flare & Bootcut</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Straight & Wide Leg</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Skinny Jeans</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">BAGS & SHOES</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Crossbody Bags</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Tote & Shoulder Bags</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Ankle Boots</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Sneakers</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Clothing</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Bags</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Shoes</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            {%- render 'liujo-megamenu-women', outlet_color: section.settings.outlet_color -%}
           </div>
 
           <!-- 2. MEN -->
           <div class="liujo-header__nav-item" data-nav-category="men">
             <a href="/collections/all" class="liujo-header__nav-link">MEN</a>
-            <div class="liujo-megamenu">
-              <div class="liujo-megamenu__container liujo-megamenu__container--5col">
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">NEW ARRIVALS</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Spring Summer 2026</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Liu Jo Uomo Icons</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">CLOTHING</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jackets & Coats</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shirts & Polos</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Chinos</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Knitwear</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">JEANS</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Regular Fit</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Slim Fit</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Relaxed Fit</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">SHOES & ACCESSORIES</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Sneakers</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Belts & Wallets</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Men's Sale</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            {%- render 'liujo-megamenu-men', outlet_color: section.settings.outlet_color -%}
           </div>
 
           <!-- 3. KIDS (Exact match to SS1) -->
           <div class="liujo-header__nav-item" data-nav-category="kids">
             <a href="/collections/all" class="liujo-header__nav-link">KIDS</a>
-            <div class="liujo-megamenu">
-              <div class="liujo-megamenu__container liujo-megamenu__container--4col">
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">BABY (0-12 MONTHS)</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & sets</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Bottom</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Accessories</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">KIDS (18 MONTHS-7 YEARS)</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Sweatshirts</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shoes</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title">GIRLS (8-16 YEARS)</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Sweatshirts</a></li>
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shoes</a></li>
-                  </ul>
-                </div>
-                <div class="liujo-megamenu__col">
-                  <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
-                  <ul class="liujo-megamenu__list">
-                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">8-16 years</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            {%- render 'liujo-megamenu-kids', outlet_color: section.settings.outlet_color -%}
           </div>
         {%- endif -%}
       </nav>
