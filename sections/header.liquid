@@ -237,8 +237,8 @@
       </div>
     </div>
 
-    <!-- Liu Jo Luxury Real-Time Predictive Search Drawer (Matching SS1 & SS2) -->
-    {%- render 'liujo-search-modal', search_menu: section.settings.search_menu, main_menu: section.settings.menu -%}
+    <!-- Liu Jo Luxury Real-Time Predictive Search Drawer (Auto gets from Header Menu) -->
+    {%- render 'liujo-search-modal', header_menu: nav_menu -%}
   </header>
 </div>
 
@@ -659,17 +659,6 @@
       "id": "outlet_color",
       "label": "Outlet Pink Accent",
       "default": "#e6006e"
-    },
-    {
-      "type": "header",
-      "content": "Search Drawer Menu (Dynamic)"
-    },
-    {
-      "type": "link_list",
-      "id": "search_menu",
-      "label": "Search Bar Menu",
-      "default": "main-menu",
-      "info": "Dynamic Menu for Search Drawer tabs & suggestions. Defaults to Main Menu if not selected."
     },
     {
       "type": "header",
