@@ -475,27 +475,47 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0 var(--liujo-header-pad-x, 40px);
   display: grid;
-  gap: 36px;
+  grid-template-columns: repeat(var(--megamenu-cols, 6), minmax(0, 1fr));
+  gap: 28px;
+}
+
+.liujo-megamenu__container--3col {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .liujo-megamenu__container--4col {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .liujo-megamenu__container--5col {
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.liujo-megamenu__container--6col {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px;
 }
 
 .liujo-megamenu__container--7col {
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 24px;
+  gap: 20px;
+}
+
+.liujo-megamenu__container--8col {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 16px;
 }
 
 @media (max-width: 1400px) {
-  .liujo-megamenu__container--7col {
+  .liujo-megamenu__container--6col,
+  .liujo-megamenu__container--7col,
+  .liujo-megamenu__container--8col {
     gap: 16px;
   }
-  .liujo-megamenu__container--7col .liujo-megamenu__link {
+  .liujo-megamenu__container--6col .liujo-megamenu__link,
+  .liujo-megamenu__container--7col .liujo-megamenu__link,
+  .liujo-megamenu__container--8col .liujo-megamenu__link {
     font-size: 12px;
   }
 }
@@ -504,18 +524,26 @@ h1, h2, h3, h4, h5, h6 {
   .liujo-megamenu {
     padding: 30px 0 40px;
   }
-  .liujo-megamenu__container--7col {
+  .liujo-megamenu__container--6col,
+  .liujo-megamenu__container--7col,
+  .liujo-megamenu__container--8col {
     gap: 10px;
   }
-  .liujo-megamenu__container--7col .liujo-megamenu__col-title {
+  .liujo-megamenu__container--6col .liujo-megamenu__col-title,
+  .liujo-megamenu__container--7col .liujo-megamenu__col-title,
+  .liujo-megamenu__container--8col .liujo-megamenu__col-title {
     font-size: 11px;
     margin-bottom: 14px;
   }
-  .liujo-megamenu__container--7col .liujo-megamenu__link {
+  .liujo-megamenu__container--6col .liujo-megamenu__link,
+  .liujo-megamenu__container--7col .liujo-megamenu__link,
+  .liujo-megamenu__container--8col .liujo-megamenu__link {
     font-size: 11px;
     line-height: 1.4;
   }
-  .liujo-megamenu__container--7col .liujo-megamenu__list-item {
+  .liujo-megamenu__container--6col .liujo-megamenu__list-item,
+  .liujo-megamenu__container--7col .liujo-megamenu__list-item,
+  .liujo-megamenu__container--8col .liujo-megamenu__list-item {
     margin-bottom: 7px;
   }
 }
@@ -532,7 +560,14 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   margin-bottom: 22px;
   color: #111111;
+  text-decoration: none;
+  display: inline-block;
   padding-bottom: 0;
+  transition: color 0.15s ease;
+}
+
+.liujo-megamenu__col-title:hover {
+  text-decoration: underline;
 }
 
 .liujo-megamenu__col-title.is-outlet {

@@ -45,8 +45,9 @@
               </a>
 
               {%- if link.links.size > 0 -%}
+                {%- assign col_count = link.links.size -%}
                 <div class="liujo-megamenu">
-                  <div class="liujo-megamenu__container{% if link.links.size == 4 %} liujo-megamenu__container--4col{% else %} liujo-megamenu__container--5col{% endif %}">
+                  <div class="liujo-megamenu__container liujo-megamenu__container--{{ col_count }}col" style="--megamenu-cols: {{ col_count }}; grid-template-columns: repeat({{ col_count }}, minmax(0, 1fr));">
                     {%- for child_link in link.links -%}
                       {%- assign is_outlet = false -%}
                       {%- assign child_title_down = child_link.title | downcase -%}
