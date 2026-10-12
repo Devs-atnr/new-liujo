@@ -1,4 +1,11 @@
 <!-- Liu Jo Luxury Real-Time Predictive Search Drawer (Matching SS1 & SS2) -->
+{%- assign search_nav = nil -%}
+{%- if search_menu != blank and linklists[search_menu] != blank and linklists[search_menu].links.size > 0 -%}
+  {%- assign search_nav = linklists[search_menu] -%}
+{%- elsif main_menu != blank and linklists[main_menu] != blank and linklists[main_menu].links.size > 0 -%}
+  {%- assign search_nav = linklists[main_menu] -%}
+{%- endif -%}
+
 <div class="liujo-search-backdrop" data-liujo-search-backdrop></div>
 
 <div 
@@ -50,76 +57,177 @@
 
     <!-- Main Content Area -->
     <div class="liujo-search-content">
-      <!-- 1. STATE 1: BEFORE SEARCH (Initial State matching SS1) -->
+      <!-- 1. STATE 1: BEFORE SEARCH (Dynamic Tabs & Menus matching SS1) -->
       <div class="liujo-search-before" data-liujo-search-before>
         <!-- Category Switcher Tabs -->
         <div class="liujo-search-tabs">
-          <button type="button" class="liujo-search-tab is-active" data-search-tab="women">WOMEN</button>
-          <span class="liujo-search-tab-divider">|</span>
-          <button type="button" class="liujo-search-tab" data-search-tab="men">MEN</button>
-          <span class="liujo-search-tab-divider">|</span>
-          <button type="button" class="liujo-search-tab" data-search-tab="kids">KIDS</button>
+          {%- if search_nav != blank and search_nav.links.size > 0 -%}
+            {%- for tab_link in search_nav.links -%}
+              {%- assign tab_handle = tab_link.handle | default: tab_link.title | handleize -%}
+              <button 
+                type="button" 
+                class="liujo-search-tab{% if forloop.first %} is-active{% endif %}" 
+                data-search-tab="{{ tab_handle }}"
+                data-search-tab-name="{{ tab_link.title | escape }}">
+                {{ tab_link.title | upcase }}
+              </button>
+              {%- unless forloop.last -%}
+                <span class="liujo-search-tab-divider">|</span>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- else -%}
+            <button type="button" class="liujo-search-tab is-active" data-search-tab="women" data-search-tab-name="Women">WOMEN</button>
+            <span class="liujo-search-tab-divider">|</span>
+            <button type="button" class="liujo-search-tab" data-search-tab="men" data-search-tab-name="Men">MEN</button>
+            <span class="liujo-search-tab-divider">|</span>
+            <button type="button" class="liujo-search-tab" data-search-tab="kids" data-search-tab-name="Kids">KIDS</button>
+          {%- endif -%}
         </div>
 
-        <!-- Women Tab Panel (SS1 Default) -->
-        <div class="liujo-search-panel is-active" data-search-panel="women">
-          <div class="liujo-search-panel__cols">
-            <div class="liujo-search-panel__col">
-              <div class="liujo-search-panel__heading">SUGGESTIONS</div>
-              <ul class="liujo-search-panel__list">
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Bag">Women's Bag</button></li>
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Jeans">Women's Jeans</button></li>
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Shoes">Women's Shoes</button></li>
-              </ul>
+        <!-- Panels for each Category Tab -->
+        {%- if search_nav != blank and search_nav.links.size > 0 -%}
+          {%- for tab_link in search_nav.links -%}
+            {%- assign tab_handle = tab_link.handle | default: tab_link.title | handleize -%}
+            <div class="liujo-search-panel{% if forloop.first %} is-active{% endif %}" data-search-panel="{{ tab_handle }}"{% unless forloop.first %} style="display: none;"{% endunless %}>
+              <div class="liujo-search-panel__cols">
+                {%- if tab_link.links.size > 0 -%}
+                  {%- for col_link in tab_link.links -%}
+                    <div class="liujo-search-panel__col">
+                      <div class="liujo-search-panel__heading">
+                        <a href="{{ col_link.url }}" style="text-decoration: none; color: inherit;">
+                          {{ col_link.title | upcase }}
+                        </a>
+                      </div>
+                      <ul class="liujo-search-panel__list">
+                        {%- if col_link.links.size > 0 -%}
+                          {%- for item_link in col_link.links -%}
+                            <li>
+                              <button type="button" class="liujo-search-suggestion-btn" data-query="{{ item_link.title | escape }}" data-url="{{ item_link.url }}">
+                                {{ item_link.title }}
+                              </button>
+                            </li>
+                          {%- endfor -%}
+                        {%- else -%}
+                          <li>
+                            <button type="button" class="liujo-search-suggestion-btn" data-query="{{ col_link.title | escape }}" data-url="{{ col_link.url }}">
+                              {{ col_link.title }}
+                            </button>
+                          </li>
+                        {%- endif -%}
+                      </ul>
+                    </div>
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- assign lower_tab = tab_handle | downcase -%}
+                  {%- if lower_tab contains 'men' and lower_tab != 'women' -%}
+                    <div class="liujo-search-panel__col">
+                      <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+                      <ul class="liujo-search-panel__list">
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Sneakers">Men's Sneakers</button></li>
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jeans">Men's Jeans</button></li>
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jackets">Men's Jackets</button></li>
+                      </ul>
+                    </div>
+                    <div class="liujo-search-panel__col">
+                      <div class="liujo-search-panel__heading">NEW IN</div>
+                      <ul class="liujo-search-panel__list">
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's New Arrivals">Men's New Arrivals</button></li>
+                      </ul>
+                    </div>
+                  {%- elsif lower_tab contains 'kid' -%}
+                    <div class="liujo-search-panel__col">
+                      <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+                      <ul class="liujo-search-panel__list">
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="Baby Clothing">Baby Clothing</button></li>
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids Shoes">Kids Shoes</button></li>
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="Girls Dresses">Girls Dresses</button></li>
+                      </ul>
+                    </div>
+                    <div class="liujo-search-panel__col">
+                      <div class="liujo-search-panel__heading">NEW IN</div>
+                      <ul class="liujo-search-panel__list">
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids New Arrivals">Kids New Arrivals</button></li>
+                      </ul>
+                    </div>
+                  {%- else -%}
+                    <div class="liujo-search-panel__col">
+                      <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+                      <ul class="liujo-search-panel__list">
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="{{ tab_link.title }}'s Bag">{{ tab_link.title }}'s Bag</button></li>
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="{{ tab_link.title }}'s Jeans">{{ tab_link.title }}'s Jeans</button></li>
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="{{ tab_link.title }}'s Shoes">{{ tab_link.title }}'s Shoes</button></li>
+                      </ul>
+                    </div>
+                    <div class="liujo-search-panel__col">
+                      <div class="liujo-search-panel__heading">NEW IN</div>
+                      <ul class="liujo-search-panel__list">
+                        <li><button type="button" class="liujo-search-suggestion-btn" data-query="{{ tab_link.title }}'s New Arrivals">{{ tab_link.title }}'s New Arrivals</button></li>
+                      </ul>
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
             </div>
-            <div class="liujo-search-panel__col">
-              <div class="liujo-search-panel__heading">NEW IN</div>
-              <ul class="liujo-search-panel__list">
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's New Arrivals">Women's New Arrivals</button></li>
-              </ul>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default Liu Jo Fallback Panels -->
+          <div class="liujo-search-panel is-active" data-search-panel="women">
+            <div class="liujo-search-panel__cols">
+              <div class="liujo-search-panel__col">
+                <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+                <ul class="liujo-search-panel__list">
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Bag">Women's Bag</button></li>
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Jeans">Women's Jeans</button></li>
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Shoes">Women's Shoes</button></li>
+                </ul>
+              </div>
+              <div class="liujo-search-panel__col">
+                <div class="liujo-search-panel__heading">NEW IN</div>
+                <ul class="liujo-search-panel__list">
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's New Arrivals">Women's New Arrivals</button></li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Men Tab Panel -->
-        <div class="liujo-search-panel" data-search-panel="men" style="display: none;">
-          <div class="liujo-search-panel__cols">
-            <div class="liujo-search-panel__col">
-              <div class="liujo-search-panel__heading">SUGGESTIONS</div>
-              <ul class="liujo-search-panel__list">
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Sneakers">Men's Sneakers</button></li>
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jeans">Men's Jeans</button></li>
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jackets">Men's Jackets</button></li>
-              </ul>
-            </div>
-            <div class="liujo-search-panel__col">
-              <div class="liujo-search-panel__heading">NEW IN</div>
-              <ul class="liujo-search-panel__list">
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's New Arrivals">Men's New Arrivals</button></li>
-              </ul>
+          <div class="liujo-search-panel" data-search-panel="men" style="display: none;">
+            <div class="liujo-search-panel__cols">
+              <div class="liujo-search-panel__col">
+                <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+                <ul class="liujo-search-panel__list">
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Sneakers">Men's Sneakers</button></li>
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jeans">Men's Jeans</button></li>
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jackets">Men's Jackets</button></li>
+                </ul>
+              </div>
+              <div class="liujo-search-panel__col">
+                <div class="liujo-search-panel__heading">NEW IN</div>
+                <ul class="liujo-search-panel__list">
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's New Arrivals">Men's New Arrivals</button></li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Kids Tab Panel -->
-        <div class="liujo-search-panel" data-search-panel="kids" style="display: none;">
-          <div class="liujo-search-panel__cols">
-            <div class="liujo-search-panel__col">
-              <div class="liujo-search-panel__heading">SUGGESTIONS</div>
-              <ul class="liujo-search-panel__list">
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Baby Clothing">Baby Clothing</button></li>
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids Shoes">Kids Shoes</button></li>
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Girls Dresses">Girls Dresses</button></li>
-              </ul>
-            </div>
-            <div class="liujo-search-panel__col">
-              <div class="liujo-search-panel__heading">NEW IN</div>
-              <ul class="liujo-search-panel__list">
-                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids New Arrivals">Kids New Arrivals</button></li>
-              </ul>
+          <div class="liujo-search-panel" data-search-panel="kids" style="display: none;">
+            <div class="liujo-search-panel__cols">
+              <div class="liujo-search-panel__col">
+                <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+                <ul class="liujo-search-panel__list">
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Baby Clothing">Baby Clothing</button></li>
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids Shoes">Kids Shoes</button></li>
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Girls Dresses">Girls Dresses</button></li>
+                </ul>
+              </div>
+              <div class="liujo-search-panel__col">
+                <div class="liujo-search-panel__heading">NEW IN</div>
+                <ul class="liujo-search-panel__list">
+                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids New Arrivals">Kids New Arrivals</button></li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        {%- endif -%}
       </div>
 
       <!-- 2. STATE 2: AFTER SEARCH (Real-Time Predictive Results matching SS2) -->
@@ -128,11 +236,27 @@
           <!-- Left Column: Category Tabs + Suggestions For You -->
           <div class="liujo-search-after__sidebar">
             <div class="liujo-search-tabs">
-              <button type="button" class="liujo-search-tab is-active" data-search-after-tab="women">WOMEN</button>
-              <span class="liujo-search-tab-divider">|</span>
-              <button type="button" class="liujo-search-tab" data-search-after-tab="men">MEN</button>
-              <span class="liujo-search-tab-divider">|</span>
-              <button type="button" class="liujo-search-tab" data-search-after-tab="kids">KIDS</button>
+              {%- if search_nav != blank and search_nav.links.size > 0 -%}
+                {%- for tab_link in search_nav.links -%}
+                  {%- assign tab_handle = tab_link.handle | default: tab_link.title | handleize -%}
+                  <button 
+                    type="button" 
+                    class="liujo-search-tab{% if forloop.first %} is-active{% endif %}" 
+                    data-search-after-tab="{{ tab_handle }}"
+                    data-search-tab-name="{{ tab_link.title | escape }}">
+                    {{ tab_link.title | upcase }}
+                  </button>
+                  {%- unless forloop.last -%}
+                    <span class="liujo-search-tab-divider">|</span>
+                  {%- endunless -%}
+                {%- endfor -%}
+              {%- else -%}
+                <button type="button" class="liujo-search-tab is-active" data-search-after-tab="women" data-search-tab-name="Women">WOMEN</button>
+                <span class="liujo-search-tab-divider">|</span>
+                <button type="button" class="liujo-search-tab" data-search-after-tab="men" data-search-tab-name="Men">MEN</button>
+                <span class="liujo-search-tab-divider">|</span>
+                <button type="button" class="liujo-search-tab" data-search-after-tab="kids" data-search-tab-name="Kids">KIDS</button>
+              {%- endif -%}
             </div>
             <div class="liujo-search-sidebar-section">
               <div class="liujo-search-panel__heading">SUGGESTIONS FOR YOU</div>

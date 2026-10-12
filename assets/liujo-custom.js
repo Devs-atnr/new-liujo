@@ -497,15 +497,18 @@ function initLiuJoSearchDrawer() {
     }
   });
 
-  let currentGender = 'women';
+  const firstTab = drawer.querySelector('[data-search-tab]');
+  let currentGender = firstTab ? (firstTab.dataset.searchTab || 'women') : 'women';
+  let currentGenderName = firstTab ? (firstTab.dataset.searchTabName || currentGender) : currentGender;
 
-  // Synchronized Gender Tab Switcher (State 1 & State 2)
+  // Synchronized Category Tab Switcher (State 1 & State 2)
   const tabBtns = drawer.querySelectorAll('[data-search-tab]');
   const afterTabBtns = drawer.querySelectorAll('[data-search-after-tab]');
   const panels = drawer.querySelectorAll('[data-search-panel]');
 
-  function setGender(gender) {
+  function setGender(gender, genderName) {
     currentGender = gender;
+    currentGenderName = genderName || gender;
 
     // Sync State 1 Tabs
     tabBtns.forEach(t => {
@@ -533,35 +536,39 @@ function initLiuJoSearchDrawer() {
     // When in State 2 with text in input, re-run predictive search for this tab immediately!
     const query = input ? input.value.trim() : '';
     if (query.length > 0) {
-      showAfterState(query, currentGender);
+      showAfterState(query, currentGender, currentGenderName);
     }
   }
 
   // Category Tabs in State 1 (BEFORE SEARCH)
   tabBtns.forEach(tab => {
     tab.addEventListener('click', () => {
-      setGender(tab.dataset.searchTab);
+      setGender(tab.dataset.searchTab, tab.dataset.searchTabName);
     });
   });
 
   // Category Tabs in State 2 (AFTER SEARCH) - Now fully interactive and re-queries!
   afterTabBtns.forEach(tab => {
     tab.addEventListener('click', () => {
-      setGender(tab.dataset.searchAfterTab);
+      setGender(tab.dataset.searchAfterTab, tab.dataset.searchTabName);
     });
   });
 
-  // Suggestion buttons in State 1 (Clicking automatically searches)
-  const suggestionBtns = drawer.querySelectorAll('.liujo-search-suggestion-btn');
-  suggestionBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+  // Suggestion buttons in State 1 (Delegated click handling)
+  if (beforeState) {
+    beforeState.addEventListener('click', (e) => {
+      const btn = e.target.closest('.liujo-search-suggestion-btn');
+      if (!btn) return;
+      e.preventDefault();
       const query = btn.dataset.query || btn.textContent.trim();
       if (input) {
         input.value = query;
-        showAfterState(query, currentGender);
+        if (clearBtn) clearBtn.style.display = 'inline-flex';
+        if (clearDivider) clearDivider.style.display = 'inline-block';
+        showAfterState(query, currentGender, currentGenderName);
       }
     });
-  });
+  }
 
   // Clickable suggestions in State 2 (SUGGESTIONS FOR YOU)
   if (queriesContainer) {
@@ -572,7 +579,7 @@ function initLiuJoSearchDrawer() {
       const term = item.getAttribute('data-query');
       if (term && input) {
         input.value = term;
-        showAfterState(term, currentGender);
+        showAfterState(term, currentGender, currentGenderName);
       }
     });
   }
@@ -611,24 +618,26 @@ function initLiuJoSearchDrawer() {
     if (activeAbortController) activeAbortController.abort();
   }
 
-  function showAfterState(query, gender = currentGender) {
+  function showAfterState(query, gender = currentGender, genderName = currentGenderName) {
     if (beforeState) beforeState.style.display = 'none';
     if (afterState) afterState.style.display = 'block';
     if (seeAllLink) {
       let seeAllQuery = query;
-      if (gender === 'men' && !query.toLowerCase().includes('men')) seeAllQuery = `${query} men`;
-      else if (gender === 'kids' && !query.toLowerCase().includes('kid')) seeAllQuery = `${query} kids`;
+      const gTerm = (genderName || gender || '').toLowerCase();
+      if (gTerm && gTerm !== 'all' && !query.toLowerCase().includes(gTerm)) {
+        seeAllQuery = `${query} ${gTerm}`;
+      }
       seeAllLink.href = `${searchUrl}?q=${encodeURIComponent(seeAllQuery)}`;
     }
 
     // Debounce AJAX fetch (200ms)
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      fetchPredictiveResults(query, gender);
+      fetchPredictiveResults(query, gender, genderName);
     }, 200);
   }
 
-  function fetchPredictiveResults(query, gender = currentGender) {
+  function fetchPredictiveResults(query, gender = currentGender, genderName = currentGenderName) {
     if (activeAbortController) activeAbortController.abort();
     activeAbortController = new AbortController();
 
@@ -638,10 +647,9 @@ function initLiuJoSearchDrawer() {
 
     // Targeted query based on active category tab
     let targetQuery = query;
-    if (gender === 'men' && !query.toLowerCase().includes('men') && !query.toLowerCase().includes('uomo')) {
-      targetQuery = `${query} men`;
-    } else if (gender === 'kids' && !query.toLowerCase().includes('kid') && !query.toLowerCase().includes('child') && !query.toLowerCase().includes('baby')) {
-      targetQuery = `${query} kids`;
+    const gTerm = (genderName || gender || '').toLowerCase();
+    if (gTerm && gTerm !== 'all' && !query.toLowerCase().includes(gTerm)) {
+      targetQuery = `${query} ${gTerm}`;
     }
 
     const endpoint = `${predictiveUrl}.json?q=${encodeURIComponent(targetQuery)}&resources[type]=product,query,collection&resources[limit]=10`;
@@ -659,20 +667,20 @@ function initLiuJoSearchDrawer() {
             .then(r => r.json())
             .then(fallbackData => {
               if (loadingSpinner) loadingSpinner.style.display = 'none';
-              renderResults(fallbackData, query, gender);
+              renderResults(fallbackData, query, gender, genderName);
             })
             .catch(() => {
               if (loadingSpinner) loadingSpinner.style.display = 'none';
-              renderResults(data, query, gender);
+              renderResults(data, query, gender, genderName);
             });
         } else {
           if (loadingSpinner) loadingSpinner.style.display = 'none';
-          renderResults(data, query, gender);
+          renderResults(data, query, gender, genderName);
         }
       })
       .catch(err => {
         if (err.name === 'AbortError') return;
-        fetchSectionFallback(targetQuery, gender);
+        fetchSectionFallback(targetQuery, gender, genderName);
       });
   }
 
@@ -713,7 +721,7 @@ function initLiuJoSearchDrawer() {
       });
   }
 
-  function renderResults(data, query, gender = currentGender) {
+  function renderResults(data, query, gender = currentGender, genderName = currentGenderName) {
     const products = data?.resources?.results?.products || [];
     const queries = data?.resources?.results?.queries || [];
     const collections = data?.resources?.results?.collections || [];
@@ -730,10 +738,11 @@ function initLiuJoSearchDrawer() {
           suggestionsHtml += `<li><a href="${col.url}">${col.title}</a></li>`;
         });
       } else {
-        const prefix = gender === 'men' ? "Men's " : (gender === 'kids' ? "Kids " : "Women's ");
+        const catName = genderName || gender || '';
+        const prefix = catName && catName !== 'all' ? `${catName}'s ` : '';
         suggestionsHtml += `
           <li><a href="#" data-query="${query}">${query}</a></li>
-          <li><a href="#" data-query="${prefix}${query}">${prefix}${query}</a></li>
+          ${prefix ? `<li><a href="#" data-query="${prefix}${query}">${prefix}${query}</a></li>` : ''}
           <li><a href="#" data-query="${query} new in">${query} new in</a></li>
         `;
       }
