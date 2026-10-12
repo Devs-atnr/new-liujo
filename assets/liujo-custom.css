@@ -184,19 +184,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-header {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 32px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 var(--liujo-header-pad-x, 40px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: var(--liujo-header-h-desk, 86px);
   position: relative;
 }
 
 @media (max-width: 991px) {
   .liujo-header {
-    height: 58px;
+    height: var(--liujo-header-h-mob, 60px);
     padding: 0 16px;
     display: flex;
     justify-content: space-between;
@@ -247,7 +248,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-logo-image {
-  max-height: 32px;
+  max-height: 34px;
   width: auto;
   display: block;
 }
@@ -272,12 +273,19 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* --- Desktop Root Navigation (WOMEN / MEN / KIDS) --- */
+/* --- Desktop Root Navigation (WOMEN / MEN / KIDS) - Flush Left --- */
 .liujo-header__rootmenu {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 36px;
   flex: 1;
+}
+
+@media (max-width: 991px) {
+  .liujo-header__rootmenu {
+    display: none !important;
+  }
 }
 
 .liujo-header__nav-item {
@@ -291,9 +299,10 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   color: #111111;
   text-decoration: none;
-  padding: 26px 0;
+  height: var(--liujo-header-h-desk, 86px);
+  display: inline-flex;
+  align-items: center;
   position: relative;
-  display: inline-block;
   transition: color 0.2s ease;
 }
 
@@ -313,7 +322,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* --- Header Right Actions (Desktop & Mobile) --- */
+/* --- Header Right Actions (Flush Right) --- */
 .liujo-header__actions {
   display: flex;
   align-items: center;
@@ -339,6 +348,12 @@ h1, h2, h3, h4, h5, h6 {
   transition: opacity 0.2s ease;
 }
 
+@media (max-width: 991px) {
+  .liujo-header__store-link {
+    display: none !important;
+  }
+}
+
 .liujo-header__store-link:hover {
   opacity: 0.7;
 }
@@ -349,6 +364,12 @@ h1, h2, h3, h4, h5, h6 {
   height: 14px;
   background-color: #d0d0d0;
   margin: 0 4px;
+}
+
+@media (max-width: 991px) {
+  .liujo-header__divider {
+    display: none !important;
+  }
 }
 
 .liujo-action-btn {
@@ -371,6 +392,38 @@ h1, h2, h3, h4, h5, h6 {
 
 .liujo-action-btn svg {
   display: block;
+}
+
+/* Desktop-only and Mobile-only helper classes */
+.liujo-action-btn--desk-only {
+  display: flex !important;
+}
+
+@media (max-width: 991px) {
+  .liujo-action-btn--desk-only {
+    display: none !important;
+  }
+}
+
+.liujo-action-btn--mob-only {
+  display: none !important;
+}
+
+@media (max-width: 991px) {
+  .liujo-action-btn--mob-only {
+    display: flex !important;
+  }
+}
+
+/* Mobile & Tablet Hamburger Toggler - Strictly hidden on desktop! */
+.liujo-header__mob-toggler {
+  display: none !important;
+}
+
+@media (max-width: 991px) {
+  .liujo-header__mob-toggler {
+    display: flex !important;
+  }
 }
 
 .liujo-badge-count {
@@ -406,6 +459,7 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
   transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
   transform: translateY(6px);
+  z-index: 99;
 }
 
 .liujo-header__nav-item:hover .liujo-megamenu {
@@ -416,9 +470,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-megamenu__container {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 48px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 var(--liujo-header-pad-x, 40px);
   display: grid;
   gap: 36px;
 }

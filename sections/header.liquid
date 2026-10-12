@@ -1,7 +1,21 @@
 {% comment %}
   LIU JO LUXURY HEADER (Integrates seamlessly into Shopify OS 2.0 Header Group)
   Pixel-perfect Liu Jo Milano header matching liujo.com desktop and mobile navigation
+  - Dynamic Desktop Header Height & Mobile Header Height
+  - Dynamic edge-to-edge layout: Menu Left, Logo Center, Store Locator & Search Right
+  - Hamburger ONLY on mobile/tablet (hidden on desktop)
+  - Dynamic Shopify Menu (3-level navigation) + Liu Jo luxury fallback
+  - Dynamic toggle options for Wishlist & Cart on desktop & mobile
+  - Full-width Luxury Mega Menu
 {% endcomment %}
+
+<style>
+  :root {
+    --liujo-header-h-desk: {{ section.settings.header_height_desktop | default: 85 }}px;
+    --liujo-header-h-mob: {{ section.settings.header_height_mobile | default: 60 }}px;
+    --liujo-header-pad-x: {{ section.settings.header_padding_horizontal | default: 40 }}px;
+  }
+</style>
 
 <div class="liujo-header-container" data-section-id="{{ section.id }}" data-section-type="liujo-header">
   {%- if section.settings.show_announcement -%}
@@ -19,157 +33,212 @@
 
   <header class="liujo-header-wrapper">
     <div class="liujo-header">
-      <!-- Desktop Left: Root Navigation (WOMEN / MEN / KIDS) -->
-      <nav class="liujo-header__rootmenu d-none d-lg-flex" aria-label="Main Navigation">
-        <!-- 1. WOMEN -->
-        <div class="liujo-header__nav-item" data-nav-category="women">
-          <a href="/collections/all" class="liujo-header__nav-link">WOMEN</a>
-          <div class="liujo-megamenu">
-            <div class="liujo-megamenu__container liujo-megamenu__container--5col">
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">NEW ARRIVALS</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">The Gigi Hadid Edit <sup class="liujo-megamenu__badge">NEW</sup></a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Spring Summer 2026</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Iconic Denim</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">New In Shoes</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">CLOTHING</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jackets & Blazers</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shirts & Blouses</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Knitwear</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">JEANS</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Bottom Up Denim</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Flare & Bootcut</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Straight & Wide Leg</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Skinny Jeans</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">BAGS & SHOES</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Crossbody Bags</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Tote & Shoulder Bags</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Ankle Boots</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Sneakers</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Clothing</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Bags</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Shoes</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Desktop Left: Root Navigation (Flush Left) -->
+      <nav class="liujo-header__rootmenu" aria-label="Main Navigation">
+        {%- assign nav_menu = linklists[section.settings.menu] -%}
+        {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
+          {%- for link in nav_menu.links -%}
+            {%- assign link_handle = link.title | downcase -%}
+            <div class="liujo-header__nav-item" data-nav-category="{{ link.title | handleize }}">
+              <a href="{{ link.url }}" class="liujo-header__nav-link{% if link.active %} is-active{% endif %}">
+                {{ link.title | upcase }}
+              </a>
 
-        <!-- 2. MEN -->
-        <div class="liujo-header__nav-item" data-nav-category="men">
-          <a href="/collections/all" class="liujo-header__nav-link">MEN</a>
-          <div class="liujo-megamenu">
-            <div class="liujo-megamenu__container liujo-megamenu__container--5col">
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">NEW ARRIVALS</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Spring Summer 2026</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Liu Jo Uomo Icons</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">CLOTHING</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jackets & Coats</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shirts & Polos</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Chinos</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Knitwear</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">JEANS</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Regular Fit</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Slim Fit</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Relaxed Fit</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">SHOES & ACCESSORIES</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Sneakers</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Belts & Wallets</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Men's Sale</a></li>
-                </ul>
+              {%- if link.links.size > 0 -%}
+                <div class="liujo-megamenu">
+                  <div class="liujo-megamenu__container{% if link.links.size == 4 %} liujo-megamenu__container--4col{% else %} liujo-megamenu__container--5col{% endif %}">
+                    {%- for child_link in link.links -%}
+                      {%- assign is_outlet = false -%}
+                      {%- assign child_title_down = child_link.title | downcase -%}
+                      {%- if child_title_down contains 'outlet' -%}
+                        {%- assign is_outlet = true -%}
+                      {%- endif -%}
+                      <div class="liujo-megamenu__col">
+                        <a href="{{ child_link.url }}" class="liujo-megamenu__col-title{% if is_outlet %} is-outlet{% endif %}"{% if is_outlet %} style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"{% endif %}>
+                          {{ child_link.title | upcase }}
+                        </a>
+                        {%- if child_link.links.size > 0 -%}
+                          <ul class="liujo-megamenu__list">
+                            {%- for grandchild_link in child_link.links -%}
+                              <li class="liujo-megamenu__list-item">
+                                <a href="{{ grandchild_link.url }}" class="liujo-megamenu__link{% if is_outlet %} is-outlet{% endif %}"{% if is_outlet %} style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"{% endif %}>
+                                  {{ grandchild_link.title }}
+                                  {%- if grandchild_link.title contains 'New' or grandchild_link.title contains 'NEW' or grandchild_link.title contains 'Gigi' -%}
+                                    <sup class="liujo-megamenu__badge">NEW</sup>
+                                  {%- endif -%}
+                                </a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- elsif section.settings.use_liujo_default_fallback -%}
+                {%- comment %} Fallback for top links that don't have child links in Shopify yet {% endcomment -%}
+                {%- if link_handle contains 'kid' -%}
+                  {%- render 'liujo-megamenu-kids', outlet_color: section.settings.outlet_color -%}
+                {%- elsif link_handle contains 'men' and link_handle != 'women' -%}
+                  {%- render 'liujo-megamenu-men', outlet_color: section.settings.outlet_color -%}
+                {%- else -%}
+                  {%- render 'liujo-megamenu-women', outlet_color: section.settings.outlet_color -%}
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default Liu Jo Luxury 3-Tab Desktop Navigation (WOMEN / MEN / KIDS) -->
+          <!-- 1. WOMEN -->
+          <div class="liujo-header__nav-item" data-nav-category="women">
+            <a href="/collections/all" class="liujo-header__nav-link">WOMEN</a>
+            <div class="liujo-megamenu">
+              <div class="liujo-megamenu__container liujo-megamenu__container--5col">
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">NEW ARRIVALS</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">The Gigi Hadid Edit <sup class="liujo-megamenu__badge">NEW</sup></a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Spring Summer 2026</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Iconic Denim</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">New In Shoes</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">CLOTHING</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jackets & Blazers</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shirts & Blouses</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Knitwear</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">JEANS</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Bottom Up Denim</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Flare & Bootcut</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Straight & Wide Leg</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Skinny Jeans</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">BAGS & SHOES</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Crossbody Bags</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Tote & Shoulder Bags</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Ankle Boots</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Sneakers</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Clothing</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Bags</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Shoes</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- 3. KIDS (Exact match to liujo.com Screenshot 1) -->
-        <div class="liujo-header__nav-item" data-nav-category="kids">
-          <a href="/collections/all" class="liujo-header__nav-link">KIDS</a>
-          <div class="liujo-megamenu">
-            <div class="liujo-megamenu__container liujo-megamenu__container--4col">
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">BABY (0-12 MONTHS)</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & sets</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Bottom</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Accessories</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">KIDS (18 MONTHS-7 YEARS)</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Sweatshirts</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shoes</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title">GIRLS (8-16 YEARS)</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Sweatshirts</a></li>
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shoes</a></li>
-                </ul>
-              </div>
-              <div class="liujo-megamenu__col">
-                <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
-                <ul class="liujo-megamenu__list">
-                  <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">8-16 years</a></li>
-                </ul>
+          <!-- 2. MEN -->
+          <div class="liujo-header__nav-item" data-nav-category="men">
+            <a href="/collections/all" class="liujo-header__nav-link">MEN</a>
+            <div class="liujo-megamenu">
+              <div class="liujo-megamenu__container liujo-megamenu__container--5col">
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">NEW ARRIVALS</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Spring Summer 2026</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Liu Jo Uomo Icons</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">CLOTHING</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jackets & Coats</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shirts & Polos</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Chinos</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Knitwear</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">JEANS</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Regular Fit</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Slim Fit</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Relaxed Fit</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">SHOES & ACCESSORIES</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Sneakers</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Belts & Wallets</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Men's Sale</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+
+          <!-- 3. KIDS (Exact match to SS1) -->
+          <div class="liujo-header__nav-item" data-nav-category="kids">
+            <a href="/collections/all" class="liujo-header__nav-link">KIDS</a>
+            <div class="liujo-megamenu">
+              <div class="liujo-megamenu__container liujo-megamenu__container--4col">
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">BABY (0-12 MONTHS)</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & sets</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Bottom</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Accessories</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">KIDS (18 MONTHS-7 YEARS)</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Sweatshirts</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shoes</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title">GIRLS (8-16 YEARS)</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Outerwear</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Dresses & Jumpsuits</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Topwear</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Trousers & Skirts</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Jumpers & Sweatshirts</a></li>
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link">Shoes</a></li>
+                  </ul>
+                </div>
+                <div class="liujo-megamenu__col">
+                  <div class="liujo-megamenu__col-title is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</div>
+                  <ul class="liujo-megamenu__list">
+                    <li class="liujo-megamenu__list-item"><a href="/collections/all" class="liujo-megamenu__link is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">8-16 years</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
       </nav>
 
-      <!-- Center: Brand Logo with MILANO subtitle -->
+      <!-- Center: Brand Logo with MILANO subtitle (Dead Center) -->
       <div class="liujo-header__brand">
         <a href="{{ routes.root_url }}" class="liujo-logo">
           {%- if settings.logo != blank -%}
@@ -184,45 +253,67 @@
         </a>
       </div>
 
-      <!-- Right: Action Items -->
+      <!-- Right: Action Items (Flush Right, matching SS1) -->
       <div class="liujo-header__actions">
         {%- if section.settings.show_store_locator -%}
-          <a href="{{ section.settings.store_locator_link | default: '/pages/stores' }}" class="liujo-header__store-link d-none d-lg-inline-block">
+          <a href="{{ section.settings.store_locator_link | default: '/pages/stores' }}" class="liujo-header__store-link">
             {{ section.settings.store_locator_label | default: 'Locate Stores' }}
           </a>
-          <span class="liujo-header__divider d-none d-lg-inline-block"></span>
+          {%- if section.settings.show_search -%}
+            <span class="liujo-header__divider"></span>
+          {%- endif -%}
         {%- endif -%}
 
-        <!-- Search Icon -->
-        <a href="{{ routes.search_url }}" class="liujo-action-btn" aria-label="Search">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </a>
+        <!-- Search Icon (Desktop & Mobile) -->
+        {%- if section.settings.show_search -%}
+          <a href="{{ routes.search_url }}" class="liujo-action-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </a>
+        {%- endif -%}
 
-        <!-- Wishlist Icon (Desktop) -->
-        <a href="/pages/wishlist" class="liujo-action-btn d-none d-lg-flex" aria-label="Wishlist">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
-          <span class="liujo-badge-count" data-wishlist-count style="display:none;">0</span>
-        </a>
+        <!-- Wishlist Icon (Desktop - Hidden by default to match SS1) -->
+        {%- if section.settings.show_wishlist_desktop -%}
+          <a href="/pages/wishlist" class="liujo-action-btn liujo-action-btn--desk-only" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span class="liujo-badge-count" data-wishlist-count style="display:none;">0</span>
+          </a>
+        {%- endif -%}
 
-        <!-- Shopping Cart Icon (Desktop) -->
-        <a href="{{ routes.cart_url }}" class="liujo-action-btn d-none d-lg-flex" id="cart-icon-bubble" aria-label="Cart">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
-          </svg>
-          {%- if cart != empty and cart.item_count > 0 -%}
-            <span class="liujo-badge-count">{{ cart.item_count }}</span>
-          {%- endif -%}
-        </a>
+        <!-- Shopping Cart Icon (Desktop - Hidden by default to match SS1) -->
+        {%- if section.settings.show_cart_desktop -%}
+          <a href="{{ routes.cart_url }}" class="liujo-action-btn liujo-action-btn--desk-only" id="cart-icon-bubble-desktop" aria-label="Cart">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            {%- if cart != empty and cart.item_count > 0 -%}
+              <span class="liujo-badge-count">{{ cart.item_count }}</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
 
-        <!-- Mobile Hamburger Toggler (Right side of header, right beside search!) -->
-        <button type="button" class="liujo-action-btn liujo-header__mob-toggler d-flex d-lg-none" data-liujo-drawer-open aria-label="Open Navigation Menu">
+        <!-- Shopping Cart Icon (Mobile) -->
+        {%- if section.settings.show_cart_mobile -%}
+          <a href="{{ routes.cart_url }}" class="liujo-action-btn liujo-action-btn--mob-only" id="cart-icon-bubble-mobile" aria-label="Cart">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            {%- if cart != empty and cart.item_count > 0 -%}
+              <span class="liujo-badge-count">{{ cart.item_count }}</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+
+        <!-- Mobile & Tablet Hamburger Toggler (Strictly hidden on desktop!) -->
+        <button type="button" class="liujo-action-btn liujo-header__mob-toggler" data-liujo-drawer-open aria-label="Open Navigation Menu">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -235,7 +326,7 @@
 </div>
 
 <!-- ==========================================================================
-     MOBILE OFF-CANVAS DRAWER (Exact match to liujo.com Screenshot 3)
+     MOBILE OFF-CANVAS DRAWER (Strictly Mobile & Tablet)
      ========================================================================== -->
 <div class="liujo-mob-drawer-overlay" data-liujo-drawer-overlay></div>
 <div class="liujo-mob-drawer" data-liujo-drawer>
@@ -253,267 +344,280 @@
     </button>
   </div>
 
-  <!-- Horizontal Tabs Bar (WOMEN / MEN / KIDS) -->
-  <div class="liujo-mob-drawer__tabs">
-    <button type="button" class="liujo-mob-tab-btn is-active" data-liujo-tab-btn data-target-tab="women">WOMEN</button>
-    <button type="button" class="liujo-mob-tab-btn" data-liujo-tab-btn data-target-tab="men">MEN</button>
-    <button type="button" class="liujo-mob-tab-btn" data-liujo-tab-btn data-target-tab="kids">KIDS</button>
-  </div>
-
-  <!-- Body: Category Lists per Tab -->
-  <div class="liujo-mob-drawer__body">
-    <!-- 1. WOMEN PANEL (Matches Screenshot 3) -->
-    <div class="liujo-mob-tab-panel is-active" data-liujo-tab-panel data-tab-id="women">
-      <ul class="liujo-mob-nav-list">
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>NEW ARRIVALS</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">The Gigi Hadid Edit <sup class="liujo-megamenu__badge">NEW</sup></a></li>
-            <li><a href="/collections/all">Spring Summer 2026</a></li>
-            <li><a href="/collections/all">Iconic Denim</a></li>
-            <li><a href="/collections/all">New In Shoes</a></li>
-            <li><a href="/collections/all"><strong>View All New Arrivals</strong></a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>CLOTHING</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Jackets & Blazers</a></li>
-            <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
-            <li><a href="/collections/all">Shirts & Blouses</a></li>
-            <li><a href="/collections/all">Jumpers & Knitwear</a></li>
-            <li><a href="/collections/all">Trousers & Skirts</a></li>
-            <li><a href="/collections/all"><strong>View All Clothing</strong></a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>JEANS</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Bottom Up Denim</a></li>
-            <li><a href="/collections/all">Flare & Bootcut</a></li>
-            <li><a href="/collections/all">Straight & Wide Leg</a></li>
-            <li><a href="/collections/all">Skinny Jeans</a></li>
-            <li><a href="/collections/all"><strong>View All Jeans</strong></a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>BAGS</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Crossbody Bags</a></li>
-            <li><a href="/collections/all">Shoulder Bags</a></li>
-            <li><a href="/collections/all">Tote Bags</a></li>
-            <li><a href="/collections/all">Clutches & Mini Bags</a></li>
-            <li><a href="/collections/all"><strong>View All Bags</strong></a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>SHOES</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Sneakers</a></li>
-            <li><a href="/collections/all">Ankle Boots</a></li>
-            <li><a href="/collections/all">Pumps & Heels</a></li>
-            <li><a href="/collections/all">Sandals</a></li>
-            <li><a href="/collections/all"><strong>View All Shoes</strong></a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>ACCESSORIES</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Belts</a></li>
-            <li><a href="/collections/all">Scarves & Foulards</a></li>
-            <li><a href="/collections/all">Small Leather Goods</a></li>
-            <li><a href="/collections/all">Sunglasses</a></li>
-            <li><a href="/collections/all"><strong>View All Accessories</strong></a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item is-outlet has-sub">
-          <button type="button" class="liujo-mob-nav-trigger is-outlet" data-accordion-trigger style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">
-            <span style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</span>
-            <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Dresses & Clothing</a></li>
-            <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Bags & Accessories</a></li>
-            <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Shoes</a></li>
-            <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"><strong>View All Outlet</strong></a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item">
-          <a href="/collections/all" class="liujo-mob-nav-link">
-            <span>GIFT CARD</span>
-          </a>
-        </li>
-      </ul>
+  <!-- Dynamic / Fallback Mobile Navigation Tabs -->
+  {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
+    <div class="liujo-mob-drawer__tabs">
+      {%- for link in nav_menu.links -%}
+        <button type="button" class="liujo-mob-tab-btn{% if forloop.first %} is-active{% endif %}" data-liujo-tab-btn data-target-tab="{{ link.title | handleize }}">{{ link.title | upcase }}</button>
+      {%- endfor -%}
     </div>
 
-    <!-- 2. MEN PANEL -->
-    <div class="liujo-mob-tab-panel" data-liujo-tab-panel data-tab-id="men" style="display:none;">
-      <ul class="liujo-mob-nav-list">
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>NEW ARRIVALS</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Spring Summer 2026</a></li>
-            <li><a href="/collections/all">Liu Jo Uomo Icons</a></li>
-            <li><a href="/collections/all">New In Shoes</a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>CLOTHING</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Jackets & Coats</a></li>
-            <li><a href="/collections/all">Shirts & Polos</a></li>
-            <li><a href="/collections/all">Knitwear</a></li>
-            <li><a href="/collections/all">Trousers & Chinos</a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>JEANS</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Regular Fit</a></li>
-            <li><a href="/collections/all">Slim Fit</a></li>
-            <li><a href="/collections/all">Relaxed Fit</a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>SHOES</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Sneakers</a></li>
-            <li><a href="/collections/all">Elegant Shoes</a></li>
-            <li><a href="/collections/all">Boots</a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>ACCESSORIES</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Belts & Small Leather Goods</a></li>
-            <li><a href="/collections/all">Bags & Backpacks</a></li>
-            <li><a href="/collections/all">Hats & Caps</a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item is-outlet has-sub">
-          <button type="button" class="liujo-mob-nav-trigger is-outlet" data-accordion-trigger style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">
-            <span style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</span>
-            <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Men's Outlet</a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item">
-          <a href="/collections/all" class="liujo-mob-nav-link">
-            <span>GIFT CARD</span>
-          </a>
-        </li>
-      </ul>
+    <div class="liujo-mob-drawer__body">
+      {%- for link in nav_menu.links -%}
+        <div class="liujo-mob-tab-panel{% if forloop.first %} is-active{% endif %}" data-liujo-tab-panel data-tab-id="{{ link.title | handleize }}"{% unless forloop.first %} style="display:none;"{% endunless %}>
+          {%- if link.links.size > 0 -%}
+            <ul class="liujo-mob-nav-list">
+              {%- for child_link in link.links -%}
+                {%- assign is_outlet = false -%}
+                {%- assign child_title_down = child_link.title | downcase -%}
+                {%- if child_title_down contains 'outlet' -%}
+                  {%- assign is_outlet = true -%}
+                {%- endif -%}
+                <li class="liujo-mob-nav-item{% if is_outlet %} is-outlet{% endif %}{% if child_link.links.size > 0 %} has-sub{% endif %}">
+                  {%- if child_link.links.size > 0 -%}
+                    <button type="button" class="liujo-mob-nav-trigger{% if is_outlet %} is-outlet{% endif %}" data-accordion-trigger{% if is_outlet %} style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"{% endif %}>
+                      <span{% if is_outlet %} style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"{% endif %}>{{ child_link.title | upcase }}</span>
+                      <svg class="liujo-chevron{% if is_outlet %} is-outlet{% endif %}" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{% if is_outlet %}{{ section.settings.outlet_color | default: '#e6006e' }}{% else %}currentColor{% endif %}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                    <ul class="liujo-mob-sublist">
+                      {%- for grandchild_link in child_link.links -%}
+                        <li>
+                          <a href="{{ grandchild_link.url }}"{% if is_outlet %} class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"{% endif %}>
+                            {{ grandchild_link.title }}
+                            {%- if grandchild_link.title contains 'New' or grandchild_link.title contains 'NEW' or grandchild_link.title contains 'Gigi' -%}
+                              <sup class="liujo-megamenu__badge">NEW</sup>
+                            {%- endif -%}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- else -%}
+                    <a href="{{ child_link.url }}" class="liujo-mob-nav-link{% if is_outlet %} is-outlet{% endif %}"{% if is_outlet %} style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"{% endif %}>
+                      <span{% if is_outlet %} style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"{% endif %}>{{ child_link.title | upcase }}</span>
+                    </a>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- else -%}
+            {%- comment %} Fallback for tabs without links in Shopify yet {% endcomment -%}
+            {%- assign link_handle = link.title | downcase -%}
+            {%- if link_handle contains 'kid' -%}
+              {%- render 'liujo-mob-kids-panel', outlet_color: section.settings.outlet_color -%}
+            {%- elsif link_handle contains 'men' and link_handle != 'women' -%}
+              {%- render 'liujo-mob-men-panel', outlet_color: section.settings.outlet_color -%}
+            {%- else -%}
+              {%- render 'liujo-mob-women-panel', outlet_color: section.settings.outlet_color -%}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <!-- Fallback Mobile Tabs (WOMEN / MEN / KIDS) -->
+    <div class="liujo-mob-drawer__tabs">
+      <button type="button" class="liujo-mob-tab-btn is-active" data-liujo-tab-btn data-target-tab="women">WOMEN</button>
+      <button type="button" class="liujo-mob-tab-btn" data-liujo-tab-btn data-target-tab="men">MEN</button>
+      <button type="button" class="liujo-mob-tab-btn" data-liujo-tab-btn data-target-tab="kids">KIDS</button>
     </div>
 
-    <!-- 3. KIDS PANEL -->
-    <div class="liujo-mob-tab-panel" data-liujo-tab-panel data-tab-id="kids" style="display:none;">
-      <ul class="liujo-mob-nav-list">
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>BABY (0-12 MONTHS)</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Dresses & sets</a></li>
-            <li><a href="/collections/all">Bottom</a></li>
-            <li><a href="/collections/all">Outerwear</a></li>
-            <li><a href="/collections/all">Topwear</a></li>
-            <li><a href="/collections/all">Accessories</a></li>
-          </ul>
-        </li>
+    <div class="liujo-mob-drawer__body">
+      <!-- 1. WOMEN PANEL -->
+      <div class="liujo-mob-tab-panel is-active" data-liujo-tab-panel data-tab-id="women">
+        <ul class="liujo-mob-nav-list">
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>NEW ARRIVALS</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">The Gigi Hadid Edit <sup class="liujo-megamenu__badge">NEW</sup></a></li>
+              <li><a href="/collections/all">Spring Summer 2026</a></li>
+              <li><a href="/collections/all">Iconic Denim</a></li>
+              <li><a href="/collections/all">New In Shoes</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>CLOTHING</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Jackets & Blazers</a></li>
+              <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
+              <li><a href="/collections/all">Shirts & Blouses</a></li>
+              <li><a href="/collections/all">Jumpers & Knitwear</a></li>
+              <li><a href="/collections/all">Trousers & Skirts</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>JEANS</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Bottom Up Denim</a></li>
+              <li><a href="/collections/all">Flare & Bootcut</a></li>
+              <li><a href="/collections/all">Straight & Wide Leg</a></li>
+              <li><a href="/collections/all">Skinny Jeans</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>BAGS</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Crossbody Bags</a></li>
+              <li><a href="/collections/all">Shoulder Bags</a></li>
+              <li><a href="/collections/all">Tote Bags</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>SHOES</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Sneakers</a></li>
+              <li><a href="/collections/all">Ankle Boots</a></li>
+              <li><a href="/collections/all">Pumps & Heels</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>ACCESSORIES</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Belts</a></li>
+              <li><a href="/collections/all">Scarves & Foulards</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item is-outlet has-sub">
+            <button type="button" class="liujo-mob-nav-trigger is-outlet" data-accordion-trigger style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">
+              <span style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</span>
+              <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Dresses & Clothing</a></li>
+              <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Bags & Accessories</a></li>
+              <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Shoes</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item">
+            <a href="/collections/all" class="liujo-mob-nav-link">
+              <span>GIFT CARD</span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>KIDS (18 MONTHS-7 YEARS)</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Outerwear</a></li>
-            <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
-            <li><a href="/collections/all">Topwear</a></li>
-            <li><a href="/collections/all">Trousers & Skirts</a></li>
-            <li><a href="/collections/all">Jumpers & Sweatshirts</a></li>
-            <li><a href="/collections/all">Shoes</a></li>
-          </ul>
-        </li>
+      <!-- 2. MEN PANEL -->
+      <div class="liujo-mob-tab-panel" data-liujo-tab-panel data-tab-id="men" style="display:none;">
+        <ul class="liujo-mob-nav-list">
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>NEW ARRIVALS</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Spring Summer 2026</a></li>
+              <li><a href="/collections/all">Liu Jo Uomo Icons</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>CLOTHING</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Jackets & Coats</a></li>
+              <li><a href="/collections/all">Shirts & Polos</a></li>
+              <li><a href="/collections/all">Trousers & Chinos</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>JEANS</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Regular Fit</a></li>
+              <li><a href="/collections/all">Slim Fit</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>SHOES</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Sneakers</a></li>
+              <li><a href="/collections/all">Boots</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item is-outlet has-sub">
+            <button type="button" class="liujo-mob-nav-trigger is-outlet" data-accordion-trigger style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">
+              <span style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</span>
+              <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Men's Outlet</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
 
-        <li class="liujo-mob-nav-item has-sub">
-          <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
-            <span>GIRLS (8-16 YEARS)</span>
-            <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all">Outerwear</a></li>
-            <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
-            <li><a href="/collections/all">Topwear</a></li>
-            <li><a href="/collections/all">Trousers & Skirts</a></li>
-            <li><a href="/collections/all">Jumpers & Sweatshirts</a></li>
-            <li><a href="/collections/all">Shoes</a></li>
-          </ul>
-        </li>
-
-        <li class="liujo-mob-nav-item is-outlet has-sub">
-          <button type="button" class="liujo-mob-nav-trigger is-outlet" data-accordion-trigger style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">
-            <span style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</span>
-            <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-          <ul class="liujo-mob-sublist">
-            <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">8-16 years</a></li>
-          </ul>
-        </li>
-      </ul>
+      <!-- 3. KIDS PANEL -->
+      <div class="liujo-mob-tab-panel" data-liujo-tab-panel data-tab-id="kids" style="display:none;">
+        <ul class="liujo-mob-nav-list">
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>BABY (0-12 MONTHS)</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Dresses & sets</a></li>
+              <li><a href="/collections/all">Bottom</a></li>
+              <li><a href="/collections/all">Outerwear</a></li>
+              <li><a href="/collections/all">Topwear</a></li>
+              <li><a href="/collections/all">Accessories</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>KIDS (18 MONTHS-7 YEARS)</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Outerwear</a></li>
+              <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
+              <li><a href="/collections/all">Topwear</a></li>
+              <li><a href="/collections/all">Trousers & Skirts</a></li>
+              <li><a href="/collections/all">Jumpers & Sweatshirts</a></li>
+              <li><a href="/collections/all">Shoes</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item has-sub">
+            <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+              <span>GIRLS (8-16 YEARS)</span>
+              <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all">Outerwear</a></li>
+              <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
+              <li><a href="/collections/all">Topwear</a></li>
+              <li><a href="/collections/all">Trousers & Skirts</a></li>
+              <li><a href="/collections/all">Jumpers & Sweatshirts</a></li>
+              <li><a href="/collections/all">Shoes</a></li>
+            </ul>
+          </li>
+          <li class="liujo-mob-nav-item is-outlet has-sub">
+            <button type="button" class="liujo-mob-nav-trigger is-outlet" data-accordion-trigger style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">
+              <span style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">OUTLET</span>
+              <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <ul class="liujo-mob-sublist">
+              <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">8-16 years</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
+  {%- endif -%}
 
-  <!-- Bottom Drawer Section: Divider + Wishlist & Account (Screenshot 3) -->
+  <!-- Bottom Drawer Section: Divider + Wishlist & Account -->
   <div class="liujo-mob-drawer__bottom">
     <div class="liujo-mob-drawer__divider"></div>
     <div class="liujo-mob-drawer__links">
@@ -583,6 +687,64 @@
     },
     {
       "type": "header",
+      "content": "Header Dimensions & Layout"
+    },
+    {
+      "type": "range",
+      "id": "header_height_desktop",
+      "min": 60,
+      "max": 140,
+      "step": 2,
+      "default": 86,
+      "unit": "px",
+      "label": "Desktop Header Height"
+    },
+    {
+      "type": "range",
+      "id": "header_height_mobile",
+      "min": 50,
+      "max": 100,
+      "step": 2,
+      "default": 60,
+      "unit": "px",
+      "label": "Mobile Header Height"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_horizontal",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 40,
+      "unit": "px",
+      "label": "Desktop Edge Padding (Left/Right)"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Menu (Dynamic)"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu",
+      "default": "main-menu",
+      "info": "3-Level Navigation: Level 1 = Tabs, Level 2 = Mega Menu Columns, Level 3 = Links."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_liujo_default_fallback",
+      "label": "Use Liu Jo Built-in Mega Menus as Fallback",
+      "default": true,
+      "info": "When enabled, automatically provides the official Liu Jo Milan Women, Men, and Kids menus if a tab has no sublinks in Shopify."
+    },
+    {
+      "type": "color",
+      "id": "outlet_color",
+      "label": "Outlet Pink Accent",
+      "default": "#e6006e"
+    },
+    {
+      "type": "header",
       "content": "Brand Logo"
     },
     {
@@ -597,12 +759,12 @@
     },
     {
       "type": "header",
-      "content": "Store Locator & Accent"
+      "content": "Action Icons (Dynamic Show/Hide)"
     },
     {
       "type": "checkbox",
       "id": "show_store_locator",
-      "label": "Show Locate Stores",
+      "label": "Show Locate Stores (Desktop)",
       "default": true
     },
     {
@@ -617,10 +779,28 @@
       "label": "Store Locator Link"
     },
     {
-      "type": "color",
-      "id": "outlet_color",
-      "label": "Outlet Pink Accent",
-      "default": "#e6006e"
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show Search Icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist_desktop",
+      "label": "Show Wishlist on Desktop (Off in SS1 design)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_desktop",
+      "label": "Show Cart Icon on Desktop (Off in SS1 design)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_mobile",
+      "label": "Show Cart Icon on Mobile",
+      "default": true
     }
   ]
 }

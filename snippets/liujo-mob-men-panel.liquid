@@ -1,0 +1,52 @@
+<ul class="liujo-mob-nav-list">
+  <li class="liujo-mob-nav-item has-sub">
+    <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+      <span>NEW ARRIVALS</span>
+      <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    <ul class="liujo-mob-sublist">
+      <li><a href="/collections/all">Spring Summer 2026</a></li>
+      <li><a href="/collections/all">Liu Jo Uomo Icons</a></li>
+    </ul>
+  </li>
+  <li class="liujo-mob-nav-item has-sub">
+    <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+      <span>CLOTHING</span>
+      <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    <ul class="liujo-mob-sublist">
+      <li><a href="/collections/all">Jackets & Coats</a></li>
+      <li><a href="/collections/all">Shirts & Polos</a></li>
+      <li><a href="/collections/all">Trousers & Chinos</a></li>
+    </ul>
+  </li>
+  <li class="liujo-mob-nav-item has-sub">
+    <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+      <span>JEANS</span>
+      <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    <ul class="liujo-mob-sublist">
+      <li><a href="/collections/all">Regular Fit</a></li>
+      <li><a href="/collections/all">Slim Fit</a></li>
+    </ul>
+  </li>
+  <li class="liujo-mob-nav-item has-sub">
+    <button type="button" class="liujo-mob-nav-trigger" data-accordion-trigger>
+      <span>SHOES</span>
+      <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    <ul class="liujo-mob-sublist">
+      <li><a href="/collections/all">Sneakers</a></li>
+      <li><a href="/collections/all">Boots</a></li>
+    </ul>
+  </li>
+  <li class="liujo-mob-nav-item is-outlet has-sub">
+    <button type="button" class="liujo-mob-nav-trigger is-outlet" data-accordion-trigger style="color: {{ outlet_color | default: '#e6006e' }};">
+      <span style="color: {{ outlet_color | default: '#e6006e' }};">OUTLET</span>
+      <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    <ul class="liujo-mob-sublist">
+      <li><a href="/collections/all" class="is-outlet" style="color: {{ outlet_color | default: '#e6006e' }};">Men's Outlet</a></li>
+    </ul>
+  </li>
+</ul>
