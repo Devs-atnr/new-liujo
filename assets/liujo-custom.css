@@ -172,52 +172,128 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   LIU JO MAIN HEADER & NAVIGATION
+   LIU JO MAIN HEADER & LUXURY NAVIGATION (MATCHING LIUJO.COM)
    ========================================================================== */
 .liujo-header-wrapper {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--liujo-border-gray);
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .liujo-header {
-  max-width: var(--liujo-container-max);
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--liujo-header-height-desk);
+  height: 72px;
+  position: relative;
 }
 
 @media (max-width: 991px) {
   .liujo-header {
-    height: var(--liujo-header-height-mob);
+    height: 58px;
     padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
-/* Root Navigation Menu (Desktop Left) */
+/* --- Brand Logo (LIU•JO MILANO) --- */
+.liujo-header__brand {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.liujo-logo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.liujo-logo__main {
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #000000;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.liujo-logo__dot {
+  font-size: 16px;
+  margin: 0 2px;
+  vertical-align: middle;
+}
+
+.liujo-logo__sub {
+  font-family: inherit;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #333333;
+  margin-top: 4px;
+}
+
+.liujo-logo-image {
+  max-height: 32px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 991px) {
+  .liujo-header__brand {
+    order: 1;
+    text-align: left;
+    margin: 0;
+  }
+  .liujo-logo {
+    align-items: flex-start;
+  }
+  .liujo-logo__main {
+    font-size: 21px;
+    letter-spacing: 0.2em;
+  }
+  .liujo-logo__sub {
+    font-size: 7px;
+    letter-spacing: 0.3em;
+    margin-top: 2px;
+  }
+}
+
+/* --- Desktop Root Navigation (WOMEN / MEN / KIDS) --- */
 .liujo-header__rootmenu {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 36px;
   flex: 1;
+}
+
+.liujo-header__nav-item {
+  position: static;
 }
 
 .liujo-header__nav-link {
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--liujo-black);
+  color: #111111;
   text-decoration: none;
-  padding: 10px 0;
+  padding: 26px 0;
   position: relative;
+  display: inline-block;
   transition: color 0.2s ease;
 }
 
@@ -228,8 +304,8 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 0%;
   height: 2px;
-  background-color: var(--liujo-black);
-  transition: width 0.3s ease;
+  background-color: #000000;
+  transition: width 0.2s ease;
 }
 
 .liujo-header__nav-item:hover > .liujo-header__nav-link::after,
@@ -237,54 +313,29 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* Brand Logo (Center) */
-.liujo-header__brand {
-  flex: 0 0 auto;
-  text-align: center;
-}
-
-.liujo-logo-text {
-  font-family: var(--liujo-font-main);
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--liujo-black);
-  text-decoration: none;
-  line-height: 1;
-  display: inline-block;
-}
-
-.liujo-logo-text span {
-  font-size: 18px;
-  vertical-align: middle;
-  margin: 0 2px;
-}
-
-.liujo-logo-image {
-  max-height: 32px;
-  width: auto;
-  display: block;
-}
-
-/* Header Action Icons (Right) */
+/* --- Header Right Actions (Desktop & Mobile) --- */
 .liujo-header__actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 18px;
   flex: 1;
 }
 
+@media (max-width: 991px) {
+  .liujo-header__actions {
+    order: 2;
+    flex: initial;
+    gap: 14px;
+  }
+}
+
 .liujo-header__store-link {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--liujo-black);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #111111;
   text-decoration: none;
-  padding-right: 20px;
-  border-right: 1px solid var(--liujo-border-gray);
   transition: opacity 0.2s ease;
 }
 
@@ -292,38 +343,42 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.7;
 }
 
+.liujo-header__divider {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background-color: #d0d0d0;
+  margin: 0 4px;
+}
+
 .liujo-action-btn {
   background: none;
   border: none;
   padding: 6px;
-  color: var(--liujo-black);
+  color: #111111;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   text-decoration: none;
-  transition: transform 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .liujo-action-btn:hover {
-  transform: translateY(-1px);
+  opacity: 0.7;
 }
 
 .liujo-action-btn svg {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  fill: none;
+  display: block;
 }
 
 .liujo-badge-count {
   position: absolute;
   top: 0;
   right: -2px;
-  background-color: var(--liujo-black);
-  color: var(--liujo-white);
+  background-color: #000000;
+  color: #ffffff;
   font-size: 9px;
   font-weight: 700;
   min-width: 15px;
@@ -335,22 +390,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   LIU JO MEGA MENU (DESKTOP)
+   DESKTOP MEGA MENU DROPDOWN (FULL WIDTH, CLEAN LUXURY)
    ========================================================================== */
 .liujo-megamenu {
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
-  background-color: var(--liujo-white);
-  border-bottom: 1px solid var(--liujo-border-gray);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-  padding: 40px 0 50px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+  padding: 44px 0 54px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-  transform: translateY(10px);
+  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+  transform: translateY(6px);
 }
 
 .liujo-header__nav-item:hover .liujo-megamenu {
@@ -361,23 +416,38 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-megamenu__container {
-  max-width: var(--liujo-container-max);
+  max-width: 1360px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 48px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr) 1.5fr;
-  gap: 32px;
+  gap: 36px;
+}
+
+.liujo-megamenu__container--4col {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.liujo-megamenu__container--5col {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.liujo-megamenu__col {
+  display: flex;
+  flex-direction: column;
 }
 
 .liujo-megamenu__col-title {
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 20px;
-  color: var(--liujo-black);
-  border-bottom: 1px solid var(--liujo-border-gray);
-  padding-bottom: 8px;
+  margin-bottom: 22px;
+  color: #111111;
+  padding-bottom: 0;
+}
+
+.liujo-megamenu__col-title.is-outlet {
+  color: #e6006e !important;
 }
 
 .liujo-megamenu__list {
@@ -387,77 +457,44 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-megamenu__list-item {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .liujo-megamenu__link {
   font-size: 13px;
-  color: var(--liujo-mid-gray);
+  font-weight: 400;
+  color: #444444;
   text-decoration: none;
-  transition: color 0.2s ease, transform 0.2s ease;
+  line-height: 1.5;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
   display: inline-block;
 }
 
 .liujo-megamenu__link:hover {
-  color: var(--liujo-black);
-  transform: translateX(4px);
+  color: #000000;
+  text-decoration: underline;
+}
+
+.liujo-megamenu__link.is-outlet {
+  color: #e6006e !important;
 }
 
 .liujo-megamenu__badge {
   font-size: 9px;
   font-weight: 700;
-  color: var(--liujo-accent-pink);
+  color: #e6006e;
   margin-left: 6px;
   vertical-align: super;
 }
 
-.liujo-megamenu__promo-card {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-  background-color: var(--liujo-light-gray);
-  text-decoration: none;
-  display: block;
-}
-
-.liujo-megamenu__promo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.liujo-megamenu__promo-card:hover .liujo-megamenu__promo-img {
-  transform: scale(1.04);
-}
-
-.liujo-megamenu__promo-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 24px;
-  background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
-  color: var(--liujo-white);
-}
-
-.liujo-megamenu__promo-title {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--liujo-white);
-  margin-bottom: 4px;
-}
-
 /* ==========================================================================
-   LIU JO MOBILE DRAWER NAVIGATION
+   MOBILE OFF-CANVAS DRAWER NAVIGATION (MATCHING SCREENSHOT 3)
    ========================================================================== */
 .liujo-mob-drawer-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 9999;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -472,62 +509,75 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 85%;
+  width: 88%;
   max-width: 400px;
   height: 100%;
-  background-color: var(--liujo-white);
-  z-index: 1001;
+  background-color: #ffffff;
+  z-index: 10000;
   transform: translateX(-100%);
-  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 15px 0 40px rgba(0, 0, 0, 0.12);
 }
 
 .liujo-mob-drawer.is-open {
   transform: translateX(0);
 }
 
+/* Drawer Header: Logo + Close */
 .liujo-mob-drawer__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--liujo-border-gray);
+  padding: 18px 24px 14px;
 }
 
+.liujo-mob-drawer__close {
+  background: none;
+  border: none;
+  padding: 4px;
+  color: #111111;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Horizontal Tabs (WOMEN / MEN / KIDS) */
 .liujo-mob-drawer__tabs {
   display: flex;
-  border-bottom: 1px solid var(--liujo-border-gray);
-  background-color: var(--liujo-light-gray);
+  gap: 24px;
+  padding: 12px 24px 0;
+  background-color: #ffffff;
 }
 
 .liujo-mob-tab-btn {
-  flex: 1;
-  padding: 14px 8px;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   background: none;
   border: none;
+  padding: 0 0 10px 0;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999999;
   cursor: pointer;
-  color: var(--liujo-mid-gray);
   border-bottom: 2px solid transparent;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .liujo-mob-tab-btn.is-active {
-  background-color: var(--liujo-white);
-  color: var(--liujo-black);
-  border-bottom-color: var(--liujo-black);
+  color: #000000;
+  border-bottom-color: #000000;
 }
 
+/* Drawer Body & Navigation Accordions */
 .liujo-mob-drawer__body {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 0;
+  padding: 12px 0 24px;
 }
 
 .liujo-mob-nav-list {
@@ -537,37 +587,125 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-mob-nav-item {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: none;
 }
 
+.liujo-mob-nav-trigger,
 .liujo-mob-nav-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
-  font-size: 14px;
+  width: 100%;
+  padding: 14px 24px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--liujo-black);
+  color: #111111;
+  cursor: pointer;
   text-decoration: none;
+  transition: background-color 0.15s ease;
 }
 
-.liujo-mob-drawer__footer {
-  padding: 20px 24px;
-  border-top: 1px solid var(--liujo-border-gray);
+.liujo-mob-nav-trigger:hover,
+.liujo-mob-nav-link:hover {
+  background-color: #fbfbfb;
+}
+
+.liujo-mob-nav-trigger .liujo-chevron {
+  transition: transform 0.25s ease;
+  stroke: #222222;
+}
+
+.liujo-mob-nav-item.is-open .liujo-mob-nav-trigger .liujo-chevron {
+  transform: rotate(90deg);
+}
+
+/* OUTLET Pink Accent */
+.liujo-mob-nav-trigger.is-outlet,
+.liujo-mob-nav-item.is-outlet .liujo-mob-nav-trigger span,
+.liujo-mob-nav-item.is-outlet .liujo-mob-nav-link span {
+  color: #e6006e !important;
+}
+
+.liujo-mob-nav-trigger.is-outlet .liujo-chevron,
+.liujo-mob-nav-item.is-outlet .liujo-chevron {
+  stroke: #e6006e !important;
+}
+
+.liujo-mob-sublist a.is-outlet {
+  color: #e6006e !important;
+}
+
+/* Collapsible Sublist */
+.liujo-mob-sublist {
+  display: none;
+  list-style: none;
+  padding: 6px 24px 14px 32px;
+  margin: 0;
   background-color: #fafafa;
 }
 
-.liujo-mob-drawer__footer-link {
+.liujo-mob-nav-item.is-open .liujo-mob-sublist {
   display: block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--liujo-black);
+}
+
+.liujo-mob-sublist li {
+  margin-bottom: 8px;
+}
+
+.liujo-mob-sublist a {
+  display: block;
+  font-size: 13px;
+  color: #555555;
   text-decoration: none;
-  padding: 8px 0;
+  padding: 4px 0;
+}
+
+.liujo-mob-sublist a:hover {
+  color: #000000;
+}
+
+/* Drawer Bottom: Divider + Wishlist & Account (Screenshot 3) */
+.liujo-mob-drawer__bottom {
+  padding: 0 24px 28px;
+  background-color: #ffffff;
+}
+
+.liujo-mob-drawer__divider {
+  width: 100%;
+  height: 1px;
+  background-color: #111111;
+  margin-bottom: 22px;
+}
+
+.liujo-mob-drawer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.liujo-mob-action-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.liujo-mob-action-link:hover {
+  opacity: 0.7;
+}
+
+.liujo-mob-action-link svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================

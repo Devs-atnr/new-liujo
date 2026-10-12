@@ -135,6 +135,7 @@ function initLiuJoMobileDrawer() {
   const drawer = document.querySelector('[data-liujo-drawer]');
   const tabBtns = document.querySelectorAll('[data-liujo-tab-btn]');
   const tabPanels = document.querySelectorAll('[data-liujo-tab-panel]');
+  const accordionTriggers = document.querySelectorAll('[data-accordion-trigger]');
 
   function openDrawer() {
     if (drawer) drawer.classList.add('is-open');
@@ -152,6 +153,12 @@ function initLiuJoMobileDrawer() {
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
   if (overlay) overlay.addEventListener('click', closeDrawer);
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer && drawer.classList.contains('is-open')) {
+      closeDrawer();
+    }
+  });
+
   // Tab switching (Women / Men / Kids)
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -167,6 +174,28 @@ function initLiuJoMobileDrawer() {
           panel.style.display = 'none';
         }
       });
+    });
+  });
+
+  // Collapsible Accordions inside Mobile Drawer
+  accordionTriggers.forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const parentItem = trigger.closest('.liujo-mob-nav-item');
+      if (!parentItem) return;
+
+      const isOpen = parentItem.classList.contains('is-open');
+      // Optional: close other accordions in the same panel
+      const siblingItems = parentItem.parentElement.querySelectorAll('.liujo-mob-nav-item');
+      siblingItems.forEach(item => {
+        if (item !== parentItem) item.classList.remove('is-open');
+      });
+
+      if (isOpen) {
+        parentItem.classList.remove('is-open');
+      } else {
+        parentItem.classList.add('is-open');
+      }
     });
   });
 }
