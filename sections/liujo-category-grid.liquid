@@ -1,0 +1,85 @@
+{% comment %}
+  LIU JO CATEGORY GRID / MINIMALIST COLLECTION TABS
+  Quick visual pill/circle navigation for flagship categories: Bags, Shoes, Denim, Clothing.
+{% endcomment %}
+
+<div class="liujo-category-grid-section" data-section-id="{{ section.id }}" data-section-type="liujo-category-grid" style="padding: 40px 0 20px;">
+  <div style="max-width: var(--liujo-container-max); margin: 0 auto; padding: 0 16px;">
+    {%- if section.settings.title != blank -%}
+      <div class="liujo-section-header" style="margin-bottom: 24px;">
+        <h2 class="liujo-title-small">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="liujo-cat-pills-row" style="display: flex; gap: 16px; overflow-x: auto; scrollbar-width: none; padding-bottom: 12px; justify-content: center; flex-wrap: wrap;">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link | default: '/collections/all' }}" class="liujo-cat-pill" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 24px; border: 1px solid var(--liujo-border-gray); border-radius: 30px; text-decoration: none; color: var(--liujo-black); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; background: #fff; transition: all 0.25s ease;" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 60, height: 60 }}" alt="{{ block.settings.title }}" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;">
+          {%- endif -%}
+          <span>{{ block.settings.title }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .liujo-cat-pill:hover {
+    border-color: var(--liujo-black) !important;
+    background-color: var(--liujo-black) !important;
+    color: var(--liujo-white) !important;
+    transform: translateY(-2px);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Liu Jo Category Pills",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop By Category"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Name",
+          "default": "Denim"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Optional Icon/Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liu Jo Category Pills",
+      "blocks": [
+        { "type": "category", "settings": { "title": "New In" } },
+        { "type": "category", "settings": { "title": "Clothing" } },
+        { "type": "category", "settings": { "title": "Bottom Up Denim" } },
+        { "type": "category", "settings": { "title": "Bags" } },
+        { "type": "category", "settings": { "title": "Shoes" } },
+        { "type": "category", "settings": { "title": "Accessories" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

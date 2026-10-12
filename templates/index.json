@@ -1,75 +1,243 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "hero_video": {
+      "type": "liujo-hero-video",
+      "settings": {
+        "video_url": "https://media.liujo.com/PUBLIC/VIDEO/Liu_Jo_camp_15s_16х9.mp4",
+        "overlay_opacity": 20,
+        "tagline": "Campaign 2026",
+        "heading": "The Gigi Hadid Edit",
+        "button_label": "Discover",
+        "button_link": "/collections/all"
+      }
+    },
+    "hero_slider": {
+      "type": "liujo-hero-slider",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "slide_1": {
+          "type": "slide",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "overlay_opacity": 15,
+            "heading": "Explore the Looks",
+            "button_label": "Discover Collection",
+            "button_link": "/collections/all"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "slide_1"
       ],
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
+      "settings": {}
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "product_carousel": {
+      "type": "liujo-product-carousel",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
+        "title": "Explore the Looks",
+        "subtitle": "The latest styles handpicked for this season",
         "collection": "all",
         "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
         "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "view_all_label": "See all Clothing"
+      }
+    },
+    "category_pills": {
+      "type": "liujo-category-grid",
+      "blocks": {
+        "cat_1": { "type": "category", "settings": { "title": "New In", "link": "/collections/all" } },
+        "cat_2": { "type": "category", "settings": { "title": "Clothing", "link": "/collections/all" } },
+        "cat_3": { "type": "category", "settings": { "title": "Bottom Up Denim", "link": "/collections/all" } },
+        "cat_4": { "type": "category", "settings": { "title": "Bags", "link": "/collections/all" } },
+        "cat_5": { "type": "category", "settings": { "title": "Shoes", "link": "/collections/all" } },
+        "cat_6": { "type": "category", "settings": { "title": "Accessories", "link": "/collections/all" } }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4",
+        "cat_5",
+        "cat_6"
+      ],
+      "settings": {
+        "title": "Shop By Category"
+      }
+    },
+    "split_banners_tops": {
+      "type": "liujo-split-banners",
+      "blocks": {
+        "banner_shirts": {
+          "type": "banner",
+          "settings": {
+            "title": "Shirts",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg",
+            "link": "/collections/all"
+          }
+        },
+        "banner_jackets": {
+          "type": "banner",
+          "settings": {
+            "title": "Jackets",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg",
+            "link": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "banner_shirts",
+        "banner_jackets"
+      ],
+      "settings": {}
+    },
+    "split_banners_bottoms": {
+      "type": "liujo-split-banners",
+      "blocks": {
+        "banner_jeans": {
+          "type": "banner",
+          "settings": {
+            "title": "Jeans",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
+            "link": "/collections/all"
+          }
+        },
+        "banner_shoes": {
+          "type": "banner",
+          "settings": {
+            "title": "Shoes",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg",
+            "link": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "banner_jeans",
+        "banner_shoes"
+      ],
+      "settings": {}
+    },
+    "editorial_story": {
+      "type": "liujo-editorial-story",
+      "settings": {
+        "image_position": "left",
+        "tagline": "Liu Jo Heritage",
+        "heading": "Italian Glamour & Contemporary Femininity",
+        "description": "Born in the heart of the Italian fashion district of Carpi in 1995, Liu Jo embodies modern elegance and timeless allure. Every piece celebrates natural beauty through tailor-made fits, premium materials, and distinctive Italian craftsmanship.",
+        "button_label": "Read Our Story",
+        "button_link": "/pages/about"
+      }
+    },
+    "boutique_services": {
+      "type": "liujo-services-bar",
+      "blocks": {
+        "service_1": {
+          "type": "service",
+          "settings": {
+            "icon": "shipping",
+            "title": "Orders & Shipments",
+            "description": "Complimentary delivery on orders over €150"
+          }
+        },
+        "service_2": {
+          "type": "service",
+          "settings": {
+            "icon": "support",
+            "title": "Boutique Assistance",
+            "description": "Monday to Friday, 9:00 to 18:00 CET"
+          }
+        },
+        "service_3": {
+          "type": "service",
+          "settings": {
+            "icon": "returns",
+            "title": "Easy Returns",
+            "description": "30 days for complimentary returns & exchanges"
+          }
+        },
+        "service_4": {
+          "type": "service",
+          "settings": {
+            "icon": "security",
+            "title": "Certified Payments",
+            "description": "Encrypted checkout via Cards, PayPal & Klarna"
+          }
+        }
+      },
+      "block_order": [
+        "service_1",
+        "service_2",
+        "service_3",
+        "service_4"
+      ],
+      "settings": {}
+    },
+    "social_gallery": {
+      "type": "liujo-social-gallery",
+      "blocks": {
+        "tile_1": {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw38804d25/images/E-ZB7305D041679212-3-N.jpeg?sw=594&sh=826",
+            "link": "https://www.instagram.com/liujo/"
+          }
+        },
+        "tile_2": {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw9e6fac8b/images/E-ZB7307D041679212-4-N.jpeg?sw=594&sh=826",
+            "link": "https://www.instagram.com/liujo/"
+          }
+        },
+        "tile_3": {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0fc7c95b/images/E-ZB7301T055B79215-4-N.jpeg?sw=594&sh=826",
+            "link": "https://www.instagram.com/liujo/"
+          }
+        },
+        "tile_4": {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw579b6e6e/images/E-ZB7302T055B79215-3-N.jpeg?sw=594&sh=826",
+            "link": "https://www.instagram.com/liujo/"
+          }
+        },
+        "tile_5": {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw5aa23c3f/images/E-ZB7303D042979253-3-N.jpeg?sw=594&sh=826",
+            "link": "https://www.instagram.com/liujo/"
+          }
+        },
+        "tile_6": {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw8e4668b4/images/E-ZB7304D485479260-4-N.jpeg?sw=594&sh=826",
+            "link": "https://www.instagram.com/liujo/"
+          }
+        }
+      },
+      "block_order": [
+        "tile_1",
+        "tile_2",
+        "tile_3",
+        "tile_4",
+        "tile_5",
+        "tile_6"
+      ],
+      "settings": {
+        "title": "@LIUJO ON INSTAGRAM",
+        "subtitle": "Tag @liujo and #LiuJoPeople to be featured in our lookbook"
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "hero_video",
+    "hero_slider",
+    "product_carousel",
+    "category_pills",
+    "split_banners_tops",
+    "split_banners_bottoms",
+    "editorial_story",
+    "boutique_services",
+    "social_gallery"
   ]
 }

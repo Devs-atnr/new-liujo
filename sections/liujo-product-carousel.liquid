@@ -1,0 +1,150 @@
+{% comment %}
+  LIU JO PRODUCT CAROUSEL SECTION
+  Matches the "Explore the Looks" draggable product list carousel on https://www.liujo.com
+{% endcomment %}
+
+<div class="liujo-product-carousel-section" data-section-id="{{ section.id }}" data-section-type="liujo-product-carousel" data-liujo-carousel>
+  <div class="liujo-section-header">
+    <h2 class="liujo-title-display">{{ section.settings.title | default: 'Explore the Looks' }}</h2>
+    {%- if section.settings.subtitle != blank -%}
+      <div class="liujo-subtitle" style="margin-top: 8px;">{{ section.settings.subtitle }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="liujo-carousel-track-wrapper">
+    <!-- Prev Arrow Button -->
+    <button type="button" class="liujo-carousel-arrow arrow-prev" data-carousel-prev aria-label="Previous Products">
+      <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+
+    <div class="liujo-carousel-track" data-carousel-track>
+      {%- assign selected_collection = collections[section.settings.collection] -%}
+      {%- if selected_collection != blank and selected_collection.products_count > 0 -%}
+        {%- for product in selected_collection.products limit: section.settings.products_to_show -%}
+          {%- render 'liujo-product-card', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- High Fashion Fallback Liu Jo Catalog Products -->
+        {%- render 'liujo-product-card',
+          demo_id: 'zb7305',
+          demo_title: 'Jeans balloon with rhinestones',
+          demo_price: '€ 239.00',
+          demo_img_front: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw38804d25/images/E-ZB7305D041679212-3-N.jpeg?sw=594&sh=826',
+          demo_img_back: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw7e7b58ae/images/E-ZB7305D041679212-4-N.jpeg?sw=594&sh=826'
+        -%}
+
+        {%- render 'liujo-product-card',
+          demo_id: 'zb7307',
+          demo_title: 'Oversized jacket in denim with rhinestones',
+          demo_price: '€ 299.00',
+          demo_img_front: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw9e6fac8b/images/E-ZB7307D041679212-4-N.jpeg?sw=594&sh=826',
+          demo_img_back: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw2127c151/images/E-ZB7307D041679212-3-N.jpeg?sw=594&sh=826'
+        -%}
+
+        {%- render 'liujo-product-card',
+          demo_id: 'zb7301',
+          demo_title: 'Flare jeans with scarf',
+          demo_price: '€ 219.00',
+          demo_img_front: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0fc7c95b/images/E-ZB7301T055B79215-4-N.jpeg?sw=594&sh=826',
+          demo_img_back: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb9dbf93d/images/E-ZB7301T055B79215-3-N.jpeg?sw=594&sh=826'
+        -%}
+
+        {%- render 'liujo-product-card',
+          demo_id: 'zb7302',
+          demo_title: 'Shirt in denim with digital print',
+          demo_price: '€ 179.00',
+          demo_img_front: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw579b6e6e/images/E-ZB7302T055B79215-3-N.jpeg?sw=594&sh=826',
+          demo_img_back: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwc796710a/images/E-ZB7302T055B79215-4-N.jpeg?sw=594&sh=826'
+        -%}
+
+        {%- render 'liujo-product-card',
+          demo_id: 'zb7303',
+          demo_title: 'Jacket in denim with alamari',
+          demo_price: '€ 259.00',
+          demo_img_front: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw5aa23c3f/images/E-ZB7303D042979253-3-N.jpeg?sw=594&sh=826',
+          demo_img_back: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw47caca33/images/E-ZB7303D042979253-4-N.jpeg?sw=594&sh=826'
+        -%}
+
+        {%- render 'liujo-product-card',
+          demo_id: 'zb7304',
+          demo_title: 'Cropped Jeans low-waisted',
+          demo_price: '€ 199.00',
+          demo_img_front: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw8e4668b4/images/E-ZB7304D485479260-4-N.jpeg?sw=594&sh=826',
+          demo_img_back: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwa22d26ba/images/E-ZB7304D485479260-3-N.jpeg?sw=594&sh=826'
+        -%}
+
+        {%- render 'liujo-product-card',
+          demo_id: 'zb4b70',
+          demo_title: 'Ankle boots in suede chocolate',
+          demo_price: '€ 279.00',
+          demo_img_front: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwad3a193a/images/E-4B7001PX002S1815-7-N.jpeg?sw=594&sh=826',
+          demo_img_back: 'https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw398aeb5d/images/E-4B7001PX002S1815-6-N.jpeg?sw=594&sh=826'
+        -%}
+      {%- endif -%}
+    </div>
+
+    <!-- Next Arrow Button -->
+    <button type="button" class="liujo-carousel-arrow arrow-next" data-carousel-next aria-label="Next Products">
+      <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+  </div>
+
+  {%- if section.settings.show_view_all and section.settings.collection != blank -%}
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="{{ collections[section.settings.collection].url }}" class="btn-editorial-outline">
+        {{ section.settings.view_all_label | default: 'View all products' }}
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Liu Jo Product Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Explore the Looks"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "The latest styles handpicked for this season"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "default": 8,
+      "label": "Number of products to show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View all' button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All Button Label",
+      "default": "See all Clothing"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liu Jo Product Carousel"
+    }
+  ]
+}
+{% endschema %}

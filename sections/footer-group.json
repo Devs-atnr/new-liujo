@@ -1,1 +1,26 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","settings":{"color_scheme":"scheme-1","newsletter_enable":true,"newsletter_heading":"Subscribe to our emails","enable_follow_on_shop":true,"show_social":true,"enable_country_selector":true,"enable_language_selector":true,"payment_enable":true,"show_policy":true,"margin_top":0,"padding_top":36,"padding_bottom":36}}},"order":["footer"]}
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "liujo_footer": {
+      "type": "liujo-footer",
+      "settings": {
+        "show_prefooter": true,
+        "help_title": "May we help you?",
+        "help_phone": "+44 330 8087718",
+        "help_hours": "Monday to Friday, 9.00 to 18.00",
+        "help_link_text": "Email us",
+        "newsletter_title": "Sign up for updates",
+        "newsletter_subtitle": "Subscribe to our newsletter.",
+        "col_1_title": "Customer Care",
+        "col_2_title": "Liu Jo World",
+        "col_3_title": "Liu Jo for you",
+        "col_4_title": "Corporate",
+        "copyright_text": "© 2026 Digital Boite s.r.l. All Rights Reserved. P.IVA and C.F. 03796760365. Liu Jo Official Store."
+      }
+    }
+  },
+  "order": [
+    "liujo_footer"
+  ]
+}

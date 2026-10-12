@@ -1,0 +1,100 @@
+{% comment %}
+  LIU JO 2-COLUMN SPLIT EDITORIAL BANNERS (SQUARE BLOCKS)
+  Matches Liu Jo's category square slide blocks: "Shirts" & "Jackets" / "Jeans" & "Shoes".
+{% endcomment %}
+
+<div class="liujo-split-banners-section" data-section-id="{{ section.id }}" data-section-type="liujo-split-banners">
+  <div class="liujo-split-grid">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link | default: '/collections/all' }}" class="liujo-split-block" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+        {%- elsif block.settings.demo_image_url != blank -%}
+          <img src="{{ block.settings.demo_image_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag }}
+        {%- endif -%}
+
+        <div class="liujo-split-block__overlay">
+          <h2 class="liujo-split-block__title">{{ block.settings.title }}</h2>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Liu Jo Split Banners",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Square Banner",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Category"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "demo_image_url",
+          "label": "Default / External Image URL"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liu Jo Split Banners (Shirts & Jackets)",
+      "blocks": [
+        {
+          "type": "banner",
+          "settings": {
+            "title": "Shirts",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg"
+          }
+        },
+        {
+          "type": "banner",
+          "settings": {
+            "title": "Jackets",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Liu Jo Split Banners (Jeans & Shoes)",
+      "blocks": [
+        {
+          "type": "banner",
+          "settings": {
+            "title": "Jeans",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg"
+          }
+        },
+        {
+          "type": "banner",
+          "settings": {
+            "title": "Shoes",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

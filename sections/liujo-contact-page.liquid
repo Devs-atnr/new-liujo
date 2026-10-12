@@ -1,0 +1,121 @@
+{% comment %}
+  LIU JO CUSTOMER CARE & CONTACT PAGE SECTION
+  Replicates the Contact Us / Customer Care portal of Liu Jo.
+{% endcomment %}
+
+<div class="liujo-contact-page" data-section-id="{{ section.id }}" style="max-width: var(--liujo-container-max); margin: 0 auto; padding: 40px 24px 80px;">
+  <div style="text-align: center; margin-bottom: 50px;">
+    <span class="liujo-subtitle" style="letter-spacing: 0.15em; text-transform: uppercase;">{{ section.settings.subtitle | default: 'Customer Care' }}</span>
+    <h1 class="liujo-title-display" style="margin-top: 8px;">{{ section.settings.title | default: 'May We Help You?' }}</h1>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; max-width: 1100px; margin: 0 auto;">
+    <!-- Left: Channels of contact -->
+    <div>
+      <h3 class="liujo-title-small" style="margin-bottom: 24px;">Direct Support</h3>
+
+      <div style="margin-bottom: 32px; border-bottom: 1px solid var(--liujo-border-gray); padding-bottom: 24px;">
+        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--liujo-mid-gray); display: block; margin-bottom: 6px;">Phone</span>
+        <a href="tel:{{ section.settings.phone | default: '+443308087718' }}" style="font-size: 18px; font-weight: 600; color: var(--liujo-black); text-decoration: none;">
+          {{ section.settings.phone | default: '+44 330 8087718' }}
+        </a>
+        <p style="font-size: 13px; color: #777; margin: 6px 0 0;">{{ section.settings.hours | default: 'Monday to Friday, 9.00 to 18.00 CET' }}</p>
+      </div>
+
+      <div style="margin-bottom: 32px; border-bottom: 1px solid var(--liujo-border-gray); padding-bottom: 24px;">
+        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--liujo-mid-gray); display: block; margin-bottom: 6px;">Boutique Inquiries</span>
+        <p style="font-size: 13px; color: #555; line-height: 1.6; margin: 0;">Need styling advice or assistance with store appointments? Contact our digital personal shopping team.</p>
+      </div>
+
+      <div>
+        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--liujo-mid-gray); display: block; margin-bottom: 12px;">Frequently Asked Questions</span>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 2;">
+          <li><a href="/pages/orders-and-shipments" style="color: var(--liujo-black); text-decoration: underline;">How can I track my shipment?</a></li>
+          <li><a href="/pages/returns" style="color: var(--liujo-black); text-decoration: underline;">How do I request a return or exchange?</a></li>
+          <li><a href="/pages/size-guide" style="color: var(--liujo-black); text-decoration: underline;">Where can I find the size guide?</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right: Contact Form -->
+    <div>
+      <h3 class="liujo-title-small" style="margin-bottom: 24px;">Send A Message</h3>
+
+      {% form 'contact', class: 'liujo-contact-form' %}
+        {%- if form.posted_successfully? -%}
+          <div style="padding: 16px; background-color: #e8f5e9; color: #2e7d32; font-size: 14px; margin-bottom: 20px;">
+            Thank you for contacting Liu Jo. Your request has been received and our team will get back to you shortly.
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div style="padding: 16px; background-color: #ffebee; color: #c62828; font-size: 14px; margin-bottom: 20px;">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+          <div>
+            <label for="ContactFormName" style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px;">First & Last Name</label>
+            <input type="text" id="ContactFormName" name="contact[name]" required style="width: 100%; padding: 12px 16px; border: 1px solid var(--liujo-border-gray); font-size: 13px; font-family: var(--liujo-font-main);">
+          </div>
+          <div>
+            <label for="ContactFormEmail" style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px;">Email Address</label>
+            <input type="email" id="ContactFormEmail" name="contact[email]" required style="width: 100%; padding: 12px 16px; border: 1px solid var(--liujo-border-gray); font-size: 13px; font-family: var(--liujo-font-main);">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label for="ContactFormOrder" style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px;">Order Number (Optional)</label>
+          <input type="text" id="ContactFormOrder" name="contact[order_number]" style="width: 100%; padding: 12px 16px; border: 1px solid var(--liujo-border-gray); font-size: 13px; font-family: var(--liujo-font-main);">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label for="ContactFormMessage" style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px;">Message</label>
+          <textarea rows="6" id="ContactFormMessage" name="contact[body]" required style="width: 100%; padding: 12px 16px; border: 1px solid var(--liujo-border-gray); font-size: 13px; font-family: var(--liujo-font-main);"></textarea>
+        </div>
+
+        <button type="submit" class="btn-editorial-solid" style="width: 100%;">
+          Submit Request
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Liu Jo Contact Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Customer Care"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "May We Help You?"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "+44 330 8087718"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Support Hours",
+      "default": "Monday to Friday, 9.00 to 18.00 CET"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liu Jo Contact Page"
+    }
+  ]
+}
+{% endschema %}

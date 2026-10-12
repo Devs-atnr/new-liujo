@@ -1,0 +1,121 @@
+{% comment %}
+  LIU JO SOCIAL / INSTAGRAM GALLERY SECTION
+  Displays a curated 6-item lookbook grid linking to social media / Instagram.
+{% endcomment %}
+
+<div class="liujo-social-gallery" data-section-id="{{ section.id }}" data-section-type="liujo-social-gallery">
+  <div class="liujo-section-header">
+    <h2 class="liujo-title-display">{{ section.settings.title | default: '@LIUJO ON INSTAGRAM' }}</h2>
+    {%- if section.settings.subtitle != blank -%}
+      <div class="liujo-subtitle" style="margin-top: 8px;">{{ section.settings.subtitle }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="liujo-social-grid">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link | default: 'https://www.instagram.com/liujo/' }}" target="_blank" class="liujo-social-tile" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Liu Jo Instagram Look" loading="lazy">
+        {%- elsif block.settings.demo_image_url != blank -%}
+          <img src="{{ block.settings.demo_image_url }}" alt="Liu Jo Instagram Look" loading="lazy">
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag }}
+        {%- endif -%}
+
+        <div class="liujo-social-tile__hover">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Liu Jo Social Gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "@LIUJO ON INSTAGRAM"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Tag @liujo and #LiuJoPeople to be featured in our lookbook"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Social Tile",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "demo_image_url",
+          "label": "External Image URL"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liu Jo Social Gallery",
+      "blocks": [
+        {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw38804d25/images/E-ZB7305D041679212-3-N.jpeg?sw=594&sh=826"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw9e6fac8b/images/E-ZB7307D041679212-4-N.jpeg?sw=594&sh=826"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0fc7c95b/images/E-ZB7301T055B79215-4-N.jpeg?sw=594&sh=826"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw579b6e6e/images/E-ZB7302T055B79215-3-N.jpeg?sw=594&sh=826"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw5aa23c3f/images/E-ZB7303D042979253-3-N.jpeg?sw=594&sh=826"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw8e4668b4/images/E-ZB7304D485479260-4-N.jpeg?sw=594&sh=826"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,58 @@
+{% comment %}
+  LIU JO PRODUCT CARD SNIPPET
+  Luxury portrait card with hover flip image, wishlist toggle, minimal typography & price.
+{% endcomment %}
+
+<div class="liujo-product-card-wrap">
+  <div class="liujo-product-card">
+    <div class="liujo-card-media">
+      <a href="{{ product.url }}" class="liujo-card-img-link">
+        {%- if product.featured_media != blank -%}
+          <img src="{{ product.featured_media | image_url: width: 600 }}"
+               alt="{{ product.title | escape }}"
+               class="img-primary"
+               loading="lazy">
+          {%- if product.media.size > 1 -%}
+            <img src="{{ product.media[1] | image_url: width: 600 }}"
+                 alt="{{ product.title | escape }}"
+                 class="img-secondary"
+                 loading="lazy">
+          {%- endif -%}
+        {%- elsif demo_img_front != blank -%}
+          <img src="{{ demo_img_front }}" alt="{{ demo_title | default: 'Liu Jo Product' }}" class="img-primary" loading="lazy">
+          <img src="{{ demo_img_back | default: demo_img_front }}" alt="{{ demo_title | default: 'Liu Jo Product' }}" class="img-secondary" loading="lazy">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'img-primary' }}
+        {%- endif -%}
+      </a>
+
+      <!-- Wishlist Heart Button -->
+      <button type="button"
+              class="liujo-wishlist-trigger"
+              data-liujo-wishlist
+              data-product-id="{{ product.id | default: demo_id | default: '1' }}"
+              aria-label="Add to Wishlist">
+        <svg viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="liujo-card-info">
+      <a href="{{ product.url | default: '#' }}" class="liujo-card-title">
+        {{ product.title | default: demo_title | default: 'Liu Jo Denim Jeans' }}
+      </a>
+
+      <div class="liujo-card-price">
+        {%- if product != blank -%}
+          <span>{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="liujo-card-price-compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+        {%- else -%}
+          <span>{{ demo_price | default: '€ 189.00' }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,390 @@
+{% comment %}
+  LIU JO COMPLETE FOOTER SECTION
+  Features Pre-footer (Help + Newsletter), 4-column accordion menu, language selector, social icons & copyright.
+{% endcomment %}
+
+<footer class="liujo-footer" data-section-id="{{ section.id }}" data-section-type="liujo-footer">
+  {%- if section.settings.show_prefooter -%}
+    <div class="liujo-prefooter">
+      <div class="liujo-prefooter__container">
+        <!-- Left: Customer Help Desk -->
+        <div class="liujo-help-block">
+          <h3>{{ section.settings.help_title | default: 'May we help you?' }}</h3>
+          <p>
+            {{ section.settings.help_phone_label | default: 'Phone' }}
+            <strong>
+              <a href="tel:{{ section.settings.help_phone | remove: ' ' }}">{{ section.settings.help_phone | default: '+44 330 8087718' }}</a>
+            </strong><br>
+            {{ section.settings.help_hours | default: 'Monday to Friday, 9.00 to 18.00' }}
+          </p>
+          <a href="{{ section.settings.help_link | default: '/pages/contact' }}" class="btn-link-editorial">
+            {{ section.settings.help_link_text | default: 'Email us' }}
+          </a>
+        </div>
+
+        <!-- Right: Newsletter Signup -->
+        <div class="liujo-newsletter-block">
+          <h3>{{ section.settings.newsletter_title | default: 'Sign up for updates' }}</h3>
+          <p>{{ section.settings.newsletter_subtitle | default: 'Subscribe to our newsletter.' }}</p>
+
+          {% form 'customer', class: 'liujo-newsletter-form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="liujo-nl-form-row">
+              <input type="email"
+                     name="contact[email]"
+                     class="liujo-nl-input"
+                     value="{{ form.email }}"
+                     placeholder="{{ section.settings.newsletter_placeholder | default: 'Email address' }}"
+                     required>
+              <button type="submit" class="liujo-nl-submit">
+                {{ section.settings.newsletter_button_text | default: 'Subscribe' }}
+              </button>
+            </div>
+
+            <div class="liujo-nl-gender-pills">
+              <label class="liujo-gender-label">
+                <input type="checkbox" name="customer[note][woman]" value="true" checked>
+                <span>Woman</span>
+              </label>
+              <label class="liujo-gender-label">
+                <input type="checkbox" name="customer[note][man]" value="true">
+                <span>Man</span>
+              </label>
+              <label class="liujo-gender-label">
+                <input type="checkbox" name="customer[note][girl]" value="true">
+                <span>Girl</span>
+              </label>
+            </div>
+
+            {%- if form.posted_successfully? -%}
+              <p class="liujo-nl-success" style="color: #2e7d32; font-size: 13px; margin-bottom: 8px;">
+                Thank you for subscribing to Liu Jo updates!
+              </p>
+            {%- endif -%}
+
+            <div class="liujo-nl-privacy">
+              By entering your e-mail address you declare that you wish to subscribe to the Liu Jo newsletter. For further information,
+              <a href="{{ section.settings.privacy_link | default: '/pages/privacy-policy' }}">please see our Privacy Policy</a>.
+            </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <!-- Main 4-Column Accordion Footer -->
+  <div class="liujo-main-footer">
+    <div class="liujo-footer-grid">
+      <!-- Col 1: Customer Care -->
+      <div class="liujo-footer-col">
+        <h4 class="liujo-footer-heading">{{ section.settings.col_1_title | default: 'Customer Care' }}</h4>
+        <ul class="liujo-footer-links">
+          {%- if section.settings.col_1_menu != blank -%}
+            {%- for link in linklists[section.settings.col_1_menu].links -%}
+              <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li class="liujo-footer-link-item"><a href="/pages/orders-and-shipments" class="liujo-footer-link">Orders & Shipping Services</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/payments" class="liujo-footer-link">Payments</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/returns" class="liujo-footer-link">Return and Exchange Policy</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/returns" class="liujo-footer-link">Make a Return</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/size-guide" class="liujo-footer-link">Size Guide</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/faq" class="liujo-footer-link">FAQ</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <!-- Col 2: Liu Jo World -->
+      <div class="liujo-footer-col">
+        <h4 class="liujo-footer-heading">{{ section.settings.col_2_title | default: 'Liu Jo World' }}</h4>
+        <ul class="liujo-footer-links">
+          {%- if section.settings.col_2_menu != blank -%}
+            {%- for link in linklists[section.settings.col_2_menu].links -%}
+              <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li class="liujo-footer-link-item"><a href="/pages/stories" class="liujo-footer-link" style="color: var(--liujo-accent-pink);">Stories</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/about" class="liujo-footer-link">About Liu Jo</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/sustainability" class="liujo-footer-link">Better Together</a></li>
+            <li class="liujo-footer-link-item"><a href="/collections/all" class="liujo-footer-link">Collections</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/retail-experience" class="liujo-footer-link">Retail Experience</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <!-- Col 3: Liu Jo for you -->
+      <div class="liujo-footer-col">
+        <h4 class="liujo-footer-heading">{{ section.settings.col_3_title | default: 'Liu Jo for you' }}</h4>
+        <ul class="liujo-footer-links">
+          {%- if section.settings.col_3_menu != blank -%}
+            {%- for link in linklists[section.settings.col_3_menu].links -%}
+              <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li class="liujo-footer-link-item"><a href="/pages/easy-shopping" class="liujo-footer-link">Easy Shopping</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/stores" class="liujo-footer-link">Store locator</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/contact" class="liujo-footer-link">Personal Shopper</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/gift-cards" class="liujo-footer-link">Store Cards</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <!-- Col 4: Corporate -->
+      <div class="liujo-footer-col">
+        <h4 class="liujo-footer-heading">{{ section.settings.col_4_title | default: 'Corporate' }}</h4>
+        <ul class="liujo-footer-links">
+          {%- if section.settings.col_4_menu != blank -%}
+            {%- for link in linklists[section.settings.col_4_menu].links -%}
+              <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li class="liujo-footer-link-item"><a href="/pages/careers" class="liujo-footer-link">Careers</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/privacy-policy" class="liujo-footer-link">Privacy Policy</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/cookie-policy" class="liujo-footer-link">Cookie Policy</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/terms" class="liujo-footer-link">Terms and Conditions</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/terms-of-sale" class="liujo-footer-link">Terms of Sale</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/accessibility" class="liujo-footer-link">Accessibility Statement</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post-Footer -->
+  <div class="liujo-postfooter">
+    <div class="liujo-postfooter__container">
+      <div class="liujo-lang-selector">
+        <a href="/pages/change-country" class="liujo-footer-link" style="font-weight: 600; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">
+          Language: <span style="font-weight: 400; color: #fff;">English</span>
+        </a>
+      </div>
+
+      <!-- Social Icons -->
+      <div class="liujo-social-icons">
+        {%- if section.settings.social_instagram != blank -%}
+          <a href="{{ section.settings.social_instagram }}" class="liujo-social-icon" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+        {%- else -%}
+          <a href="https://www.instagram.com/liujo/" class="liujo-social-icon" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="17.5" cy="6.5" r="1.5"></circle></svg>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.social_facebook != blank -%}
+          <a href="{{ section.settings.social_facebook }}" class="liujo-social-icon" target="_blank" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+        {%- else -%}
+          <a href="https://www.facebook.com/liujoglobal" class="liujo-social-icon" target="_blank" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.social_youtube != blank -%}
+          <a href="{{ section.settings.social_youtube }}" class="liujo-social-icon" target="_blank" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+          </a>
+        {%- else -%}
+          <a href="https://www.youtube.com/liujofficial" class="liujo-social-icon" target="_blank" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#fff"></polygon></svg>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.social_tiktok != blank -%}
+          <a href="{{ section.settings.social_tiktok }}" class="liujo-social-icon" target="_blank" aria-label="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+          </a>
+        {%- else -%}
+          <a href="https://www.tiktok.com/@liujo" class="liujo-social-icon" target="_blank" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <!-- Copyright Notice -->
+      <div class="liujo-copyright">
+        {{ section.settings.copyright_text | default: '© 2026 Digital Boite s.r.l. All Rights Reserved. P.IVA and C.F. 03796760365. Liu Jo Official Store.' }}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Liu Jo Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Pre-Footer Customer Help"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_prefooter",
+      "label": "Show Pre-Footer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "help_title",
+      "label": "Help Section Title",
+      "default": "May we help you?"
+    },
+    {
+      "type": "text",
+      "id": "help_phone",
+      "label": "Phone Number",
+      "default": "+44 330 8087718"
+    },
+    {
+      "type": "text",
+      "id": "help_hours",
+      "label": "Support Hours",
+      "default": "Monday to Friday, 9.00 to 18.00"
+    },
+    {
+      "type": "text",
+      "id": "help_link_text",
+      "label": "Link Text",
+      "default": "Email us"
+    },
+    {
+      "type": "url",
+      "id": "help_link",
+      "label": "Contact Page Link"
+    },
+    {
+      "type": "header",
+      "content": "Pre-Footer Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter Title",
+      "default": "Sign up for updates"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_subtitle",
+      "label": "Newsletter Subtitle",
+      "default": "Subscribe to our newsletter."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Input Placeholder",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button_text",
+      "label": "Button Text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "url",
+      "id": "privacy_link",
+      "label": "Privacy Policy Link"
+    },
+    {
+      "type": "header",
+      "content": "Column 1: Customer Care"
+    },
+    {
+      "type": "text",
+      "id": "col_1_title",
+      "label": "Column 1 Title",
+      "default": "Customer Care"
+    },
+    {
+      "type": "link_list",
+      "id": "col_1_menu",
+      "label": "Column 1 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 2: Liu Jo World"
+    },
+    {
+      "type": "text",
+      "id": "col_2_title",
+      "label": "Column 2 Title",
+      "default": "Liu Jo World"
+    },
+    {
+      "type": "link_list",
+      "id": "col_2_menu",
+      "label": "Column 2 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 3: Liu Jo for you"
+    },
+    {
+      "type": "text",
+      "id": "col_3_title",
+      "label": "Column 3 Title",
+      "default": "Liu Jo for you"
+    },
+    {
+      "type": "link_list",
+      "id": "col_3_menu",
+      "label": "Column 3 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 4: Corporate"
+    },
+    {
+      "type": "text",
+      "id": "col_4_title",
+      "label": "Column 4 Title",
+      "default": "Corporate"
+    },
+    {
+      "type": "link_list",
+      "id": "col_4_menu",
+      "label": "Column 4 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Social Media Links"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "social_youtube",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "url",
+      "id": "social_tiktok",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "header",
+      "content": "Legal & Copyright"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "© 2026 Digital Boite s.r.l. All Rights Reserved. P.IVA and C.F. 03796760365. Liu Jo Official Store."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liu Jo Footer"
+    }
+  ]
+}
+{% endschema %}

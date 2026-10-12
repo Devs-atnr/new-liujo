@@ -1,0 +1,73 @@
+{
+  "sections": {
+    "stories": {
+      "type": "liujo-stories-page",
+      "blocks": {
+        "story_1": {
+          "type": "story",
+          "settings": {
+            "category": "Campaign 2026",
+            "title": "The Gigi Hadid Edit",
+            "summary": "An exclusive look into our newest campaign celebrating unapologetic confidence and sculpted denim silhouettes.",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg",
+            "link": "/collections/all"
+          }
+        },
+        "story_2": {
+          "type": "story",
+          "settings": {
+            "category": "Sustainability",
+            "title": "Better Together: Sustainable Denim",
+            "summary": "Exploring our eco-conscious manufacturing initiatives, recycled fibers and water-saving technologies.",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
+            "link": "/collections/all"
+          }
+        },
+        "story_3": {
+          "type": "story",
+          "settings": {
+            "category": "Heritage",
+            "title": "Italian Craftsmanship In Carpi",
+            "summary": "From initial hand sketches to precision tailoring: discovering the timeless artistry behind Liu Jo outerwear.",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg",
+            "link": "/collections/all"
+          }
+        },
+        "story_4": {
+          "type": "story",
+          "settings": {
+            "category": "Style Guide",
+            "title": "Accessories Spotlight: Luxury Footwear",
+            "summary": "How to elevate everyday contemporary dressing with Italian suede boots and jewel embellishments.",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg",
+            "link": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "story_1",
+        "story_2",
+        "story_3",
+        "story_4"
+      ],
+      "settings": {
+        "title": "Liu Jo Stories",
+        "subtitle": "Campaigns, inspirations and contemporary perspectives from the Italian maison."
+      }
+    },
+    "boutique_services": {
+      "type": "liujo-services-bar",
+      "blocks": {
+        "s1": { "type": "service", "settings": { "icon": "shipping", "title": "Orders & Shipments", "description": "Complimentary delivery on orders over €150" } },
+        "s2": { "type": "service", "settings": { "icon": "support", "title": "Boutique Assistance", "description": "Monday to Friday, 9:00 to 18:00 CET" } },
+        "s3": { "type": "service", "settings": { "icon": "returns", "title": "Easy Returns", "description": "30 days for complimentary returns & exchanges" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {}
+    }
+  },
+  "order": [
+    "stories",
+    "boutique_services"
+  ]
+}
