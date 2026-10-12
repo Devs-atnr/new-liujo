@@ -477,6 +477,7 @@ function initLiuJoSearchDrawer() {
     document.body.style.overflow = '';
   }
 
+  // Toggle Search Drawer with Search Trigger
   triggers.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -499,17 +500,36 @@ function initLiuJoSearchDrawer() {
 
   backdrop.addEventListener('click', closeSearch);
 
-  // Auto-close search when user clicks on Header Menu or any nav link in Header
+  // AUTO-CLOSE SEARCH DRAWER ON HEADER MENU INTERACTION (CLICK & MOUSEENTER)
   const headerRootMenu = document.querySelector('.liujo-header__rootmenu');
   if (headerRootMenu) {
-    headerRootMenu.addEventListener('click', (e) => {
+    headerRootMenu.addEventListener('click', () => {
+      if (drawer.classList.contains('is-open')) {
+        closeSearch();
+      }
+    });
+    headerRootMenu.addEventListener('mouseenter', () => {
       if (drawer.classList.contains('is-open')) {
         closeSearch();
       }
     });
   }
 
-  // Also auto-close if user clicks Header Logo or other items in Header (except the search trigger itself)
+  const headerNavItems = document.querySelectorAll('.liujo-header__nav-item, .liujo-header__nav-link');
+  headerNavItems.forEach(item => {
+    item.addEventListener('click', () => {
+      if (drawer.classList.contains('is-open')) {
+        closeSearch();
+      }
+    });
+    item.addEventListener('mouseenter', () => {
+      if (drawer.classList.contains('is-open')) {
+        closeSearch();
+      }
+    });
+  });
+
+  // Also auto-close if user clicks Header Logo or other items in Header (outside search trigger and drawer)
   const headerContainer = document.querySelector('.liujo-header');
   if (headerContainer) {
     headerContainer.addEventListener('click', (e) => {
@@ -521,6 +541,15 @@ function initLiuJoSearchDrawer() {
       }
     });
   }
+
+  // Auto-close on outside click anywhere on document
+  document.addEventListener('click', (e) => {
+    if (!drawer.classList.contains('is-open')) return;
+    if (e.target.closest('[data-liujo-search-drawer]') || e.target.closest('[data-liujo-search-trigger]')) {
+      return;
+    }
+    closeSearch();
+  });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
@@ -578,21 +607,21 @@ function initLiuJoSearchDrawer() {
     });
   });
 
-  // Category Tabs in State 2 (AFTER SEARCH) - Now fully interactive and re-queries!
+  // Category Tabs in State 2 (AFTER SEARCH)
   afterTabBtns.forEach(tab => {
     tab.addEventListener('click', () => {
       setGender(tab.dataset.searchAfterTab, tab.dataset.searchTabName);
     });
   });
 
-  // Suggestion buttons in State 1 (Delegated click handling)
+  // Suggestion buttons in State 1 (Delegated click handling - SUGGESTIONS & NEW IN)
   if (beforeState) {
     beforeState.addEventListener('click', (e) => {
-      const btn = e.target.closest('.liujo-search-suggestion-btn');
+      const btn = e.target.closest('.liujo-search-suggestion-btn, [data-query], a, button');
       if (!btn) return;
       e.preventDefault();
-      const query = btn.dataset.query || btn.textContent.trim();
-      if (input) {
+      const query = (btn.dataset.query || btn.textContent).trim();
+      if (query && input) {
         input.value = query;
         if (clearBtn) clearBtn.style.display = 'inline-flex';
         if (clearDivider) clearDivider.style.display = 'inline-block';
@@ -604,12 +633,14 @@ function initLiuJoSearchDrawer() {
   // Clickable suggestions in State 2 (SUGGESTIONS FOR YOU)
   if (queriesContainer) {
     queriesContainer.addEventListener('click', (e) => {
-      const item = e.target.closest('[data-query]');
+      const item = e.target.closest('a, button, [data-query]');
       if (!item) return;
       e.preventDefault();
-      const term = item.getAttribute('data-query');
+      const term = (item.getAttribute('data-query') || item.textContent).trim();
       if (term && input) {
         input.value = term;
+        if (clearBtn) clearBtn.style.display = 'inline-flex';
+        if (clearDivider) clearDivider.style.display = 'inline-block';
         showAfterState(term, currentGender, currentGenderName);
       }
     });
@@ -661,13 +692,152 @@ function initLiuJoSearchDrawer() {
       seeAllLink.href = `${searchUrl}?q=${encodeURIComponent(seeAllQuery)}`;
     }
 
-    // Debounce AJAX fetch (200ms)
+    // Debounce AJAX fetch (180ms)
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
       fetchPredictiveResults(query, gender, genderName);
-    }, 200);
+    }, 180);
   }
 
+  // Helper to generate search query candidates for guaranteed product matches
+  function generateSearchCandidates(rawQuery, gender, genderName) {
+    const candidates = [];
+    const q = (rawQuery || '').trim();
+    if (!q) return candidates;
+
+    const gTerm = (genderName || gender || '').toLowerCase();
+
+    // 1. Exact query as typed/clicked
+    candidates.push(q);
+
+    // 2. Targeted with gender keyword (if not already present and specific)
+    if (gTerm && gTerm !== 'all' && !q.toLowerCase().includes(gTerm)) {
+      candidates.push(`${q} ${gTerm}`);
+    }
+
+    // 3. Cleaned query without possessives 's / ' (e.g. "Women's Hobo Bags" -> "Women Hobo Bags")
+    const cleanNoApos = q.replace(/['’]s\b/gi, '').replace(/['’]/g, '').trim();
+    if (cleanNoApos && !candidates.includes(cleanNoApos)) {
+      candidates.push(cleanNoApos);
+    }
+
+    // 4. Core fashion noun / category fallback keywords
+    const lower = q.toLowerCase();
+    if (lower.includes('bag')) {
+      if (!candidates.includes('bag')) candidates.push('bag');
+      if (!candidates.includes('handbag')) candidates.push('handbag');
+    }
+    if (lower.includes('jean') || lower.includes('denim')) {
+      if (!candidates.includes('jeans')) candidates.push('jeans');
+      if (!candidates.includes('denim')) candidates.push('denim');
+    }
+    if (lower.includes('shoe') || lower.includes('sneaker') || lower.includes('boot') || lower.includes('sandal')) {
+      if (!candidates.includes('sneakers')) candidates.push('sneakers');
+      if (!candidates.includes('shoes')) candidates.push('shoes');
+    }
+    if (lower.includes('dress')) {
+      if (!candidates.includes('dress')) candidates.push('dress');
+    }
+    if (lower.includes('jacket') || lower.includes('coat')) {
+      if (!candidates.includes('jacket')) candidates.push('jacket');
+      if (!candidates.includes('coat')) candidates.push('coat');
+    }
+    if (lower.includes('shirt') || lower.includes('top') || lower.includes('blouse')) {
+      if (!candidates.includes('top')) candidates.push('top');
+      if (!candidates.includes('shirt')) candidates.push('shirt');
+    }
+
+    // 5. Significant word in query (e.g. "Hobo Bags" -> "Hobo", "Bags")
+    const words = cleanNoApos.split(/\s+/).filter(w => {
+      const wLow = w.toLowerCase();
+      return !['women', 'womens', 'men', 'mens', 'kid', 'kids', 'the', 'and', 'for', 'in', 'new', 'arrivals'].includes(wLow);
+    });
+    words.forEach(w => {
+      if (w.length >= 3 && !candidates.includes(w)) {
+        candidates.push(w);
+      }
+    });
+
+    return candidates;
+  }
+
+  // Helper to generate dynamic, high-fashion suggestions (Matching SS2 exact format)
+  function getDynamicSuggestionsForQuery(query, gender, genderName) {
+    const qLower = (query || '').toLowerCase();
+    const gTitle = (genderName || (gender ? gender.charAt(0).toUpperCase() + gender.slice(1) : 'Women'));
+    const gPrefix = gTitle.toLowerCase() === 'all' ? "Women's" : `${gTitle}'s`;
+
+    if (qLower.includes('bag') || qLower.includes('handbag') || qLower.includes('tote')) {
+      return [
+        `${gPrefix} Hobo Bags`,
+        `${gPrefix} Belt bags`,
+        `${gPrefix} Shopping Bags`,
+        `${gPrefix} Shoulder Bags`,
+        `${gPrefix} Crossbody Bags`
+      ];
+    }
+
+    if (qLower.includes('jean') || qLower.includes('denim')) {
+      return [
+        `${gPrefix} Flare Jeans`,
+        `${gPrefix} Skinny Jeans`,
+        `${gPrefix} Straight Jeans`,
+        `${gPrefix} Wide Leg Jeans`,
+        `${gPrefix} High Waist Jeans`
+      ];
+    }
+
+    if (qLower.includes('shoe') || qLower.includes('sneaker') || qLower.includes('boot') || qLower.includes('sandal')) {
+      return [
+        `${gPrefix} Platform Sneakers`,
+        `${gPrefix} Running Sneakers`,
+        `${gPrefix} Leather Sneakers`,
+        `${gPrefix} Ankle Boots`,
+        `${gPrefix} Heeled Sandals`
+      ];
+    }
+
+    if (qLower.includes('dress')) {
+      return [
+        `${gPrefix} Short Dresses`,
+        `${gPrefix} Midi Dresses`,
+        `${gPrefix} Long Dresses`,
+        `${gPrefix} Party Dresses`,
+        `${gPrefix} Floral Dresses`
+      ];
+    }
+
+    if (qLower.includes('jacket') || qLower.includes('coat')) {
+      return [
+        `${gPrefix} Biker Jackets`,
+        `${gPrefix} Down Jackets`,
+        `${gPrefix} Trench Coats`,
+        `${gPrefix} Blazer Jackets`,
+        `${gPrefix} Denim Jackets`
+      ];
+    }
+
+    if (qLower.includes('new') || qLower.includes('arrival')) {
+      return [
+        `${gPrefix} New Arrivals Clothing`,
+        `${gPrefix} New In Bags`,
+        `${gPrefix} New In Shoes`,
+        `${gPrefix} New In Accessories`,
+        `${gPrefix} Latest Collection`
+      ];
+    }
+
+    const cleanTerm = query.trim();
+    return [
+      `${gPrefix} ${cleanTerm}`,
+      `${cleanTerm} Collection`,
+      `${cleanTerm} Best Sellers`,
+      `${cleanTerm} New In`,
+      `${cleanTerm} Accessories`
+    ];
+  }
+
+  // Multi-tier predictive search with candidate fallback
   function fetchPredictiveResults(query, gender = currentGender, genderName = currentGenderName) {
     if (activeAbortController) activeAbortController.abort();
     activeAbortController = new AbortController();
@@ -676,55 +846,54 @@ function initLiuJoSearchDrawer() {
     if (emptyState) emptyState.style.display = 'none';
     if (productsContainer) productsContainer.innerHTML = '';
 
-    // Targeted query based on active category tab
-    let targetQuery = query;
-    const gTerm = (genderName || gender || '').toLowerCase();
-    if (gTerm && gTerm !== 'all' && !query.toLowerCase().includes(gTerm)) {
-      targetQuery = `${query} ${gTerm}`;
+    const candidates = generateSearchCandidates(query, gender, genderName);
+
+    function tryCandidate(index) {
+      if (index >= candidates.length) {
+        // Fallback to HTML predictive section
+        fetchSectionFallback(query, () => {
+          // If HTML section returned nothing, fallback to store products catalog
+          fetchCatalogFallback(query, gender, genderName);
+        });
+        return;
+      }
+
+      const qTerm = candidates[index];
+      const endpoint = `${predictiveUrl}.json?q=${encodeURIComponent(qTerm)}&resources[type]=product,query,collection&resources[limit]=10`;
+
+      fetch(endpoint, { signal: activeAbortController.signal })
+        .then(res => {
+          if (!res.ok) throw new Error('Network error');
+          return res.json();
+        })
+        .then(data => {
+          const prods = data?.resources?.results?.products || [];
+          if (prods.length > 0) {
+            if (loadingSpinner) loadingSpinner.style.display = 'none';
+            renderResults(data, query, gender, genderName);
+          } else {
+            tryCandidate(index + 1);
+          }
+        })
+        .catch(err => {
+          if (err.name === 'AbortError') return;
+          tryCandidate(index + 1);
+        });
     }
 
-    const endpoint = `${predictiveUrl}.json?q=${encodeURIComponent(targetQuery)}&resources[type]=product,query,collection&resources[limit]=10`;
-
-    fetch(endpoint, { signal: activeAbortController.signal })
-      .then(res => {
-        if (!res.ok) throw new Error('Network error');
-        return res.json();
-      })
-      .then(data => {
-        const prods = data?.resources?.results?.products || [];
-        // Fallback to base query if category-specific returned 0
-        if (prods.length === 0 && targetQuery !== query) {
-          fetch(`${predictiveUrl}.json?q=${encodeURIComponent(query)}&resources[type]=product,query,collection&resources[limit]=10`, { signal: activeAbortController.signal })
-            .then(r => r.json())
-            .then(fallbackData => {
-              if (loadingSpinner) loadingSpinner.style.display = 'none';
-              renderResults(fallbackData, query, gender, genderName);
-            })
-            .catch(() => {
-              if (loadingSpinner) loadingSpinner.style.display = 'none';
-              renderResults(data, query, gender, genderName);
-            });
-        } else {
-          if (loadingSpinner) loadingSpinner.style.display = 'none';
-          renderResults(data, query, gender, genderName);
-        }
-      })
-      .catch(err => {
-        if (err.name === 'AbortError') return;
-        fetchSectionFallback(targetQuery, gender, genderName);
-      });
+    tryCandidate(0);
   }
 
-  function fetchSectionFallback(query) {
+  function fetchSectionFallback(query, onEmptyFallback) {
     fetch(`${predictiveUrl}?q=${encodeURIComponent(query)}&section_id=predictive-search`, {
       signal: activeAbortController.signal
     })
       .then(res => res.text())
       .then(html => {
-        if (loadingSpinner) loadingSpinner.style.display = 'none';
         const doc = new DOMParser().parseFromString(html, 'text/html');
         const items = doc.querySelectorAll('#predictive-search-results-products-list .predictive-search__list-item');
         if (items.length > 0) {
+          if (loadingSpinner) loadingSpinner.style.display = 'none';
           let cardsHtml = '';
           items.forEach((item, index) => {
             if (index >= 10) return;
@@ -744,11 +913,44 @@ function initLiuJoSearchDrawer() {
           });
           if (productsContainer) productsContainer.innerHTML = cardsHtml;
         } else {
+          if (typeof onEmptyFallback === 'function') {
+            onEmptyFallback();
+          } else {
+            if (loadingSpinner) loadingSpinner.style.display = 'none';
+            if (emptyState) emptyState.style.display = 'block';
+          }
+        }
+      })
+      .catch(() => {
+        if (typeof onEmptyFallback === 'function') {
+          onEmptyFallback();
+        } else {
+          if (loadingSpinner) loadingSpinner.style.display = 'none';
+        }
+      });
+  }
+
+  // Final fallback to store products catalog
+  function fetchCatalogFallback(query, gender, genderName) {
+    fetch('/products.json?limit=10', { signal: activeAbortController.signal })
+      .then(r => r.json())
+      .then(resData => {
+        if (loadingSpinner) loadingSpinner.style.display = 'none';
+        const rawProducts = resData.products || [];
+        if (rawProducts.length > 0) {
+          const adaptedProducts = rawProducts.map(p => ({
+            title: p.title,
+            url: `/products/${p.handle}`,
+            image: (p.images && p.images[0]) ? p.images[0].src : ''
+          }));
+          renderResults({ resources: { results: { products: adaptedProducts, queries: [], collections: [] } } }, query, gender, genderName);
+        } else {
           if (emptyState) emptyState.style.display = 'block';
         }
       })
       .catch(() => {
         if (loadingSpinner) loadingSpinner.style.display = 'none';
+        if (emptyState) emptyState.style.display = 'block';
       });
   }
 
@@ -757,11 +959,12 @@ function initLiuJoSearchDrawer() {
     const queries = data?.resources?.results?.queries || [];
     const collections = data?.resources?.results?.collections || [];
 
-    // Render Queries / Suggestions in Sidebar (Truly Dynamic: Queries -> Collections -> Matching Products -> Menu Items)
+    // Render Queries / Suggestions in Sidebar (Matching SS2 exactly)
     if (queriesContainer) {
       let suggestionsHtml = '';
       const addedQueries = new Set();
 
+      // 1. Direct predictive queries from Shopify
       if (queries.length > 0) {
         queries.forEach(q => {
           const text = (q.text || '').trim();
@@ -772,19 +975,19 @@ function initLiuJoSearchDrawer() {
         });
       }
 
+      // 2. Dynamic high-fashion suggestions matching SS2 (e.g. Women's Hobo Bags, etc.)
+      const contextualSugs = getDynamicSuggestionsForQuery(query, gender, genderName);
+      contextualSugs.forEach(text => {
+        if (!addedQueries.has(text.toLowerCase()) && addedQueries.size < 5) {
+          addedQueries.add(text.toLowerCase());
+          suggestionsHtml += `<li><a href="#" data-query="${text}">${text}</a></li>`;
+        }
+      });
+
+      // 3. Fallback to collections
       if (collections.length > 0 && addedQueries.size < 5) {
         collections.forEach(col => {
           const title = (col.title || '').trim();
-          if (title && !addedQueries.has(title.toLowerCase())) {
-            addedQueries.add(title.toLowerCase());
-            suggestionsHtml += `<li><a href="${col.url}">${title}</a></li>`;
-          }
-        });
-      }
-
-      if (products.length > 0 && addedQueries.size < 5) {
-        products.slice(0, 5).forEach(p => {
-          const title = (p.title || '').trim();
           if (title && !addedQueries.has(title.toLowerCase())) {
             addedQueries.add(title.toLowerCase());
             suggestionsHtml += `<li><a href="#" data-query="${title}">${title}</a></li>`;
@@ -792,8 +995,8 @@ function initLiuJoSearchDrawer() {
         });
       }
 
-      // If still fewer than 3 suggestions, pull real configured menu items from the active tab panel
-      if (addedQueries.size < 3) {
+      // 4. Fallback to active panel menu buttons
+      if (addedQueries.size < 5) {
         const activePanel = drawer.querySelector(`[data-search-panel="${gender}"]`) || drawer.querySelector('[data-search-panel].is-active');
         if (activePanel) {
           const menuBtns = activePanel.querySelectorAll('.liujo-search-suggestion-btn');
@@ -819,13 +1022,15 @@ function initLiuJoSearchDrawer() {
       if (emptyState) emptyState.style.display = 'none';
       let cardsHtml = '';
       products.slice(0, 10).forEach(product => {
-        const imgUrl = product.image || product.featured_image?.url || '';
+        const imgUrl = product.image || product.featured_image?.url || product.featured_image || (product.images && product.images[0] ? (product.images[0].src || product.images[0]) : '') || '';
+        const title = product.title || '';
+        const url = product.url || `/products/${product.handle || ''}`;
         cardsHtml += `
-          <a href="${product.url}" class="liujo-search-card">
+          <a href="${url}" class="liujo-search-card">
             <div class="liujo-search-card__media">
-              ${imgUrl ? `<img src="${imgUrl}" alt="${product.title}" loading="lazy">` : ''}
+              ${imgUrl ? `<img src="${imgUrl}" alt="${title}" loading="lazy">` : ''}
             </div>
-            <span class="liujo-search-card__title">${product.title}</span>
+            <span class="liujo-search-card__title">${title}</span>
           </a>
         `;
       });
