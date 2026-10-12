@@ -726,26 +726,60 @@ function initLiuJoSearchDrawer() {
     const queries = data?.resources?.results?.queries || [];
     const collections = data?.resources?.results?.collections || [];
 
-    // Render Queries / Suggestions in Sidebar
+    // Render Queries / Suggestions in Sidebar (Truly Dynamic: Queries -> Collections -> Matching Products -> Menu Items)
     if (queriesContainer) {
       let suggestionsHtml = '';
+      const addedQueries = new Set();
+
       if (queries.length > 0) {
         queries.forEach(q => {
-          suggestionsHtml += `<li><a href="#" data-query="${q.text}">${q.text}</a></li>`;
+          const text = (q.text || '').trim();
+          if (text && !addedQueries.has(text.toLowerCase())) {
+            addedQueries.add(text.toLowerCase());
+            suggestionsHtml += `<li><a href="#" data-query="${text}">${text}</a></li>`;
+          }
         });
-      } else if (collections.length > 0) {
-        collections.forEach(col => {
-          suggestionsHtml += `<li><a href="${col.url}">${col.title}</a></li>`;
-        });
-      } else {
-        const catName = genderName || gender || '';
-        const prefix = catName && catName !== 'all' ? `${catName}'s ` : '';
-        suggestionsHtml += `
-          <li><a href="#" data-query="${query}">${query}</a></li>
-          ${prefix ? `<li><a href="#" data-query="${prefix}${query}">${prefix}${query}</a></li>` : ''}
-          <li><a href="#" data-query="${query} new in">${query} new in</a></li>
-        `;
       }
+
+      if (collections.length > 0 && addedQueries.size < 5) {
+        collections.forEach(col => {
+          const title = (col.title || '').trim();
+          if (title && !addedQueries.has(title.toLowerCase())) {
+            addedQueries.add(title.toLowerCase());
+            suggestionsHtml += `<li><a href="${col.url}">${title}</a></li>`;
+          }
+        });
+      }
+
+      if (products.length > 0 && addedQueries.size < 5) {
+        products.slice(0, 5).forEach(p => {
+          const title = (p.title || '').trim();
+          if (title && !addedQueries.has(title.toLowerCase())) {
+            addedQueries.add(title.toLowerCase());
+            suggestionsHtml += `<li><a href="#" data-query="${title}">${title}</a></li>`;
+          }
+        });
+      }
+
+      // If still fewer than 3 suggestions, pull real configured menu items from the active tab panel
+      if (addedQueries.size < 3) {
+        const activePanel = drawer.querySelector(`[data-search-panel="${gender}"]`) || drawer.querySelector('[data-search-panel].is-active');
+        if (activePanel) {
+          const menuBtns = activePanel.querySelectorAll('.liujo-search-suggestion-btn');
+          menuBtns.forEach(btn => {
+            const term = (btn.dataset.query || btn.textContent).trim();
+            if (term && !addedQueries.has(term.toLowerCase()) && addedQueries.size < 5) {
+              addedQueries.add(term.toLowerCase());
+              suggestionsHtml += `<li><a href="#" data-query="${term}">${term}</a></li>`;
+            }
+          });
+        }
+      }
+
+      if (addedQueries.size === 0) {
+        suggestionsHtml += `<li><a href="#" data-query="${query}">${query}</a></li>`;
+      }
+
       queriesContainer.innerHTML = suggestionsHtml;
     }
 
