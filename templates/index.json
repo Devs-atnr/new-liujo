@@ -52,12 +52,48 @@
     "category_pills": {
       "type": "liujo-category-grid",
       "blocks": {
-        "cat_1": { "type": "category", "settings": { "title": "New In", "link": "/collections/all" } },
-        "cat_2": { "type": "category", "settings": { "title": "Clothing", "link": "/collections/all" } },
-        "cat_3": { "type": "category", "settings": { "title": "Bottom Up Denim", "link": "/collections/all" } },
-        "cat_4": { "type": "category", "settings": { "title": "Bags", "link": "/collections/all" } },
-        "cat_5": { "type": "category", "settings": { "title": "Shoes", "link": "/collections/all" } },
-        "cat_6": { "type": "category", "settings": { "title": "Accessories", "link": "/collections/all" } }
+        "cat_1": {
+          "type": "category",
+          "settings": {
+            "title": "New In",
+            "link": "/collections/all"
+          }
+        },
+        "cat_2": {
+          "type": "category",
+          "settings": {
+            "title": "Clothing",
+            "link": "/collections/all"
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "title": "Bottom Up Denim",
+            "link": "/collections/all"
+          }
+        },
+        "cat_4": {
+          "type": "category",
+          "settings": {
+            "title": "Bags",
+            "link": "/collections/all"
+          }
+        },
+        "cat_5": {
+          "type": "category",
+          "settings": {
+            "title": "Shoes",
+            "link": "/collections/all"
+          }
+        },
+        "cat_6": {
+          "type": "category",
+          "settings": {
+            "title": "Accessories",
+            "link": "/collections/all"
+          }
+        }
       },
       "block_order": [
         "cat_1",
@@ -67,6 +103,7 @@
         "cat_5",
         "cat_6"
       ],
+      "disabled": true,
       "settings": {
         "title": "Shop By Category"
       }
