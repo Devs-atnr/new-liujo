@@ -1,17 +1,14 @@
 {
-  "name": "Footer",
+  "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "liujo_footer": {
-      "type": "liujo-footer",
+    "footer": {
+      "type": "footer",
       "settings": {
-        "show_prefooter": true,
         "help_title": "May we help you?",
         "help_phone": "+44 330 8087718",
         "help_hours": "Monday to Friday, 9.00 to 18.00",
-        "help_link_text": "Email us",
         "newsletter_title": "Sign up for updates",
-        "newsletter_subtitle": "Subscribe to our newsletter.",
         "col_1_title": "Customer Care",
         "col_2_title": "Liu Jo World",
         "col_3_title": "Liu Jo for you",
@@ -21,6 +18,6 @@
     }
   },
   "order": [
-    "liujo_footer"
+    "footer"
   ]
 }

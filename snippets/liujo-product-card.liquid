@@ -44,7 +44,7 @@
       </a>
 
       <div class="liujo-card-price">
-        {%- if product != blank -%}
+        {%- if product != blank and product.price != blank -%}
           <span>{{ product.price | money }}</span>
           {%- if product.compare_at_price > product.price -%}
             <span class="liujo-card-price-compare">{{ product.compare_at_price | money }}</span>
