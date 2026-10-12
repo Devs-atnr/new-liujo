@@ -462,6 +462,7 @@ function initLiuJoSearchDrawer() {
   function openSearch() {
     drawer.classList.add('is-open');
     backdrop.classList.add('is-open');
+    document.body.classList.add('has-search-open');
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
       if (input) input.focus();
@@ -472,6 +473,7 @@ function initLiuJoSearchDrawer() {
   function closeSearch() {
     drawer.classList.remove('is-open');
     backdrop.classList.remove('is-open');
+    document.body.classList.remove('has-search-open');
     document.body.style.overflow = '';
   }
 
@@ -490,6 +492,29 @@ function initLiuJoSearchDrawer() {
   }
 
   backdrop.addEventListener('click', closeSearch);
+
+  // Auto-close search when user clicks on Header Menu or any nav link in Header
+  const headerRootMenu = document.querySelector('.liujo-header__rootmenu');
+  if (headerRootMenu) {
+    headerRootMenu.addEventListener('click', (e) => {
+      if (drawer.classList.contains('is-open')) {
+        closeSearch();
+      }
+    });
+  }
+
+  // Also auto-close if user clicks Header Logo or other items in Header
+  const headerContainer = document.querySelector('.liujo-header');
+  if (headerContainer) {
+    headerContainer.addEventListener('click', (e) => {
+      if (e.target.closest('[data-search-trigger]') || e.target.closest('.liujo-header__action--search') || e.target.closest('.liujo-search-drawer')) {
+        return;
+      }
+      if (drawer.classList.contains('is-open')) {
+        closeSearch();
+      }
+    });
+  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('is-open')) {

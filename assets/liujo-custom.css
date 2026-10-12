@@ -485,6 +485,13 @@ input, textarea, select, button,
   transform: translateY(0);
 }
 
+body.has-search-open .liujo-megamenu {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .liujo-megamenu__container {
   width: 100%;
   max-width: 100%;
