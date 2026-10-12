@@ -230,6 +230,15 @@
     "drawers": {
       "name": "Drawers"
     },
+    "search_drawer_menu": {
+      "name": "Search Drawer Menu",
+      "settings": {
+        "search_menu": {
+          "label": "Search Bar Menu",
+          "info": "Dynamic Menu for Search Drawer tabs & suggestions (WOMEN, MEN, KIDS, SALE)."
+        }
+      }
+    },
     "animations": {
       "name": "Animations",
       "settings": {

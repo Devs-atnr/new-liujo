@@ -1216,6 +1216,18 @@
     ]
   },
   {
+    "name": "t:settings_schema.search_drawer_menu.name",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "search_menu",
+        "label": "t:settings_schema.search_drawer_menu.settings.search_menu.label",
+        "default": "main-menu",
+        "info": "t:settings_schema.search_drawer_menu.settings.search_menu.info"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.badges.name",
     "settings": [
       {

@@ -1,9 +1,13 @@
 <!-- Liu Jo Luxury Real-Time Predictive Search Drawer (Matching SS1 & SS2) -->
 {%- assign search_nav = nil -%}
-{%- if search_menu != blank and linklists[search_menu] != blank and linklists[search_menu].links.size > 0 -%}
+{%- if settings.search_menu != blank and linklists[settings.search_menu] != blank and linklists[settings.search_menu].links.size > 0 -%}
+  {%- assign search_nav = linklists[settings.search_menu] -%}
+{%- elsif search_menu != blank and linklists[search_menu] != blank and linklists[search_menu].links.size > 0 -%}
   {%- assign search_nav = linklists[search_menu] -%}
 {%- elsif main_menu != blank and linklists[main_menu] != blank and linklists[main_menu].links.size > 0 -%}
   {%- assign search_nav = linklists[main_menu] -%}
+{%- elsif linklists['main-menu'] != blank and linklists['main-menu'].links.size > 0 -%}
+  {%- assign search_nav = linklists['main-menu'] -%}
 {%- endif -%}
 
 <div class="liujo-search-backdrop" data-liujo-search-backdrop></div>
