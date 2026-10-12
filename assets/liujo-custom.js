@@ -480,13 +480,19 @@ function initLiuJoSearchDrawer() {
   triggers.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      openSearch();
+      e.stopPropagation();
+      if (drawer.classList.contains('is-open')) {
+        closeSearch();
+      } else {
+        openSearch();
+      }
     });
   });
 
   if (closeBtn) {
     closeBtn.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       closeSearch();
     });
   }
@@ -503,11 +509,11 @@ function initLiuJoSearchDrawer() {
     });
   }
 
-  // Also auto-close if user clicks Header Logo or other items in Header
+  // Also auto-close if user clicks Header Logo or other items in Header (except the search trigger itself)
   const headerContainer = document.querySelector('.liujo-header');
   if (headerContainer) {
     headerContainer.addEventListener('click', (e) => {
-      if (e.target.closest('[data-search-trigger]') || e.target.closest('.liujo-header__action--search') || e.target.closest('.liujo-search-drawer')) {
+      if (e.target.closest('[data-liujo-search-trigger]') || e.target.closest('.liujo-search-drawer')) {
         return;
       }
       if (drawer.classList.contains('is-open')) {
