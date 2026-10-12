@@ -1836,6 +1836,10 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #e5e5e5;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
   padding: 24px 0;
 }
 
@@ -1843,9 +1847,16 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
   margin: 0;
   padding: 0;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
-.liujo-search-bar__input {
+.liujo-search-bar__input,
+.liujo-search-bar__input:focus,
+.liujo-search-bar__input:focus-visible,
+.liujo-search-bar__input:hover,
+.liujo-search-bar__input:active {
   width: 100%;
   font-family: inherit;
   font-size: 26px;
@@ -1853,11 +1864,30 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #000000;
-  background: transparent;
-  border: none;
-  outline: none;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  border-radius: 0 !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
   padding: 0;
   line-height: 1.2;
+}
+
+.liujo-search-bar__input::-webkit-search-decoration,
+.liujo-search-bar__input::-webkit-search-cancel-button,
+.liujo-search-bar__input::-webkit-search-results-button,
+.liujo-search-bar__input::-webkit-search-results-decoration {
+  -webkit-appearance: none !important;
+  display: none !important;
 }
 
 .liujo-search-bar__input::placeholder {
@@ -1902,7 +1932,7 @@ h1, h2, h3, h4, h5, h6 {
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1924,21 +1954,21 @@ h1, h2, h3, h4, h5, h6 {
 .liujo-search-tabs {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 28px;
 }
 
 .liujo-search-tab {
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13.5px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #777777;
+  color: #888888;
   cursor: pointer;
-  padding: 0 0 2px;
+  padding: 0 2px 4px;
   border-bottom: 2px solid transparent;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
@@ -1953,8 +1983,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-search-tab-divider {
-  font-size: 11px;
-  color: #cccccc;
+  font-size: 13px;
+  color: #d0d0d0;
   user-select: none;
 }
 
@@ -1969,12 +1999,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-search-panel__heading {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #111111;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .liujo-search-panel__list {
@@ -1984,7 +2014,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-search-panel__list li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .liujo-search-suggestion-btn,
@@ -1992,13 +2022,14 @@ h1, h2, h3, h4, h5, h6 {
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 400;
-  color: #444444;
+  color: #333333;
   text-decoration: none;
   cursor: pointer;
-  padding: 0;
-  line-height: 1.5;
+  padding: 2px 0;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
   transition: color 0.15s ease, text-decoration 0.15s ease;
   text-align: left;
 }
@@ -2040,15 +2071,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .liujo-search-results-heading {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #111111;
 }
 
 .liujo-search-see-all {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;

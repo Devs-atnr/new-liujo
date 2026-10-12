@@ -497,24 +497,57 @@ function initLiuJoSearchDrawer() {
     }
   });
 
-  // Category Tabs in State 1 (BEFORE SEARCH)
+  let currentGender = 'women';
+
+  // Synchronized Gender Tab Switcher (State 1 & State 2)
   const tabBtns = drawer.querySelectorAll('[data-search-tab]');
+  const afterTabBtns = drawer.querySelectorAll('[data-search-after-tab]');
   const panels = drawer.querySelectorAll('[data-search-panel]');
+
+  function setGender(gender) {
+    currentGender = gender;
+
+    // Sync State 1 Tabs
+    tabBtns.forEach(t => {
+      if (t.dataset.searchTab === gender) t.classList.add('is-active');
+      else t.classList.remove('is-active');
+    });
+
+    // Sync State 2 Tabs
+    afterTabBtns.forEach(t => {
+      if (t.dataset.searchAfterTab === gender) t.classList.add('is-active');
+      else t.classList.remove('is-active');
+    });
+
+    // Sync State 1 Panels
+    panels.forEach(p => {
+      if (p.dataset.searchPanel === gender) {
+        p.style.display = 'block';
+        p.classList.add('is-active');
+      } else {
+        p.style.display = 'none';
+        p.classList.remove('is-active');
+      }
+    });
+
+    // When in State 2 with text in input, re-run predictive search for this tab immediately!
+    const query = input ? input.value.trim() : '';
+    if (query.length > 0) {
+      showAfterState(query, currentGender);
+    }
+  }
+
+  // Category Tabs in State 1 (BEFORE SEARCH)
   tabBtns.forEach(tab => {
     tab.addEventListener('click', () => {
-      const target = tab.dataset.searchTab;
-      tabBtns.forEach(t => t.classList.remove('is-active'));
-      tab.classList.add('is-active');
+      setGender(tab.dataset.searchTab);
+    });
+  });
 
-      panels.forEach(p => {
-        if (p.dataset.searchPanel === target) {
-          p.style.display = 'block';
-          p.classList.add('is-active');
-        } else {
-          p.style.display = 'none';
-          p.classList.remove('is-active');
-        }
-      });
+  // Category Tabs in State 2 (AFTER SEARCH) - Now fully interactive and re-queries!
+  afterTabBtns.forEach(tab => {
+    tab.addEventListener('click', () => {
+      setGender(tab.dataset.searchAfterTab);
     });
   });
 
@@ -525,19 +558,24 @@ function initLiuJoSearchDrawer() {
       const query = btn.dataset.query || btn.textContent.trim();
       if (input) {
         input.value = query;
-        input.dispatchEvent(new Event('input', { bubbles: true }));
+        showAfterState(query, currentGender);
       }
     });
   });
 
-  // Category Tabs in State 2 (AFTER SEARCH)
-  const afterTabBtns = drawer.querySelectorAll('[data-search-after-tab]');
-  afterTabBtns.forEach(tab => {
-    tab.addEventListener('click', () => {
-      afterTabBtns.forEach(t => t.classList.remove('is-active'));
-      tab.classList.add('is-active');
+  // Clickable suggestions in State 2 (SUGGESTIONS FOR YOU)
+  if (queriesContainer) {
+    queriesContainer.addEventListener('click', (e) => {
+      const item = e.target.closest('[data-query]');
+      if (!item) return;
+      e.preventDefault();
+      const term = item.getAttribute('data-query');
+      if (term && input) {
+        input.value = term;
+        showAfterState(term, currentGender);
+      }
     });
-  });
+  }
 
   // Clear "X" Button
   if (clearBtn) {
@@ -573,21 +611,24 @@ function initLiuJoSearchDrawer() {
     if (activeAbortController) activeAbortController.abort();
   }
 
-  function showAfterState(query) {
+  function showAfterState(query, gender = currentGender) {
     if (beforeState) beforeState.style.display = 'none';
     if (afterState) afterState.style.display = 'block';
     if (seeAllLink) {
-      seeAllLink.href = `${searchUrl}?q=${encodeURIComponent(query)}`;
+      let seeAllQuery = query;
+      if (gender === 'men' && !query.toLowerCase().includes('men')) seeAllQuery = `${query} men`;
+      else if (gender === 'kids' && !query.toLowerCase().includes('kid')) seeAllQuery = `${query} kids`;
+      seeAllLink.href = `${searchUrl}?q=${encodeURIComponent(seeAllQuery)}`;
     }
 
     // Debounce AJAX fetch (200ms)
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      fetchPredictiveResults(query);
+      fetchPredictiveResults(query, gender);
     }, 200);
   }
 
-  function fetchPredictiveResults(query) {
+  function fetchPredictiveResults(query, gender = currentGender) {
     if (activeAbortController) activeAbortController.abort();
     activeAbortController = new AbortController();
 
@@ -595,7 +636,15 @@ function initLiuJoSearchDrawer() {
     if (emptyState) emptyState.style.display = 'none';
     if (productsContainer) productsContainer.innerHTML = '';
 
-    const endpoint = `${predictiveUrl}.json?q=${encodeURIComponent(query)}&resources[type]=product,query,collection&resources[limit]=10`;
+    // Targeted query based on active category tab
+    let targetQuery = query;
+    if (gender === 'men' && !query.toLowerCase().includes('men') && !query.toLowerCase().includes('uomo')) {
+      targetQuery = `${query} men`;
+    } else if (gender === 'kids' && !query.toLowerCase().includes('kid') && !query.toLowerCase().includes('child') && !query.toLowerCase().includes('baby')) {
+      targetQuery = `${query} kids`;
+    }
+
+    const endpoint = `${predictiveUrl}.json?q=${encodeURIComponent(targetQuery)}&resources[type]=product,query,collection&resources[limit]=10`;
 
     fetch(endpoint, { signal: activeAbortController.signal })
       .then(res => {
@@ -603,13 +652,27 @@ function initLiuJoSearchDrawer() {
         return res.json();
       })
       .then(data => {
-        if (loadingSpinner) loadingSpinner.style.display = 'none';
-        renderResults(data, query);
+        const prods = data?.resources?.results?.products || [];
+        // Fallback to base query if category-specific returned 0
+        if (prods.length === 0 && targetQuery !== query) {
+          fetch(`${predictiveUrl}.json?q=${encodeURIComponent(query)}&resources[type]=product,query,collection&resources[limit]=10`, { signal: activeAbortController.signal })
+            .then(r => r.json())
+            .then(fallbackData => {
+              if (loadingSpinner) loadingSpinner.style.display = 'none';
+              renderResults(fallbackData, query, gender);
+            })
+            .catch(() => {
+              if (loadingSpinner) loadingSpinner.style.display = 'none';
+              renderResults(data, query, gender);
+            });
+        } else {
+          if (loadingSpinner) loadingSpinner.style.display = 'none';
+          renderResults(data, query, gender);
+        }
       })
       .catch(err => {
         if (err.name === 'AbortError') return;
-        // Fallback to section fetch if json endpoint fails
-        fetchSectionFallback(query);
+        fetchSectionFallback(targetQuery, gender);
       });
   }
 
@@ -650,7 +713,7 @@ function initLiuJoSearchDrawer() {
       });
   }
 
-  function renderResults(data, query) {
+  function renderResults(data, query, gender = currentGender) {
     const products = data?.resources?.results?.products || [];
     const queries = data?.resources?.results?.queries || [];
     const collections = data?.resources?.results?.collections || [];
@@ -660,16 +723,18 @@ function initLiuJoSearchDrawer() {
       let suggestionsHtml = '';
       if (queries.length > 0) {
         queries.forEach(q => {
-          suggestionsHtml += `<li><a href="${q.url}">${q.text}</a></li>`;
+          suggestionsHtml += `<li><a href="#" data-query="${q.text}">${q.text}</a></li>`;
         });
       } else if (collections.length > 0) {
         collections.forEach(col => {
           suggestionsHtml += `<li><a href="${col.url}">${col.title}</a></li>`;
         });
       } else {
+        const prefix = gender === 'men' ? "Men's " : (gender === 'kids' ? "Kids " : "Women's ");
         suggestionsHtml += `
-          <li><a href="${searchUrl}?q=${encodeURIComponent(query)}">${query}</a></li>
-          <li><a href="${searchUrl}?q=${encodeURIComponent(query + ' new in')}">${query} new in</a></li>
+          <li><a href="#" data-query="${query}">${query}</a></li>
+          <li><a href="#" data-query="${prefix}${query}">${prefix}${query}</a></li>
+          <li><a href="#" data-query="${query} new in">${query} new in</a></li>
         `;
       }
       queriesContainer.innerHTML = suggestionsHtml;
