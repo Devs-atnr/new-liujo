@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.header.name",
   "type": "header",
@@ -8,11 +17,23 @@
         "show_announcement": true,
         "announcement_bg": "#000000",
         "announcement_text": "#ffffff",
-        "announcement_text_content": "This is just a presentation website",
+        "announcement_text_content": "THIS IS JUST A PRESENTATION WEBSITE",
         "announcement_link_label": "Discover",
-        "announcement_link": "/collections/all",
+        "announcement_link": "",
+        "header_height_desktop": 86,
+        "header_height_mobile": 60,
+        "header_padding_horizontal": 40,
+        "menu": "main-menu-copy-for-menu",
+        "use_liujo_default_fallback": true,
+        "outlet_color": "#e6006e",
         "logo_width": 130,
-        "show_store_locator": true
+        "show_store_locator": true,
+        "store_locator_label": "Locate Stores",
+        "store_locator_link": "",
+        "show_search": true,
+        "show_wishlist_desktop": false,
+        "show_cart_desktop": false,
+        "show_cart_mobile": true
       }
     }
   },
