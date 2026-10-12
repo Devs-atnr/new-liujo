@@ -253,20 +253,20 @@
         </a>
       </div>
 
-      <!-- Right: Action Items (Flush Right, matching SS1) -->
+      <!-- Right: Action Items (Flush Right) -->
       <div class="liujo-header__actions">
         {%- if section.settings.show_store_locator -%}
           <a href="{{ section.settings.store_locator_link | default: '/pages/stores' }}" class="liujo-header__store-link">
             {{ section.settings.store_locator_label | default: 'Locate Stores' }}
           </a>
-          {%- if section.settings.show_search -%}
+          {%- if section.settings.show_search_desktop -%}
             <span class="liujo-header__divider"></span>
           {%- endif -%}
         {%- endif -%}
 
-        <!-- Search Icon (Desktop & Mobile) -->
-        {%- if section.settings.show_search -%}
-          <a href="{{ routes.search_url }}" class="liujo-action-btn" aria-label="Search">
+        <!-- Desktop Search Icon -->
+        {%- if section.settings.show_search_desktop -%}
+          <a href="{{ routes.search_url }}" class="liujo-action-btn liujo-action-btn--desk-only" aria-label="Search">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -274,7 +274,7 @@
           </a>
         {%- endif -%}
 
-        <!-- Wishlist Icon (Desktop - Hidden by default to match SS1) -->
+        <!-- Desktop Wishlist Icon -->
         {%- if section.settings.show_wishlist_desktop -%}
           <a href="/pages/wishlist" class="liujo-action-btn liujo-action-btn--desk-only" aria-label="Wishlist">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -284,7 +284,17 @@
           </a>
         {%- endif -%}
 
-        <!-- Shopping Cart Icon (Desktop - Hidden by default to match SS1) -->
+        <!-- Desktop Customer Account Icon -->
+        {%- if section.settings.show_account_desktop and shop.customer_accounts_enabled -%}
+          <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="liujo-action-btn liujo-action-btn--desk-only" aria-label="Account">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        <!-- Desktop Shopping Cart Icon -->
         {%- if section.settings.show_cart_desktop -%}
           <a href="{{ routes.cart_url }}" class="liujo-action-btn liujo-action-btn--desk-only" id="cart-icon-bubble-desktop" aria-label="Cart">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -298,7 +308,37 @@
           </a>
         {%- endif -%}
 
-        <!-- Shopping Cart Icon (Mobile) -->
+        <!-- Mobile Search Icon -->
+        {%- if section.settings.show_search_mobile -%}
+          <a href="{{ routes.search_url }}" class="liujo-action-btn liujo-action-btn--mob-only" aria-label="Search">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        <!-- Mobile Wishlist Icon -->
+        {%- if section.settings.show_wishlist_mobile -%}
+          <a href="/pages/wishlist" class="liujo-action-btn liujo-action-btn--mob-only" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span class="liujo-badge-count" data-wishlist-count style="display:none;">0</span>
+          </a>
+        {%- endif -%}
+
+        <!-- Mobile Customer Account Icon -->
+        {%- if section.settings.show_account_mobile and shop.customer_accounts_enabled -%}
+          <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="liujo-action-btn liujo-action-btn--mob-only" aria-label="Account">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        <!-- Mobile Shopping Cart Icon -->
         {%- if section.settings.show_cart_mobile -%}
           <a href="{{ routes.cart_url }}" class="liujo-action-btn liujo-action-btn--mob-only" id="cart-icon-bubble-mobile" aria-label="Cart">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -312,14 +352,16 @@
           </a>
         {%- endif -%}
 
-        <!-- Mobile & Tablet Hamburger Toggler (Strictly hidden on desktop!) -->
-        <button type="button" class="liujo-action-btn liujo-header__mob-toggler" data-liujo-drawer-open aria-label="Open Navigation Menu">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
+        <!-- Mobile & Tablet Hamburger Drawer Toggler -->
+        {%- if section.settings.show_hamburger_mobile -%}
+          <button type="button" class="liujo-action-btn liujo-header__mob-toggler" data-liujo-drawer-open aria-label="Open Navigation Menu">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        {%- endif -%}
       </div>
     </div>
   </header>
@@ -759,12 +801,12 @@
     },
     {
       "type": "header",
-      "content": "Action Icons (Dynamic Show/Hide)"
+      "content": "Desktop Action Icons"
     },
     {
       "type": "checkbox",
       "id": "show_store_locator",
-      "label": "Show Locate Stores (Desktop)",
+      "label": "Show Store Locator",
       "default": true
     },
     {
@@ -780,26 +822,60 @@
     },
     {
       "type": "checkbox",
-      "id": "show_search",
+      "id": "show_search_desktop",
       "label": "Show Search Icon",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_wishlist_desktop",
-      "label": "Show Wishlist on Desktop (Off in SS1 design)",
+      "label": "Show Wishlist Icon",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account_desktop",
+      "label": "Show Customer Account Icon",
       "default": false
     },
     {
       "type": "checkbox",
       "id": "show_cart_desktop",
-      "label": "Show Cart Icon on Desktop (Off in SS1 design)",
+      "label": "Show Shopping Cart Icon",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Mobile Action Icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_mobile",
+      "label": "Show Search Icon",
+      "default": true
     },
     {
       "type": "checkbox",
       "id": "show_cart_mobile",
-      "label": "Show Cart Icon on Mobile",
+      "label": "Show Shopping Cart Icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist_mobile",
+      "label": "Show Wishlist Icon in Header",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account_mobile",
+      "label": "Show Customer Account Icon in Header",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hamburger_mobile",
+      "label": "Show Menu Drawer (Hamburger) Icon",
       "default": true
     }
   ]
