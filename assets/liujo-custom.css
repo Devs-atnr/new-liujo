@@ -1780,3 +1780,407 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(0);
   }
 }
+
+/* ==========================================================================
+   LIU JO LUXURY PREDICTIVE SEARCH DRAWER (MATCHING SS1 & SS2)
+   ========================================================================== */
+.liujo-search-backdrop {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 98;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+.liujo-search-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.liujo-search-drawer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+}
+
+.liujo-search-drawer.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.liujo-search-drawer__inner {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 var(--liujo-header-pad-x, 40px);
+}
+
+.liujo-search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 24px 0;
+}
+
+.liujo-search-bar__form {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.liujo-search-bar__input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.liujo-search-bar__input::placeholder {
+  color: #111111;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.liujo-search-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 0 0 auto;
+  margin-left: 20px;
+}
+
+.liujo-search-bar__clear {
+  background: none;
+  border: none;
+  color: #111111;
+  cursor: pointer;
+  padding: 6px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.liujo-search-bar__clear:hover {
+  opacity: 0.6;
+}
+
+.liujo-search-bar__divider {
+  display: none;
+  width: 1px;
+  height: 16px;
+  background-color: #d0d0d0;
+  margin: 0 16px;
+}
+
+.liujo-search-bar__close {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111111;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: opacity 0.2s ease;
+}
+
+.liujo-search-bar__close:hover {
+  opacity: 0.6;
+}
+
+.liujo-search-content {
+  padding: 28px 0 44px;
+}
+
+/* Category Switcher Tabs */
+.liujo-search-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.liujo-search-tab {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #777777;
+  cursor: pointer;
+  padding: 0 0 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.liujo-search-tab.is-active {
+  color: #000000;
+  border-bottom-color: #000000;
+}
+
+.liujo-search-tab:hover {
+  color: #000000;
+}
+
+.liujo-search-tab-divider {
+  font-size: 11px;
+  color: #cccccc;
+  user-select: none;
+}
+
+/* State 1: Before Search Panels */
+.liujo-search-panel__cols {
+  display: flex;
+  gap: 60px;
+}
+
+.liujo-search-panel__col {
+  min-width: 140px;
+}
+
+.liujo-search-panel__heading {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111111;
+  margin-bottom: 14px;
+}
+
+.liujo-search-panel__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.liujo-search-panel__list li {
+  margin-bottom: 8px;
+}
+
+.liujo-search-suggestion-btn,
+.liujo-search-panel__list a {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  color: #444444;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1.5;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
+  text-align: left;
+}
+
+.liujo-search-suggestion-btn:hover,
+.liujo-search-panel__list a:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+
+/* State 2: After Search Layout */
+.liujo-search-after__inner {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.liujo-search-after__sidebar {
+  flex: 0 0 240px;
+  width: 240px;
+}
+
+.liujo-search-after__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.liujo-search-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.liujo-search-results-heading {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+.liujo-search-see-all {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.liujo-search-see-all:hover {
+  opacity: 0.7;
+}
+
+/* 5-Column Real-Time Product Grid (SS2 Exact) */
+.liujo-search-products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.liujo-search-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.liujo-search-card:hover {
+  opacity: 0.85;
+}
+
+.liujo-search-card:hover .liujo-search-card__title {
+  text-decoration: underline;
+}
+
+.liujo-search-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-color: #f7f7f7;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.liujo-search-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.liujo-search-card__title {
+  font-size: 11px;
+  font-weight: 400;
+  color: #222222;
+  line-height: 1.35;
+  margin-top: 4px;
+}
+
+.liujo-search-card__price {
+  font-size: 11px;
+  font-weight: 600;
+  color: #111111;
+  margin-top: 2px;
+}
+
+/* Loading spinner */
+.liujo-search-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.liujo-search-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #e0e0e0;
+  border-top-color: #000000;
+  border-radius: 50%;
+  animation: liujoSearchSpin 0.7s linear infinite;
+}
+
+@keyframes liujoSearchSpin {
+  to { transform: rotate(360deg); }
+}
+
+.liujo-search-empty {
+  padding: 30px 0;
+  font-size: 13px;
+  color: #666666;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1199px) {
+  .liujo-search-after__sidebar {
+    flex: 0 0 180px;
+    width: 180px;
+  }
+  .liujo-search-products-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 991px) {
+  .liujo-search-drawer__inner {
+    padding: 0 16px;
+  }
+  .liujo-search-bar {
+    padding: 16px 0;
+  }
+  .liujo-search-bar__input {
+    font-size: 20px;
+  }
+  .liujo-search-after__inner {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .liujo-search-after__sidebar {
+    width: 100%;
+    flex: initial;
+  }
+  .liujo-search-products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (max-width: 575px) {
+  .liujo-search-products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .liujo-search-panel__cols {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+

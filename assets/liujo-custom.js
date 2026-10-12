@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLiuJoSizeGuideModal();
   initLiuJoGridToggler();
   initLiuJoMobileStickyCart();
+  initLiuJoSearchDrawer();
 });
 
 // 1. VIDEO CONTROLS
@@ -430,5 +431,268 @@ function initLiuJoMobileStickyCart() {
       e.preventDefault();
       mainSubmitBtn.click();
     });
+  }
+}
+
+// 10. REAL-TIME PREDICTIVE SEARCH DRAWER (MATCHING SS1 & SS2)
+function initLiuJoSearchDrawer() {
+  const triggers = document.querySelectorAll('[data-liujo-search-trigger]');
+  const drawer = document.querySelector('[data-liujo-search-drawer]');
+  const backdrop = document.querySelector('[data-liujo-search-backdrop]');
+  if (!drawer || !backdrop) return;
+
+  const input = drawer.querySelector('[data-liujo-search-input]');
+  const clearBtn = drawer.querySelector('[data-liujo-search-clear]');
+  const clearDivider = drawer.querySelector('[data-liujo-search-clear-divider]');
+  const closeBtn = drawer.querySelector('[data-liujo-search-close]');
+  const beforeState = drawer.querySelector('[data-liujo-search-before]');
+  const afterState = drawer.querySelector('[data-liujo-search-after]');
+  const productsContainer = drawer.querySelector('[data-liujo-search-products]');
+  const queriesContainer = drawer.querySelector('[data-liujo-search-queries-list]');
+  const loadingSpinner = drawer.querySelector('[data-liujo-search-loading]');
+  const emptyState = drawer.querySelector('[data-liujo-search-empty]');
+  const seeAllLink = drawer.querySelector('[data-liujo-see-all]');
+  const searchUrl = drawer.dataset.searchUrl || '/search';
+  const predictiveUrl = drawer.dataset.predictiveUrl || '/search/suggest';
+
+  let debounceTimer = null;
+  let activeAbortController = null;
+
+  // Open Drawer
+  function openSearch() {
+    drawer.classList.add('is-open');
+    backdrop.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => {
+      if (input) input.focus();
+    }, 150);
+  }
+
+  // Close Drawer
+  function closeSearch() {
+    drawer.classList.remove('is-open');
+    backdrop.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  triggers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openSearch();
+    });
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSearch();
+    });
+  }
+
+  backdrop.addEventListener('click', closeSearch);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+      closeSearch();
+    }
+  });
+
+  // Category Tabs in State 1 (BEFORE SEARCH)
+  const tabBtns = drawer.querySelectorAll('[data-search-tab]');
+  const panels = drawer.querySelectorAll('[data-search-panel]');
+  tabBtns.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.searchTab;
+      tabBtns.forEach(t => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+
+      panels.forEach(p => {
+        if (p.dataset.searchPanel === target) {
+          p.style.display = 'block';
+          p.classList.add('is-active');
+        } else {
+          p.style.display = 'none';
+          p.classList.remove('is-active');
+        }
+      });
+    });
+  });
+
+  // Suggestion buttons in State 1 (Clicking automatically searches)
+  const suggestionBtns = drawer.querySelectorAll('.liujo-search-suggestion-btn');
+  suggestionBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const query = btn.dataset.query || btn.textContent.trim();
+      if (input) {
+        input.value = query;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+  });
+
+  // Category Tabs in State 2 (AFTER SEARCH)
+  const afterTabBtns = drawer.querySelectorAll('[data-search-after-tab]');
+  afterTabBtns.forEach(tab => {
+    tab.addEventListener('click', () => {
+      afterTabBtns.forEach(t => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+    });
+  });
+
+  // Clear "X" Button
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (input) {
+        input.value = '';
+        input.focus();
+        showBeforeState();
+      }
+    });
+  }
+
+  // Handle Input Changes (Real-Time Predictive Search)
+  if (input) {
+    input.addEventListener('input', () => {
+      const query = input.value.trim();
+
+      if (query.length > 0) {
+        if (clearBtn) clearBtn.style.display = 'inline-flex';
+        if (clearDivider) clearDivider.style.display = 'inline-block';
+        showAfterState(query);
+      } else {
+        showBeforeState();
+      }
+    });
+  }
+
+  function showBeforeState() {
+    if (clearBtn) clearBtn.style.display = 'none';
+    if (clearDivider) clearDivider.style.display = 'none';
+    if (beforeState) beforeState.style.display = 'block';
+    if (afterState) afterState.style.display = 'none';
+    if (activeAbortController) activeAbortController.abort();
+  }
+
+  function showAfterState(query) {
+    if (beforeState) beforeState.style.display = 'none';
+    if (afterState) afterState.style.display = 'block';
+    if (seeAllLink) {
+      seeAllLink.href = `${searchUrl}?q=${encodeURIComponent(query)}`;
+    }
+
+    // Debounce AJAX fetch (200ms)
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      fetchPredictiveResults(query);
+    }, 200);
+  }
+
+  function fetchPredictiveResults(query) {
+    if (activeAbortController) activeAbortController.abort();
+    activeAbortController = new AbortController();
+
+    if (loadingSpinner) loadingSpinner.style.display = 'flex';
+    if (emptyState) emptyState.style.display = 'none';
+    if (productsContainer) productsContainer.innerHTML = '';
+
+    const endpoint = `${predictiveUrl}.json?q=${encodeURIComponent(query)}&resources[type]=product,query,collection&resources[limit]=10`;
+
+    fetch(endpoint, { signal: activeAbortController.signal })
+      .then(res => {
+        if (!res.ok) throw new Error('Network error');
+        return res.json();
+      })
+      .then(data => {
+        if (loadingSpinner) loadingSpinner.style.display = 'none';
+        renderResults(data, query);
+      })
+      .catch(err => {
+        if (err.name === 'AbortError') return;
+        // Fallback to section fetch if json endpoint fails
+        fetchSectionFallback(query);
+      });
+  }
+
+  function fetchSectionFallback(query) {
+    fetch(`${predictiveUrl}?q=${encodeURIComponent(query)}&section_id=predictive-search`, {
+      signal: activeAbortController.signal
+    })
+      .then(res => res.text())
+      .then(html => {
+        if (loadingSpinner) loadingSpinner.style.display = 'none';
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const items = doc.querySelectorAll('#predictive-search-results-products-list .predictive-search__list-item');
+        if (items.length > 0) {
+          let cardsHtml = '';
+          items.forEach((item, index) => {
+            if (index >= 10) return;
+            const link = item.querySelector('a');
+            const img = item.querySelector('img');
+            const heading = item.querySelector('.predictive-search__item-heading');
+            if (link && heading) {
+              cardsHtml += `
+                <a href="${link.href}" class="liujo-search-card">
+                  <div class="liujo-search-card__media">
+                    ${img ? `<img src="${img.src}" alt="${img.alt || heading.textContent.trim()}" loading="lazy">` : ''}
+                  </div>
+                  <span class="liujo-search-card__title">${heading.textContent.trim()}</span>
+                </a>
+              `;
+            }
+          });
+          if (productsContainer) productsContainer.innerHTML = cardsHtml;
+        } else {
+          if (emptyState) emptyState.style.display = 'block';
+        }
+      })
+      .catch(() => {
+        if (loadingSpinner) loadingSpinner.style.display = 'none';
+      });
+  }
+
+  function renderResults(data, query) {
+    const products = data?.resources?.results?.products || [];
+    const queries = data?.resources?.results?.queries || [];
+    const collections = data?.resources?.results?.collections || [];
+
+    // Render Queries / Suggestions in Sidebar
+    if (queriesContainer) {
+      let suggestionsHtml = '';
+      if (queries.length > 0) {
+        queries.forEach(q => {
+          suggestionsHtml += `<li><a href="${q.url}">${q.text}</a></li>`;
+        });
+      } else if (collections.length > 0) {
+        collections.forEach(col => {
+          suggestionsHtml += `<li><a href="${col.url}">${col.title}</a></li>`;
+        });
+      } else {
+        suggestionsHtml += `
+          <li><a href="${searchUrl}?q=${encodeURIComponent(query)}">${query}</a></li>
+          <li><a href="${searchUrl}?q=${encodeURIComponent(query + ' new in')}">${query} new in</a></li>
+        `;
+      }
+      queriesContainer.innerHTML = suggestionsHtml;
+    }
+
+    // Render Products Grid (5-column luxury cards matching SS2)
+    if (products.length > 0) {
+      if (emptyState) emptyState.style.display = 'none';
+      let cardsHtml = '';
+      products.slice(0, 10).forEach(product => {
+        const imgUrl = product.image || product.featured_image?.url || '';
+        cardsHtml += `
+          <a href="${product.url}" class="liujo-search-card">
+            <div class="liujo-search-card__media">
+              ${imgUrl ? `<img src="${imgUrl}" alt="${product.title}" loading="lazy">` : ''}
+            </div>
+            <span class="liujo-search-card__title">${product.title}</span>
+          </a>
+        `;
+      });
+      if (productsContainer) productsContainer.innerHTML = cardsHtml;
+    } else {
+      if (emptyState) emptyState.style.display = 'block';
+    }
   }
 }

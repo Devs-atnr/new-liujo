@@ -1,0 +1,171 @@
+<!-- Liu Jo Luxury Real-Time Predictive Search Drawer (Matching SS1 & SS2) -->
+<div class="liujo-search-backdrop" data-liujo-search-backdrop></div>
+
+<div 
+  class="liujo-search-drawer" 
+  data-liujo-search-drawer 
+  data-search-url="{{ routes.search_url }}"
+  data-predictive-url="{{ routes.predictive_search_url }}"
+  data-currency-symbol="{{ cart.currency.symbol | default: '€' }}"
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Search"
+>
+  <div class="liujo-search-drawer__inner">
+    <!-- Top Search Bar: Large Input + Actions -->
+    <div class="liujo-search-bar">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="liujo-search-bar__form" data-liujo-search-form>
+        <input 
+          type="search" 
+          name="q" 
+          class="liujo-search-bar__input" 
+          placeholder="SEARCH" 
+          autocomplete="off" 
+          autocorrect="off" 
+          autocapitalize="characters" 
+          spellcheck="false" 
+          data-liujo-search-input
+          aria-label="Search Store"
+        >
+        <input type="hidden" name="options[prefix]" value="last">
+      </form>
+
+      <div class="liujo-search-bar__actions">
+        <!-- Clear "X" Button (shown when query typed, matching SS2) -->
+        <button type="button" class="liujo-search-bar__clear" data-liujo-search-clear aria-label="Clear Search text">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <span class="liujo-search-bar__divider" data-liujo-search-clear-divider></span>
+
+        <!-- Close Button (text button, matching SS1 & SS2) -->
+        <button type="button" class="liujo-search-bar__close" data-liujo-search-close aria-label="Close search">
+          CLOSE
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="liujo-search-content">
+      <!-- 1. STATE 1: BEFORE SEARCH (Initial State matching SS1) -->
+      <div class="liujo-search-before" data-liujo-search-before>
+        <!-- Category Switcher Tabs -->
+        <div class="liujo-search-tabs">
+          <button type="button" class="liujo-search-tab is-active" data-search-tab="women">WOMEN</button>
+          <span class="liujo-search-tab-divider">|</span>
+          <button type="button" class="liujo-search-tab" data-search-tab="men">MEN</button>
+          <span class="liujo-search-tab-divider">|</span>
+          <button type="button" class="liujo-search-tab" data-search-tab="kids">KIDS</button>
+        </div>
+
+        <!-- Women Tab Panel (SS1 Default) -->
+        <div class="liujo-search-panel is-active" data-search-panel="women">
+          <div class="liujo-search-panel__cols">
+            <div class="liujo-search-panel__col">
+              <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+              <ul class="liujo-search-panel__list">
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Bag">Women's Bag</button></li>
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Jeans">Women's Jeans</button></li>
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Shoes">Women's Shoes</button></li>
+              </ul>
+            </div>
+            <div class="liujo-search-panel__col">
+              <div class="liujo-search-panel__heading">NEW IN</div>
+              <ul class="liujo-search-panel__list">
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's New Arrivals">Women's New Arrivals</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Men Tab Panel -->
+        <div class="liujo-search-panel" data-search-panel="men" style="display: none;">
+          <div class="liujo-search-panel__cols">
+            <div class="liujo-search-panel__col">
+              <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+              <ul class="liujo-search-panel__list">
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Sneakers">Men's Sneakers</button></li>
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jeans">Men's Jeans</button></li>
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jackets">Men's Jackets</button></li>
+              </ul>
+            </div>
+            <div class="liujo-search-panel__col">
+              <div class="liujo-search-panel__heading">NEW IN</div>
+              <ul class="liujo-search-panel__list">
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's New Arrivals">Men's New Arrivals</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kids Tab Panel -->
+        <div class="liujo-search-panel" data-search-panel="kids" style="display: none;">
+          <div class="liujo-search-panel__cols">
+            <div class="liujo-search-panel__col">
+              <div class="liujo-search-panel__heading">SUGGESTIONS</div>
+              <ul class="liujo-search-panel__list">
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Baby Clothing">Baby Clothing</button></li>
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids Shoes">Kids Shoes</button></li>
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Girls Dresses">Girls Dresses</button></li>
+              </ul>
+            </div>
+            <div class="liujo-search-panel__col">
+              <div class="liujo-search-panel__heading">NEW IN</div>
+              <ul class="liujo-search-panel__list">
+                <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids New Arrivals">Kids New Arrivals</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. STATE 2: AFTER SEARCH (Real-Time Predictive Results matching SS2) -->
+      <div class="liujo-search-after" data-liujo-search-after style="display: none;">
+        <div class="liujo-search-after__inner">
+          <!-- Left Column: Category Tabs + Suggestions For You -->
+          <div class="liujo-search-after__sidebar">
+            <div class="liujo-search-tabs">
+              <button type="button" class="liujo-search-tab is-active" data-search-after-tab="women">WOMEN</button>
+              <span class="liujo-search-tab-divider">|</span>
+              <button type="button" class="liujo-search-tab" data-search-after-tab="men">MEN</button>
+              <span class="liujo-search-tab-divider">|</span>
+              <button type="button" class="liujo-search-tab" data-search-after-tab="kids">KIDS</button>
+            </div>
+            <div class="liujo-search-sidebar-section">
+              <div class="liujo-search-panel__heading">SUGGESTIONS FOR YOU</div>
+              <ul class="liujo-search-panel__list" data-liujo-search-queries-list>
+                <!-- Populated dynamically via predictive search -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right Column: Recommended For You & 5-Column Products Grid -->
+          <div class="liujo-search-after__main">
+            <div class="liujo-search-results-header">
+              <div class="liujo-search-results-heading">RECOMMENDED FOR YOU</div>
+              <a href="{{ routes.search_url }}" class="liujo-search-see-all" data-liujo-see-all>SEE ALL RESULTS</a>
+            </div>
+
+            <!-- Real-Time Loading Spinner -->
+            <div class="liujo-search-loading" data-liujo-search-loading style="display: none;">
+              <div class="liujo-search-spinner"></div>
+            </div>
+
+            <!-- Real-Time 5-Column Product Grid -->
+            <div class="liujo-search-products-grid" data-liujo-search-products>
+              <!-- Populated via Predictive Search AJAX -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="liujo-search-empty" data-liujo-search-empty style="display: none;">
+              <p>No products found matching your search.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

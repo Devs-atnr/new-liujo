@@ -138,12 +138,12 @@
 
         <!-- Desktop Search Icon -->
         {%- if section.settings.show_search_desktop -%}
-          <a href="{{ routes.search_url }}" class="liujo-action-btn liujo-action-btn--desk-only" aria-label="Search">
+          <button type="button" class="liujo-action-btn liujo-action-btn--desk-only" data-liujo-search-trigger aria-label="Search">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-          </a>
+          </button>
         {%- endif -%}
 
         <!-- Desktop Wishlist Icon -->
@@ -182,12 +182,12 @@
 
         <!-- Mobile Search Icon -->
         {%- if section.settings.show_search_mobile -%}
-          <a href="{{ routes.search_url }}" class="liujo-action-btn liujo-action-btn--mob-only" aria-label="Search">
+          <button type="button" class="liujo-action-btn liujo-action-btn--mob-only" data-liujo-search-trigger aria-label="Search">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-          </a>
+          </button>
         {%- endif -%}
 
         <!-- Mobile Wishlist Icon -->
@@ -236,6 +236,9 @@
         {%- endif -%}
       </div>
     </div>
+
+    <!-- Liu Jo Luxury Real-Time Predictive Search Drawer (Matching SS1 & SS2) -->
+    {%- render 'liujo-search-modal' -%}
   </header>
 </div>
 
