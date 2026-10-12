@@ -2,18 +2,88 @@
   LIU JO HERO VIDEO SECTION
   Autoplay muted loop video with sound/pause toggle, editorial title & CTA button.
   Directly replicates Liu Jo's hero campaign banner ("The Gigi Hadid Edit").
+  Fully dynamic with desktop/mobile poster pickers, mobile video option, font size sliders, and button colors.
 {% endcomment %}
 
-<div class="liujo-hero-video" data-section-id="{{ section.id }}" data-section-type="liujo-hero-video" data-liujo-video-container>
+{%- assign s_id = section.id -%}
+<div class="liujo-hero-video liujo-hero-video--{{ s_id }}" data-section-id="{{ s_id }}" data-section-type="liujo-hero-video" data-liujo-video-container>
+  <style>
+    .liujo-hero-video--{{ s_id }} .liujo-hero-video__wrapper {
+      height: {{ section.settings.height_desktop | default: '85vh' }};
+      min-height: {{ section.settings.min_height_desktop | default: 520 }}px;
+      max-height: {{ section.settings.max_height_desktop | default: 960 }}px;
+    }
+    @media (max-width: 767px) {
+      .liujo-hero-video--{{ s_id }} .liujo-hero-video__wrapper {
+        height: {{ section.settings.height_mobile | default: '75vh' }};
+        min-height: {{ section.settings.min_height_mobile | default: 440 }}px;
+      }
+    }
+    .liujo-hero-video--{{ s_id }} .liujo-hero-video__overlay {
+      background-color: {{ section.settings.overlay_color | default: '#000000' }};
+      opacity: {{ section.settings.overlay_opacity | default: 25 | divided_by: 100.0 }};
+    }
+    .liujo-hero-video--{{ s_id }} .liujo-hero-video__content-wrap {
+      justify-content: {{ section.settings.content_alignment | default: 'center' }};
+      align-items: {{ section.settings.content_position | default: 'flex-end' }};
+      text-align: {{ section.settings.content_alignment | default: 'center' }};
+    }
+    .liujo-hero-video--{{ s_id }} .liujo-hero-video__tagline {
+      font-size: {{ section.settings.tagline_size_desktop | default: 13 }}px;
+      color: {{ section.settings.tagline_color | default: '#ffffff' }};
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .liujo-hero-video--{{ s_id }} .liujo-hero-video__title {
+      font-size: {{ section.settings.heading_size_desktop | default: 52 }}px;
+      color: {{ section.settings.heading_color | default: '#ffffff' }};
+      line-height: 1.15;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      font-weight: 600;
+    }
+    @media (max-width: 767px) {
+      .liujo-hero-video--{{ s_id }} .liujo-hero-video__tagline {
+        font-size: {{ section.settings.tagline_size_mobile | default: 11 }}px;
+      }
+      .liujo-hero-video--{{ s_id }} .liujo-hero-video__title {
+        font-size: {{ section.settings.heading_size_mobile | default: 32 }}px;
+      }
+    }
+    .liujo-hero-video--{{ s_id }} .liujo-hero-video__btn {
+      font-size: {{ section.settings.button_font_size | default: 11 }}px;
+      color: {{ section.settings.button_text_color | default: '#ffffff' }} !important;
+      background-color: {{ section.settings.button_bg_color | default: 'transparent' }} !important;
+      border: 1px solid {{ section.settings.button_border_color | default: '#ffffff' }} !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 38px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .liujo-hero-video--{{ s_id }} .liujo-hero-video__btn:hover {
+      color: {{ section.settings.button_hover_text_color | default: '#000000' }} !important;
+      background-color: {{ section.settings.button_hover_bg_color | default: '#ffffff' }} !important;
+      border-color: {{ section.settings.button_hover_bg_color | default: '#ffffff' }} !important;
+    }
+  </style>
+
   <div class="liujo-hero-video__wrapper">
+    <!-- Desktop Video -->
     {%- if section.settings.video_url != blank -%}
-      <video class="liujo-hero-video__media"
+      <video class="liujo-hero-video__media{% if section.settings.video_url_mobile != blank %} large-up-show{% endif %}"
              autoplay loop muted playsinline
-             poster="{{ section.settings.poster_image | image_url: width: 1800 }}">
+             poster="{% if section.settings.poster_image != blank %}{{ section.settings.poster_image | image_url: width: 2000 }}{% else %}https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg{% endif %}">
         <source src="{{ section.settings.video_url }}" type="video/mp4">
       </video>
     {%- else -%}
-      <!-- Liu Jo Official Campaign High Quality Video Source -->
       <video class="liujo-hero-video__media"
              autoplay loop muted playsinline
              poster="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg">
@@ -21,36 +91,53 @@
       </video>
     {%- endif -%}
 
-    <!-- Video Play/Pause & Audio Mute/Unmute Controls -->
-    <div class="liujo-hero-video__controls">
-      <button type="button" class="liujo-video-btn" data-video-play-btn aria-label="Play or Pause Video">
-        <svg class="icon-play" viewBox="0 0 24 24" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-        <svg class="icon-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-      </button>
+    <!-- Optional Dedicated Mobile Video -->
+    {%- if section.settings.video_url_mobile != blank -%}
+      <video class="liujo-hero-video__media small-hide medium-hide"
+             style="display: none;"
+             autoplay loop muted playsinline
+             poster="{% if section.settings.poster_image_mobile != blank %}{{ section.settings.poster_image_mobile | image_url: width: 1000 }}{% elsif section.settings.poster_image != blank %}{{ section.settings.poster_image | image_url: width: 1000 }}{% else %}https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwc9a97ec1/the-gigi-hadid-edit/drop1/HP/Hero-2-mob.jpg{% endif %}">
+        <source src="{{ section.settings.video_url_mobile }}" type="video/mp4">
+      </video>
+    {%- endif -%}
 
-      <button type="button" class="liujo-video-btn" data-video-mute-btn aria-label="Toggle Audio">
-        <svg class="icon-mute" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-        <svg class="icon-sound" viewBox="0 0 24 24" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-      </button>
-    </div>
+    <!-- Video Play/Pause & Audio Controls -->
+    {%- if section.settings.show_controls -%}
+      <div class="liujo-hero-video__controls">
+        <button type="button" class="liujo-video-btn" data-video-play-btn aria-label="Play or Pause Video">
+          <svg class="icon-play" viewBox="0 0 24 24" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <svg class="icon-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+        </button>
 
-    <!-- Editorial Text & CTA Overlay -->
-    <div class="liujo-hero-video__overlay" style="background: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});">
-      <div class="liujo-hero-video__content">
+        <button type="button" class="liujo-video-btn" data-video-mute-btn aria-label="Toggle Audio">
+          <svg class="icon-mute" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+          <svg class="icon-sound" viewBox="0 0 24 24" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        </button>
+      </div>
+    {%- endif -%}
+
+    <!-- Color Overlay Layer -->
+    <div class="liujo-hero-video__overlay"></div>
+
+    <!-- Content Layer -->
+    <div class="liujo-hero-video__content-wrap" style="position: absolute; inset: 0; display: flex; padding: 0 24px 80px; z-index: 2;">
+      <div class="liujo-hero-video__content" style="max-width: 800px; width: 100%;">
         {%- if section.settings.tagline != blank -%}
-          <div class="liujo-subtitle" style="color: #fff; margin-bottom: 12px; letter-spacing: 0.15em; text-transform: uppercase;">
+          <div class="liujo-hero-video__tagline">
             {{ section.settings.tagline }}
           </div>
         {%- endif -%}
 
-        <h1 class="liujo-hero-video__title">
-          {{ section.settings.heading | default: 'The Gigi Hadid Edit' }}
-        </h1>
+        {%- if section.settings.heading != blank -%}
+          <h1 class="liujo-hero-video__title">
+            {{ section.settings.heading }}
+          </h1>
+        {%- endif -%}
 
         {%- if section.settings.button_label != blank -%}
-          <div style="margin-top: 24px;">
-            <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn-editorial-outline btn-editorial-outline--white">
-              <span>{{ section.settings.button_label | default: 'Discover' }}</span>
+          <div style="margin-top: 10px;">
+            <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="liujo-hero-video__btn">
+              <span>{{ section.settings.button_label }}</span>
             </a>
           </div>
         {%- endif -%}
@@ -65,19 +152,73 @@
   "settings": [
     {
       "type": "header",
-      "content": "Video Settings"
+      "content": "Video Source Settings"
     },
     {
       "type": "text",
       "id": "video_url",
-      "label": "Video MP4 URL",
-      "info": "Upload MP4 video in Shopify Files and paste URL here, or leave blank for official Liu Jo campaign video.",
+      "label": "Desktop Video MP4 URL",
+      "info": "Upload MP4 in Shopify Files and paste URL here, or leave blank for official Liu Jo campaign video.",
       "default": "https://media.liujo.com/PUBLIC/VIDEO/Liu_Jo_camp_15s_16х9.mp4"
+    },
+    {
+      "type": "text",
+      "id": "video_url_mobile",
+      "label": "Mobile Video MP4 URL (Optional)"
     },
     {
       "type": "image_picker",
       "id": "poster_image",
-      "label": "Poster Image (Fallback)"
+      "label": "Desktop Poster Image (Fallback)"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image_mobile",
+      "label": "Mobile Poster Image (Fallback)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "Show Play/Pause & Audio Mute Buttons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Banner Heights"
+    },
+    {
+      "type": "select",
+      "id": "height_desktop",
+      "label": "Desktop Banner Height",
+      "options": [
+        { "value": "100vh", "label": "Full Screen (100vh)" },
+        { "value": "85vh", "label": "Large (85vh)" },
+        { "value": "75vh", "label": "Medium (75vh)" },
+        { "value": "650px", "label": "Fixed 650px" }
+      ],
+      "default": "85vh"
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "Mobile Banner Height",
+      "options": [
+        { "value": "85vh", "label": "Tall (85vh)" },
+        { "value": "75vh", "label": "Standard (75vh)" },
+        { "value": "65vh", "label": "Compact (65vh)" },
+        { "value": "480px", "label": "Fixed 480px" }
+      ],
+      "default": "75vh"
+    },
+    {
+      "type": "header",
+      "content": "Dark Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "default": "#000000"
     },
     {
       "type": "range",
@@ -91,30 +232,156 @@
     },
     {
       "type": "header",
-      "content": "Content & Typography"
+      "content": "Content Alignment"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Vertical Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "header",
+      "content": "Tagline / Subtitle"
     },
     {
       "type": "text",
       "id": "tagline",
-      "label": "Tagline / Subtitle",
+      "label": "Tagline / Subtitle Text",
       "default": "Campaign 2026"
+    },
+    {
+      "type": "range",
+      "id": "tagline_size_desktop",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Tagline Font Size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "tagline_size_mobile",
+      "min": 9,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Tagline Font Size",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "tagline_color",
+      "label": "Tagline Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Heading Typography & Color"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
+      "label": "Heading Text",
       "default": "The Gigi Hadid Edit"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 24,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Heading Font Size",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 18,
+      "max": 54,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Heading Font Size",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Button & Link Settings"
     },
     {
       "type": "text",
       "id": "button_label",
-      "label": "Button Label",
+      "label": "Button Name / Label",
       "default": "Discover"
     },
     {
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 9,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Button Font Size",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button Hover Background Color",
+      "default": "#ffffff"
     }
   ],
   "presets": [

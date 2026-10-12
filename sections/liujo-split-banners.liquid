@@ -1,24 +1,137 @@
 {% comment %}
-  LIU JO 2-COLUMN SPLIT EDITORIAL BANNERS (SQUARE BLOCKS)
+  LIU JO SPLIT EDITORIAL BANNERS (SQUARE / PORTRAIT BLOCKS)
   Matches Liu Jo's category square slide blocks: "Shirts" & "Jackets" / "Jeans" & "Shoes".
+  Fully dynamic with separate desktop/mobile image pickers, font size controls, button colors & layout options.
 {% endcomment %}
 
-<div class="liujo-split-banners-section" data-section-id="{{ section.id }}" data-section-type="liujo-split-banners">
+{%- assign s_id = section.id -%}
+<div class="liujo-split-banners-section liujo-split-banners--{{ s_id }}" data-section-id="{{ s_id }}" data-section-type="liujo-split-banners">
+  <style>
+    .liujo-split-banners--{{ s_id }} .liujo-split-grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop | default: 2 }}, minmax(0, 1fr));
+      gap: {{ section.settings.gap_desktop | default: 16 }}px;
+      {% if section.settings.full_width %}
+        max-width: 100%;
+        padding: 0 {{ section.settings.padding_x | default: 16 }}px;
+      {% endif %}
+    }
+    @media (max-width: 767px) {
+      .liujo-split-banners--{{ s_id }} .liujo-split-grid {
+        grid-template-columns: repeat({{ section.settings.columns_mobile | default: 1 }}, minmax(0, 1fr));
+        gap: {{ section.settings.gap_mobile | default: 12 }}px;
+      }
+    }
+  </style>
+
   <div class="liujo-split-grid">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.link | default: '/collections/all' }}" class="liujo-split-block" {{ block.shopify_attributes }}>
-        {%- if block.settings.image != blank -%}
-          <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-        {%- elsif block.settings.demo_image_url != blank -%}
-          <img src="{{ block.settings.demo_image_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-        {%- else -%}
-          {{ 'collection-1' | placeholder_svg_tag }}
-        {%- endif -%}
+      {%- assign b_id = block.id -%}
+      <div class="liujo-split-block-wrapper liujo-split-block--{{ b_id }}" {{ block.shopify_attributes }}>
+        <style>
+          .liujo-split-block--{{ b_id }} .liujo-split-block {
+            aspect-ratio: {{ block.settings.aspect_ratio | default: section.settings.aspect_ratio | default: '1 / 1' }};
+          }
+          .liujo-split-block--{{ b_id }} .liujo-split-block__overlay {
+            background-color: {{ block.settings.overlay_color | default: '#000000' }};
+            opacity: {{ block.settings.overlay_opacity | default: 20 | divided_by: 100.0 }};
+          }
+          .liujo-split-block--{{ b_id }} .liujo-split-block__content {
+            align-items: {{ block.settings.content_position | default: 'flex-end' }};
+            justify-content: {{ block.settings.content_alignment | default: 'center' }};
+            text-align: {{ block.settings.content_alignment | default: 'center' }};
+          }
+          .liujo-split-block--{{ b_id }} .liujo-split-block__subheading {
+            font-size: {{ block.settings.subheading_size_desktop | default: 12 }}px;
+            color: {{ block.settings.subheading_color | default: '#ffffff' }};
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+          }
+          .liujo-split-block--{{ b_id }} .liujo-split-block__title {
+            font-size: {{ block.settings.title_size_desktop | default: 30 }}px;
+            color: {{ block.settings.title_color | default: '#ffffff' }};
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 0 0 {% if block.settings.button_label != blank %}16px{% else %}0{% endif %};
+            line-height: 1.2;
+          }
+          @media (max-width: 767px) {
+            .liujo-split-block--{{ b_id }} .liujo-split-block__subheading {
+              font-size: {{ block.settings.subheading_size_mobile | default: 10 }}px;
+            }
+            .liujo-split-block--{{ b_id }} .liujo-split-block__title {
+              font-size: {{ block.settings.title_size_mobile | default: 22 }}px;
+            }
+          }
+          .liujo-split-block--{{ b_id }} .liujo-split-block__btn {
+            font-size: {{ block.settings.button_font_size | default: 11 }}px;
+            color: {{ block.settings.button_text_color | default: '#ffffff' }} !important;
+            background-color: {{ block.settings.button_bg_color | default: 'transparent' }} !important;
+            border: 1px solid {{ block.settings.button_border_color | default: '#ffffff' }} !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 28px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+          }
+          .liujo-split-block--{{ b_id }} .liujo-split-block__btn:hover {
+            color: {{ block.settings.button_hover_text_color | default: '#000000' }} !important;
+            background-color: {{ block.settings.button_hover_bg_color | default: '#ffffff' }} !important;
+            border-color: {{ block.settings.button_hover_bg_color | default: '#ffffff' }} !important;
+          }
+        </style>
 
-        <div class="liujo-split-block__overlay">
-          <h2 class="liujo-split-block__title">{{ block.settings.title }}</h2>
-        </div>
-      </a>
+        <a href="{{ block.settings.link | default: '/collections/all' }}" class="liujo-split-block">
+          <picture>
+            {%- if block.settings.image_mobile != blank -%}
+              <source media="(max-width: 767px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+            {%- endif -%}
+
+            {%- assign desk_img = block.settings.image_desktop | default: block.settings.image -%}
+            {%- if desk_img != blank -%}
+              <img src="{{ desk_img | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+            {%- elsif block.settings.demo_image_url != blank -%}
+              <img src="{{ block.settings.demo_image_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </picture>
+
+          <!-- Color / Dark Overlay -->
+          <div class="liujo-split-block__overlay"></div>
+
+          <!-- Content Elements -->
+          <div class="liujo-split-block__content" style="position: absolute; inset: 0; display: flex; padding: 28px 24px; z-index: 2;">
+            <div style="width: 100%;">
+              {%- if block.settings.subheading != blank -%}
+                <div class="liujo-split-block__subheading">
+                  {{ block.settings.subheading }}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.title != blank -%}
+                <h2 class="liujo-split-block__title">
+                  {{ block.settings.title }}
+                </h2>
+              {%- endif -%}
+
+              {%- if block.settings.button_label != blank -%}
+                <div>
+                  <span class="liujo-split-block__btn">
+                    {{ block.settings.button_label }}
+                  </span>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </a>
+      </div>
     {%- endfor -%}
   </div>
 </div>
@@ -26,22 +139,89 @@
 {% schema %}
 {
   "name": "Liu Jo Split Banners",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Desktop Columns",
+      "options": [
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" },
+        { "value": "4", "label": "4 Columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile Columns",
+      "options": [
+        { "value": "1", "label": "1 Column (Stacked)" },
+        { "value": "2", "label": "2 Columns (Side by side)" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Default Aspect Ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "3 / 4", "label": "Portrait (3:4)" },
+        { "value": "4 / 5", "label": "Editorial Portrait (4:5)" },
+        { "value": "16 / 9", "label": "Landscape (16:9)" }
+      ],
+      "default": "1 / 1"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Grid Gap",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Grid Gap",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width Grid",
+      "default": false
+    }
+  ],
   "blocks": [
     {
       "type": "banner",
-      "name": "Square Banner",
+      "name": "Split Banner Block",
       "settings": [
         {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Category"
+          "type": "header",
+          "content": "Images (Desktop & Mobile)"
         },
         {
           "type": "image_picker",
-          "id": "image",
-          "label": "Image"
+          "id": "image_desktop",
+          "label": "Desktop Banner Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Banner Image"
         },
         {
           "type": "text",
@@ -49,9 +229,187 @@
           "label": "Default / External Image URL"
         },
         {
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Custom Aspect Ratio for this block",
+          "options": [
+            { "value": "1 / 1", "label": "Square (1:1)" },
+            { "value": "3 / 4", "label": "Portrait (3:4)" },
+            { "value": "4 / 5", "label": "Editorial Portrait (4:5)" },
+            { "value": "16 / 9", "label": "Landscape (16:9)" }
+          ],
+          "default": "1 / 1"
+        },
+        {
+          "type": "header",
+          "content": "Overlay Styling"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "unit": "%",
+          "label": "Overlay Opacity",
+          "default": 20
+        },
+        {
+          "type": "header",
+          "content": "Content Alignment & Position"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Vertical Position",
+          "options": [
+            { "value": "flex-start", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Bottom" }
+          ],
+          "default": "flex-end"
+        },
+        {
+          "type": "header",
+          "content": "Subheading / Tagline"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading Text"
+        },
+        {
+          "type": "range",
+          "id": "subheading_size_desktop",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop Subheading Font Size",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "subheading_size_mobile",
+          "min": 9,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile Subheading Font Size",
+          "default": 10
+        },
+        {
+          "type": "color",
+          "id": "subheading_color",
+          "label": "Subheading Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Title Typography & Color"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title / Category",
+          "default": "Category"
+        },
+        {
+          "type": "range",
+          "id": "title_size_desktop",
+          "min": 16,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop Title Font Size",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "title_size_mobile",
+          "min": 14,
+          "max": 44,
+          "step": 2,
+          "unit": "px",
+          "label": "Mobile Title Font Size",
+          "default": 22
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Button & Link Settings"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Name / Label (Optional)"
+        },
+        {
           "type": "url",
           "id": "link",
-          "label": "Link"
+          "label": "Banner Link"
+        },
+        {
+          "type": "range",
+          "id": "button_font_size",
+          "min": 9,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Font Size",
+          "default": 11
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "transparent"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color",
+          "label": "Button Border Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_text_color",
+          "label": "Button Hover Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_bg_color",
+          "label": "Button Hover Background Color",
+          "default": "#ffffff"
         }
       ]
     }

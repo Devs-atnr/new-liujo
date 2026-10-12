@@ -1,36 +1,121 @@
 {% comment %}
   LIU JO EDITORIAL HERO SLIDER SECTION
   Full-bleed luxury image slider matching Liu Jo's "Explore the Looks" banner.
+  Fully dynamic with separate desktop/mobile images, font size sliders, button colors, and alignments.
 {% endcomment %}
 
 <div class="liujo-hero-slider-section" data-section-id="{{ section.id }}" data-section-type="liujo-hero-slider">
   <div class="liujo-hero-slider">
     {%- for block in section.blocks -%}
-      <div class="liujo-hero-slide" {{ block.shopify_attributes }}>
+      {%- assign block_id = block.id -%}
+      <div class="liujo-hero-slide liujo-hero-slide--{{ block_id }}" {{ block.shopify_attributes }}>
+        <style>
+          .liujo-hero-slide--{{ block_id }} {
+            height: {{ block.settings.slide_height_desktop | default: section.settings.slide_height_desktop | default: '85vh' }};
+            min-height: {{ block.settings.min_height_desktop | default: 520 }}px;
+          }
+          @media (max-width: 767px) {
+            .liujo-hero-slide--{{ block_id }} {
+              height: {{ block.settings.slide_height_mobile | default: section.settings.slide_height_mobile | default: '70vh' }};
+              min-height: {{ block.settings.min_height_mobile | default: 420 }}px;
+            }
+          }
+          .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__overlay {
+            background-color: {{ block.settings.overlay_color | default: '#000000' }};
+            opacity: {{ block.settings.overlay_opacity | default: 15 | divided_by: 100.0 }};
+          }
+          .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__overlay-wrap {
+            justify-content: {{ block.settings.content_alignment | default: 'center' }};
+            align-items: {{ block.settings.content_position | default: 'flex-end' }};
+            text-align: {{ block.settings.content_alignment | default: 'center' }};
+          }
+          .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__subheading {
+            font-size: {{ block.settings.subheading_size_desktop | default: 13 }}px;
+            color: {{ block.settings.subheading_color | default: '#ffffff' }};
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            font-weight: 600;
+          }
+          .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__heading {
+            font-size: {{ block.settings.heading_size_desktop | default: 48 }}px;
+            color: {{ block.settings.heading_color | default: '#ffffff' }};
+            line-height: 1.15;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            font-weight: 600;
+          }
+          @media (max-width: 767px) {
+            .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__subheading {
+              font-size: {{ block.settings.subheading_size_mobile | default: 11 }}px;
+            }
+            .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__heading {
+              font-size: {{ block.settings.heading_size_mobile | default: 28 }}px;
+            }
+          }
+          .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn {
+            font-size: {{ block.settings.button_font_size | default: 11 }}px;
+            color: {{ block.settings.button_text_color | default: '#ffffff' }} !important;
+            background-color: {{ block.settings.button_bg_color | default: 'transparent' }} !important;
+            border: 1px solid {{ block.settings.button_border_color | default: '#ffffff' }} !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 38px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+          }
+          .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn:hover {
+            color: {{ block.settings.button_hover_text_color | default: '#000000' }} !important;
+            background-color: {{ block.settings.button_hover_bg_color | default: '#ffffff' }} !important;
+            border-color: {{ block.settings.button_hover_bg_color | default: '#ffffff' }} !important;
+          }
+        </style>
+
         <picture>
           {%- if block.settings.image_mobile != blank -%}
-            <source media="(max-width: 767px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+            <source media="(max-width: 767px)" srcset="{{ block.settings.image_mobile | image_url: width: 1000 }}">
+          {%- elsif block.settings.demo_image_mobile != blank -%}
+            <source media="(max-width: 767px)" srcset="{{ block.settings.demo_image_mobile }}">
+          {%- elsif block.settings.image_desktop == blank -%}
+            <source media="(max-width: 767px)" srcset="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwc9a97ec1/the-gigi-hadid-edit/drop1/HP/Hero-2-mob.jpg">
           {%- endif -%}
+
           {%- if block.settings.image_desktop != blank -%}
-            <img src="{{ block.settings.image_desktop | image_url: width: 2000 }}" alt="{{ block.settings.heading | escape }}" class="liujo-hero-slide__image" loading="lazy">
+            <img src="{{ block.settings.image_desktop | image_url: width: 2400 }}" alt="{{ block.settings.heading | default: 'Liu Jo Looks' | escape }}" class="liujo-hero-slide__image" loading="lazy">
+          {%- elsif block.settings.demo_image_desktop != blank -%}
+            <img src="{{ block.settings.demo_image_desktop }}" alt="{{ block.settings.heading | default: 'Liu Jo Looks' | escape }}" class="liujo-hero-slide__image" loading="lazy">
           {%- else -%}
             <!-- Official Liu Jo High Resolution Editorial Image -->
-            <source media="(max-width: 767px)" srcset="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwc9a97ec1/the-gigi-hadid-edit/drop1/HP/Hero-2-mob.jpg">
             <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg" alt="Liu Jo Looks" class="liujo-hero-slide__image" loading="lazy">
           {%- endif -%}
         </picture>
 
-        <div class="liujo-hero-slide__overlay" style="background: rgba(0, 0, 0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});">
-          <div class="liujo-hero-slide__content">
+        <!-- Dynamic Overlay Layer -->
+        <div class="liujo-hero-slide__overlay"></div>
+
+        <!-- Content Overlay Container -->
+        <div class="liujo-hero-slide__overlay-wrap" style="position: absolute; inset: 0; display: flex; padding: 0 24px 70px; z-index: 2;">
+          <div class="liujo-hero-slide__content" style="max-width: 760px; width: 100%;">
+            {%- if block.settings.subheading != blank -%}
+              <div class="liujo-hero-slide__subheading">
+                {{ block.settings.subheading }}
+              </div>
+            {%- endif -%}
+
             {%- if block.settings.heading != blank -%}
-              <h2 class="liujo-title-display" style="color: #fff; margin-bottom: 20px;">
+              <h2 class="liujo-hero-slide__heading">
                 {{ block.settings.heading }}
               </h2>
             {%- endif -%}
 
             {%- if block.settings.button_label != blank -%}
               <div>
-                <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="btn-editorial-outline btn-editorial-outline--white">
+                <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="liujo-hero-slide__btn">
                   <span>{{ block.settings.button_label }}</span>
                 </a>
               </div>
@@ -45,48 +130,237 @@
 {% schema %}
 {
   "name": "Liu Jo Hero Slider",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Global Slide Dimensions"
+    },
+    {
+      "type": "select",
+      "id": "slide_height_desktop",
+      "label": "Desktop Slide Height",
+      "options": [
+        { "value": "100vh", "label": "Full Screen (100vh)" },
+        { "value": "85vh", "label": "Large (85vh)" },
+        { "value": "75vh", "label": "Medium (75vh)" },
+        { "value": "650px", "label": "Fixed 650px" },
+        { "value": "550px", "label": "Fixed 550px" }
+      ],
+      "default": "85vh"
+    },
+    {
+      "type": "select",
+      "id": "slide_height_mobile",
+      "label": "Mobile Slide Height",
+      "options": [
+        { "value": "85vh", "label": "Tall (85vh)" },
+        { "value": "70vh", "label": "Standard (70vh)" },
+        { "value": "60vh", "label": "Compact (60vh)" },
+        { "value": "450px", "label": "Fixed 450px" }
+      ],
+      "default": "70vh"
+    }
+  ],
   "blocks": [
     {
       "type": "slide",
       "name": "Editorial Slide",
       "settings": [
         {
+          "type": "header",
+          "content": "Desktop & Mobile Banner Images"
+        },
+        {
           "type": "image_picker",
           "id": "image_desktop",
-          "label": "Desktop Image"
+          "label": "Desktop Banner Image"
         },
         {
           "type": "image_picker",
           "id": "image_mobile",
-          "label": "Mobile Image"
+          "label": "Mobile Banner Image"
+        },
+        {
+          "type": "text",
+          "id": "demo_image_desktop",
+          "label": "External Desktop Image URL (Optional Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "demo_image_mobile",
+          "label": "External Mobile Image URL (Optional Fallback)"
+        },
+        {
+          "type": "header",
+          "content": "Overlay Styling"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay Color",
+          "default": "#000000"
         },
         {
           "type": "range",
           "id": "overlay_opacity",
           "min": 0,
-          "max": 70,
+          "max": 80,
           "step": 5,
           "unit": "%",
           "label": "Overlay Opacity",
           "default": 15
         },
         {
+          "type": "header",
+          "content": "Content Alignment & Position"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Vertical Position",
+          "options": [
+            { "value": "flex-start", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Bottom" }
+          ],
+          "default": "flex-end"
+        },
+        {
+          "type": "header",
+          "content": "Tagline / Subheading"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading Text"
+        },
+        {
+          "type": "range",
+          "id": "subheading_size_desktop",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop Subheading Size",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "subheading_size_mobile",
+          "min": 9,
+          "max": 22,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile Subheading Size",
+          "default": 11
+        },
+        {
+          "type": "color",
+          "id": "subheading_color",
+          "label": "Subheading Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Heading Typography & Color"
+        },
+        {
           "type": "text",
           "id": "heading",
-          "label": "Heading",
+          "label": "Heading Text",
           "default": "Explore the Looks"
+        },
+        {
+          "type": "range",
+          "id": "heading_size_desktop",
+          "min": 20,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop Heading Font Size",
+          "default": 48
+        },
+        {
+          "type": "range",
+          "id": "heading_size_mobile",
+          "min": 16,
+          "max": 48,
+          "step": 2,
+          "unit": "px",
+          "label": "Mobile Heading Font Size",
+          "default": 28
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Button & Link Settings"
         },
         {
           "type": "text",
           "id": "button_label",
-          "label": "Button Label",
+          "label": "Button Name / Label",
           "default": "Discover Collection"
         },
         {
           "type": "url",
           "id": "button_link",
           "label": "Button Link"
+        },
+        {
+          "type": "range",
+          "id": "button_font_size",
+          "min": 9,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Font Size",
+          "default": 11
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "transparent"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color",
+          "label": "Button Border Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_text_color",
+          "label": "Button Hover Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_bg_color",
+          "label": "Button Hover Background Color",
+          "default": "#ffffff"
         }
       ]
     }

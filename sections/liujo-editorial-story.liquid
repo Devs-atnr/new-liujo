@@ -1,17 +1,92 @@
 {% comment %}
   LIU JO EDITORIAL STORY / LOOKBOOK SECTION
   Split narrative section showcasing Italian craftsmanship, heritage, and collections.
+  Fully dynamic with separate desktop/mobile image pickers, font size sliders, and button color styling.
 {% endcomment %}
 
-<div class="liujo-editorial-story-section" data-section-id="{{ section.id }}" data-section-type="liujo-editorial-story">
+{%- assign s_id = section.id -%}
+<div class="liujo-editorial-story-section liujo-editorial-story--{{ s_id }}" data-section-id="{{ s_id }}" data-section-type="liujo-editorial-story">
+  <style>
+    .liujo-editorial-story--{{ s_id }} {
+      background-color: {{ section.settings.bg_color | default: '#fafafa' }};
+      padding: {{ section.settings.padding_top | default: 80 }}px 0 {{ section.settings.padding_bottom | default: 80 }}px;
+    }
+    .liujo-editorial-story--{{ s_id }} .liujo-story-tag {
+      font-size: {{ section.settings.tagline_size_desktop | default: 12 }}px;
+      color: {{ section.settings.tagline_color | default: '#888888' }};
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .liujo-editorial-story--{{ s_id }} .liujo-story-heading {
+      font-size: {{ section.settings.heading_size_desktop | default: 36 }}px;
+      color: {{ section.settings.heading_color | default: '#111111' }};
+      line-height: 1.25;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .liujo-editorial-story--{{ s_id }} .liujo-story-text p {
+      font-size: {{ section.settings.description_size_desktop | default: 15 }}px;
+      color: {{ section.settings.description_color | default: '#555555' }};
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 767px) {
+      .liujo-editorial-story--{{ s_id }} {
+        padding: {{ section.settings.padding_top | default: 80 | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | default: 80 | divided_by: 2 }}px;
+      }
+      .liujo-editorial-story--{{ s_id }} .liujo-story-tag {
+        font-size: {{ section.settings.tagline_size_mobile | default: 11 }}px;
+      }
+      .liujo-editorial-story--{{ s_id }} .liujo-story-heading {
+        font-size: {{ section.settings.heading_size_mobile | default: 24 }}px;
+      }
+      .liujo-editorial-story--{{ s_id }} .liujo-story-text p {
+        font-size: {{ section.settings.description_size_mobile | default: 13 }}px;
+      }
+    }
+    .liujo-editorial-story--{{ s_id }} .liujo-story-btn {
+      font-size: {{ section.settings.button_font_size | default: 11 }}px;
+      color: {{ section.settings.button_text_color | default: '#111111' }} !important;
+      background-color: {{ section.settings.button_bg_color | default: 'transparent' }} !important;
+      border: 1px solid {{ section.settings.button_border_color | default: '#111111' }} !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 38px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .liujo-editorial-story--{{ s_id }} .liujo-story-btn:hover {
+      color: {{ section.settings.button_hover_text_color | default: '#ffffff' }} !important;
+      background-color: {{ section.settings.button_hover_bg_color | default: '#111111' }} !important;
+      border-color: {{ section.settings.button_hover_bg_color | default: '#111111' }} !important;
+    }
+  </style>
+
   <div class="liujo-story-container" {% if section.settings.image_position == 'right' %}style="direction: rtl;"{% endif %}>
-    <!-- Story Visual Image -->
+    <!-- Story Visual Image (with Mobile / Desktop Picture) -->
     <div class="liujo-story-image-wrap" style="direction: ltr;">
-      {%- if section.settings.image != blank -%}
-        <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
-      {%- else -%}
-        <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwc9a97ec1/the-gigi-hadid-edit/drop1/HP/Hero-2-mob.jpg" alt="Liu Jo Editorial Heritage" loading="lazy">
-      {%- endif -%}
+      <picture>
+        {%- if section.settings.image_mobile != blank -%}
+          <source media="(max-width: 767px)" srcset="{{ section.settings.image_mobile | image_url: width: 800 }}">
+        {%- endif -%}
+
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
+        {%- elsif section.settings.demo_image_url != blank -%}
+          <img src="{{ section.settings.demo_image_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
+        {%- else -%}
+          <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwc9a97ec1/the-gigi-hadid-edit/drop1/HP/Hero-2-mob.jpg" alt="Liu Jo Editorial Heritage" loading="lazy">
+        {%- endif -%}
+      </picture>
     </div>
 
     <!-- Story Editorial Text -->
@@ -20,18 +95,22 @@
         <span class="liujo-story-tag">{{ section.settings.tagline }}</span>
       {%- endif -%}
 
-      <h2 class="liujo-story-heading">
-        {{ section.settings.heading | default: 'Italian Glamour & Contemporary Femininity' }}
-      </h2>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="liujo-story-heading">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
 
-      <div class="liujo-story-text">
-        <p>{{ section.settings.description | default: 'Born in the heart of the Italian fashion district of Carpi in 1995, Liu Jo embodies modern elegance and timeless allure. Every piece celebrates natural beauty through tailor-made fits, premium materials, and distinctive Italian craftsmanship.' }}</p>
-      </div>
+      {%- if section.settings.description != blank -%}
+        <div class="liujo-story-text">
+          <p>{{ section.settings.description }}</p>
+        </div>
+      {%- endif -%}
 
       {%- if section.settings.button_label != blank -%}
         <div>
-          <a href="{{ section.settings.button_link | default: '/pages/about' }}" class="btn-editorial-outline">
-            <span>{{ section.settings.button_label | default: 'Read Our Story' }}</span>
+          <a href="{{ section.settings.button_link | default: '/pages/about' }}" class="liujo-story-btn">
+            <span>{{ section.settings.button_label }}</span>
           </a>
         </div>
       {%- endif -%}
@@ -44,6 +123,10 @@
   "name": "Liu Jo Editorial Story",
   "settings": [
     {
+      "type": "header",
+      "content": "Layout & Background"
+    },
+    {
       "type": "select",
       "id": "image_position",
       "label": "Image Position",
@@ -54,9 +137,53 @@
       "default": "left"
     },
     {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background Color",
+      "default": "#fafafa"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 140,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 140,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Story Images (Desktop & Mobile)"
+    },
+    {
       "type": "image_picker",
       "id": "image",
-      "label": "Story Image"
+      "label": "Desktop Story Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Story Image"
+    },
+    {
+      "type": "text",
+      "id": "demo_image_url",
+      "label": "Default / External Image URL"
+    },
+    {
+      "type": "header",
+      "content": "Tagline Typography & Color"
     },
     {
       "type": "text",
@@ -65,27 +192,157 @@
       "default": "Liu Jo Heritage"
     },
     {
+      "type": "range",
+      "id": "tagline_size_desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Tagline Size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tagline_size_mobile",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Tagline Size",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "tagline_color",
+      "label": "Tagline Color",
+      "default": "#888888"
+    },
+    {
+      "type": "header",
+      "content": "Heading Typography & Color"
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Italian Glamour & Contemporary Femininity"
     },
     {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 20,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Heading Size",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 42,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Heading Size",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Description Typography & Color"
+    },
+    {
       "type": "textarea",
       "id": "description",
-      "label": "Story Text",
+      "label": "Story Description Text",
       "default": "Born in the heart of the Italian fashion district of Carpi in 1995, Liu Jo embodies modern elegance and timeless allure. Every piece celebrates natural beauty through tailor-made fits, premium materials, and distinctive Italian craftsmanship."
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Description Size",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Description Size",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Text Color",
+      "default": "#555555"
+    },
+    {
+      "type": "header",
+      "content": "Button & Link Settings"
     },
     {
       "type": "text",
       "id": "button_label",
-      "label": "Button Label",
+      "label": "Button Name / Label",
       "default": "Read Our Story"
     },
     {
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Button Font Size",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button Hover Background Color",
+      "default": "#111111"
     }
   ],
   "presets": [
