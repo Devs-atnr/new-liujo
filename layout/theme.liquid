@@ -318,7 +318,7 @@
     {%- endif -%}
 
     <script>
-      if (Shopify.designMode) {
+      if (window.Shopify && window.Shopify.designMode) {
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>

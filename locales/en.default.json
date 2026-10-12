@@ -276,6 +276,7 @@
     },
 
     "header": {
+      "name": "Header",
       "announcement": "Announcement",
       "menu": "Menu",
       "cart_count": {
@@ -318,6 +319,7 @@
       }
     },
     "footer": {
+      "name": "Footer",
       "payment": "Payment methods"
     },
     "featured_blog": {
