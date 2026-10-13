@@ -462,6 +462,7 @@ function initLiuJoSearchDrawer() {
   function openSearch() {
     drawer.classList.add('is-open');
     backdrop.classList.add('is-open');
+    document.documentElement.classList.add('has-search-open');
     document.body.classList.add('has-search-open');
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
@@ -473,6 +474,7 @@ function initLiuJoSearchDrawer() {
   function closeSearch() {
     drawer.classList.remove('is-open');
     backdrop.classList.remove('is-open');
+    document.documentElement.classList.remove('has-search-open');
     document.body.classList.remove('has-search-open');
     document.body.style.overflow = '';
     if (drawer) drawer.scrollTop = 0;
