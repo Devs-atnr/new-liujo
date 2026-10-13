@@ -75,11 +75,26 @@
   <!-- Liu Jo Mobile Sort Dropdown Menu -->
   <div class="liujo-mobile-sort-dropdown large-up-hide medium-hide" id="LiuJoMobileSortDropdown" style="display: none;">
     <ul class="liujo-sort-options-list">
-      <li data-sort-value="manual" class="{% if sort_by == 'manual' or sort_by == '' %}is-selected{% endif %}">OUR FAVOURITES</li>
-      <li data-sort-value="price-ascending" class="{% if sort_by == 'price-ascending' %}is-selected{% endif %}">LOW TO HIGH</li>
-      <li data-sort-value="price-descending" class="{% if sort_by == 'price-descending' %}is-selected{% endif %}">HIGH TO LOW</li>
-      <li data-sort-value="created-descending" class="{% if sort_by == 'created-descending' %}is-selected{% endif %}">NEW IN</li>
-      <li data-sort-value="best-selling" class="{% if sort_by == 'best-selling' %}is-selected{% endif %}">BEST SELLERS</li>
+      <li data-sort-value="manual" class="{% if sort_by == 'manual' or sort_by == '' %}is-selected{% endif %}">
+        <span>OUR FAVOURITES</span>
+        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </li>
+      <li data-sort-value="price-ascending" class="{% if sort_by == 'price-ascending' %}is-selected{% endif %}">
+        <span>LOW TO HIGH</span>
+        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </li>
+      <li data-sort-value="price-descending" class="{% if sort_by == 'price-descending' %}is-selected{% endif %}">
+        <span>HIGH TO LOW</span>
+        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </li>
+      <li data-sort-value="created-descending" class="{% if sort_by == 'created-descending' %}is-selected{% endif %}">
+        <span>NEW IN</span>
+        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </li>
+      <li data-sort-value="best-selling" class="{% if sort_by == 'best-selling' %}is-selected{% endif %}">
+        <span>BEST SELLERS</span>
+        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </li>
     </ul>
   </div>
 
@@ -460,25 +475,8 @@
         {% endif %}
 
         {%- if filter_type == 'horizontal' -%}
-          <!-- Liu Jo Desktop Right Controls: Grid Toggler & Sort By Dropdown -->
+          <!-- Liu Jo Desktop Right Controls: Sort By Dropdown -->
           <div class="liujo-desktop-toolbar-right small-hide">
-            <!-- Grid Column Toggler (2 col vs 4 col) -->
-            <div class="liujo-grid-toggler" data-liujo-grid-toggler>
-              <button type="button" class="liujo-grid-toggle-btn" data-grid-cols="2" aria-label="2 Columns View" title="2 Columns">
-                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
-                  <rect x="1" y="2" width="6" height="12" rx="1"></rect>
-                  <rect x="9" y="2" width="6" height="12" rx="1"></rect>
-                </svg>
-              </button>
-              <button type="button" class="liujo-grid-toggle-btn is-active" data-grid-cols="4" aria-label="4 Columns View" title="4 Columns">
-                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
-                  <rect x="1" y="2" width="2.5" height="12" rx="0.5"></rect>
-                  <rect x="5" y="2" width="2.5" height="12" rx="0.5"></rect>
-                  <rect x="9" y="2" width="2.5" height="12" rx="0.5"></rect>
-                  <rect x="13" y="2" width="2.5" height="12" rx="0.5"></rect>
-                </svg>
-              </button>
-            </div>
 
             {%- if enable_sorting -%}
               <!-- Liu Jo Desktop Sort Trigger & Dropdown -->
@@ -491,11 +489,26 @@
                 </button>
                 <div class="liujo-desktop-sort-dropdown" id="LiuJoDesktopSortDropdown" style="display: none;">
                   <ul class="liujo-sort-options-list">
-                    <li data-sort-value="manual" class="{% if sort_by == 'manual' or sort_by == '' %}is-selected{% endif %}">OUR FAVOURITES</li>
-                    <li data-sort-value="price-ascending" class="{% if sort_by == 'price-ascending' %}is-selected{% endif %}">LOW TO HIGH</li>
-                    <li data-sort-value="price-descending" class="{% if sort_by == 'price-descending' %}is-selected{% endif %}">HIGH TO LOW</li>
-                    <li data-sort-value="created-descending" class="{% if sort_by == 'created-descending' %}is-selected{% endif %}">NEW IN</li>
-                    <li data-sort-value="best-selling" class="{% if sort_by == 'best-selling' %}is-selected{% endif %}">BEST SELLERS</li>
+                    <li data-sort-value="manual" class="{% if sort_by == 'manual' or sort_by == '' %}is-selected{% endif %}">
+                      <span>OUR FAVOURITES</span>
+                      <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    </li>
+                    <li data-sort-value="price-ascending" class="{% if sort_by == 'price-ascending' %}is-selected{% endif %}">
+                      <span>LOW TO HIGH</span>
+                      <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    </li>
+                    <li data-sort-value="price-descending" class="{% if sort_by == 'price-descending' %}is-selected{% endif %}">
+                      <span>HIGH TO LOW</span>
+                      <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    </li>
+                    <li data-sort-value="created-descending" class="{% if sort_by == 'created-descending' %}is-selected{% endif %}">
+                      <span>NEW IN</span>
+                      <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    </li>
+                    <li data-sort-value="best-selling" class="{% if sort_by == 'best-selling' %}is-selected{% endif %}">
+                      <span>BEST SELLERS</span>
+                      <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    </li>
                   </ul>
                 </div>
                 <!-- Native select preserved for form submission / serialization -->

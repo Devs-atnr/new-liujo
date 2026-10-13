@@ -65,6 +65,25 @@
   margin: 0 !important;
 }
 
+/* Collection Title Row & Grid Toggler on Right (Image 1 Parity) */
+.liujo-plp-header-top-row {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+.liujo-plp-header-left {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.liujo-plp-header-top-row .liujo-plp-breadcrumbs {
+  padding: 14px 0 2px 0 !important;
+}
+
 .collection-hero__title {
   font-family: var(--liujo-font-main) !important;
   font-size: 20px !important;
@@ -131,9 +150,10 @@
     border-top: 1px solid #111;
     border-bottom: 1px solid #111;
     background: #fff;
+    position: -webkit-sticky;
     position: sticky;
-    top: var(--liujo-header-height-mob, 56px);
-    z-index: 25;
+    top: var(--liujo-header-h-mob, 60px);
+    z-index: 90;
   }
 
   .liujo-split-btn {
@@ -174,9 +194,10 @@
     background: #fff;
     border-bottom: 1px solid #111;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    position: -webkit-sticky;
     position: sticky;
-    top: calc(var(--liujo-header-height-mob, 56px) + 46px);
-    z-index: 24;
+    top: calc(var(--liujo-header-h-mob, 60px) + 46px);
+    z-index: 89;
   }
 
   .liujo-sort-options-list {
@@ -186,6 +207,9 @@
   }
 
   .liujo-sort-options-list li {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     padding: 14px 20px;
     font-family: var(--liujo-font-main);
     font-size: 12px;
@@ -200,6 +224,17 @@
 
   .liujo-sort-options-list li:last-child {
     border-bottom: none;
+  }
+
+  .liujo-sort-options-list li .liujo-sort-check {
+    display: none !important;
+    stroke: #000 !important;
+    margin-left: 16px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .liujo-sort-options-list li.is-selected .liujo-sort-check {
+    display: block !important;
   }
 
   .liujo-sort-options-list li:hover,
@@ -276,29 +311,50 @@
   .mobile-facets__list {
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 14px 10px !important;
+    gap: 16px 8px !important;
     padding: 0 !important;
     margin: 0 !important;
   }
 
-  @media (max-width: 480px) {
-    .mobile-facets__list {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
+  .mobile-facets__item input[type="checkbox"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    border: 1px solid #767676 !important;
+    border-radius: 0 !important;
+    background-color: #ffffff !important;
+    cursor: pointer !important;
+    position: relative !important;
+    margin: 0 !important;
+    margin-right: 8px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0 !important;
   }
 
-  .mobile-facets__item input[type="checkbox"] {
-    width: 16px !important;
-    height: 16px !important;
-    border: 1px solid #777 !important;
-    border-radius: 0 !important;
-    margin-right: 8px !important;
-    accent-color: #000 !important;
-    cursor: pointer !important;
+  .mobile-facets__item input[type="checkbox"]:checked {
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  .mobile-facets__item input[type="checkbox"]:checked::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 5px !important;
+    top: 2px !important;
+    width: 5px !important;
+    height: 9px !important;
+    border: solid #ffffff !important;
+    border-width: 0 1.5px 1.5px 0 !important;
+    transform: rotate(45deg) !important;
   }
 
   .mobile-facets__label {
-    font-size: 11.5px !important;
+    font-size: 11px !important;
+    line-height: 1.3 !important;
     letter-spacing: 0.02em !important;
     color: #222 !important;
     display: flex !important;
@@ -307,16 +363,35 @@
   }
 }
 
-/* 4. DESKTOP FILTER BAR & MODALS */
+/* 4. FIXED HEADER & FILTER BAR SYNCHRONIZATION */
+.shopify-section-group-header-group {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: calc(-1 * var(--liujo-announcement-h, 0px)) !important;
+  z-index: 95 !important;
+  background: #ffffff !important;
+}
+
+.facets-wrapper {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: var(--liujo-header-h-desk, 86px) !important;
+  z-index: 90 !important;
+  background: #ffffff !important;
+}
+
+@media (max-width: 989px) {
+  .facets-wrapper {
+    top: var(--liujo-header-h-mob, 60px) !important;
+  }
+}
+
 @media (min-width: 990px) {
   .facets-container {
     max-width: 100% !important;
     padding: 10px 24px 14px 24px !important;
     background: #fff !important;
     border-bottom: 1px solid #ebebeb !important;
-    position: sticky !important;
-    top: var(--liujo-header-height-desk, 80px) !important;
-    z-index: 25 !important;
   }
 
   .facets__form {
@@ -378,27 +453,29 @@
     position: absolute !important;
     top: calc(100% + 10px) !important;
     left: 0 !important;
-    width: 360px !important;
-    max-width: 90vw !important;
+    width: 580px !important;
+    max-width: calc(100vw - 48px) !important;
     background: #fff !important;
     border: 1px solid #e0e0e0 !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
-    padding: 24px 22px 18px 22px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+    padding: 24px 24px 20px 24px !important;
     z-index: 100 !important;
     border-radius: 0 !important;
   }
 
   .liujo-facet-popup-close {
     position: absolute !important;
-    top: 12px !important;
-    right: 14px !important;
+    top: 14px !important;
+    right: 16px !important;
     background: transparent !important;
     border: none !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     line-height: 1 !important;
     cursor: pointer !important;
     color: #111 !important;
-    padding: 4px !important;
+    padding: 6px !important;
+    z-index: 5 !important;
+    font-family: inherit !important;
   }
 
   .liujo-facet-popup-close:hover {
@@ -411,12 +488,26 @@
 
   .facets__list {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 16px 16px !important;
-    padding: 10px 0 20px 0 !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 16px 14px !important;
+    padding: 10px 6px 20px 0 !important;
     margin: 0 !important;
-    max-height: 280px !important;
+    max-height: 270px !important;
     overflow-y: auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #000 #f1f1f1 !important;
+  }
+
+  .facets__list::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  .facets__list::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+  }
+
+  .facets__list::-webkit-scrollbar-thumb {
+    background: #111111 !important;
   }
 
   .facets__item {
@@ -428,7 +519,7 @@
   .facet-checkbox {
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 10px !important;
     cursor: pointer !important;
     font-size: 12px !important;
     font-weight: 500 !important;
@@ -440,14 +531,38 @@
   }
 
   .facet-checkbox input[type="checkbox"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
     width: 16px !important;
     height: 16px !important;
-    border: 1px solid #777 !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    border: 1px solid #767676 !important;
     border-radius: 0 !important;
-    margin: 0 !important;
-    accent-color: #000 !important;
+    background-color: #ffffff !important;
     cursor: pointer !important;
+    position: relative !important;
+    margin: 0 !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
     flex-shrink: 0 !important;
+  }
+
+  .facet-checkbox input[type="checkbox"]:checked {
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  .facet-checkbox input[type="checkbox"]:checked::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 5px !important;
+    top: 2px !important;
+    width: 4px !important;
+    height: 8px !important;
+    border: solid #ffffff !important;
+    border-width: 0 1.5px 1.5px 0 !important;
+    transform: rotate(45deg) !important;
   }
 
   .facet-checkbox svg {
@@ -462,9 +577,11 @@
 
   .liujo-facet-popup-footer {
     display: flex !important;
-    gap: 10px !important;
-    padding-top: 16px !important;
-    border-top: 1px solid #eee !important;
+    gap: 0 !important;
+    padding-top: 18px !important;
+    margin-top: 6px !important;
+    border-top: 1px solid #ebebeb !important;
+    width: 100% !important;
   }
 
   .liujo-facet-popup-footer facet-remove {
@@ -472,7 +589,7 @@
   }
 
   .liujo-facet-btn {
-    height: 40px !important;
+    height: 44px !important;
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
@@ -480,7 +597,7 @@
     font-family: var(--liujo-font-main) !important;
     font-size: 11.5px !important;
     font-weight: 700 !important;
-    letter-spacing: 0.1em !important;
+    letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
     cursor: pointer !important;
     border-radius: 0 !important;
@@ -517,33 +634,6 @@
     position: relative !important;
   }
 
-  .liujo-grid-toggler {
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-  }
-
-  .liujo-grid-toggle-btn {
-    background: transparent !important;
-    border: none !important;
-    color: #888 !important;
-    padding: 4px !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: color 0.2s ease !important;
-    width: auto !important;
-    height: auto !important;
-  }
-
-  .liujo-grid-toggle-btn:hover,
-  .liujo-grid-toggle-btn.is-active {
-    color: #000 !important;
-    background: transparent !important;
-    border: none !important;
-  }
-
   .liujo-desktop-sort-wrapper {
     position: relative !important;
   }
@@ -573,11 +663,14 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
     min-width: 220px !important;
     z-index: 100 !important;
-    padding: 10px 0 !important;
+    padding: 8px 0 !important;
   }
 
   .liujo-sort-options-list li {
-    padding: 12px 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 13px 22px !important;
     font-family: var(--liujo-font-main) !important;
     font-size: 11.5px !important;
     font-weight: 700 !important;
@@ -586,6 +679,22 @@
     color: #111 !important;
     cursor: pointer !important;
     transition: background 0.15s ease !important;
+    border-bottom: 1px solid #f5f5f5 !important;
+  }
+
+  .liujo-sort-options-list li:last-child {
+    border-bottom: none !important;
+  }
+
+  .liujo-sort-options-list li .liujo-sort-check {
+    display: none !important;
+    stroke: #000 !important;
+    margin-left: 16px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .liujo-sort-options-list li.is-selected .liujo-sort-check {
+    display: block !important;
   }
 
   .liujo-sort-options-list li:hover {
@@ -593,7 +702,7 @@
   }
 
   .liujo-sort-options-list li.is-selected {
-    background: #f2f2f2 !important;
+    background: #f7f7f7 !important;
     font-weight: 800 !important;
   }
 }

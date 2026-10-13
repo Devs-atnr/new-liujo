@@ -11,32 +11,55 @@
 
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    <div class="liujo-plp-breadcrumbs">
-      <nav aria-label="Breadcrumb">
-        <ol class="liujo-breadcrumbs-list">
-          <li><a href="{{ routes.root_url }}">Liu Jo</a></li>
-          <li class="liujo-bc-sep">•</li>
-          <li><a href="{{ routes.all_products_collection_url }}">Women</a></li>
-          {%- assign col_lower = collection.title | downcase -%}
-          {%- unless col_lower == 'clothing' or col_lower == 'women' -%}
-            <li class="liujo-bc-sep">•</li>
-            <li><a href="{{ routes.all_products_collection_url }}">Clothing</a></li>
-          {%- endunless -%}
-          <li class="liujo-bc-sep">•</li>
-          <li class="liujo-bc-current" aria-current="page">
-            {{ collection.title | escape }}
-            <span class="liujo-item-count">({{ collection.all_products_count | default: collection.products_count }})</span>
-          </li>
-        </ol>
-      </nav>
-    </div>
+    <div class="liujo-plp-header-top-row">
+      <div class="liujo-plp-header-left">
+        <div class="liujo-plp-breadcrumbs">
+          <nav aria-label="Breadcrumb">
+            <ol class="liujo-breadcrumbs-list">
+              <li><a href="{{ routes.root_url }}">Liu Jo</a></li>
+              <li class="liujo-bc-sep">•</li>
+              <li><a href="{{ routes.all_products_collection_url }}">Women</a></li>
+              {%- assign col_lower = collection.title | downcase -%}
+              {%- unless col_lower == 'clothing' or col_lower == 'women' -%}
+                <li class="liujo-bc-sep">•</li>
+                <li><a href="{{ routes.all_products_collection_url }}">Clothing</a></li>
+              {%- endunless -%}
+              <li class="liujo-bc-sep">•</li>
+              <li class="liujo-bc-current" aria-current="page">
+                {{ collection.title | escape }}
+                <span class="liujo-item-count">({{ collection.all_products_count | default: collection.products_count }})</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
 
-    <div class="collection-hero__text-wrapper">
-      <h1 class="collection-hero__title">
-        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
-      </h1>
+        <div class="collection-hero__text-wrapper">
+          <h1 class="collection-hero__title">
+            <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+            {{- collection.title | escape -}}
+          </h1>
+        </div>
+      </div>
+
+      <!-- Desktop Grid Toggler Aligned on the Right of Title (Image 1 Parity) -->
+      <div class="liujo-grid-toggler small-hide" data-liujo-grid-toggler>
+        <button type="button" class="liujo-grid-toggle-btn" data-grid-cols="2" aria-label="2 Columns View" title="2 Columns">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <rect x="1" y="2" width="6" height="12" rx="0.5"></rect>
+            <rect x="9" y="2" width="6" height="12" rx="0.5"></rect>
+          </svg>
+        </button>
+        <button type="button" class="liujo-grid-toggle-btn is-active" data-grid-cols="4" aria-label="4 Columns View" title="4 Columns">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <rect x="1" y="2" width="2.5" height="12" rx="0.5"></rect>
+            <rect x="5" y="2" width="2.5" height="12" rx="0.5"></rect>
+            <rect x="9" y="2" width="2.5" height="12" rx="0.5"></rect>
+            <rect x="13" y="2" width="2.5" height="12" rx="0.5"></rect>
+          </svg>
+        </button>
+      </div>
     </div>
+  </div>
 
     {%- if section.settings.show_collection_image and collection.image -%}
       <div class="collection-hero__image-container media gradient">

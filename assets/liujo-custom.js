@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLiuJoMobileStickyCart();
   initLiuJoSearchDrawer();
   initLiuJoToolbar();
+  initLiuJoStickyOffsets();
 });
 
 // 1. VIDEO CONTROLS
@@ -1221,3 +1222,26 @@ function initLiuJoToolbar() {
     });
   });
 }
+
+// 12. DYNAMIC STICKY OFFSETS FOR HEADER & FILTER BAR
+function initLiuJoStickyOffsets() {
+  function updateOffsets() {
+    const announcement = document.querySelector('.liujo-announcement-bar');
+    const headerWrapper = document.querySelector('.liujo-header-wrapper');
+    const announcementH = announcement && announcement.offsetHeight ? announcement.offsetHeight : 0;
+    document.documentElement.style.setProperty('--liujo-announcement-h', `${announcementH}px`);
+
+    if (headerWrapper) {
+      const headerH = headerWrapper.offsetHeight;
+      if (window.innerWidth >= 990) {
+        document.documentElement.style.setProperty('--liujo-header-h-desk', `${headerH}px`);
+      } else {
+        document.documentElement.style.setProperty('--liujo-header-h-mob', `${headerH}px`);
+      }
+    }
+  }
+
+  updateOffsets();
+  window.addEventListener('resize', updateOffsets, { passive: true });
+}
+
