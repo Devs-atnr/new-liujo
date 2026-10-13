@@ -17,8 +17,11 @@
           <li><a href="{{ routes.root_url }}">Liu Jo</a></li>
           <li class="liujo-bc-sep">•</li>
           <li><a href="{{ routes.all_products_collection_url }}">Women</a></li>
-          <li class="liujo-bc-sep">•</li>
-          <li><a href="{{ routes.all_products_collection_url }}">Clothing</a></li>
+          {%- assign col_lower = collection.title | downcase -%}
+          {%- unless col_lower == 'clothing' or col_lower == 'women' -%}
+            <li class="liujo-bc-sep">•</li>
+            <li><a href="{{ routes.all_products_collection_url }}">Clothing</a></li>
+          {%- endunless -%}
           <li class="liujo-bc-sep">•</li>
           <li class="liujo-bc-current" aria-current="page">
             {{ collection.title | escape }}

@@ -598,12 +598,31 @@
   }
 }
 
-/* 5. PRODUCT GRID */
-#product-grid {
+/* 5. PRODUCT GRID & CONTAINER FLUID (LIUJO.COM PARITY) */
+.collection-hero__inner.page-width,
+.facets-wrapper.page-width,
+.collection.page-width,
+.template-search__results.page-width,
+.template-search__header.page-width {
+  max-width: 100% !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+#product-grid.product-grid {
+  display: grid !important;
+  width: 100% !important;
   max-width: 100% !important;
   padding: 16px 24px 60px 24px !important;
-  margin: 0 auto !important;
-  gap: 32px 14px !important;
+  margin: 0 !important;
+  gap: 28px 12px !important;
+}
+
+#product-grid.product-grid > .grid__item {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 @media (min-width: 990px) {
@@ -613,20 +632,29 @@
 
   #product-grid.product-grid.grid--compact {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 40px 20px !important;
+    gap: 36px 16px !important;
   }
 }
 
 @media (max-width: 989px) {
+  .collection-hero__inner.page-width,
+  .facets-wrapper.page-width,
+  .collection.page-width,
+  .template-search__results.page-width,
+  .template-search__header.page-width {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
   #product-grid.product-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    padding: 14px 12px 48px 12px !important;
-    gap: 20px 8px !important;
+    padding: 12px 12px 48px 12px !important;
+    gap: 16px 8px !important;
   }
 
   #product-grid.product-grid.grid--mobile-compact {
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 24px !important;
   }
 }
 
