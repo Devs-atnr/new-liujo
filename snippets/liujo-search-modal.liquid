@@ -90,34 +90,61 @@
 
             <div class="liujo-search-panel{% if forloop.first %} is-active{% endif %}" data-search-panel="{{ tab_handle }}"{% unless forloop.first %} style="display: none;"{% endunless %}>
               <div class="liujo-search-panel__cols">
+                {%- assign new_in_child = blank -%}
+                {%- if tab_link.links.size > 0 -%}
+                  {%- for child in tab_link.links -%}
+                    {%- assign c_title = child.title | downcase -%}
+                    {%- if c_title contains 'new' or c_title contains 'novit' or c_title contains 'arrival' -%}
+                      {%- assign new_in_child = child -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+
                 <!-- Column 1: SUGGESTIONS -->
                 <div class="liujo-search-panel__col">
                   <div class="liujo-search-panel__heading">SUGGESTIONS</div>
                   <ul class="liujo-search-panel__list">
-                    {%- if lower_tab contains 'men' and lower_tab != 'women' -%}
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Sneakers">Men's Sneakers</button></li>
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jeans">Men's Jeans</button></li>
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jackets">Men's Jackets</button></li>
-                    {%- elsif lower_tab contains 'kid' -%}
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Baby Clothing">Baby Clothing</button></li>
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids Shoes">Kids Shoes</button></li>
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Girls Dresses">Girls Dresses</button></li>
-                    {%- elsif lower_tab contains 'women' -%}
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Bag">Women's Bag</button></li>
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Jeans">Women's Jeans</button></li>
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Shoes">Women's Shoes</button></li>
-                    {%- elsif tab_link.links.size > 0 -%}
-                      {%- for child in tab_link.links limit: 3 -%}
-                        <li>
-                          <button type="button" class="liujo-search-suggestion-btn" data-query="{% if child.title contains tab_link.title %}{{ child.title }}{% else %}{{ tab_link.title }}'s {{ child.title }}{% endif %}" data-url="{{ child.url }}">
-                            {% if child.title contains tab_link.title %}{{ child.title }}{% else %}{{ tab_link.title }}'s {{ child.title }}{% endif %}
-                          </button>
-                        </li>
+                    {%- assign sug_rendered = 0 -%}
+                    {%- if tab_link.links.size > 0 -%}
+                      {%- for child in tab_link.links -%}
+                        {%- if child != new_in_child and sug_rendered < 4 -%}
+                          {%- assign child_url = child.url -%}
+                          {%- if child_url == blank or child_url == '#' -%}
+                            {%- assign child_url = routes.search_url | append: '?q=' | append: tab_link.title | append: '+' | append: child.title | url_encode -%}
+                          {%- endif -%}
+                          <li>
+                            <a href="{{ child_url }}" class="liujo-search-link">
+                              {%- if child.title contains tab_link.title -%}
+                                {{ child.title }}
+                              {%- else -%}
+                                {{ tab_link.title }}'s {{ child.title }}
+                              {%- endif -%}
+                            </a>
+                          </li>
+                          {%- assign sug_rendered = sug_rendered | plus: 1 -%}
+                        {%- endif -%}
                       {%- endfor -%}
-                    {%- else -%}
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="{{ tab_link.title }}'s Bag">{{ tab_link.title }}'s Bag</button></li>
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="{{ tab_link.title }}'s Jeans">{{ tab_link.title }}'s Jeans</button></li>
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="{{ tab_link.title }}'s Shoes">{{ tab_link.title }}'s Shoes</button></li>
+                    {%- endif -%}
+
+                    {%- if sug_rendered == 0 -%}
+                      {%- if lower_tab contains 'men' and lower_tab != 'women' -%}
+                        <li><a href="{{ routes.search_url }}?q=Men%27s+Sneakers" class="liujo-search-link">Men's Sneakers</a></li>
+                        <li><a href="{{ routes.search_url }}?q=Men%27s+Jeans" class="liujo-search-link">Men's Jeans</a></li>
+                        <li><a href="{{ routes.search_url }}?q=Men%27s+Jackets" class="liujo-search-link">Men's Jackets</a></li>
+                      {%- elsif lower_tab contains 'kid' -%}
+                        <li><a href="{{ routes.search_url }}?q=Baby+Clothing" class="liujo-search-link">Baby Clothing</a></li>
+                        <li><a href="{{ routes.search_url }}?q=Kids+Shoes" class="liujo-search-link">Kids Shoes</a></li>
+                        <li><a href="{{ routes.search_url }}?q=Girls+Dresses" class="liujo-search-link">Girls Dresses</a></li>
+                      {%- elsif lower_tab contains 'women' -%}
+                        <li><a href="{{ routes.search_url }}?q=Women%27s+Bag" class="liujo-search-link">Women's Bag</a></li>
+                        <li><a href="{{ routes.search_url }}?q=Women%27s+Jeans" class="liujo-search-link">Women's Jeans</a></li>
+                        <li><a href="{{ routes.search_url }}?q=Women%27s+Shoes" class="liujo-search-link">Women's Shoes</a></li>
+                      {%- else -%}
+                        <li><a href="{{ routes.search_url }}?q={{ tab_link.title | url_encode }}+Bag" class="liujo-search-link">{{ tab_link.title }}'s Bag</a></li>
+                        <li><a href="{{ routes.search_url }}?q={{ tab_link.title | url_encode }}+Jeans" class="liujo-search-link">{{ tab_link.title }}'s Jeans</a></li>
+                        <li><a href="{{ routes.search_url }}?q={{ tab_link.title | url_encode }}+Shoes" class="liujo-search-link">{{ tab_link.title }}'s Shoes</a></li>
+                      {%- endif -%}
                     {%- endif -%}
                   </ul>
                 </div>
@@ -126,14 +153,29 @@
                 <div class="liujo-search-panel__col">
                   <div class="liujo-search-panel__heading">NEW IN</div>
                   <ul class="liujo-search-panel__list">
-                    {%- if lower_tab contains 'men' and lower_tab != 'women' -%}
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's New Arrivals">Men's New Arrivals</button></li>
+                    {%- if new_in_child != blank -%}
+                      {%- assign new_url = new_in_child.url -%}
+                      {%- if new_url == blank or new_url == '#' -%}
+                        {%- assign new_url = routes.search_url | append: '?q=' | append: tab_link.title | append: '+New+Arrivals' -%}
+                      {%- endif -%}
+                      <li><a href="{{ new_url }}" class="liujo-search-link">{{ new_in_child.title }}</a></li>
+                      {%- if new_in_child.links.size > 0 -%}
+                        {%- for sub_new in new_in_child.links limit: 3 -%}
+                          {%- assign sub_new_url = sub_new.url -%}
+                          {%- if sub_new_url == blank or sub_new_url == '#' -%}
+                            {%- assign sub_new_url = routes.search_url | append: '?q=' | append: sub_new.title | url_encode -%}
+                          {%- endif -%}
+                          <li><a href="{{ sub_new_url }}" class="liujo-search-link">{{ sub_new.title }}</a></li>
+                        {%- endfor -%}
+                      {%- endif -%}
+                    {%- elsif lower_tab contains 'men' and lower_tab != 'women' -%}
+                      <li><a href="{{ routes.search_url }}?q=Men%27s+New+Arrivals" class="liujo-search-link">Men's New Arrivals</a></li>
                     {%- elsif lower_tab contains 'kid' -%}
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids New Arrivals">Kids New Arrivals</button></li>
+                      <li><a href="{{ routes.search_url }}?q=Kids+New+Arrivals" class="liujo-search-link">Kids New Arrivals</a></li>
                     {%- elsif lower_tab contains 'women' -%}
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's New Arrivals">Women's New Arrivals</button></li>
+                      <li><a href="{{ routes.search_url }}?q=Women%27s+New+Arrivals" class="liujo-search-link">Women's New Arrivals</a></li>
                     {%- else -%}
-                      <li><button type="button" class="liujo-search-suggestion-btn" data-query="{{ tab_link.title }}'s New Arrivals">{{ tab_link.title }}'s New Arrivals</button></li>
+                      <li><a href="{{ routes.search_url }}?q={{ tab_link.title | url_encode }}+New+Arrivals" class="liujo-search-link">{{ tab_link.title }}'s New Arrivals</a></li>
                     {%- endif -%}
                   </ul>
                 </div>
@@ -147,15 +189,15 @@
               <div class="liujo-search-panel__col">
                 <div class="liujo-search-panel__heading">SUGGESTIONS</div>
                 <ul class="liujo-search-panel__list">
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Bag">Women's Bag</button></li>
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Jeans">Women's Jeans</button></li>
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's Shoes">Women's Shoes</button></li>
+                  <li><a href="{{ routes.search_url }}?q=Women%27s+Bag" class="liujo-search-link">Women's Bag</a></li>
+                  <li><a href="{{ routes.search_url }}?q=Women%27s+Jeans" class="liujo-search-link">Women's Jeans</a></li>
+                  <li><a href="{{ routes.search_url }}?q=Women%27s+Shoes" class="liujo-search-link">Women's Shoes</a></li>
                 </ul>
               </div>
               <div class="liujo-search-panel__col">
                 <div class="liujo-search-panel__heading">NEW IN</div>
                 <ul class="liujo-search-panel__list">
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Women's New Arrivals">Women's New Arrivals</button></li>
+                  <li><a href="{{ routes.search_url }}?q=Women%27s+New+Arrivals" class="liujo-search-link">Women's New Arrivals</a></li>
                 </ul>
               </div>
             </div>
@@ -166,15 +208,15 @@
               <div class="liujo-search-panel__col">
                 <div class="liujo-search-panel__heading">SUGGESTIONS</div>
                 <ul class="liujo-search-panel__list">
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Sneakers">Men's Sneakers</button></li>
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jeans">Men's Jeans</button></li>
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's Jackets">Men's Jackets</button></li>
+                  <li><a href="{{ routes.search_url }}?q=Men%27s+Sneakers" class="liujo-search-link">Men's Sneakers</a></li>
+                  <li><a href="{{ routes.search_url }}?q=Men%27s+Jeans" class="liujo-search-link">Men's Jeans</a></li>
+                  <li><a href="{{ routes.search_url }}?q=Men%27s+Jackets" class="liujo-search-link">Men's Jackets</a></li>
                 </ul>
               </div>
               <div class="liujo-search-panel__col">
                 <div class="liujo-search-panel__heading">NEW IN</div>
                 <ul class="liujo-search-panel__list">
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Men's New Arrivals">Men's New Arrivals</button></li>
+                  <li><a href="{{ routes.search_url }}?q=Men%27s+New+Arrivals" class="liujo-search-link">Men's New Arrivals</a></li>
                 </ul>
               </div>
             </div>
@@ -185,15 +227,15 @@
               <div class="liujo-search-panel__col">
                 <div class="liujo-search-panel__heading">SUGGESTIONS</div>
                 <ul class="liujo-search-panel__list">
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Baby Clothing">Baby Clothing</button></li>
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids Shoes">Kids Shoes</button></li>
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Girls Dresses">Girls Dresses</button></li>
+                  <li><a href="{{ routes.search_url }}?q=Baby+Clothing" class="liujo-search-link">Baby Clothing</a></li>
+                  <li><a href="{{ routes.search_url }}?q=Kids+Shoes" class="liujo-search-link">Kids Shoes</a></li>
+                  <li><a href="{{ routes.search_url }}?q=Girls+Dresses" class="liujo-search-link">Girls Dresses</a></li>
                 </ul>
               </div>
               <div class="liujo-search-panel__col">
                 <div class="liujo-search-panel__heading">NEW IN</div>
                 <ul class="liujo-search-panel__list">
-                  <li><button type="button" class="liujo-search-suggestion-btn" data-query="Kids New Arrivals">Kids New Arrivals</button></li>
+                  <li><a href="{{ routes.search_url }}?q=Kids+New+Arrivals" class="liujo-search-link">Kids New Arrivals</a></li>
                 </ul>
               </div>
             </div>

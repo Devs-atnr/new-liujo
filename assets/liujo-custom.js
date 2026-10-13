@@ -615,10 +615,16 @@ function initLiuJoSearchDrawer() {
     });
   });
 
-  // Suggestion buttons in State 1 (Delegated click handling - SUGGESTIONS & NEW IN)
+  // Suggestion links in State 1 (SUGGESTIONS & NEW IN)
   if (beforeState) {
     beforeState.addEventListener('click', (e) => {
-      const btn = e.target.closest('.liujo-search-suggestion-btn, [data-query], a, button');
+      const link = e.target.closest('a');
+      if (link && link.getAttribute('href') && link.getAttribute('href') !== '#') {
+        // Real page link: close drawer and let browser navigate to page
+        closeSearch();
+        return;
+      }
+      const btn = e.target.closest('.liujo-search-suggestion-btn, [data-query], button');
       if (!btn) return;
       e.preventDefault();
       const query = (btn.dataset.query || btn.textContent).trim();
@@ -634,7 +640,13 @@ function initLiuJoSearchDrawer() {
   // Clickable suggestions in State 2 (SUGGESTIONS FOR YOU)
   if (queriesContainer) {
     queriesContainer.addEventListener('click', (e) => {
-      const item = e.target.closest('a, button, [data-query]');
+      const link = e.target.closest('a');
+      if (link && link.getAttribute('href') && link.getAttribute('href') !== '#') {
+        // Real page link: close drawer and let browser navigate to page
+        closeSearch();
+        return;
+      }
+      const item = e.target.closest('[data-query], button');
       if (!item) return;
       e.preventDefault();
       const term = (item.getAttribute('data-query') || item.textContent).trim();
@@ -971,7 +983,7 @@ function initLiuJoSearchDrawer() {
           const text = (q.text || '').trim();
           if (text && !addedQueries.has(text.toLowerCase())) {
             addedQueries.add(text.toLowerCase());
-            suggestionsHtml += `<li><a href="#" data-query="${text}">${text}</a></li>`;
+            suggestionsHtml += `<li><a href="${searchUrl}?q=${encodeURIComponent(text)}" class="liujo-search-link" data-query="${text}">${text}</a></li>`;
           }
         });
       }
@@ -981,7 +993,7 @@ function initLiuJoSearchDrawer() {
       contextualSugs.forEach(text => {
         if (!addedQueries.has(text.toLowerCase()) && addedQueries.size < 5) {
           addedQueries.add(text.toLowerCase());
-          suggestionsHtml += `<li><a href="#" data-query="${text}">${text}</a></li>`;
+          suggestionsHtml += `<li><a href="${searchUrl}?q=${encodeURIComponent(text)}" class="liujo-search-link" data-query="${text}">${text}</a></li>`;
         }
       });
 
@@ -989,30 +1001,32 @@ function initLiuJoSearchDrawer() {
       if (collections.length > 0 && addedQueries.size < 5) {
         collections.forEach(col => {
           const title = (col.title || '').trim();
+          const colUrl = col.url || `${searchUrl}?q=${encodeURIComponent(title)}`;
           if (title && !addedQueries.has(title.toLowerCase())) {
             addedQueries.add(title.toLowerCase());
-            suggestionsHtml += `<li><a href="#" data-query="${title}">${title}</a></li>`;
+            suggestionsHtml += `<li><a href="${colUrl}" class="liujo-search-link" data-query="${title}">${title}</a></li>`;
           }
         });
       }
 
-      // 4. Fallback to active panel menu buttons
+      // 4. Fallback to active panel menu buttons / links
       if (addedQueries.size < 5) {
         const activePanel = drawer.querySelector(`[data-search-panel="${gender}"]`) || drawer.querySelector('[data-search-panel].is-active');
         if (activePanel) {
-          const menuBtns = activePanel.querySelectorAll('.liujo-search-suggestion-btn');
-          menuBtns.forEach(btn => {
-            const term = (btn.dataset.query || btn.textContent).trim();
+          const menuLinks = activePanel.querySelectorAll('.liujo-search-link, .liujo-search-suggestion-btn, a');
+          menuLinks.forEach(link => {
+            const term = (link.dataset.query || link.textContent).trim();
+            const linkHref = link.getAttribute('href') || `${searchUrl}?q=${encodeURIComponent(term)}`;
             if (term && !addedQueries.has(term.toLowerCase()) && addedQueries.size < 5) {
               addedQueries.add(term.toLowerCase());
-              suggestionsHtml += `<li><a href="#" data-query="${term}">${term}</a></li>`;
+              suggestionsHtml += `<li><a href="${linkHref}" class="liujo-search-link" data-query="${term}">${term}</a></li>`;
             }
           });
         }
       }
 
       if (addedQueries.size === 0) {
-        suggestionsHtml += `<li><a href="#" data-query="${query}">${query}</a></li>`;
+        suggestionsHtml += `<li><a href="${searchUrl}?q=${encodeURIComponent(query)}" class="liujo-search-link" data-query="${query}">${query}</a></li>`;
       }
 
       queriesContainer.innerHTML = suggestionsHtml;

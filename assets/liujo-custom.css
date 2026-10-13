@@ -2061,6 +2061,7 @@ body.has-search-open .liujo-megamenu {
 }
 
 .liujo-search-suggestion-btn,
+.liujo-search-link,
 .liujo-search-panel__list a {
   background: none;
   border: none;
@@ -2075,9 +2076,11 @@ body.has-search-open .liujo-megamenu {
   letter-spacing: 0.02em;
   transition: color 0.15s ease, text-decoration 0.15s ease;
   text-align: left;
+  display: inline-block;
 }
 
 .liujo-search-suggestion-btn:hover,
+.liujo-search-link:hover,
 .liujo-search-panel__list a:hover {
   color: #000000;
   text-decoration: underline;
