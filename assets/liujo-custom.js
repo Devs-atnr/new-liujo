@@ -1165,9 +1165,16 @@ function initLiuJoToolbar() {
       const sortBtn = document.getElementById('LiuJoMobileSortTrigger');
       if (sortBtn) sortBtn.classList.remove('is-active');
 
-      const nativeDrawerTrigger = document.querySelector('.mobile-facets__open-wrapper');
-      if (nativeDrawerTrigger) {
-        nativeDrawerTrigger.click();
+      const menuDrawer = document.querySelector('.mobile-facets__wrapper');
+      if (menuDrawer) {
+        const summary = menuDrawer.querySelector('summary.mobile-facets__open-wrapper');
+        const details = menuDrawer.querySelector('details.mobile-facets__disclosure');
+        if (typeof menuDrawer.openMenuDrawer === 'function' && summary) {
+          details?.setAttribute('open', '');
+          menuDrawer.openMenuDrawer(summary);
+        } else if (summary) {
+          summary.click();
+        }
       }
       return;
     }
