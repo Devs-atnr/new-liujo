@@ -205,47 +205,43 @@
   }
 
   .liujo-split-btn {
-    flex: 1 1 50%;
-    height: 46px;
-    background: #fff;
-    color: #111;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-family: var(--liujo-font-main);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 0;
+    flex: 1 1 50% !important;
+    height: 40px !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    font-family: var(--liujo-font-main) !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    transition: background 0.15s ease !important;
+    padding: 0 !important;
   }
 
   .liujo-split-btn--sort {
-    border-right: 1px solid #111;
+    border-right: 1px solid #111111 !important;
   }
 
-  .liujo-split-btn.is-active {
-    background: #000 !important;
-    color: #fff !important;
-  }
-
-  .liujo-split-btn.is-active svg {
-    stroke: #fff !important;
+  .liujo-split-btn svg {
+    stroke: #111111 !important;
   }
 
   /* Mobile Sort Dropdown */
   .liujo-mobile-sort-dropdown {
-    background: #fff;
-    border-bottom: 1px solid #111;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    position: -webkit-sticky;
-    position: sticky;
-    top: calc(var(--liujo-header-h-mob, 60px) + 46px);
-    z-index: 89;
+    background: #ffffff !important;
+    border-bottom: 1px solid #111111 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 95 !important;
   }
 
   .liujo-sort-options-list {
@@ -334,9 +330,12 @@
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 16px 20px !important;
-    border-bottom: 1px solid #111 !important;
-    background: #fff !important;
+    padding: max(26px, env(safe-area-inset-top, 26px)) 24px 18px 24px !important;
+    border-bottom: 1px solid #ebebeb !important;
+    background: #ffffff !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
   }
 
   .mobile-facets__header-inner {
@@ -347,30 +346,38 @@
   .mobile-facets__heading {
     text-align: left !important;
     font-family: var(--liujo-font-main) !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
-    letter-spacing: 0.12em !important;
+    letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
-    color: #111 !important;
+    color: #111111 !important;
     margin: 0 !important;
   }
 
   .liujo-mobile-drawer-close {
     background: transparent !important;
     border: none !important;
-    font-size: 20px !important;
+    font-size: 18px !important;
+    font-weight: 300 !important;
     line-height: 1 !important;
-    color: #111 !important;
+    color: #111111 !important;
     cursor: pointer !important;
     padding: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    margin-right: -4px !important;
   }
 
   .mobile-facets__details {
-    border-bottom: 1px solid #e5e5e5 !important;
+    border-bottom: 1px solid #ebebeb !important;
   }
 
   .mobile-facets__summary {
-    padding: 16px 20px !important;
+    padding: 16px 24px !important;
+    cursor: pointer !important;
   }
 
   .mobile-facets__summary > div {
@@ -378,11 +385,11 @@
     align-items: center !important;
     justify-content: space-between !important;
     font-family: var(--liujo-font-main) !important;
-    font-size: 12.5px !important;
-    font-weight: 700 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
-    color: #111 !important;
+    color: #111111 !important;
   }
 
   .mobile-facets__submenu {
@@ -393,8 +400,8 @@
     visibility: visible !important;
     opacity: 1 !important;
     border: none !important;
-    padding: 12px 18px 24px 18px !important;
-    background: transparent !important;
+    padding: 18px 24px 28px 24px !important;
+    background: #ffffff !important;
     box-sizing: border-box !important;
   }
 
@@ -407,13 +414,14 @@
   .mobile-facets__list {
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 16px 8px !important;
+    column-gap: 8px !important;
+    row-gap: 20px !important;
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
   }
 
-  @media (max-width: 380px) {
+  @media (max-width: 340px) {
     .mobile-facets__list {
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
@@ -430,14 +438,11 @@
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
-    display: flex !important;
-    align-items: flex-start !important;
-    gap: 7px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 9px !important;
     cursor: pointer !important;
-    word-break: normal !important;
-    overflow-wrap: break-word !important;
-    white-space: normal !important;
-    line-height: 1.25 !important;
+    line-height: 1 !important;
   }
 
   /* Hide duplicate icons and extra padding */
@@ -450,31 +455,31 @@
   .mobile-facets__item input[type="checkbox"] {
     appearance: none !important;
     -webkit-appearance: none !important;
-    width: 16px !important;
-    height: 16px !important;
-    min-width: 16px !important;
-    min-height: 16px !important;
-    border: 1px solid #767676 !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    border: 1px solid #999999 !important;
     border-radius: 0 !important;
     background-color: #ffffff !important;
     cursor: pointer !important;
     position: relative !important;
-    margin: 2px 0 0 0 !important;
-    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
     flex-shrink: 0 !important;
   }
 
   .mobile-facets__item input[type="checkbox"]:checked {
     background-color: #ffffff !important;
     border-color: #000000 !important;
-    border-width: 1.5px !important;
   }
 
   .mobile-facets__item input[type="checkbox"]:checked::after {
     content: '' !important;
     position: absolute !important;
-    left: 4px !important;
-    top: 1px !important;
+    left: 5px !important;
+    top: 2px !important;
     width: 5px !important;
     height: 9px !important;
     border: solid #000000 !important;
@@ -483,19 +488,22 @@
   }
 
   .facet-checkbox__text {
-    display: inline !important;
+    display: inline-block !important;
     font-family: var(--liujo-font-main) !important;
-    font-size: 11.5px !important;
-    color: #222222 !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    color: #111111 !important;
     letter-spacing: 0.02em !important;
-    line-height: 1.25 !important;
+    line-height: 1.2 !important;
     word-break: normal !important;
-    white-space: normal !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .facet-checkbox__text-label {
     display: inline !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
     text-transform: capitalize !important;
   }
 
@@ -1094,8 +1102,20 @@
 
 /* Product Price DIRECTLY Below Heading */
 .liujo-card-price-wrapper {
-  margin-top: 2px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 3px !important;
   padding: 0 !important;
+}
+
+.liujo-card-price-wrapper .price,
+.liujo-card-price-wrapper .price__container,
+.liujo-card-price-wrapper .price__regular,
+.liujo-card-price-wrapper .price-item {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .liujo-card-price-wrapper .price {
