@@ -475,6 +475,7 @@ function initLiuJoSearchDrawer() {
     backdrop.classList.remove('is-open');
     document.body.classList.remove('has-search-open');
     document.body.style.overflow = '';
+    if (drawer) drawer.scrollTop = 0;
   }
 
   // Toggle Search Drawer with Search Trigger
