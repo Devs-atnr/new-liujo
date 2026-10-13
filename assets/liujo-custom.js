@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLiuJoSearchDrawer();
   initLiuJoToolbar();
   initLiuJoStickyOffsets();
+  initLiuJoInfiniteScroll();
 });
 
 // 1. VIDEO CONTROLS
@@ -1244,4 +1245,101 @@ function initLiuJoStickyOffsets() {
   updateOffsets();
   window.addEventListener('resize', updateOffsets, { passive: true });
 }
+
+// 13. SEAMLESS INFINITE SCROLL FOR PLP & SEARCH
+function initLiuJoInfiniteScroll() {
+  let isFetching = false;
+  let observer = null;
+
+  function setupObserver() {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+
+    const trigger = document.querySelector('[data-liujo-infinite-scroll] .liujo-infinite-scroll-trigger');
+    const grid = document.getElementById('product-grid');
+    if (!trigger || !grid) return;
+
+    const nextUrl = trigger.getAttribute('data-next-url');
+    if (!nextUrl) {
+      const loader = trigger.querySelector('.liujo-infinite-loader');
+      if (loader) loader.style.display = 'none';
+      return;
+    }
+
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !isFetching) {
+          loadNextPage(trigger, grid);
+        }
+      });
+    }, {
+      rootMargin: '600px 0px 600px 0px',
+      threshold: 0.05
+    });
+
+    observer.observe(trigger);
+  }
+
+  async function loadNextPage(trigger, grid) {
+    const nextUrl = trigger.getAttribute('data-next-url');
+    if (!nextUrl || isFetching) return;
+
+    isFetching = true;
+    const loader = trigger.querySelector('.liujo-infinite-loader');
+    if (loader) loader.style.display = 'flex';
+
+    try {
+      const response = await fetch(nextUrl);
+      if (!response.ok) throw new Error('Network error loading products');
+      const text = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, 'text/html');
+
+      const newItems = doc.querySelectorAll('#product-grid > .grid__item');
+      if (newItems.length > 0) {
+        newItems.forEach(item => {
+          grid.appendChild(item);
+        });
+
+        if (typeof initLiuJoCarousels === 'function') initLiuJoCarousels();
+        if (typeof initLiuJoWishlist === 'function') initLiuJoWishlist();
+      }
+
+      const newTrigger = doc.querySelector('[data-liujo-infinite-scroll] .liujo-infinite-scroll-trigger');
+      const newNextUrl = newTrigger ? newTrigger.getAttribute('data-next-url') : null;
+
+      if (newNextUrl) {
+        trigger.setAttribute('data-next-url', newNextUrl);
+      } else {
+        trigger.removeAttribute('data-next-url');
+        if (loader) loader.style.display = 'none';
+        if (observer) observer.disconnect();
+      }
+    } catch (err) {
+      console.error('Error during infinite scroll:', err);
+      if (loader) loader.style.display = 'none';
+    } finally {
+      isFetching = false;
+    }
+  }
+
+  setupObserver();
+
+  // Watch for ProductGridContainer updates (e.g. from Shopify facet filters)
+  const container = document.getElementById('ProductGridContainer');
+  if (container) {
+    const mutObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'childList') {
+          setupObserver();
+          break;
+        }
+      }
+    });
+    mutObserver.observe(container, { childList: true });
+  }
+}
+
 

@@ -187,7 +187,23 @@
               </ul>
 
               {%- if paginate.pages > 1 -%}
-                {% render 'pagination', paginate: paginate, anchor: '' %}
+                <div class="liujo-infinite-scroll-container" data-liujo-infinite-scroll>
+                  <div class="liujo-infinite-scroll-trigger" data-next-url="{{ paginate.next.url }}" data-total-pages="{{ paginate.pages }}" data-current-page="{{ paginate.current_page }}">
+                    {%- if paginate.next -%}
+                      <div class="liujo-infinite-loader">
+                        <svg class="liujo-spinner-svg" width="26" height="26" viewBox="0 0 50 50">
+                          <circle cx="25" cy="25" r="20" fill="none" stroke="#e6e6e6" stroke-width="3.5"></circle>
+                          <circle cx="25" cy="25" r="20" fill="none" stroke="#111111" stroke-width="3.5" stroke-dasharray="80" stroke-dashoffset="60"></circle>
+                        </svg>
+                        <span style="font-family: var(--liujo-font-main); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #111;">Loading products...</span>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  <!-- Visually hidden fallback for screen readers / non-JS -->
+                  <div class="liujo-pagination-accessible visually-hidden">
+                    {% render 'pagination', paginate: paginate, anchor: '' %}
+                  </div>
+                </div>
               {%- endif -%}
             </div>
           {%- endif -%}

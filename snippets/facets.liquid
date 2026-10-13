@@ -208,8 +208,10 @@
                     >
                       <div>
                         <span class="facets__summary-label">
-                          {{- filter.label | escape }}
-                          {%- if filter_type == 'vertical' -%}
+                          {{- filter.label | escape -}}
+                          {%- if filter.active_values.size > 0 -%}
+                            <span class="liujo-filter-count-badge">{{ filter.active_values.size }}</span>
+                          {%- elsif filter_type == 'vertical' -%}
                             <span class="facets__selected{% if filter.active_values.size == 0 %} hidden{% endif %}">
                               ({{ filter.active_values.size }})</span
                             >
@@ -386,7 +388,12 @@
                   >
                     <summary class="facets__summary caption-large focus-offset">
                       <div>
-                        <span>{{ filter.label | escape }}</span>
+                        <span>
+                          {{ filter.label | escape }}
+                          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                            <span class="liujo-filter-count-badge">1</span>
+                          {%- endif -%}
+                        </span>
                         {{- 'icon-caret.svg' | inline_asset_content -}}
                       </div>
                     </summary>
@@ -627,12 +634,19 @@
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
                         class="mobile-facets__details js-filter"
                         data-index="mobile-{{ forloop.index }}"
+                        {% if filter.active_values.size > 0 %} open{% endif %}
                       >
                         <summary class="mobile-facets__summary focus-inset">
                           <div>
-                            <span>{{ filter.label | escape }}</span>
+                            <span>
+                              {{ filter.label | escape }}
+                              {%- if filter.active_values.size > 0 -%}
+                                <span class="liujo-filter-count-badge">{{ filter.active_values.size }}</span>
+                              {%- endif -%}
+                            </span>
                             <span class="mobile-facets__arrow">
-                              {{- 'icon-arrow.svg' | inline_asset_content -}}
+                              <svg class="liujo-chevron-right" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                              <svg class="liujo-chevron-down" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
                             </span>
                           </div>
                         </summary>
@@ -769,12 +783,19 @@
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
                         class="mobile-facets__details js-filter"
                         data-index="mobile-{{ forloop.index }}"
+                        {% if filter.min_value.value != nil or filter.max_value.value != nil %} open{% endif %}
                       >
                         <summary class="mobile-facets__summary focus-inset">
                           <div>
-                            <span>{{ filter.label | escape }}</span>
+                            <span>
+                              {{ filter.label | escape }}
+                              {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                                <span class="liujo-filter-count-badge">1</span>
+                              {%- endif -%}
+                            </span>
                             <span class="mobile-facets__arrow">
-                              {{- 'icon-arrow.svg' | inline_asset_content -}}
+                              <svg class="liujo-chevron-right" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                              <svg class="liujo-chevron-down" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
                             </span>
                           </div>
                         </summary>
