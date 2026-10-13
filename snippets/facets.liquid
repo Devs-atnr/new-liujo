@@ -608,7 +608,7 @@
                 type="button"
                 class="liujo-mobile-drawer-close"
                 aria-label="Close"
-                onclick="document.querySelector('.mobile-facets__close').click()"
+                onclick="const d = this.closest('menu-drawer'); if(d && typeof d.closeMenuDrawer === 'function') { d.closeMenuDrawer(event, d.querySelector('summary')); } else { document.querySelector('.mobile-facets__close')?.click(); }"
               >
                 ✕
               </button>
@@ -692,7 +692,8 @@
 
                               {%- capture text_value -%}
                                 <span class="facet-checkbox__text" aria-hidden="true">
-                                  <span class="facet-checkbox__text-label">{{- value.label | escape }}</span> ({{- value.count -}})
+                                  <span class="facet-checkbox__text-label">{{- value.label | escape }}</span>
+                                  <span class="facet-checkbox__count">({{- value.count -}})</span>
                                 </span>
                                 <span class="visually-hidden">
                                   {{- value.label | escape }} (
@@ -749,11 +750,7 @@
                                           }}
                                         {%- endif -%}
                                       </div>
-                                    {%- else -%}
-                                      <span class="mobile-facets__highlight"></span>
-                                      {{- 'square.svg' | inline_asset_content -}}
-                                      {{- 'icon-checkmark.svg' | inline_asset_content -}}
-                                    {%- endif %}
+                                    {%- endif -%}
 
                                     {{ text_value }}
                                   </label>

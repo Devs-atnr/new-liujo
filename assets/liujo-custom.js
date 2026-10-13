@@ -1169,11 +1169,29 @@ function initLiuJoToolbar() {
       if (menuDrawer) {
         const summary = menuDrawer.querySelector('summary.mobile-facets__open-wrapper');
         const details = menuDrawer.querySelector('details.mobile-facets__disclosure');
-        if (typeof menuDrawer.openMenuDrawer === 'function' && summary) {
-          details?.setAttribute('open', '');
-          menuDrawer.openMenuDrawer(summary);
-        } else if (summary) {
-          summary.click();
+        if (summary && details) {
+          if (!details.hasAttribute('open')) {
+            details.setAttribute('open', '');
+          }
+          if (typeof menuDrawer.openMenuDrawer === 'function') {
+            menuDrawer.openMenuDrawer(summary);
+          } else {
+            details.classList.add('menu-opening');
+          }
+        }
+      }
+      return;
+    }
+
+    // Backdrop click on mobile facets form to close drawer
+    if (e.target && e.target.id === 'FacetFiltersFormMobile') {
+      const menuDrawer = e.target.closest('menu-drawer');
+      if (menuDrawer) {
+        const summary = menuDrawer.querySelector('summary.mobile-facets__open-wrapper');
+        if (typeof menuDrawer.closeMenuDrawer === 'function') {
+          menuDrawer.closeMenuDrawer(e, summary);
+        } else {
+          menuDrawer.querySelector('.mobile-facets__close')?.click();
         }
       }
       return;
