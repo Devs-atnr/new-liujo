@@ -1,14 +1,13 @@
 /* ==========================================================================
-   LIU JO COLLECTION PAGE (PLP) - LUXURY ITALIAN STYLING
-   Pixel-perfect parity with liujo.com
-   Breadcrumbs, editorial banner, sticky filter strip, grid column togglers & 3:4 portrait cards
+   LIU JO COLLECTION & SEARCH PAGE (PLP) - LUXURY ITALIAN STYLING
+   Pixel-perfect parity with liujo.com (Desktop & Mobile)
    ========================================================================== */
 
-/* 1. BREADCRUMBS */
+/* 1. BREADCRUMBS (DESKTOP) */
 .liujo-plp-breadcrumbs {
-  max-width: var(--liujo-container-max, 1440px);
-  margin: 0 auto;
-  padding: 18px 24px 6px;
+  max-width: 100%;
+  margin: 0;
+  padding: 16px 24px 4px 24px;
 }
 
 .liujo-breadcrumbs-list {
@@ -21,165 +20,590 @@
   margin: 0;
 }
 
-.liujo-breadcrumbs-list a {
+.liujo-breadcrumbs-list a,
+.liujo-breadcrumbs-list span {
   font-family: var(--liujo-font-main);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--liujo-mid-gray, #777);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #666;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .liujo-breadcrumbs-list a:hover {
-  color: var(--liujo-black, #111);
+  color: #000;
 }
 
 .liujo-bc-sep {
-  font-size: 10px;
-  color: #ccc;
+  font-size: 9px;
+  color: #888;
 }
 
 .liujo-bc-current {
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--liujo-black, #111);
+  color: #111 !important;
+  font-weight: 600;
 }
 
 .liujo-item-count {
-  font-weight: 500;
-  color: var(--liujo-mid-gray, #888);
+  color: #777;
   margin-left: 2px;
 }
 
-/* 2. COLLECTION BANNER */
+/* 2. COLLECTION BANNER (DESKTOP) */
 .collection-hero {
-  text-align: center;
-  padding: 24px 20px 32px;
-  background-color: var(--liujo-white, #fff);
-  border-bottom: 1px solid var(--liujo-border-gray, #e5e5e5);
-  margin-bottom: 0;
+  text-align: left !important;
+  padding: 6px 24px 12px 24px !important;
+  background-color: #fff !important;
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+}
+
+.collection-hero__inner {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .collection-hero__title {
-  font-family: var(--liujo-font-main);
-  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--liujo-black, #111);
-  margin: 0 0 10px;
+  font-family: var(--liujo-font-main) !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #111 !important;
+  margin: 4px 0 6px 0 !important;
+  text-align: left !important;
 }
 
 .collection-hero__description {
-  font-family: var(--liujo-font-main);
-  font-size: 13px;
-  letter-spacing: 0.03em;
-  color: var(--liujo-mid-gray, #666);
-  max-width: 680px;
-  margin: 0 auto;
-  line-height: 1.6;
+  display: none !important;
 }
 
-/* 3. FACETS & FILTER BAR */
-.facets-container {
-  max-width: var(--liujo-container-max, 1440px);
-  margin: 0 auto;
-  padding: 14px 24px;
-  border-bottom: 1px solid var(--liujo-border-gray, #e5e5e5);
-  background-color: var(--liujo-white, #fff);
-  position: sticky;
-  top: var(--liujo-header-height-desk, 80px);
-  z-index: 20;
+@media (max-width: 989px) {
+  .collection-hero {
+    display: none !important;
+  }
 }
 
-.facets__form {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  border: none !important;
-  padding: 0 !important;
+/* 3. MOBILE PLP HEADER & 50/50 SPLIT TOOLBAR */
+@media (max-width: 989px) {
+  .liujo-plp-mobile-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px 10px;
+    background: #fff;
+  }
+
+  .liujo-plp-mobile-title {
+    font-family: var(--liujo-font-main);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #111;
+    margin: 0;
+  }
+
+  .liujo-plp-count {
+    font-weight: 500;
+    color: #666;
+    margin-left: 2px;
+  }
+
+  .liujo-mobile-grid-toggle-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #111;
+    background: #fff;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .liujo-plp-split-toolbar {
+    display: flex;
+    width: 100%;
+    border-top: 1px solid #111;
+    border-bottom: 1px solid #111;
+    background: #fff;
+    position: sticky;
+    top: var(--liujo-header-height-mob, 56px);
+    z-index: 25;
+  }
+
+  .liujo-split-btn {
+    flex: 1 1 50%;
+    height: 46px;
+    background: #fff;
+    color: #111;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--liujo-font-main);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+
+  .liujo-split-btn--sort {
+    border-right: 1px solid #111;
+  }
+
+  .liujo-split-btn.is-active {
+    background: #000 !important;
+    color: #fff !important;
+  }
+
+  .liujo-split-btn.is-active svg {
+    stroke: #fff !important;
+  }
+
+  /* Mobile Sort Dropdown */
+  .liujo-mobile-sort-dropdown {
+    background: #fff;
+    border-bottom: 1px solid #111;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: calc(var(--liujo-header-height-mob, 56px) + 46px);
+    z-index: 24;
+  }
+
+  .liujo-sort-options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .liujo-sort-options-list li {
+    padding: 14px 20px;
+    font-family: var(--liujo-font-main);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #111;
+    cursor: pointer;
+    border-bottom: 1px solid #f2f2f2;
+    transition: background 0.15s ease;
+  }
+
+  .liujo-sort-options-list li:last-child {
+    border-bottom: none;
+  }
+
+  .liujo-sort-options-list li:hover,
+  .liujo-sort-options-list li.is-selected {
+    background: #f7f7f7;
+  }
+
+  /* Mobile Filter Drawer Accordions */
+  .mobile-facets__header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #111 !important;
+  }
+
+  .mobile-facets__heading {
+    font-family: var(--liujo-font-main) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: #111 !important;
+    margin: 0 !important;
+  }
+
+  .liujo-mobile-drawer-close {
+    background: transparent !important;
+    border: none !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+    color: #111 !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+  }
+
+  .mobile-facets__details {
+    border-bottom: 1px solid #e5e5e5 !important;
+  }
+
+  .mobile-facets__summary {
+    padding: 16px 20px !important;
+  }
+
+  .mobile-facets__summary > div {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    font-family: var(--liujo-font-main) !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: #111 !important;
+  }
+
+  .mobile-facets__submenu {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border: none !important;
+    padding: 6px 20px 20px !important;
+    background: transparent !important;
+  }
+
+  .mobile-facets__submenu .mobile-facets__header,
+  .mobile-facets__submenu .mobile-facets__close-button {
+    display: none !important;
+  }
+
+  .mobile-facets__list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px 10px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  @media (max-width: 480px) {
+    .mobile-facets__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  .mobile-facets__item input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+    border: 1px solid #777 !important;
+    border-radius: 0 !important;
+    margin-right: 8px !important;
+    accent-color: #000 !important;
+    cursor: pointer !important;
+  }
+
+  .mobile-facets__label {
+    font-size: 11.5px !important;
+    letter-spacing: 0.02em !important;
+    color: #222 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
 }
 
-.facets__wrapper {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+/* 4. DESKTOP FILTER BAR & MODALS */
+@media (min-width: 990px) {
+  .facets-container {
+    max-width: 100% !important;
+    padding: 10px 24px 14px 24px !important;
+    background: #fff !important;
+    border-bottom: 1px solid #ebebeb !important;
+    position: sticky !important;
+    top: var(--liujo-header-height-desk, 80px) !important;
+    z-index: 25 !important;
+  }
+
+  .facets__form {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  .facets__wrapper {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 24px !important;
+  }
+
+  .facets__heading {
+    display: none !important;
+  }
+
+  .facets__disclosure {
+    position: relative !important;
+    margin: 0 !important;
+  }
+
+  .facets__summary {
+    padding: 6px 0 !important;
+    cursor: pointer !important;
+    font-family: var(--liujo-font-main) !important;
+  }
+
+  .facets__summary > div {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .facets__summary-label {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: capitalize !important;
+    color: #111 !important;
+  }
+
+  .facets__summary .icon-caret {
+    width: 8px !important;
+    height: 8px !important;
+    transition: transform 0.2s ease;
+  }
+
+  details[open] > .facets__summary .icon-caret {
+    transform: rotate(180deg);
+  }
+
+  /* Desktop Filter Popup Modal (Screenshot 2) */
+  .facets__display {
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    width: 360px !important;
+    max-width: 90vw !important;
+    background: #fff !important;
+    border: 1px solid #e0e0e0 !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+    padding: 24px 22px 18px 22px !important;
+    z-index: 100 !important;
+    border-radius: 0 !important;
+  }
+
+  .liujo-facet-popup-close {
+    position: absolute !important;
+    top: 12px !important;
+    right: 14px !important;
+    background: transparent !important;
+    border: none !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    color: #111 !important;
+    padding: 4px !important;
+  }
+
+  .liujo-facet-popup-close:hover {
+    opacity: 0.6;
+  }
+
+  .facets__header {
+    display: none !important;
+  }
+
+  .facets__list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px 16px !important;
+    padding: 10px 0 20px 0 !important;
+    margin: 0 !important;
+    max-height: 280px !important;
+    overflow-y: auto !important;
+  }
+
+  .facets__item {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .facet-checkbox {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+    color: #222 !important;
+    text-transform: capitalize !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .facet-checkbox input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+    border: 1px solid #777 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    accent-color: #000 !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+  }
+
+  .facet-checkbox svg {
+    display: none !important;
+  }
+
+  .facet-checkbox__text-label {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #222 !important;
+  }
+
+  .liujo-facet-popup-footer {
+    display: flex !important;
+    gap: 10px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid #eee !important;
+  }
+
+  .liujo-facet-popup-footer facet-remove {
+    flex: 1 1 50% !important;
+  }
+
+  .liujo-facet-btn {
+    height: 40px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--liujo-font-main) !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    border-radius: 0 !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+  }
+
+  .liujo-facet-btn--reset {
+    background: #fff !important;
+    border: 1px solid #000 !important;
+    color: #000 !important;
+  }
+
+  .liujo-facet-btn--reset:hover {
+    background: #f7f7f7 !important;
+  }
+
+  .liujo-facet-btn--apply {
+    background: #000 !important;
+    border: 1px solid #000 !important;
+    color: #fff !important;
+    flex: 1 1 50% !important;
+  }
+
+  .liujo-facet-btn--apply:hover {
+    opacity: 0.85;
+  }
+
+  /* Desktop Right Controls (Screenshot 1 & 4) */
+  .liujo-desktop-toolbar-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 24px !important;
+    position: relative !important;
+  }
+
+  .liujo-grid-toggler {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .liujo-grid-toggle-btn {
+    background: transparent !important;
+    border: none !important;
+    color: #888 !important;
+    padding: 4px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: color 0.2s ease !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  .liujo-grid-toggle-btn:hover,
+  .liujo-grid-toggle-btn.is-active {
+    color: #000 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .liujo-desktop-sort-wrapper {
+    position: relative !important;
+  }
+
+  .liujo-desktop-sort-trigger {
+    background: transparent !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-family: var(--liujo-font-main) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    color: #111 !important;
+    cursor: pointer !important;
+    padding: 6px 0 !important;
+  }
+
+  .liujo-desktop-sort-dropdown {
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    right: 0 !important;
+    background: #fff !important;
+    border: 1px solid #e0e0e0 !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+    min-width: 220px !important;
+    z-index: 100 !important;
+    padding: 10px 0 !important;
+  }
+
+  .liujo-sort-options-list li {
+    padding: 12px 24px !important;
+    font-family: var(--liujo-font-main) !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: #111 !important;
+    cursor: pointer !important;
+    transition: background 0.15s ease !important;
+  }
+
+  .liujo-sort-options-list li:hover {
+    background: #f7f7f7 !important;
+  }
+
+  .liujo-sort-options-list li.is-selected {
+    background: #f2f2f2 !important;
+    font-weight: 800 !important;
+  }
 }
 
-.facets__summary {
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--liujo-black, #111);
-  cursor: pointer;
-  padding: 6px 0;
-}
-
-.facet-filters__sort {
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border: 1px solid var(--liujo-border-gray, #dcdcdc);
-  border-radius: 0;
-  padding: 8px 16px;
-  background-color: var(--liujo-white, #fff);
-  color: var(--liujo-black, #111);
-  cursor: pointer;
-}
-
-/* Grid Column Toggler */
-.liujo-grid-toggler {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.liujo-grid-toggle-btn {
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--liujo-border-gray, #dcdcdc);
-  background-color: var(--liujo-white, #fff);
-  color: var(--liujo-black, #111);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  padding: 0;
-}
-
-.liujo-grid-toggle-btn:hover {
-  border-color: var(--liujo-black, #000);
-}
-
-.liujo-grid-toggle-btn.is-active {
-  background-color: var(--liujo-black, #000);
-  border-color: var(--liujo-black, #000);
-  color: var(--liujo-white, #fff);
-}
-
-.liujo-grid-toggle-btn svg {
-  fill: currentColor;
-}
-
-/* 4. PRODUCT GRID */
+/* 5. PRODUCT GRID */
 #product-grid {
-  max-width: var(--liujo-container-max, 1440px);
-  margin: 0 auto;
-  padding: 28px 24px 60px;
-  gap: 36px 18px;
+  max-width: 100% !important;
+  padding: 16px 24px 60px 24px !important;
+  margin: 0 auto !important;
+  gap: 32px 14px !important;
 }
 
 @media (min-width: 990px) {
@@ -187,109 +611,120 @@
     grid-template-columns: repeat(4, 1fr) !important;
   }
 
-  /* Compact View on Desktop (2 columns) */
   #product-grid.product-grid.grid--compact {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 48px 32px;
+    gap: 40px 20px !important;
   }
 }
 
 @media (max-width: 989px) {
   #product-grid.product-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    padding: 20px 16px 48px;
-    gap: 24px 10px;
+    padding: 14px 12px 48px 12px !important;
+    gap: 20px 8px !important;
   }
 
-  /* Compact View on Mobile (1 column full width) */
   #product-grid.product-grid.grid--mobile-compact {
     grid-template-columns: 1fr !important;
-    gap: 32px;
+    gap: 28px !important;
   }
 }
 
-/* 5. PRODUCT CARD LUXURY FORMATTING */
+/* 6. PRODUCT CARDS & DIRECT PRICE UNDER TITLE */
 .card-wrapper {
-  position: relative;
-  transition: transform 0.3s ease;
+  position: relative !important;
 }
 
 .card--standard .card__inner,
 .card--card .card__inner {
   aspect-ratio: 3 / 4 !important;
-  background-color: var(--liujo-light-gray, #f7f7f7);
+  background-color: #f7f7f7 !important;
   border-radius: 0 !important;
-  overflow: hidden;
-  position: relative;
+  overflow: hidden !important;
+  position: relative !important;
 }
 
 .card__media img {
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
   object-fit: cover !important;
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
 
 .card-wrapper:hover .card__media img:first-child {
-  transform: scale(1.02);
+  transform: scale(1.02) !important;
 }
 
-/* Wishlist Button on Cards */
+/* Carousel Dash Indicators (Screenshots 1 & 2) */
+.liujo-card-indicators {
+  position: absolute !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  z-index: 4 !important;
+  pointer-events: none !important;
+}
+
+.liujo-card-indicators .indicator-bar {
+  display: block !important;
+  width: 22px !important;
+  height: 2px !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  border-radius: 1px !important;
+  transition: background 0.2s ease, opacity 0.2s ease !important;
+}
+
+.liujo-card-indicators .indicator-bar.is-active,
+.card-wrapper:hover .liujo-card-indicators .indicator-bar:nth-child(2) {
+  background: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Wishlist Heart Trigger */
 .liujo-wishlist-trigger {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(4px);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  color: var(--liujo-black, #111);
-  transition: all 0.2s ease;
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(4px) !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 5 !important;
+  color: #111 !important;
+  transition: all 0.2s ease !important;
 }
 
 .liujo-wishlist-trigger:hover,
 .liujo-wishlist-trigger.is-active {
-  background-color: var(--liujo-white, #fff);
-  color: var(--liujo-accent-pink, #C4184E);
-  transform: scale(1.1);
+  background-color: #fff !important;
+  color: #C4184E !important;
+  transform: scale(1.08) !important;
 }
 
 .liujo-wishlist-trigger.is-active svg {
-  fill: currentColor;
+  fill: currentColor !important;
 }
 
-/* Card Information */
-.card__information {
-  padding: 12px 2px 0 !important;
-}
-
-.card-information .caption-with-letter-spacing {
-  font-family: var(--liujo-font-main);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--liujo-mid-gray, #888);
-  margin-bottom: 2px;
-}
-
+/* Product Heading (Title) */
 .card__heading {
   font-family: var(--liujo-font-main) !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.04em !important;
-  text-transform: uppercase !important;
-  color: var(--liujo-black, #111) !important;
-  line-height: 1.35;
-  margin: 0 0 4px !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: capitalize !important;
+  color: #111 !important;
+  line-height: 1.35 !important;
+  margin: 8px 0 2px 0 !important;
+  padding: 0 !important;
 }
 
 .card__heading a {
@@ -298,78 +733,65 @@
 }
 
 .card__heading a:hover {
-  opacity: 0.75;
+  opacity: 0.75 !important;
 }
 
-.card-information .price {
-  font-family: var(--liujo-font-main);
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  color: var(--liujo-black, #111);
-  margin-top: 4px;
+/* Product Price DIRECTLY Below Heading */
+.liujo-card-price-wrapper {
+  margin-top: 2px !important;
+  padding: 0 !important;
 }
 
-.card-information .price--on-sale .price-item--sale {
-  color: var(--liujo-black, #111);
-}
-
-.card-information .price--on-sale .price-item--regular {
-  font-size: 11.5px;
-  color: #999;
-  text-decoration: line-through;
-  margin-left: 6px;
-}
-
-/* Luxury Badges on Cards */
-.card__badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 4;
-}
-
-.card__badge .badge {
-  border-radius: 0 !important;
+.liujo-card-price-wrapper .price {
   font-family: var(--liujo-font-main) !important;
-  font-size: 10px !important;
+  font-size: 13px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.14em !important;
+  letter-spacing: 0.02em !important;
+  color: #111 !important;
+  margin: 0 !important;
+}
+
+.liujo-card-price-wrapper .price--on-sale .price-item--sale {
+  font-weight: 700 !important;
+  color: #111 !important;
+}
+
+.liujo-card-price-wrapper .price--on-sale .price-item--regular {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: #888 !important;
+  text-decoration: line-through !important;
+  margin-left: 6px !important;
+}
+
+/* Hide clutter */
+.card-information > .price {
+  display: none !important;
+}
+
+.card-information .caption-with-letter-spacing {
+  display: none !important;
+}
+
+/* 7. SEARCH TEMPLATE HEADER STREAMLINING */
+.template-search__header {
+  text-align: left !important;
+  padding: 16px 24px 8px 24px !important;
+  margin-bottom: 12px !important;
+}
+
+.template-search__header h1 {
+  font-family: var(--liujo-font-main) !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
-  padding: 4px 8px !important;
-  background-color: var(--liujo-black, #000) !important;
-  color: var(--liujo-white, #fff) !important;
-  border: none !important;
+  color: #111 !important;
+  text-align: left !important;
+  margin: 0 0 12px 0 !important;
 }
 
-/* 6. MINIMALIST PAGINATION */
-.pagination__list {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  list-style: none;
-  padding: 40px 0;
-  margin: 0;
-}
-
-.pagination__item {
-  min-width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--liujo-border-gray, #dcdcdc);
-  font-family: var(--liujo-font-main);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--liujo-black, #111);
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.pagination__item:hover,
-.pagination__item--current {
-  background-color: var(--liujo-black, #000);
-  border-color: var(--liujo-black, #000);
-  color: var(--liujo-white, #fff) !important;
+.template-search__search {
+  margin: 0 0 16px 0 !important;
+  max-width: 500px !important;
 }

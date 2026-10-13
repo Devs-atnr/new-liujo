@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLiuJoGridToggler();
   initLiuJoMobileStickyCart();
   initLiuJoSearchDrawer();
+  initLiuJoToolbar();
 });
 
 // 1. VIDEO CONTROLS
@@ -1056,4 +1057,167 @@ function initLiuJoSearchDrawer() {
       if (emptyState) emptyState.style.display = 'block';
     }
   }
+}
+
+// 11. LIU JO PLP & SEARCH TOOLBAR CONTROLLER (DESKTOP & MOBILE)
+function initLiuJoToolbar() {
+  function applySort(sortVal) {
+    let updated = false;
+    document.querySelectorAll('select[name="sort_by"]').forEach(sel => {
+      sel.value = sortVal;
+      updated = true;
+    });
+
+    const forms = [
+      document.getElementById('FacetFiltersForm'),
+      document.getElementById('FacetFiltersFormMobile'),
+      document.getElementById('FacetSortForm')
+    ].filter(Boolean);
+
+    if (forms.length > 0) {
+      forms.forEach(f => {
+        f.dispatchEvent(new Event('input', { bubbles: true }));
+        f.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    } else if (!updated) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort_by', sortVal);
+      window.location.href = url.toString();
+    }
+  }
+
+  // Delegated click listener across whole document
+  document.addEventListener('click', (e) => {
+    // 1. Desktop Sort Trigger
+    const deskSortTrigger = e.target.closest('#LiuJoDesktopSortTrigger');
+    if (deskSortTrigger) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropdown = document.getElementById('LiuJoDesktopSortDropdown');
+      if (dropdown) {
+        const isHidden = dropdown.style.display === 'none' || dropdown.style.display === '';
+        dropdown.style.display = isHidden ? 'block' : 'none';
+        deskSortTrigger.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      }
+      return;
+    }
+
+    // 2. Desktop Sort Option Click
+    const deskSortOption = e.target.closest('#LiuJoDesktopSortDropdown li[data-sort-value]');
+    if (deskSortOption) {
+      e.preventDefault();
+      const sortVal = deskSortOption.getAttribute('data-sort-value');
+      const dropdown = document.getElementById('LiuJoDesktopSortDropdown');
+      if (dropdown) {
+        dropdown.querySelectorAll('li').forEach(li => li.classList.remove('is-selected'));
+        deskSortOption.classList.add('is-selected');
+        dropdown.style.display = 'none';
+      }
+      const trigger = document.getElementById('LiuJoDesktopSortTrigger');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      applySort(sortVal);
+      return;
+    }
+
+    // 3. Mobile Sort Trigger
+    const mobSortTrigger = e.target.closest('#LiuJoMobileSortTrigger');
+    if (mobSortTrigger) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropdown = document.getElementById('LiuJoMobileSortDropdown');
+      if (dropdown) {
+        const isHidden = dropdown.style.display === 'none' || dropdown.style.display === '';
+        dropdown.style.display = isHidden ? 'block' : 'none';
+        mobSortTrigger.classList.toggle('is-active', isHidden);
+        mobSortTrigger.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      }
+      return;
+    }
+
+    // 4. Mobile Sort Option Click
+    const mobSortOption = e.target.closest('#LiuJoMobileSortDropdown li[data-sort-value]');
+    if (mobSortOption) {
+      e.preventDefault();
+      const sortVal = mobSortOption.getAttribute('data-sort-value');
+      const dropdown = document.getElementById('LiuJoMobileSortDropdown');
+      if (dropdown) {
+        dropdown.querySelectorAll('li').forEach(li => li.classList.remove('is-selected'));
+        mobSortOption.classList.add('is-selected');
+        dropdown.style.display = 'none';
+      }
+      const trigger = document.getElementById('LiuJoMobileSortTrigger');
+      if (trigger) {
+        trigger.classList.remove('is-active');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+      applySort(sortVal);
+      return;
+    }
+
+    // 5. Mobile Filter Trigger -> Opens Dawn drawer
+    const mobFilterTrigger = e.target.closest('#LiuJoMobileFilterTrigger');
+    if (mobFilterTrigger) {
+      e.preventDefault();
+      const dropdown = document.getElementById('LiuJoMobileSortDropdown');
+      if (dropdown) dropdown.style.display = 'none';
+      const sortBtn = document.getElementById('LiuJoMobileSortTrigger');
+      if (sortBtn) sortBtn.classList.remove('is-active');
+
+      const nativeDrawerTrigger = document.querySelector('.mobile-facets__open-wrapper');
+      if (nativeDrawerTrigger) {
+        nativeDrawerTrigger.click();
+      }
+      return;
+    }
+
+    // 6. Mobile Grid View Toggler
+    const mobGridBtn = e.target.closest('[data-liujo-grid-toggle-mobile]');
+    if (mobGridBtn) {
+      e.preventDefault();
+      const grid = document.getElementById('product-grid');
+      if (grid) {
+        const isSingle = !grid.classList.contains('grid--mobile-compact');
+        grid.classList.toggle('grid--mobile-compact', isSingle);
+        sessionStorage.setItem('liujo_grid_cols_mobile', isSingle ? '1' : '2');
+        const icon2 = mobGridBtn.querySelector('.icon-grid-2');
+        const icon1 = mobGridBtn.querySelector('.icon-grid-1');
+        if (icon2 && icon1) {
+          icon2.style.display = isSingle ? 'none' : 'block';
+          icon1.style.display = isSingle ? 'block' : 'none';
+        }
+      }
+      return;
+    }
+
+    // 7. Desktop Filter Close ✕ Button
+    const filterCloseBtn = e.target.closest('.liujo-facet-popup-close');
+    if (filterCloseBtn) {
+      e.preventDefault();
+      const details = filterCloseBtn.closest('details');
+      if (details) details.removeAttribute('open');
+      return;
+    }
+
+    // 8. Close open dropdowns & details if clicked outside
+    const deskDropdown = document.getElementById('LiuJoDesktopSortDropdown');
+    const deskTrigger = document.getElementById('LiuJoDesktopSortTrigger');
+    if (deskDropdown && deskDropdown.style.display === 'block' && !deskDropdown.contains(e.target) && !deskTrigger?.contains(e.target)) {
+      deskDropdown.style.display = 'none';
+      deskTrigger?.setAttribute('aria-expanded', 'false');
+    }
+
+    const mobDropdown = document.getElementById('LiuJoMobileSortDropdown');
+    const mobTrigger = document.getElementById('LiuJoMobileSortTrigger');
+    if (mobDropdown && mobDropdown.style.display === 'block' && !mobDropdown.contains(e.target) && !mobTrigger?.contains(e.target)) {
+      mobDropdown.style.display = 'none';
+      mobTrigger?.classList.remove('is-active');
+      mobTrigger?.setAttribute('aria-expanded', 'false');
+    }
+
+    document.querySelectorAll('.facets__disclosure[open]').forEach(details => {
+      if (!details.contains(e.target)) {
+        details.removeAttribute('open');
+      }
+    });
+  });
 }

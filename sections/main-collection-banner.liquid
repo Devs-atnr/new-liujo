@@ -14,10 +14,12 @@
     <div class="liujo-plp-breadcrumbs">
       <nav aria-label="Breadcrumb">
         <ol class="liujo-breadcrumbs-list">
-          <li><a href="{{ routes.root_url }}">LIU JO</a></li>
-          <li class="liujo-bc-sep">/</li>
-          <li><a href="{{ routes.all_products_collection_url }}">WOMEN</a></li>
-          <li class="liujo-bc-sep">/</li>
+          <li><a href="{{ routes.root_url }}">Liu Jo</a></li>
+          <li class="liujo-bc-sep">•</li>
+          <li><a href="{{ routes.all_products_collection_url }}">Women</a></li>
+          <li class="liujo-bc-sep">•</li>
+          <li><a href="{{ routes.all_products_collection_url }}">Clothing</a></li>
+          <li class="liujo-bc-sep">•</li>
           <li class="liujo-bc-current" aria-current="page">
             {{ collection.title | escape }}
             <span class="liujo-item-count">({{ collection.all_products_count | default: collection.products_count }})</span>
@@ -31,16 +33,6 @@
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
         {{- collection.title | escape -}}
       </h1>
-
-      {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">
-          {%- if collection.description != blank -%}
-            {{ collection.description }}
-          {%- else -%}
-            <p>Discover refined Italian tailoring and contemporary feminine glamour in the {{ collection.title }} collection by Liu Jo.</p>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
     </div>
 
     {%- if section.settings.show_collection_image and collection.image -%}

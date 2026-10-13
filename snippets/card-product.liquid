@@ -111,6 +111,13 @@
             </div>
           {%- endif -%}
 
+          {%- if card_product.media.size > 1 -%}
+            <div class="liujo-card-indicators" aria-hidden="true">
+              <span class="indicator-bar is-active"></span>
+              <span class="indicator-bar"></span>
+            </div>
+          {%- endif -%}
+
           <!-- Liu Jo Wishlist Heart Trigger -->
           <button
             type="button"
@@ -141,6 +148,9 @@
                   {{ card_product.title | escape }}
                 </a>
               </h3>
+              <div class="liujo-card-price-wrapper">
+                {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+              </div>
             </div>
             <div class="card__badge {{ settings.badge_position }}">
               {%- if card_product.available == false -%}
@@ -178,6 +188,9 @@
                 {{ card_product.title | escape }}
               </a>
             </h3>
+            <div class="liujo-card-price-wrapper">
+              {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+            </div>
             <div class="card-information">
               {%- if show_vendor -%}
                 <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
@@ -222,7 +235,6 @@
                 </p>
               {%- endif -%}
 
-              {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
               {%- if card_product.quantity_price_breaks_configured? -%}
                 {% if card_product.variants_count == 1 and quick_add == 'bulk' %}
                   {% liquid
