@@ -30,10 +30,15 @@
         "show_store_locator": true,
         "store_locator_label": "Locate Stores",
         "store_locator_link": "",
-        "show_search": true,
+        "show_search_desktop": true,
         "show_wishlist_desktop": false,
+        "show_account_desktop": false,
         "show_cart_desktop": false,
-        "show_cart_mobile": true
+        "show_search_mobile": true,
+        "show_cart_mobile": false,
+        "show_wishlist_mobile": false,
+        "show_account_mobile": false,
+        "show_hamburger_mobile": true
       }
     }
   },
