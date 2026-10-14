@@ -64,12 +64,12 @@
       },
       "block_order": [
         "title",
-        "price",
         "variant_picker",
-        "buy_buttons",
         "description",
         "collapsible_tab_details",
-        "collapsible_tab_shipping"
+        "collapsible_tab_shipping",
+        "price",
+        "buy_buttons"
       ],
       "settings": {
         "enable_sticky_info": true,

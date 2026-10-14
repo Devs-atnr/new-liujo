@@ -86,24 +86,21 @@
           >
             <!-- Liu Jo Custom PDP Breadcrumbs (Image 2 Parity) -->
             <nav class="liujo-pdp-breadcrumbs" aria-label="Breadcrumbs">
-              <a href="{{ routes.root_url }}">Home</a>
+              <a href="{{ routes.root_url }}">Liu Jo</a>
               <span class="liujo-bc-bullet">•</span>
               {%- if product.collections.size > 0 -%}
                 {%- assign primary_col = product.collections.first -%}
-                <a href="{{ primary_col.url }}">{{ primary_col.title | upcase }}</a>
-                <span class="liujo-bc-bullet">•</span>
+                <a href="{{ primary_col.url }}">{{ primary_col.title }}</a>
+                {%- if product.type != blank -%}
+                  <span class="liujo-bc-bullet">•</span>
+                  <span>{{ product.type }}</span>
+                {%- endif -%}
               {%- else -%}
-                <a href="/collections/women">WOMEN</a>
+                <a href="/collections/women">Women</a>
                 <span class="liujo-bc-bullet">•</span>
+                <span>Clothing</span>
               {%- endif -%}
-              <span class="liujo-bc-current">{{ product.title }}</span>
             </nav>
-
-            <!-- Liu Jo Tamara Installment Banner (Image 2 Parity) -->
-            <div class="liujo-tamara-banner">
-              <span>Pay in 4 interest-free installments of <strong class="liujo-tamara-amount" id="LiuJoTamaraAmount-{{ section.id }}">{{ product.selected_or_first_available_variant.price | divided_by: 4.0 | money }}</strong> with</span>
-              <span class="liujo-tamara-badge">tamara</span>
-            </div>
 
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
@@ -124,16 +121,6 @@
                   </div>
                   <div class="liujo-pdp-title-row" {{ block.shopify_attributes }}>
                     <h1 class="liujo-pdp-title">{{ product.title | escape }}</h1>
-                    <button type="button" class="liujo-pdp-share-btn" onclick="if(navigator.share){navigator.share({title:document.title,url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert('Link copied to clipboard!');}" aria-label="Share">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="18" cy="5" r="3"></circle>
-                        <circle cx="6" cy="12" r="3"></circle>
-                        <circle cx="18" cy="19" r="3"></circle>
-                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                      </svg>
-                      <span>SHARE</span>
-                    </button>
                   </div>
                   <hr class="liujo-pdp-title-divider" />
                 {%- when 'price' -%}
@@ -223,7 +210,7 @@
                     {%- endif -%}
                   </p>
                 {%- when 'description' -%}
-                  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
+                  <div class="product__accordion accordion liujo-accordion-description quick-add-hidden" {{ block.shopify_attributes }}>
                     <details id="Details-Description-{{ section.id }}">
                       <summary class="liujo-accordion-summary">
                         <h2 class="liujo-accordion-title">DESCRIPTION</h2>
@@ -251,8 +238,8 @@
                   {%- if heading_down contains 'detail' or heading_down contains 'composition' -%}
                     {%- assign is_details_tab = true -%}
                   {%- endif -%}
-                  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-                    <details id="Details-{{ block.id }}-{{ section.id }}" {% if is_details_tab %}open{% endif %}>
+                  <div class="product__accordion accordion liujo-accordion-details quick-add-hidden" {{ block.shopify_attributes }}>
+                    <details id="Details-{{ block.id }}-{{ section.id }}">
                       <summary class="liujo-accordion-summary">
                         <h2 class="liujo-accordion-title">
                           {%- if is_details_tab -%}
