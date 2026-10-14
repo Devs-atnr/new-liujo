@@ -1466,5 +1466,17 @@
         "label": "t:settings_schema.customer_accounts.settings.customer_account_menu.label"
       }
     ]
+  },
+  {
+    "name": "Wishlist",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_wishlist",
+        "default": true,
+        "label": "Enable Wishlist across store",
+        "info": "Display wishlist heart button on product cards, product page, and header icon."
+      }
+    ]
   }
 ]

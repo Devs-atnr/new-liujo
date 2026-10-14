@@ -1,0 +1,279 @@
+{% comment %}
+  LIU JO MAIN WISHLIST PAGE SECTION
+  Displays customer's saved items in a luxury 4-column editorial grid.
+{% endcomment %}
+
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<div class="liujo-wishlist-page page-width" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <!-- Header -->
+  <div class="liujo-wishlist-page__header">
+    <h1 class="liujo-title-display">{{ section.settings.title | default: 'My Wishlist' }}</h1>
+    <div class="liujo-wishlist-page__sub">
+      <span id="LiuJoWishlistPageCount">0</span> items saved
+    </div>
+  </div>
+
+  <!-- Wishlist Grid -->
+  <ul class="liujo-wishlist-page__grid" id="LiuJoWishlistPageGrid">
+    <!-- Populated in real time via JavaScript -->
+  </ul>
+
+  <!-- Empty State -->
+  <div class="liujo-wishlist-page__empty" id="LiuJoWishlistPageEmpty" style="display: none;">
+    <div class="liujo-wishlist-empty-icon" style="margin-bottom: 20px;">
+      <svg viewBox="0 0 24 24" width="56" height="56" stroke="#111111" stroke-width="1.2" fill="none">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+    </div>
+    <h2 class="liujo-title-medium" style="margin-bottom: 12px;">Your Wishlist is Empty</h2>
+    <p class="liujo-subtitle" style="max-width: 420px; margin: 0 auto 28px;">
+      Explore our collections and tap the heart icon on any product to save your favorites for later.
+    </p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn-editorial-solid">
+      EXPLORE THE COLLECTION
+    </a>
+  </div>
+</div>
+
+<style>
+  .liujo-wishlist-page__header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .liujo-wishlist-page__sub {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #777777;
+    margin-top: 8px;
+  }
+
+  .liujo-wishlist-page__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .liujo-wishlist-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .liujo-wishlist-card-media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background-color: #f7f7f7;
+    margin-bottom: 14px;
+  }
+
+  .liujo-wishlist-card-media a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .liujo-wishlist-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .liujo-wishlist-card:hover .liujo-wishlist-card-media img {
+    transform: scale(1.02);
+  }
+
+  .liujo-wishlist-card-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    transition: all 0.2s ease;
+    color: #111111;
+  }
+
+  .liujo-wishlist-card-remove:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  .liujo-wishlist-card-info {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2px;
+  }
+
+  .liujo-wishlist-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #000000;
+    text-decoration: none;
+    line-height: 1.35;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .liujo-wishlist-card-title:hover {
+    text-decoration: underline;
+  }
+
+  .liujo-wishlist-card-price {
+    font-size: 13px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 12px;
+  }
+
+  .liujo-wishlist-card-atc {
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #000000;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .liujo-wishlist-card-atc:hover {
+    background-color: transparent;
+    color: #000000;
+  }
+
+  .liujo-wishlist-page__empty {
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  @media (max-width: 989px) {
+    .liujo-wishlist-page__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initLiuJoWishlistPage();
+  });
+
+  function initLiuJoWishlistPage() {
+    const grid = document.getElementById('LiuJoWishlistPageGrid');
+    const emptyState = document.getElementById('LiuJoWishlistPageEmpty');
+    const countSpan = document.getElementById('LiuJoWishlistPageCount');
+    if (!grid) return;
+
+    function renderPage() {
+      let products = [];
+      try {
+        products = JSON.parse(localStorage.getItem('liujo_wishlist_products') || '[]');
+      } catch (e) {
+        products = [];
+      }
+
+      if (countSpan) countSpan.textContent = products.length;
+
+      if (!products || products.length === 0) {
+        grid.innerHTML = '';
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+      }
+
+      if (emptyState) emptyState.style.display = 'none';
+
+      grid.innerHTML = products.map(prod => `
+        <li class="liujo-wishlist-card" data-product-id="${prod.id}">
+          <div class="liujo-wishlist-card-media">
+            <button type="button" class="liujo-wishlist-card-remove" data-wishlist-page-remove="${prod.id}" aria-label="Remove item">
+              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <a href="${prod.url}">
+              <img src="${prod.image}" alt="${prod.title}" loading="lazy">
+            </a>
+          </div>
+          <div class="liujo-wishlist-card-info">
+            <a href="${prod.url}" class="liujo-wishlist-card-title">${prod.title}</a>
+            <div class="liujo-wishlist-card-price">${prod.price}</div>
+            <a href="${prod.url}" class="liujo-wishlist-card-atc">VIEW PRODUCT</a>
+          </div>
+        </li>
+      `).join('');
+
+      grid.querySelectorAll('[data-wishlist-page-remove]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = btn.getAttribute('data-wishlist-page-remove');
+          if (window.removeLiuJoWishlistProduct) {
+            window.removeLiuJoWishlistProduct(id);
+          }
+          renderPage();
+        });
+      });
+    }
+
+    renderPage();
+    window.addEventListener('wishlist:updated', renderPage);
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Wishlist Page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "My Wishlist"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 64
+    }
+  ]
+}
+{% endschema %}

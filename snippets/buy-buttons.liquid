@@ -141,18 +141,24 @@
             </quantity-input>
 
             <!-- Wishlist Square Button (Heart Icon Outline) -->
-            <button
-              type="button"
-              class="liujo-pdp-wishlist-square"
-              data-liujo-wishlist
-              data-product-id="{{ product.id }}"
-              aria-label="Add to Wishlist"
-              title="Add to Wishlist"
-            >
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-              </svg>
-            </button>
+            {%- if show_wishlist != false and settings.show_wishlist != false -%}
+              <button
+                type="button"
+                class="liujo-pdp-wishlist-square"
+                data-liujo-wishlist
+                data-product-id="{{ product.id }}"
+                data-product-title="{{ product.title | escape }}"
+                data-product-price="{{ product.selected_or_first_available_variant.price | money }}"
+                data-product-image="{{ product.featured_media | image_url: width: 500 }}"
+                data-product-url="{{ product.url }}"
+                aria-label="Add to Wishlist"
+                title="Add to Wishlist"
+              >
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+            {%- endif -%}
 
             <!-- ADD TO CART Button -->
             <button

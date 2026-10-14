@@ -1166,32 +1166,9 @@
   transform: scale(1.02) !important;
 }
 
-/* Carousel Dash Indicators (Screenshots 1 & 2) */
+/* Carousel Dash Indicators Removed per user request */
 .liujo-card-indicators {
-  position: absolute !important;
-  bottom: 12px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  z-index: 4 !important;
-  pointer-events: none !important;
-}
-
-.liujo-card-indicators .indicator-bar {
-  display: block !important;
-  width: 22px !important;
-  height: 2px !important;
-  background: rgba(255, 255, 255, 0.45) !important;
-  border-radius: 1px !important;
-  transition: background 0.2s ease, opacity 0.2s ease !important;
-}
-
-.liujo-card-indicators .indicator-bar.is-active,
-.card-wrapper:hover .liujo-card-indicators .indicator-bar:nth-child(2) {
-  background: #ffffff !important;
-  opacity: 1 !important;
+  display: none !important;
 }
 
 /* Wishlist Heart Trigger */

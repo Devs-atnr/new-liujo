@@ -227,66 +227,295 @@ function initLiuJoFooterAccordions() {
   });
 }
 
-// 5. WISHLIST TOGGLE & LOCAL STORAGE
+// 5. WISHLIST ENGINE (REAL-TIME LOCAL STORAGE, DRAWER, TOAST & BADGES)
 function initLiuJoWishlist() {
-  const wishlistTriggers = document.querySelectorAll('[data-liujo-wishlist]');
-  const wishlistCountBadge = document.querySelector('[data-wishlist-count]');
-
-  function getWishlist() {
+  function getWishlistIds() {
     try {
-      return JSON.parse(localStorage.getItem('liujo_wishlist') || '[]');
+      const ids = JSON.parse(localStorage.getItem('liujo_wishlist') || '[]');
+      return Array.isArray(ids) ? ids.map(String) : [];
     } catch (e) {
       return [];
     }
   }
 
-  function setWishlist(items) {
+  function getWishlistProducts() {
     try {
-      localStorage.setItem('liujo_wishlist', JSON.stringify(items));
-      if (wishlistCountBadge) {
-        wishlistCountBadge.textContent = items.length;
-        wishlistCountBadge.style.display = items.length > 0 ? 'inline-block' : 'none';
-      }
-    } catch (e) {}
-  }
-
-  function updateBtnUI(btn, isInList) {
-    if (isInList) {
-      btn.classList.add('is-active');
-      const textSpan = btn.querySelector('.liujo-wishlist-btn-text');
-      if (textSpan) textSpan.textContent = 'In Wishlist';
-    } else {
-      btn.classList.remove('is-active');
-      const textSpan = btn.querySelector('.liujo-wishlist-btn-text');
-      if (textSpan) textSpan.textContent = 'Add to Wishlist';
+      const prods = JSON.parse(localStorage.getItem('liujo_wishlist_products') || '[]');
+      return Array.isArray(prods) ? prods : [];
+    } catch (e) {
+      return [];
     }
   }
 
-  const currentWishlist = getWishlist();
-  if (wishlistCountBadge) {
-    wishlistCountBadge.textContent = currentWishlist.length;
-    wishlistCountBadge.style.display = currentWishlist.length > 0 ? 'inline-block' : 'none';
+  function setWishlist(ids, products) {
+    try {
+      localStorage.setItem('liujo_wishlist', JSON.stringify(ids));
+      localStorage.setItem('liujo_wishlist_products', JSON.stringify(products));
+    } catch (e) {}
+
+    updateBadgeCounts(ids.length);
+    window.dispatchEvent(new CustomEvent('wishlist:updated', { detail: { ids, products } }));
   }
 
-  wishlistTriggers.forEach(btn => {
-    const productId = btn.getAttribute('data-product-id');
-    const isIn = currentWishlist.includes(productId);
-    updateBtnUI(btn, isIn);
+  function updateBadgeCounts(count) {
+    const badges = document.querySelectorAll('[data-wishlist-count]');
+    badges.forEach(badge => {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'inline-block' : 'none';
+    });
 
-    btn.addEventListener('click', (e) => {
+    const totalCountBadges = document.querySelectorAll('[data-wishlist-total-count]');
+    totalCountBadges.forEach(b => {
+      b.textContent = count;
+    });
+
+    const pageCount = document.getElementById('LiuJoWishlistPageCount');
+    if (pageCount) pageCount.textContent = count;
+  }
+
+  function syncButtons() {
+    const ids = getWishlistIds();
+    const triggers = document.querySelectorAll('[data-liujo-wishlist]');
+    triggers.forEach(btn => {
+      const pId = String(btn.getAttribute('data-product-id') || '');
+      if (ids.includes(pId)) {
+        btn.classList.add('is-active');
+        const textSpan = btn.querySelector('.liujo-wishlist-btn-text');
+        if (textSpan) textSpan.textContent = 'In Wishlist';
+      } else {
+        btn.classList.remove('is-active');
+        const textSpan = btn.querySelector('.liujo-wishlist-btn-text');
+        if (textSpan) textSpan.textContent = 'Add to Wishlist';
+      }
+    });
+  }
+
+  // Toast Notification
+  let toastTimer = null;
+  function showToast(statusText, productTitle, productImg) {
+    const toast = document.getElementById('LiuJoWishlistToast');
+    if (!toast) return;
+
+    const statusEl = document.getElementById('LiuJoToastStatus');
+    const titleEl = document.getElementById('LiuJoToastTitle');
+    const imgEl = document.getElementById('LiuJoToastImg');
+    const imgWrap = document.getElementById('LiuJoToastImgWrap');
+
+    if (statusEl) statusEl.textContent = statusText;
+    if (titleEl) titleEl.textContent = productTitle || '';
+    if (imgEl && productImg) {
+      imgEl.src = productImg;
+      if (imgWrap) imgWrap.style.display = 'block';
+    } else if (imgWrap) {
+      imgWrap.style.display = 'none';
+    }
+
+    toast.classList.add('is-visible');
+    toast.setAttribute('aria-hidden', 'false');
+
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('is-visible');
+      toast.setAttribute('aria-hidden', 'true');
+    }, 3500);
+  }
+
+  // Drawer Render & Actions
+  function openWishlistDrawer() {
+    const drawerWrap = document.getElementById('LiuJoWishlistDrawer');
+    if (!drawerWrap) return;
+    renderDrawerItems();
+    drawerWrap.classList.add('is-open');
+    drawerWrap.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeWishlistDrawer() {
+    const drawerWrap = document.getElementById('LiuJoWishlistDrawer');
+    if (!drawerWrap) return;
+    drawerWrap.classList.remove('is-open');
+    drawerWrap.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function renderDrawerItems() {
+    const itemsContainer = document.getElementById('LiuJoWishlistItems');
+    const emptyContainer = document.getElementById('LiuJoWishlistEmpty');
+    const footerContainer = document.getElementById('LiuJoWishlistFooter');
+    if (!itemsContainer) return;
+
+    const products = getWishlistProducts();
+    updateBadgeCounts(products.length);
+
+    if (products.length === 0) {
+      itemsContainer.innerHTML = '';
+      if (emptyContainer) emptyContainer.style.display = 'flex';
+      if (footerContainer) footerContainer.style.display = 'none';
+      return;
+    }
+
+    if (emptyContainer) emptyContainer.style.display = 'none';
+    if (footerContainer) footerContainer.style.display = 'flex';
+
+    itemsContainer.innerHTML = products.map(prod => `
+      <div class="liujo-wishlist-drawer-item" data-product-id="${prod.id}">
+        <a href="${prod.url || '#'}" class="liujo-wishlist-item-img">
+          <img src="${prod.image || ''}" alt="${(prod.title || 'Product').replace(/"/g, '&quot;')}" loading="lazy">
+        </a>
+        <div class="liujo-wishlist-item-info">
+          <div>
+            <a href="${prod.url || '#'}" class="liujo-wishlist-item-title">${prod.title || 'Product'}</a>
+            <div class="liujo-wishlist-item-price">${prod.price || ''}</div>
+          </div>
+          <div class="liujo-wishlist-item-actions">
+            <a href="${prod.url || '#'}" class="liujo-wishlist-item-atc">VIEW PRODUCT</a>
+            <button type="button" class="liujo-wishlist-item-remove" data-drawer-remove="${prod.id}">Remove</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // Attach Remove Listeners inside Drawer
+    itemsContainer.querySelectorAll('[data-drawer-remove]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pId = String(btn.getAttribute('data-drawer-remove'));
+        removeProduct(pId);
+        renderDrawerItems();
+      });
+    });
+  }
+
+  function removeProduct(productId) {
+    let ids = getWishlistIds();
+    let products = getWishlistProducts();
+
+    ids = ids.filter(id => String(id) !== String(productId));
+    products = products.filter(p => String(p.id) !== String(productId));
+
+    setWishlist(ids, products);
+    syncButtons();
+  }
+
+  // Delegated Click Listener for all Wishlist buttons across page (even dynamically injected)
+  document.addEventListener('click', (e) => {
+    // 1. Wishlist Heart Toggle Button
+    const btn = e.target.closest('[data-liujo-wishlist]');
+    if (btn) {
       e.preventDefault();
       e.stopPropagation();
-      let list = getWishlist();
-      if (list.includes(productId)) {
-        list = list.filter(id => id !== productId);
-        updateBtnUI(btn, false);
+
+      const productId = String(btn.getAttribute('data-product-id') || '');
+      if (!productId) return;
+
+      let ids = getWishlistIds();
+      let products = getWishlistProducts();
+      const isCurrentlyIn = ids.includes(productId);
+
+      if (isCurrentlyIn) {
+        // Remove from wishlist
+        ids = ids.filter(id => id !== productId);
+        const removedItem = products.find(p => String(p.id) === productId);
+        products = products.filter(p => String(p.id) !== productId);
+
+        setWishlist(ids, products);
+        syncButtons();
+
+        showToast('Removed from Wishlist', removedItem?.title || '', removedItem?.image || '');
       } else {
-        list.push(productId);
-        updateBtnUI(btn, true);
+        // Extract product details
+        const card = btn.closest('.card-wrapper, .liujo-product-card-wrap, .liujo-tab-card, .product__info-container, .product-form') || document;
+        const title = btn.getAttribute('data-product-title')
+          || card.querySelector('.card__heading a, .liujo-card-title, .liujo-tab-title, .product__title h1')?.textContent?.trim()
+          || document.title.split('|')[0].trim();
+        const price = btn.getAttribute('data-product-price')
+          || card.querySelector('.price-item--regular, .price-item--sale, .liujo-card-price span, .liujo-tab-price span')?.textContent?.trim()
+          || '';
+        const image = btn.getAttribute('data-product-image')
+          || card.querySelector('.card__media img, .liujo-card-media img, .liujo-tab-card-media img, .product__media img')?.src
+          || '';
+        const url = btn.getAttribute('data-product-url')
+          || card.querySelector('.card__heading a, .liujo-card-title, .liujo-tab-card-media a')?.getAttribute('href')
+          || window.location.pathname;
+
+        ids.push(productId);
+        products.unshift({
+          id: productId,
+          title: title,
+          price: price,
+          image: image,
+          url: url
+        });
+
+        setWishlist(ids, products);
+        syncButtons();
+
+        showToast('Added to Wishlist', title, image);
       }
-      setWishlist(list);
-    });
+
+      // If drawer is open, re-render
+      const drawerWrap = document.getElementById('LiuJoWishlistDrawer');
+      if (drawerWrap && drawerWrap.classList.contains('is-open')) {
+        renderDrawerItems();
+      }
+      return;
+    }
+
+    // 2. Open Wishlist Drawer Triggers
+    const openTrigger = e.target.closest('[data-wishlist-drawer-trigger]');
+    if (openTrigger) {
+      e.preventDefault();
+      openWishlistDrawer();
+      return;
+    }
+
+    // 3. Close Wishlist Drawer Triggers
+    const closeTrigger = e.target.closest('[data-wishlist-close]');
+    if (closeTrigger) {
+      e.preventDefault();
+      closeWishlistDrawer();
+      return;
+    }
+
+    // 4. Toast View Button
+    const toastViewBtn = e.target.closest('#LiuJoToastViewBtn');
+    if (toastViewBtn) {
+      e.preventDefault();
+      const toast = document.getElementById('LiuJoWishlistToast');
+      if (toast) toast.classList.remove('is-visible');
+      openWishlistDrawer();
+      return;
+    }
+
+    // 5. Clear All Button
+    const clearBtn = e.target.closest('#LiuJoClearWishlistBtn');
+    if (clearBtn) {
+      e.preventDefault();
+      setWishlist([], []);
+      syncButtons();
+      renderDrawerItems();
+      showToast('Wishlist Cleared', '', '');
+      return;
+    }
   });
+
+  // ESC key to close drawer
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeWishlistDrawer();
+    }
+  });
+
+  // Initial Sync
+  const currentIds = getWishlistIds();
+  updateBadgeCounts(currentIds.length);
+  syncButtons();
+
+  // Expose Global Helpers
+  window.syncLiuJoWishlistButtons = syncButtons;
+  window.openLiuJoWishlistDrawer = openWishlistDrawer;
+  window.closeLiuJoWishlistDrawer = closeWishlistDrawer;
+  window.removeLiuJoWishlistProduct = removeProduct;
 }
 
 // 6. ANNOUNCEMENT BAR TICKER

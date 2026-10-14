@@ -1,0 +1,310 @@
+{% comment %}
+  LIU JO LUXURY WISHLIST DRAWER
+  Real-time slide-out drawer displaying customer saved wishlist products.
+{% endcomment %}
+
+<div id="LiuJoWishlistDrawer" class="liujo-wishlist-drawer-wrap" aria-hidden="true">
+  <!-- Backdrop Overlay -->
+  <div class="liujo-wishlist-backdrop" data-wishlist-close></div>
+
+  <!-- Slide-out Drawer Panel -->
+  <aside class="liujo-wishlist-drawer" role="dialog" aria-modal="true" aria-label="Wishlist">
+    <!-- Drawer Header -->
+    <div class="liujo-wishlist-drawer__header">
+      <div class="liujo-wishlist-drawer__title">
+        <span>Wishlist</span>
+        <span class="liujo-wishlist-drawer__count">(<span data-wishlist-total-count>0</span>)</span>
+      </div>
+      <button type="button" class="liujo-wishlist-drawer__close" data-wishlist-close aria-label="Close Wishlist">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.8" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Drawer Body -->
+    <div class="liujo-wishlist-drawer__body">
+      <!-- Items List -->
+      <div id="LiuJoWishlistItems" class="liujo-wishlist-drawer__items"></div>
+
+      <!-- Empty State -->
+      <div id="LiuJoWishlistEmpty" class="liujo-wishlist-drawer__empty" style="display: none;">
+        <div class="liujo-wishlist-empty-icon">
+          <svg viewBox="0 0 24 24" width="48" height="48" stroke="#111111" stroke-width="1.2" fill="none">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </div>
+        <h3 class="liujo-wishlist-empty-title">Your wishlist is empty</h3>
+        <p class="liujo-wishlist-empty-desc">Explore the collection and tap the heart icon on your favorite items to save them here.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn-editorial-solid" style="padding: 12px 28px; font-size: 11px;">
+          EXPLORE CATALOG
+        </a>
+      </div>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="liujo-wishlist-drawer__footer" id="LiuJoWishlistFooter" style="display: none;">
+      <button type="button" class="liujo-wishlist-clear-btn" id="LiuJoClearWishlistBtn">
+        Clear Wishlist
+      </button>
+      <a href="/pages/wishlist" class="btn-editorial-outline" style="text-align: center; width: 100%; padding: 12px 20px;">
+        VIEW ALL SAVED ITEMS
+      </a>
+    </div>
+  </aside>
+</div>
+
+<style>
+  .liujo-wishlist-drawer-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0.35s ease;
+  }
+
+  .liujo-wishlist-drawer-wrap.is-open {
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .liujo-wishlist-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .liujo-wishlist-drawer-wrap.is-open .liujo-wishlist-backdrop {
+    opacity: 1;
+  }
+
+  .liujo-wishlist-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 90%;
+    max-width: 440px;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 25px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 2;
+  }
+
+  .liujo-wishlist-drawer-wrap.is-open .liujo-wishlist-drawer {
+    transform: translateX(0);
+  }
+
+  .liujo-wishlist-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 24px;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .liujo-wishlist-drawer__title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .liujo-wishlist-drawer__count {
+    color: #888888;
+    font-weight: 400;
+  }
+
+  .liujo-wishlist-drawer__close {
+    background: transparent;
+    border: none;
+    color: #000000;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease;
+  }
+
+  .liujo-wishlist-drawer__close:hover {
+    opacity: 0.7;
+  }
+
+  .liujo-wishlist-drawer__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .liujo-wishlist-drawer__items {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .liujo-wishlist-drawer-item {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #f2f2f2;
+    position: relative;
+    animation: liujoFadeIn 0.3s ease;
+  }
+
+  @keyframes liujoFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .liujo-wishlist-item-img {
+    width: 82px;
+    height: 108px;
+    flex-shrink: 0;
+    background-color: #f7f7f7;
+    overflow: hidden;
+    display: block;
+  }
+
+  .liujo-wishlist-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .liujo-wishlist-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .liujo-wishlist-item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #000000;
+    text-decoration: none;
+    line-height: 1.35;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .liujo-wishlist-item-price {
+    font-size: 13px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 12px;
+  }
+
+  .liujo-wishlist-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .liujo-wishlist-item-atc {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #000000;
+    padding: 8px 16px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .liujo-wishlist-item-atc:hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  .liujo-wishlist-item-remove {
+    background: transparent;
+    border: none;
+    font-size: 11px;
+    color: #888888;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 4px;
+    transition: color 0.2s ease;
+  }
+
+  .liujo-wishlist-item-remove:hover {
+    color: #e02424;
+  }
+
+  .liujo-wishlist-drawer__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 10px;
+    height: 100%;
+  }
+
+  .liujo-wishlist-empty-icon {
+    margin-bottom: 18px;
+    opacity: 0.4;
+  }
+
+  .liujo-wishlist-empty-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0 0 10px;
+  }
+
+  .liujo-wishlist-empty-desc {
+    font-size: 13px;
+    color: #777777;
+    line-height: 1.5;
+    margin: 0 0 24px;
+    max-width: 280px;
+  }
+
+  .liujo-wishlist-drawer__footer {
+    padding: 18px 24px;
+    border-top: 1px solid #eeeeee;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .liujo-wishlist-clear-btn {
+    background: transparent;
+    border: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888888;
+    cursor: pointer;
+    padding: 6px;
+    text-align: center;
+    transition: color 0.2s ease;
+  }
+
+  .liujo-wishlist-clear-btn:hover {
+    color: #e02424;
+  }
+</style>

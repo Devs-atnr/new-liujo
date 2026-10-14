@@ -111,25 +111,26 @@
             </div>
           {%- endif -%}
 
-          {%- if card_product.media.size > 1 -%}
-            <div class="liujo-card-indicators" aria-hidden="true">
-              <span class="indicator-bar is-active"></span>
-              <span class="indicator-bar"></span>
-            </div>
-          {%- endif -%}
+          {%- comment -%} Removed collection card scroll dash indicators per user request {%- endcomment -%}
 
           <!-- Liu Jo Wishlist Heart Trigger -->
-          <button
-            type="button"
-            class="liujo-wishlist-trigger"
-            data-liujo-wishlist
-            data-product-id="{{ card_product.id }}"
-            aria-label="Add to Wishlist"
-          >
-            <svg viewBox="0 0 24 24" width="16" height="16">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-          </button>
+          {%- if settings.show_wishlist != false and show_wishlist != false -%}
+            <button
+              type="button"
+              class="liujo-wishlist-trigger"
+              data-liujo-wishlist
+              data-product-id="{{ card_product.id }}"
+              data-product-title="{{ card_product.title | escape }}"
+              data-product-price="{{ card_product.price | money }}"
+              data-product-image="{{ card_product.featured_media | image_url: width: 500 }}"
+              data-product-url="{{ card_product.url }}"
+              aria-label="Add to Wishlist"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          {%- endif -%}
 
           <div class="card__content">
             <div class="card__information">
