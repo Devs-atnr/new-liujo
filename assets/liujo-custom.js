@@ -1172,7 +1172,7 @@ function initLiuJoToolbar() {
       return;
     }
 
-    // 5. Mobile Filter Trigger -> Opens Dawn drawer
+    // 5. Mobile Filter Trigger -> Opens full-screen drawer
     const mobFilterTrigger = e.target.closest('#LiuJoMobileFilterTrigger');
     if (mobFilterTrigger) {
       e.preventDefault();
@@ -1196,6 +1196,27 @@ function initLiuJoToolbar() {
           }
         }
       }
+      document.documentElement.classList.add('has-filter-drawer-open');
+      document.body.classList.add('has-filter-drawer-open');
+      return;
+    }
+
+    // Mobile Drawer Close Button ✕
+    const mobDrawerClose = e.target.closest('.liujo-mobile-drawer-close');
+    if (mobDrawerClose) {
+      e.preventDefault();
+      e.stopPropagation();
+      const menuDrawer = document.querySelector('.mobile-facets__wrapper');
+      if (menuDrawer) {
+        const summary = menuDrawer.querySelector('summary.mobile-facets__open-wrapper');
+        if (typeof menuDrawer.closeMenuDrawer === 'function') {
+          menuDrawer.closeMenuDrawer(e, summary);
+        } else {
+          document.querySelector('.mobile-facets__close')?.click();
+        }
+      }
+      document.documentElement.classList.remove('has-filter-drawer-open');
+      document.body.classList.remove('has-filter-drawer-open');
       return;
     }
 
@@ -1210,6 +1231,8 @@ function initLiuJoToolbar() {
           menuDrawer.querySelector('.mobile-facets__close')?.click();
         }
       }
+      document.documentElement.classList.remove('has-filter-drawer-open');
+      document.body.classList.remove('has-filter-drawer-open');
       return;
     }
 
@@ -1241,7 +1264,102 @@ function initLiuJoToolbar() {
       return;
     }
 
-    // 8. Close open dropdowns & details if clicked outside
+    // 8. Desktop Popover Reset Button
+    const deskResetBtn = e.target.closest('.liujo-facet-btn--reset, [data-facet-reset]');
+    if (deskResetBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const details = deskResetBtn.closest('details');
+      if (details) {
+        details.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.checked = false;
+          cb.closest('.facets__label')?.classList.remove('active');
+        });
+        details.querySelectorAll('input[type="number"], input.field__input').forEach(inp => {
+          inp.value = '';
+        });
+        const badge = details.querySelector('.liujo-filter-count-badge');
+        if (badge) {
+          badge.textContent = '0';
+          badge.setAttribute('data-count', '0');
+          badge.style.display = 'none';
+        }
+        updateAllFilterBadges();
+      }
+      return;
+    }
+
+    // 9. Desktop Popover Filter Apply Button
+    const deskApplyBtn = e.target.closest('.liujo-facet-btn--apply, [data-facet-apply]');
+    if (deskApplyBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const details = deskApplyBtn.closest('details');
+      if (details) {
+        details.removeAttribute('open');
+      }
+      const facetForm = deskApplyBtn.closest('facet-filters-form') || document.querySelector('facet-filters-form');
+      if (facetForm && typeof facetForm.onSubmitHandler === 'function') {
+        facetForm.onSubmitHandler(e);
+      } else {
+        const form = document.getElementById('FacetFiltersForm');
+        if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+      return;
+    }
+
+    // 10. Mobile Drawer Reset Button
+    const mobResetBtn = e.target.closest('.liujo-facet-btn--reset-mobile, [data-facet-reset-mobile], .mobile-facets__clear');
+    if (mobResetBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const formMobile = document.getElementById('FacetFiltersFormMobile');
+      if (formMobile) {
+        formMobile.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.checked = false;
+          cb.closest('.mobile-facets__label')?.classList.remove('active');
+        });
+        formMobile.querySelectorAll('input[type="number"], input.field__input').forEach(inp => {
+          inp.value = '';
+        });
+      }
+      document.querySelectorAll('.liujo-filter-count-badge').forEach(b => {
+        b.textContent = '0';
+        b.setAttribute('data-count', '0');
+        b.style.display = 'none';
+      });
+      updateAllFilterBadges();
+      return;
+    }
+
+    // 11. Mobile Drawer Filter Apply Button
+    const mobApplyBtn = e.target.closest('.liujo-facet-btn--apply-mobile, [data-facet-apply-mobile]');
+    if (mobApplyBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const menuDrawer = document.querySelector('.mobile-facets__wrapper');
+      if (menuDrawer) {
+        const summary = menuDrawer.querySelector('summary.mobile-facets__open-wrapper');
+        if (typeof menuDrawer.closeMenuDrawer === 'function') {
+          menuDrawer.closeMenuDrawer(e, summary);
+        } else {
+          document.querySelector('.mobile-facets__close')?.click();
+        }
+      }
+      document.documentElement.classList.remove('has-filter-drawer-open');
+      document.body.classList.remove('has-filter-drawer-open');
+
+      const facetFormMobile = document.getElementById('FacetFiltersFormMobile')?.closest('facet-filters-form') || document.querySelector('facet-filters-form');
+      if (facetFormMobile && typeof facetFormMobile.onSubmitHandler === 'function') {
+        facetFormMobile.onSubmitHandler(e);
+      } else {
+        const form = document.getElementById('FacetFiltersFormMobile');
+        if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+      return;
+    }
+
+    // 12. Close open dropdowns & details if clicked outside
     const deskDropdown = document.getElementById('LiuJoDesktopSortDropdown');
     const deskTrigger = document.getElementById('LiuJoDesktopSortTrigger');
     if (deskDropdown && deskDropdown.style.display === 'block' && !deskDropdown.contains(e.target) && !deskTrigger?.contains(e.target)) {
@@ -1269,54 +1387,62 @@ function initLiuJoToolbar() {
     const input = e.target.closest('#FacetFiltersFormMobile input[type="checkbox"], #FacetFiltersForm input[type="checkbox"]');
     if (!input) return;
 
-    // 1. Update the parent category details count badge immediately
-    const details = input.closest('details');
-    if (details) {
-      const checkedInCategory = details.querySelectorAll('input[type="checkbox"]:checked').length;
+    const label = input.closest('.facets__label, .mobile-facets__label');
+    if (label) {
+      label.classList.toggle('active', input.checked);
+    }
+
+    updateAllFilterBadges();
+  });
+
+  function updateAllFilterBadges() {
+    // 1. Desktop individual category badges
+    document.querySelectorAll('#FacetFiltersForm details.js-filter').forEach(details => {
+      const checkedCount = details.querySelectorAll('input[type="checkbox"]:checked').length;
       let badge = details.querySelector('.liujo-filter-count-badge');
-      if (!badge) {
-        const titleEl = details.querySelector('.mobile-facets__summary-title') || details.querySelector('summary > div > span') || details.querySelector('summary span');
-        if (titleEl) {
-          badge = document.createElement('span');
-          badge.className = 'liujo-filter-count-badge';
-          titleEl.appendChild(badge);
-        }
-      }
       if (badge) {
-        badge.textContent = checkedInCategory;
-        badge.style.display = checkedInCategory > 0 ? 'inline-flex' : 'none';
+        badge.textContent = checkedCount;
+        badge.setAttribute('data-count', checkedCount);
+        badge.style.display = checkedCount > 0 ? 'inline-flex' : 'none';
       }
+    });
+
+    // 2. Mobile individual category badges
+    document.querySelectorAll('#FacetFiltersFormMobile details.js-filter').forEach(details => {
+      const checkedCount = details.querySelectorAll('input[type="checkbox"]:checked').length;
+      let badge = details.querySelector('.liujo-filter-count-badge');
+      if (badge) {
+        badge.textContent = checkedCount;
+        badge.setAttribute('data-count', checkedCount);
+        badge.style.display = checkedCount > 0 ? 'inline-flex' : 'none';
+      }
+    });
+
+    // 3. Desktop toolbar Reset button & total count
+    const deskForm = document.getElementById('FacetFiltersForm');
+    const deskTotal = deskForm ? deskForm.querySelectorAll('input[type="checkbox"]:checked').length : 0;
+    const deskReset = document.querySelector('.liujo-desktop-reset-wrapper');
+    if (deskReset) {
+      deskReset.style.display = deskTotal > 0 ? 'inline-flex' : 'none';
     }
 
-    // 2. Update the toolbar FILTER trigger badge immediately
-    const formMobile = document.getElementById('FacetFiltersFormMobile');
-    if (formMobile) {
-      const totalChecked = formMobile.querySelectorAll('input[type="checkbox"]:checked').length;
-      const filterBtn = document.getElementById('LiuJoMobileFilterTrigger');
-      if (filterBtn) {
-        let toolbarBadge = filterBtn.querySelector('.liujo-toolbar-filter-badge') || filterBtn.querySelector('.liujo-filter-count-badge');
-        if (!toolbarBadge) {
-          toolbarBadge = document.createElement('span');
-          toolbarBadge.className = 'liujo-filter-count-badge liujo-toolbar-filter-badge';
-          filterBtn.appendChild(toolbarBadge);
-        }
-        toolbarBadge.textContent = totalChecked;
-        toolbarBadge.style.display = totalChecked > 0 ? 'inline-flex' : 'none';
-      }
+    // 4. Mobile toolbar FILTER button badge
+    const mobForm = document.getElementById('FacetFiltersFormMobile');
+    const mobTotal = mobForm ? mobForm.querySelectorAll('input[type="checkbox"]:checked').length : deskTotal;
+    const mobBadge = document.querySelector('.liujo-toolbar-filter-badge');
+    if (mobBadge) {
+      mobBadge.textContent = mobTotal;
+      mobBadge.setAttribute('data-count', mobTotal);
+      mobBadge.style.display = mobTotal > 0 ? 'inline-flex' : 'none';
     }
-  });
+  }
 
-  // Reset count badges on clear
-  document.addEventListener('click', (e) => {
-    const clearBtn = e.target.closest('.mobile-facets__clear, .mobile-facets__clear-wrapper');
-    if (clearBtn) {
-      document.querySelectorAll('.liujo-filter-count-badge').forEach(b => {
-        b.textContent = '0';
-        b.style.display = 'none';
-      });
-    }
+  // Update badges on page load and on dynamic AJAX re-renders
+  updateAllFilterBadges();
+  document.addEventListener('liujo:facets:rendered', () => {
+    updateAllFilterBadges();
+    updateSortButtonState();
   });
-}
 
 // 12. DYNAMIC STICKY OFFSETS FOR HEADER & FILTER BAR
 function initLiuJoStickyOffsets() {

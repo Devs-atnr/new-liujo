@@ -215,13 +215,9 @@
                       <div>
                         <span class="facets__summary-label">
                           {{- filter.label | escape -}}
-                          {%- if filter.active_values.size > 0 -%}
-                            <span class="liujo-filter-count-badge">{{ filter.active_values.size }}</span>
-                          {%- elsif filter_type == 'vertical' -%}
-                            <span class="facets__selected{% if filter.active_values.size == 0 %} hidden{% endif %}">
-                              ({{ filter.active_values.size }})</span
-                            >
-                          {%- endif -%}
+                          <span class="liujo-filter-count-badge" data-count="{{ filter.active_values.size }}" style="{% if filter.active_values.size > 0 %}display: inline-flex;{% else %}display: none;{% endif %}">
+                            {{- filter.active_values.size -}}
+                          </span>
                         </span>
                         {%- if filter_type == 'vertical' and filter.operator == 'AND' -%}
                           <span class="facets__and-helptext">
@@ -361,10 +357,8 @@
                       </fieldset>
                       {%- if filter_type == 'horizontal' -%}
                         <div class="liujo-facet-popup-footer small-hide">
-                          <facet-remove>
-                            <a href="{{ filter.url_to_remove }}" class="liujo-facet-btn liujo-facet-btn--reset">RESET</a>
-                          </facet-remove>
-                          <button type="button" class="liujo-facet-btn liujo-facet-btn--apply" onclick="this.closest('details').removeAttribute('open')">FILTER</button>
+                          <button type="button" class="liujo-facet-btn liujo-facet-btn--reset" data-facet-reset>RESET</button>
+                          <button type="button" class="liujo-facet-btn liujo-facet-btn--apply" data-facet-apply>FILTER</button>
                         </div>
                       {%- endif -%}
                       {%- if filter.values.size > show_more_number and filter_type == 'vertical' -%}
@@ -398,9 +392,9 @@
                       <div>
                         <span class="facets__summary-label">
                           {{ filter.label | escape }}
-                          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
-                            <span class="liujo-filter-count-badge">1</span>
-                          {%- endif -%}
+                          <span class="liujo-filter-count-badge" data-count="{% if filter.min_value.value != nil or filter.max_value.value != nil %}1{% else %}0{% endif %}" style="{% if filter.min_value.value != nil or filter.max_value.value != nil %}display: inline-flex;{% else %}display: none;{% endif %}">
+                            {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}1{%- endif -%}
+                          </span>
                         </span>
                         <svg class="liujo-desktop-caret" width="8" height="5" viewBox="0 0 10 6" fill="currentColor">
                           <path fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"/>
@@ -432,16 +426,24 @@
                       </price-range>
                       {%- if filter_type == 'horizontal' -%}
                         <div class="liujo-facet-popup-footer small-hide">
-                          <facet-remove>
-                            <a href="{{ filter.url_to_remove }}" class="liujo-facet-btn liujo-facet-btn--reset">RESET</a>
-                          </facet-remove>
-                          <button type="button" class="liujo-facet-btn liujo-facet-btn--apply" onclick="this.closest('details').removeAttribute('open')">FILTER</button>
+                          <button type="button" class="liujo-facet-btn liujo-facet-btn--reset" data-facet-reset>RESET</button>
+                          <button type="button" class="liujo-facet-btn liujo-facet-btn--apply" data-facet-apply>FILTER</button>
                         </div>
                       {%- endif -%}
                     </div>
                   </details>
               {% endcase %}
             {%- endfor -%}
+
+            <!-- Liu Jo Desktop Far Right '✕ Reset' Button (Screenshot Parity) -->
+            <div class="liujo-desktop-reset-wrapper" style="{% if total_active_values > 0 %}display: inline-flex;{% else %}display: none;{% endif %}">
+              <facet-remove>
+                <a href="{{ results_url }}" class="liujo-desktop-reset-btn" aria-label="Reset all filters">
+                  <span class="liujo-desktop-reset-cross">✕</span>
+                  <span class="liujo-desktop-reset-text">Reset</span>
+                </a>
+              </facet-remove>
+            </div>
           </div>
           {% comment %} Pills after filtes on filter type horizontal {% endcomment %}
           {%- if filter_type == 'horizontal' -%}
@@ -644,13 +646,12 @@
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
                         class="mobile-facets__details js-filter"
                         data-index="mobile-{{ forloop.index }}"
-                        {% if filter.active_values.size > 0 %} open{% endif %}
                       >
                         <summary class="mobile-facets__summary focus-inset">
                           <div>
                             <span class="mobile-facets__summary-title">
                               {{ filter.label | escape }}
-                              <span class="liujo-filter-count-badge" style="{% if filter.active_values.size > 0 %}display: inline-flex;{% else %}display: none;{% endif %}">
+                              <span class="liujo-filter-count-badge" data-count="{{ filter.active_values.size }}" style="{% if filter.active_values.size > 0 %}display: inline-flex;{% else %}display: none;{% endif %}">
                                 {{- filter.active_values.size -}}
                               </span>
                             </span>
@@ -800,15 +801,14 @@
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
                         class="mobile-facets__details js-filter"
                         data-index="mobile-{{ forloop.index }}"
-                        {% if filter.min_value.value != nil or filter.max_value.value != nil %} open{% endif %}
                       >
                         <summary class="mobile-facets__summary focus-inset">
                           <div>
                             <span>
                               {{ filter.label | escape }}
-                              {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
-                                <span class="liujo-filter-count-badge">1</span>
-                              {%- endif -%}
+                              <span class="liujo-filter-count-badge" data-count="{% if filter.min_value.value != nil or filter.max_value.value != nil %}1{% else %}0{% endif %}" style="{% if filter.min_value.value != nil or filter.max_value.value != nil %}display: inline-flex;{% else %}display: none;{% endif %}">
+                                {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}1{%- endif -%}
+                              </span>
                             </span>
                             <span class="mobile-facets__arrow">
                               <svg class="liujo-chevron-right" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
@@ -838,17 +838,19 @@
                             {% render 'price-facet', filter: filter, id_prefix: 'Mobile-Filter-' %}
                           </price-range>
                           <div class="mobile-facets__footer">
-                            <facet-remove class="mobile-facets__clear-wrapper">
-                              <a href="{{ filter.url_to_remove }}" class="mobile-facets__clear underlined-link">
-                                {{- 'products.facets.clear' | t -}}
-                              </a>
-                            </facet-remove>
                             <button
                               type="button"
-                              class="button button--primary"
-                              onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                              class="mobile-facets__clear liujo-facet-btn--reset-mobile"
+                              data-facet-reset-mobile
                             >
-                              {{ 'products.facets.apply' | t }}
+                              RESET
+                            </button>
+                            <button
+                              type="button"
+                              class="button button--primary liujo-facet-btn--apply-mobile"
+                              data-facet-apply-mobile
+                            >
+                              FILTER
                             </button>
                           </div>
                         </div>
@@ -894,17 +896,19 @@
               {%- endif -%}
 
               <div class="mobile-facets__footer">
-                <facet-remove class="mobile-facets__clear-wrapper">
-                  <a href="{{ results_url }}" class="mobile-facets__clear underlined-link">
-                    {{- 'products.facets.clear_all' | t -}}
-                  </a>
-                </facet-remove>
                 <button
                   type="button"
-                  class="button button--primary"
-                  onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                  class="mobile-facets__clear liujo-facet-btn--reset-mobile"
+                  data-facet-reset-mobile
                 >
-                  {{ 'products.facets.apply' | t }}
+                  RESET
+                </button>
+                <button
+                  type="button"
+                  class="button button--primary liujo-facet-btn--apply-mobile"
+                  data-facet-apply-mobile
+                >
+                  FILTER
                 </button>
               </div>
             </div>

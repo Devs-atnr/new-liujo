@@ -8,7 +8,20 @@ class FacetFiltersForm extends HTMLElement {
     }, 800);
 
     const facetForm = this.querySelector('form');
-    facetForm.addEventListener('input', this.debouncedOnSubmit.bind(this));
+    facetForm.addEventListener('input', (event) => {
+      if (event.target && (event.target.name === 'sort_by' || event.target.id === 'SortBy-mobile')) {
+        this.debouncedOnSubmit(event);
+      }
+    });
+
+    this.addEventListener('click', (event) => {
+      const applyBtn = event.target.closest('.liujo-facet-btn--apply, .liujo-facet-btn--apply-mobile, [data-facet-apply-mobile], [data-facet-apply]');
+      if (applyBtn) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.onSubmitHandler(event);
+      }
+    });
 
     const facetWrapper = this.querySelector('#FacetsWrapperDesktop');
     if (facetWrapper) facetWrapper.addEventListener('keyup', onKeyUpEscape);
@@ -134,6 +147,7 @@ class FacetFiltersForm extends HTMLElement {
     FacetFiltersForm.renderProductGridContainer(html);
     FacetFiltersForm.renderProductCount(html, updateEvent);
     if (typeof initializeScrollAnimationTrigger === 'function') initializeScrollAnimationTrigger(html.innerHTML);
+    document.dispatchEvent(new CustomEvent('liujo:facets:rendered'));
   }
 
   static renderProductGridContainer(html) {
@@ -337,26 +351,24 @@ class FacetFiltersForm extends HTMLElement {
   }
 
   onSubmitHandler(event) {
-    event.preventDefault();
+    if (event && typeof event.preventDefault === 'function') event.preventDefault();
     const sortFilterForms = document.querySelectorAll('facet-filters-form form');
-    if (event.srcElement.className == 'mobile-facets__checkbox') {
-      const searchParams = this.createSearchParams(event.target.closest('form'));
-      this.onSubmitForm(searchParams, event);
-    } else {
-      const forms = [];
-      const isMobile = event.target.closest('form').id === 'FacetFiltersFormMobile';
+    const isMobile = Boolean(
+      (event && event.target && (event.target.closest('#FacetFiltersFormMobile') || event.target.closest('.mobile-facets__wrapper'))) ||
+      window.innerWidth < 990
+    );
 
-      sortFilterForms.forEach((form) => {
-        if (!isMobile) {
-          if (form.id === 'FacetSortForm' || form.id === 'FacetFiltersForm' || form.id === 'FacetSortDrawerForm') {
-            forms.push(this.createSearchParams(form));
-          }
-        } else if (form.id === 'FacetFiltersFormMobile') {
+    const forms = [];
+    sortFilterForms.forEach((form) => {
+      if (!isMobile) {
+        if (form.id === 'FacetSortForm' || form.id === 'FacetFiltersForm' || form.id === 'FacetSortDrawerForm') {
           forms.push(this.createSearchParams(form));
         }
-      });
-      this.onSubmitForm(forms.join('&'), event);
-    }
+      } else if (form.id === 'FacetFiltersFormMobile') {
+        forms.push(this.createSearchParams(form));
+      }
+    });
+    this.onSubmitForm(forms.filter(Boolean).join('&'), event);
   }
 
   onActiveFilterClick(event) {
