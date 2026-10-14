@@ -120,10 +120,6 @@
               class="liujo-wishlist-trigger"
               data-liujo-wishlist
               data-product-id="{{ card_product.id }}"
-              data-product-title="{{ card_product.title | escape }}"
-              data-product-price="{{ card_product.price | money }}"
-              data-product-image="{{ card_product.featured_media | image_url: width: 500 }}"
-              data-product-url="{{ card_product.url }}"
               aria-label="Add to Wishlist"
             >
               <svg viewBox="0 0 24 24" width="16" height="16">
@@ -153,23 +149,7 @@
                 {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
               </div>
             </div>
-            <div class="card__badge {{ settings.badge_position }}">
-              {%- if card_product.available == false -%}
-                <span
-                  id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
-                  class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
-                >
-                  {{- 'products.product.sold_out' | t -}}
-                </span>
-              {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
-                <span
-                  id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
-                  class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
-                >
-                  {{- 'products.product.on_sale' | t -}}
-                </span>
-              {%- endif -%}
-            </div>
+            {%- comment -%} Badges removed per user request {%- endcomment -%}
           </div>
         </div>
         <div class="card__content">
@@ -579,23 +559,7 @@
               </div>
             {% endif %}
           {% endif %}
-          <div class="card__badge {{ settings.badge_position }}">
-            {%- if card_product.available == false -%}
-              <span
-                id="Badge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
-              >
-                {{- 'products.product.sold_out' | t -}}
-              </span>
-            {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
-              <span
-                id="Badge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
-              >
-                {{- 'products.product.on_sale' | t -}}
-              </span>
-            {%- endif -%}
-          </div>
+          {%- comment -%} Badges removed per user request {%- endcomment -%}
         </div>
       </div>
     </div>

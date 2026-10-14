@@ -388,12 +388,10 @@
               <div class="liujo-tab-card-media">
                 {%- if prod.tags contains 'THE GIGI HADID EDIT' or prod.tags contains 'gigi-hadid' -%}
                   <span class="liujo-tab-badge">THE GIGI HADID EDIT</span>
-                {%- elsif prod.compare_at_price > prod.price -%}
-                  <span class="liujo-tab-badge" style="color: #e02424;">SALE</span>
                 {%- endif -%}
 
                 {%- if section.settings.show_wishlist != false and settings.show_wishlist != false -%}
-                  <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="{{ prod.id }}" data-product-title="{{ prod.title | escape }}" data-product-price="{{ prod.price | money }}" data-product-image="{{ prod.featured_media | image_url: width: 500 }}" data-product-url="{{ prod.url }}" aria-label="Add to Wishlist">
+                  <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="{{ prod.id }}" aria-label="Add to Wishlist">
                     <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                   </button>
                 {%- endif -%}
@@ -427,12 +425,10 @@
               <div class="liujo-tab-card-media">
                 {%- if prod.tags contains 'THE GIGI HADID EDIT' or prod.tags contains 'gigi-hadid' -%}
                   <span class="liujo-tab-badge">THE GIGI HADID EDIT</span>
-                {%- elsif prod.compare_at_price > prod.price -%}
-                  <span class="liujo-tab-badge" style="color: #e02424;">SALE</span>
                 {%- endif -%}
 
                 {%- if section.settings.show_wishlist != false and settings.show_wishlist != false -%}
-                  <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="{{ prod.id }}" data-product-title="{{ prod.title | escape }}" data-product-price="{{ prod.price | money }}" data-product-image="{{ prod.featured_media | image_url: width: 500 }}" data-product-url="{{ prod.url }}" aria-label="Add to Wishlist">
+                  <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="{{ prod.id }}" aria-label="Add to Wishlist">
                     <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                   </button>
                 {%- endif -%}
@@ -659,7 +655,7 @@
           secondary_image: {% if product.media.size > 1 %}{{ product.media[1] | image_url: width: 600 | json }}{% else %}null{% endif %},
           price: {{ product.price | money | json }},
           compare_at_price: {% if product.compare_at_price > product.price %}{{ product.compare_at_price | money | json }}{% else %}null{% endif %},
-          badge: {% if product.tags contains 'THE GIGI HADID EDIT' or product.tags contains 'gigi-hadid' %}"THE GIGI HADID EDIT"{% elsif product.compare_at_price > product.price %}"SALE"{% else %}null{% endif %}
+          badge: {% if product.tags contains 'THE GIGI HADID EDIT' or product.tags contains 'gigi-hadid' %}"THE GIGI HADID EDIT"{% else %}null{% endif %}
         };
 
         if (currentProdData.id) {
@@ -765,7 +761,7 @@
             <div class="liujo-tab-card-media">
               ${prod.badge ? `<span class="liujo-tab-badge">${prod.badge}</span>` : ''}
               ${showWishlist ? `
-              <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="${prod.id}" data-product-title="${(prod.title || '').replace(/"/g, '&quot;')}" data-product-price="${prod.price || ''}" data-product-image="${prod.image || ''}" data-product-url="${prod.url || ''}" aria-label="Add to Wishlist">
+              <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="${prod.id}" aria-label="Add to Wishlist">
                 <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
               </button>` : ''}
               <a href="${prod.url}">

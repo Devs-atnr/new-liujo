@@ -79,45 +79,59 @@ product-component .page-width,
     background: transparent !important;
   }
 
+  .product__media-list.grid,
   .product__media-list {
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 4px !important;
+    gap: 0 !important;
+    row-gap: 0 !important;
+    column-gap: 0 !important;
     list-style: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     width: 100% !important;
     background-color: transparent !important;
     background: transparent !important;
   }
 
-  /* Default item width: 50% (Row 1 & Row 2 = 2 images per row) */
+  /* Default item width: 50% (Row 1 & Row 2 = 2 images per row with 0 gap) */
+  .product__media-item.grid__item,
   .product__media-item {
-    flex: 0 0 calc(50% - 2px) !important;
-    max-width: calc(50% - 2px) !important;
-    width: calc(50% - 2px) !important;
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    width: 50% !important;
     padding: 0 !important;
     margin: 0 !important;
+    border: none !important;
+    outline: none !important;
     box-sizing: border-box !important;
     background-color: transparent !important;
     background: transparent !important;
   }
 
-  /* Row 1 & Row 2: Images 1, 2, 3, 4 = 2 images per row (50% each) */
+  /* Row 1 & Row 2: Images 1, 2, 3, 4 = 2 images per row (50% each with 0 gap) */
   .product__media-item:nth-child(1),
   .product__media-item:nth-child(2),
   .product__media-item:nth-child(3),
   .product__media-item:nth-child(4) {
-    flex: 0 0 calc(50% - 2px) !important;
-    max-width: calc(50% - 2px) !important;
-    width: calc(50% - 2px) !important;
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    width: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
   }
 
-  /* Row 3 onwards: Images 5, 6, 7... = 3 images per row (33.333% each) */
+  /* Row 3 onwards: Images 5, 6, 7... = 3 images per row (33.333% each with 0 gap) */
   .product__media-item:nth-child(n+5) {
-    flex: 0 0 calc(33.333% - 2.67px) !important;
-    max-width: calc(33.333% - 2.67px) !important;
-    width: calc(33.333% - 2.67px) !important;
+    flex: 0 0 33.333333% !important;
+    max-width: 33.333333% !important;
+    width: 33.333333% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
   }
 
   .product__media-item:only-child,
@@ -125,11 +139,19 @@ product-component .page-width,
     flex: 0 0 100% !important;
     max-width: 100% !important;
     width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  .product__media-item .media {
+  .product__media-item .media,
+  .product__media-item .product__modal-opener,
+  .product__media-item .product-media-container {
     aspect-ratio: 28 / 39 !important;
     width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
     background-color: transparent !important;
     background: transparent !important;
     overflow: hidden !important;
@@ -391,26 +413,15 @@ product-component .page-width,
   letter-spacing: 0.02em !important;
 }
 
-/* RED BACKGROUND & WHITE TEXT TAG BADGE (Sold Out / Sale / Pill) */
+/* RED BACKGROUND & WHITE TEXT TAG BADGE (Sold Out / Sale / Pill) - Removed per user request */
 .badge,
 .price__badge-sold-out,
 .price__badge-sale,
 .price .badge,
-.card__badge .badge {
-  background-color: #e02424 !important;
-  color: #ffffff !important;
-  border: 1px solid #e02424 !important;
-  border-radius: 9999px !important;
-  padding: 4px 12px !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.05em !important;
-  text-transform: uppercase !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1.2 !important;
-  margin: 0 !important;
+.card__badge,
+.card__badge .badge,
+.badge--bottom-left {
+  display: none !important;
 }
 
 /* 6. TAX & SHIPPING POLICY (Removed matching user request & Image 2) */
