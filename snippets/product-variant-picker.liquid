@@ -20,7 +20,13 @@
     data-selected-price-amount="{{ product.selected_or_first_available_variant.price | default: 0 | money_amount | escape }}"
     {{ block.shopify_attributes }}
   >
+    {%- assign rendered_options = '' -%}
     {%- for option in product.options_with_values -%}
+      {%- assign opt_down = option.name | downcase -%}
+      {%- if rendered_options contains opt_down -%}
+        {%- continue -%}
+      {%- endif -%}
+      {%- assign rendered_options = rendered_options | append: opt_down | append: ',' -%}
       {%- liquid
         assign swatch_count = option.values | map: 'swatch' | compact | size
         assign picker_type = block.settings.picker_type

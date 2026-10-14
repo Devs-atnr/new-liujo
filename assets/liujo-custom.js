@@ -1486,12 +1486,25 @@ function initLiuJoPdpInteractions() {
           }
         }
       }
+
+      // Check and update quantity limit for selected variant
+      initLiuJoQuantityLimit();
     }, 150);
   });
-  // Initialize mobile gallery dash sync
+
+  // Client-side deduplication guard for Size fieldset
+  const sizePickers = document.querySelectorAll('.liujo-size-picker-fieldset');
+  if (sizePickers.length > 1) {
+    for (let i = 1; i < sizePickers.length; i++) {
+      sizePickers[i].remove();
+    }
+  }
+
+  // Initialize mobile gallery dash sync, installments, share modal, quantity limit & cart modal
   initLiuJoMobileGalleryIndicators();
   initLiuJoInstallmentsAnimation();
-  initLiuJoShareButton();
+  initLiuJoShareModal();
+  initLiuJoQuantityLimit();
   initLiuJoCartModal();
 }
 
@@ -1524,29 +1537,166 @@ function initLiuJoInstallmentsAnimation() {
   });
 }
 
-// 17. RED SHARE BUTTON HANDLER
-function initLiuJoShareButton() {
+// 17. SHARE MODAL POPUP HANDLER (Screenshot 3 Parity)
+function initLiuJoShareModal() {
+  const modal = document.getElementById('LiuJoShareModal');
+  const urlInput = document.getElementById('LiuJoShareUrlInput');
+  const copyBtn = document.getElementById('LiuJoShareCopyBtn');
+  const copyToast = document.getElementById('LiuJoShareCopyToast');
+
+  // Open modal on Share button click
   document.addEventListener('click', (e) => {
     const shareBtn = e.target.closest('[data-liujo-share-btn]');
     if (!shareBtn) return;
     e.preventDefault();
 
-    const title = document.querySelector('.liujo-pdp-title')?.textContent?.trim() || document.title;
-    const url = window.location.href;
-
-    if (navigator.share) {
-      navigator.share({ title: title, url: url }).catch(() => {});
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => {
-        const span = shareBtn.querySelector('span');
-        const orig = span ? span.textContent : 'SHARE';
-        if (span) span.textContent = 'COPIED!';
-        setTimeout(() => {
-          if (span) span.textContent = orig;
-        }, 2000);
-      });
+    if (modal) {
+      if (urlInput) {
+        urlInput.value = window.location.href;
+      }
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
     }
   });
+
+  // Close modal
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-liujo-share-modal-close]')) {
+      e.preventDefault();
+      closeLiuJoShareModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
+      closeLiuJoShareModal();
+    }
+  });
+
+  function closeLiuJoShareModal() {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (copyToast) copyToast.classList.remove('is-shown');
+  }
+
+  // Copy button
+  if (copyBtn && urlInput) {
+    copyBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const textToCopy = urlInput.value || window.location.href;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(showToast);
+      } else {
+        urlInput.select();
+        document.execCommand('copy');
+        showToast();
+      }
+    });
+  }
+
+  function showToast() {
+    if (!copyToast) return;
+    copyToast.classList.add('is-shown');
+    setTimeout(() => {
+      copyToast.classList.remove('is-shown');
+    }, 2000);
+  }
+
+  // Social share channels
+  document.addEventListener('click', (e) => {
+    const socialBtn = e.target.closest('[data-share-channel]');
+    if (!socialBtn) return;
+    e.preventDefault();
+
+    const channel = socialBtn.getAttribute('data-share-channel');
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(document.querySelector('.liujo-pdp-title')?.textContent?.trim() || document.title);
+
+    let shareUrl = '';
+    switch (channel) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'x':
+        shareUrl = `https://twitter.com/intent/tweet?text=${title}&url=${url}`;
+        break;
+      case 'pinterest':
+        shareUrl = `https://pinterest.com/pin/create/button/?url=${url}&description=${title}`;
+        break;
+      case 'tumblr':
+        shareUrl = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${url}&title=${title}`;
+        break;
+      case 'telegram':
+        shareUrl = `https://t.me/share/url?url=${url}&text=${title}`;
+        break;
+      case 'reddit':
+        shareUrl = `https://reddit.com/submit?url=${url}&title=${title}`;
+        break;
+      case 'whatsapp':
+        shareUrl = `https://api.whatsapp.com/send?text=${title}%20${url}`;
+        break;
+    }
+
+    if (shareUrl) {
+      window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=yes,resizable=yes');
+    }
+  });
+}
+
+// 18. ENFORCE STOCK QUANTITY LIMIT (e.g. Max 4 In Stock)
+function initLiuJoQuantityLimit() {
+  function checkLimit(input) {
+    if (!input) return;
+    const max = parseInt(input.max);
+    if (!isNaN(max) && max > 0) {
+      let val = parseInt(input.value) || 1;
+      if (val > max) {
+        input.value = max;
+        val = max;
+      }
+      const plusBtn = input.closest('.liujo-qty-box, quantity-input')?.querySelector("[name='plus']");
+      if (plusBtn) {
+        plusBtn.classList.toggle('disabled', val >= max);
+        plusBtn.disabled = (val >= max);
+      }
+    }
+  }
+
+  // Intercept plus button clicks when at max limit
+  document.addEventListener('click', (e) => {
+    const plusBtn = e.target.closest(".quantity__button[name='plus'], .liujo-qty-btn[name='plus']");
+    if (!plusBtn) return;
+    const input = plusBtn.closest('.liujo-qty-box, quantity-input')?.querySelector('.liujo-qty-input, .quantity__input');
+    if (!input) return;
+    const max = parseInt(input.max);
+    if (!isNaN(max) && max > 0) {
+      const val = parseInt(input.value) || 1;
+      if (val >= max) {
+        e.preventDefault();
+        e.stopPropagation();
+        input.value = max;
+        plusBtn.classList.add('disabled');
+        plusBtn.disabled = true;
+      }
+    }
+  }, true);
+
+  // Intercept direct user typing
+  document.addEventListener('input', (e) => {
+    const input = e.target.closest('.liujo-qty-input, .quantity__input');
+    if (input) checkLimit(input);
+  });
+
+  document.addEventListener('change', (e) => {
+    const input = e.target.closest('.liujo-qty-input, .quantity__input');
+    if (input) checkLimit(input);
+  });
+
+  // Run on all quantity inputs
+  document.querySelectorAll('.liujo-qty-input, .quantity__input').forEach(checkLimit);
 }
 
 // 18. REAL-TIME ADD TO CART MODAL & CART UPDATE (Image 2 Parity)

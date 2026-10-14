@@ -90,6 +90,18 @@
             endif
           -%}
 
+          {%- liquid
+            assign sel_variant = product.selected_or_first_available_variant
+            assign max_qty = sel_variant.quantity_rule.max
+            if sel_variant.inventory_management == 'shopify' and sel_variant.inventory_policy != 'continue'
+              if sel_variant.inventory_quantity > 0
+                if max_qty == null or max_qty > sel_variant.inventory_quantity
+                  assign max_qty = sel_variant.inventory_quantity
+                endif
+              endif
+            endif
+          -%}
+
           <!-- Quantity Label & Row with Quantity Box, Heart Wishlist, and Add to Cart (Image 2 Parity) -->
           <div class="liujo-qty-label">Quantity:</div>
           <div class="liujo-pdp-cart-row">
@@ -103,13 +115,14 @@
                 type="number"
                 name="quantity"
                 id="Quantity-{{ section_id }}"
-                data-min="{{ product.selected_or_first_available_variant.quantity_rule.min | default: 1 }}"
-                min="{{ product.selected_or_first_available_variant.quantity_rule.min | default: 1 }}"
-                {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
-                  max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+                data-min="{{ sel_variant.quantity_rule.min | default: 1 }}"
+                min="{{ sel_variant.quantity_rule.min | default: 1 }}"
+                {% if max_qty != null %}
+                  max="{{ max_qty }}"
                 {% endif %}
-                step="{{ product.selected_or_first_available_variant.quantity_rule.increment | default: 1 }}"
-                value="{{ product.selected_or_first_available_variant.quantity_rule.min | default: 1 }}"
+                data-inventory-qty="{{ sel_variant.inventory_quantity }}"
+                step="{{ sel_variant.quantity_rule.increment | default: 1 }}"
+                value="{{ sel_variant.quantity_rule.min | default: 1 }}"
                 form="{{ product_form_id }}"
                 aria-label="Quantity"
               >
