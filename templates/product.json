@@ -12,16 +12,17 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
         "vendor": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "{{ product.vendor }}",
             "text_style": "uppercase"
           }
-        },
-        "title": {
-          "type": "title",
-          "settings": {}
         },
         "price": {
           "type": "price",
@@ -34,42 +35,46 @@
             "swatch_shape": "circle"
           }
         },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": false,
-            "show_gift_card_recipient": true
-          }
-        },
         "description": {
           "type": "description",
           "settings": {}
         },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
         "collapsible_tab_details": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "DETAILS",
+            "heading": "Composition & Care",
             "icon": "shirt",
-            "content": "<p>The model is 180 cm tall and wears size 40</p><p>To find your correct size, please refer to the <strong>Size Guide</strong>.</p><br><p><strong>Composition:</strong><br>Main fabric: 84% Cotton, 14% Polyester, 2% Elastane| Main lining: 65% Polyester, 35% Cotton</p><br><p>Hand wash | Do not bleach | Do not tumble dry | Iron at max. 110°C | Do not dry clean | Wash separately | Wash with liquid detergent | Do not rub during washing | Wash inside out | Do not iron decorations</p>"
+            "content": "<p>Main fabric: 100% Cotton | Main lining: 86% Polyester, 14% Cotton</p><p>Hand wash | Do not bleach | Do not tumble dry | Iron at max. 110°C | Wash inside out | Do not iron decorations</p>",
+            "page": ""
           }
         },
         "collapsible_tab_shipping": {
           "type": "collapsible_tab",
+          "disabled": true,
           "settings": {
-            "heading": "Shipping & Return",
+            "heading": "Orders & Shipments",
             "icon": "truck",
-            "content": "<p>Complimentary boutique delivery on all orders above €150. Delivery within 2-4 business days.</p><p>Complimentary 14-day boutique returns policy.</p>"
+            "content": "<p>Complimentary boutique delivery on all orders above €150. Delivery within 2-4 business days.</p><p>Complimentary 14-day boutique returns policy.</p>",
+            "page": ""
           }
         }
       },
       "block_order": [
         "title",
+        "vendor",
+        "price",
         "variant_picker",
         "description",
+        "buy_buttons",
         "collapsible_tab_details",
-        "collapsible_tab_shipping",
-        "price",
-        "buy_buttons"
+        "collapsible_tab_shipping"
       ],
       "settings": {
         "enable_sticky_info": true,
