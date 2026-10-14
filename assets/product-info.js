@@ -125,8 +125,8 @@ if (!customElements.get('product-info')) {
             this.pendingRequestUrl = null;
             const html = new DOMParser().parseFromString(responseText, 'text/html');
             callback(html);
-            // set focus to last clicked option value
-            document.querySelector(`#${targetId}`)?.focus();
+            // set focus to last clicked option value without scrolling the viewport
+            document.querySelector(`#${targetId}`)?.focus({ preventScroll: true });
           })
           .catch((error) => {
             if (error.name === 'AbortError') {
@@ -320,10 +320,10 @@ if (!customElements.get('product-info')) {
           });
         }
 
-        // set featured media as active in the media gallery
+        // set featured media as active in the media gallery (do not prepend to avoid layout shifting)
         this.querySelector(`media-gallery`)?.setActiveMedia?.(
           `${this.dataset.section}-${variantFeaturedMediaId}`,
-          true
+          false
         );
 
         // update media modal

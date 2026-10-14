@@ -93,20 +93,15 @@
         "padding_bottom": 40
       }
     },
-    "related-products": {
-      "type": "related-products",
+    "liujo_tabs_recommendations": {
+      "type": "liujo-product-tabs-recommendations",
       "settings": {
-        "heading": "Complete The Look",
-        "heading_size": "h2",
+        "tab_1_title": "YOU MIGHT LIKE",
+        "tab_2_title": "RECENTLY VIEWED",
         "products_to_show": 4,
         "columns_desktop": 4,
         "columns_mobile": "2",
-        "color_scheme": "scheme-1",
-        "image_ratio": "portrait",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
+        "empty_text": "No recently viewed items yet",
         "padding_top": 48,
         "padding_bottom": 48
       }
@@ -114,6 +109,6 @@
   },
   "order": [
     "main",
-    "related-products"
+    "liujo_tabs_recommendations"
   ]
 }

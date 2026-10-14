@@ -1,0 +1,653 @@
+{% comment %}
+  LIU JO PRODUCT TABS RECOMMENDATIONS SECTION
+  Matches Image 3: Dual centered tabs "YOU MIGHT LIKE" | "RECENTLY VIEWED"
+  4-column luxury layout with product cards, hover images, wishlist heart, editorial badge & localStorage recently viewed.
+{% endcomment %}
+
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .liujo-tabs-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: #ffffff;
+  }
+
+  .liujo-tabs-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .liujo-tabs-nav {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .liujo-tab-button {
+    background: transparent;
+    border: none;
+    padding: 14px 6px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888888;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.25s ease;
+    outline: none;
+  }
+
+  .liujo-tab-button:hover {
+    color: #000000;
+  }
+
+  .liujo-tab-button.is-active {
+    color: #000000;
+  }
+
+  .liujo-tab-button.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
+  }
+
+  .liujo-tab-panel {
+    display: none;
+  }
+
+  .liujo-tab-panel.is-active {
+    display: block;
+  }
+
+  .liujo-tabs-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .liujo-tab-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #000000;
+  }
+
+  .liujo-tab-card-media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background-color: #f6f6f6;
+    margin-bottom: 12px;
+  }
+
+  .liujo-tab-card-media a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .liujo-tab-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .liujo-tab-card-media .img-secondary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+  .liujo-tab-card:hover .img-primary.has-secondary {
+    opacity: 0;
+  }
+
+  .liujo-tab-card:hover .img-secondary {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  .liujo-tab-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 2px;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .liujo-tab-wishlist {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    color: #000000;
+  }
+
+  .liujo-tab-wishlist:hover {
+    background-color: #ffffff;
+    transform: scale(1.08);
+  }
+
+  .liujo-tab-wishlist svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+  }
+
+  .liujo-tab-info {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2px;
+  }
+
+  .liujo-tab-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #000000;
+    text-decoration: none;
+    margin-bottom: 5px;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .liujo-tab-title:hover {
+    text-decoration: underline;
+  }
+
+  .liujo-tab-price {
+    font-size: 13px;
+    font-weight: 600;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .liujo-tab-price-compare {
+    color: #888888;
+    text-decoration: line-through;
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  .liujo-tab-empty-msg {
+    text-align: center;
+    padding: 40px 15px;
+    color: #888888;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 989px) {
+    .liujo-tabs-grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+      gap: 12px;
+    }
+    .liujo-tabs-nav {
+      gap: 24px;
+    }
+    .liujo-tab-button {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      padding: 12px 4px;
+    }
+    .liujo-tab-title,
+    .liujo-tab-price {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<div class="liujo-tabs-section liujo-tabs-section-{{ section.id }} page-width" data-section-id="{{ section.id }}">
+  <!-- Tabs Navigation Header -->
+  <div class="liujo-tabs-nav-wrapper">
+    <div class="liujo-tabs-nav" role="tablist">
+      <button
+        type="button"
+        class="liujo-tab-button is-active"
+        role="tab"
+        aria-selected="true"
+        aria-controls="panel-recommendations-{{ section.id }}"
+        id="tab-btn-recommendations-{{ section.id }}"
+        data-target="panel-recommendations-{{ section.id }}"
+      >
+        {{ section.settings.tab_1_title | default: 'YOU MIGHT LIKE' }}
+      </button>
+
+      <button
+        type="button"
+        class="liujo-tab-button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-recently-viewed-{{ section.id }}"
+        id="tab-btn-recently-viewed-{{ section.id }}"
+        data-target="panel-recently-viewed-{{ section.id }}"
+      >
+        {{ section.settings.tab_2_title | default: 'RECENTLY VIEWED' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Tab 1: YOU MIGHT LIKE (Recommendations / Curated Collection) -->
+  <div
+    id="panel-recommendations-{{ section.id }}"
+    class="liujo-tab-panel is-active"
+    role="tabpanel"
+    aria-labelledby="tab-btn-recommendations-{{ section.id }}"
+  >
+    <ul class="liujo-tabs-grid">
+      {%- assign rec_products = recommendations.products -%}
+      {%- assign curated_collection = collections[section.settings.collection] -%}
+
+      {%- if rec_products != blank and rec_products.size > 0 -%}
+        {%- for prod in rec_products limit: section.settings.products_to_show -%}
+          <li class="liujo-tab-card">
+            <div class="liujo-tab-card-media">
+              {%- if prod.tags contains 'THE GIGI HADID EDIT' or prod.tags contains 'gigi-hadid' -%}
+                <span class="liujo-tab-badge">THE GIGI HADID EDIT</span>
+              {%- elsif prod.compare_at_price > prod.price -%}
+                <span class="liujo-tab-badge" style="background-color: #e02424;">SALE</span>
+              {%- endif -%}
+
+              <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="{{ prod.id }}" aria-label="Add to Wishlist">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+
+              <a href="{{ prod.url }}">
+                {%- if prod.featured_media != blank -%}
+                  <img src="{{ prod.featured_media | image_url: width: 600 }}" alt="{{ prod.title | escape }}" class="img-primary{% if prod.media.size > 1 %} has-secondary{% endif %}" loading="lazy">
+                  {%- if prod.media.size > 1 -%}
+                    <img src="{{ prod.media[1] | image_url: width: 600 }}" alt="{{ prod.title | escape }}" class="img-secondary" loading="lazy">
+                  {%- endif -%}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'img-primary' }}
+                {%- endif -%}
+              </a>
+            </div>
+
+            <div class="liujo-tab-info">
+              <a href="{{ prod.url }}" class="liujo-tab-title">{{ prod.title }}</a>
+              <div class="liujo-tab-price">
+                <span>{{ prod.price | money }}</span>
+                {%- if prod.compare_at_price > prod.price -%}
+                  <span class="liujo-tab-price-compare">{{ prod.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- elsif curated_collection != blank and curated_collection.products_count > 0 -%}
+        {%- for prod in curated_collection.products limit: section.settings.products_to_show -%}
+          <li class="liujo-tab-card">
+            <div class="liujo-tab-card-media">
+              {%- if prod.tags contains 'THE GIGI HADID EDIT' or prod.tags contains 'gigi-hadid' -%}
+                <span class="liujo-tab-badge">THE GIGI HADID EDIT</span>
+              {%- elsif prod.compare_at_price > prod.price -%}
+                <span class="liujo-tab-badge" style="background-color: #e02424;">SALE</span>
+              {%- endif -%}
+
+              <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="{{ prod.id }}" aria-label="Add to Wishlist">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+
+              <a href="{{ prod.url }}">
+                {%- if prod.featured_media != blank -%}
+                  <img src="{{ prod.featured_media | image_url: width: 600 }}" alt="{{ prod.title | escape }}" class="img-primary{% if prod.media.size > 1 %} has-secondary{% endif %}" loading="lazy">
+                  {%- if prod.media.size > 1 -%}
+                    <img src="{{ prod.media[1] | image_url: width: 600 }}" alt="{{ prod.title | escape }}" class="img-secondary" loading="lazy">
+                  {%- endif -%}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'img-primary' }}
+                {%- endif -%}
+              </a>
+            </div>
+
+            <div class="liujo-tab-info">
+              <a href="{{ prod.url }}" class="liujo-tab-title">{{ prod.title }}</a>
+              <div class="liujo-tab-price">
+                <span>{{ prod.price | money }}</span>
+                {%- if prod.compare_at_price > prod.price -%}
+                  <span class="liujo-tab-price-compare">{{ prod.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Editorial Liu Jo High-Fashion Fallback Cards (Image 3 Style) -->
+        <li class="liujo-tab-card">
+          <div class="liujo-tab-card-media">
+            <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="fallback-1" aria-label="Add to Wishlist">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <a href="#">
+              <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw38804d25/images/E-ZB7305D041679212-3-N.jpeg?sw=594&sh=826" alt="Mini skirt tartan in wool" class="img-primary has-secondary" loading="lazy">
+              <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw7e7b58ae/images/E-ZB7305D041679212-4-N.jpeg?sw=594&sh=826" alt="Mini skirt tartan in wool" class="img-secondary" loading="lazy">
+            </a>
+          </div>
+          <div class="liujo-tab-info">
+            <a href="#" class="liujo-tab-title">Mini skirt tartan in wool</a>
+            <div class="liujo-tab-price"><span>€ 199.00</span></div>
+          </div>
+        </li>
+
+        <li class="liujo-tab-card">
+          <div class="liujo-tab-card-media">
+            <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="fallback-2" aria-label="Add to Wishlist">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <a href="#">
+              <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw9e6fac8b/images/E-ZB7307D041679212-4-N.jpeg?sw=594&sh=826" alt="Bouclé cropped jacket" class="img-primary has-secondary" loading="lazy">
+              <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw2127c151/images/E-ZB7307D041679212-3-N.jpeg?sw=594&sh=826" alt="Bouclé cropped jacket" class="img-secondary" loading="lazy">
+            </a>
+          </div>
+          <div class="liujo-tab-info">
+            <a href="#" class="liujo-tab-title">Bouclé cropped jacket</a>
+            <div class="liujo-tab-price"><span>€ 289.00</span></div>
+          </div>
+        </li>
+
+        <li class="liujo-tab-card">
+          <div class="liujo-tab-card-media">
+            <span class="liujo-tab-badge">THE GIGI HADID EDIT</span>
+            <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="fallback-3" aria-label="Add to Wishlist">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <a href="#">
+              <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0fc7c95b/images/E-ZB7301T055B79215-4-N.jpeg?sw=594&sh=826" alt="Oversized denim jacket with rhinestones" class="img-primary has-secondary" loading="lazy">
+              <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb9dbf93d/images/E-ZB7301T055B79215-3-N.jpeg?sw=594&sh=826" alt="Oversized denim jacket with rhinestones" class="img-secondary" loading="lazy">
+            </a>
+          </div>
+          <div class="liujo-tab-info">
+            <a href="#" class="liujo-tab-title">Oversized denim jacket with rhinestones</a>
+            <div class="liujo-tab-price"><span>€ 299.00</span></div>
+          </div>
+        </li>
+
+        <li class="liujo-tab-card">
+          <div class="liujo-tab-card-media">
+            <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="fallback-4" aria-label="Add to Wishlist">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <a href="#">
+              <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw579b6e6e/images/E-ZB7302T055B79215-3-N.jpeg?sw=594&sh=826" alt="T-shirt with rhinestone logo" class="img-primary has-secondary" loading="lazy">
+              <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwc796710a/images/E-ZB7302T055B79215-4-N.jpeg?sw=594&sh=826" alt="T-shirt with rhinestone logo" class="img-secondary" loading="lazy">
+            </a>
+          </div>
+          <div class="liujo-tab-info">
+            <a href="#" class="liujo-tab-title">T-shirt with rhinestone logo</a>
+            <div class="liujo-tab-price"><span>€ 119.00</span></div>
+          </div>
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+
+  <!-- Tab 2: RECENTLY VIEWED (Dynamically populated from localStorage) -->
+  <div
+    id="panel-recently-viewed-{{ section.id }}"
+    class="liujo-tab-panel"
+    role="tabpanel"
+    aria-labelledby="tab-btn-recently-viewed-{{ section.id }}"
+  >
+    <ul class="liujo-tabs-grid" id="liujo-recently-viewed-grid-{{ section.id }}">
+      <!-- Populated via JavaScript -->
+    </ul>
+    <div id="liujo-recently-viewed-empty-{{ section.id }}" class="liujo-tab-empty-msg" style="display: none;">
+      {{ section.settings.empty_text | default: 'No recently viewed items yet' }}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const sectionId = {{ section.id | json }};
+    const currentProductId = {{ product.id | default: 0 | json }};
+
+    // 1. Record Current Product to localStorage
+    {%- if product != blank -%}
+      try {
+        const currentProdData = {
+          id: {{ product.id | json }},
+          title: {{ product.title | json }},
+          url: {{ product.url | json }},
+          image: {{ product.featured_media | image_url: width: 600 | json }},
+          secondary_image: {% if product.media.size > 1 %}{{ product.media[1] | image_url: width: 600 | json }}{% else %}null{% endif %},
+          price: {{ product.price | money | json }},
+          compare_at_price: {% if product.compare_at_price > product.price %}{{ product.compare_at_price | money | json }}{% else %}null{% endif %},
+          badge: {% if product.tags contains 'THE GIGI HADID EDIT' or product.tags contains 'gigi-hadid' %}"THE GIGI HADID EDIT"{% elsif product.compare_at_price > product.price %}"SALE"{% else %}null{% endif %}
+        };
+
+        if (currentProdData.id) {
+          let viewed = JSON.parse(localStorage.getItem('liujo_recently_viewed') || '[]');
+          viewed = viewed.filter(p => String(p.id) !== String(currentProdData.id));
+          viewed.unshift(currentProdData);
+          if (viewed.length > 12) viewed = viewed.slice(0, 12);
+          localStorage.setItem('liujo_recently_viewed', JSON.stringify(viewed));
+        }
+      } catch (err) {
+        console.warn('Could not save to recently viewed:', err);
+      }
+    {%- endif -%}
+
+    // 2. Tab Toggle Logic
+    const section = document.querySelector(`.liujo-tabs-section-${sectionId}`);
+    if (!section) return;
+
+    const tabButtons = section.querySelectorAll('.liujo-tab-button');
+    const tabPanels = section.querySelectorAll('.liujo-tab-panel');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+
+        tabButtons.forEach(b => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        tabPanels.forEach(p => p.classList.remove('is-active'));
+
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+
+        const activePanel = document.getElementById(targetId);
+        if (activePanel) {
+          activePanel.classList.add('is-active');
+        }
+
+        if (targetId === `panel-recently-viewed-${sectionId}`) {
+          renderRecentlyViewed();
+        }
+      });
+    });
+
+    // 3. Render Recently Viewed Grid
+    function renderRecentlyViewed() {
+      const grid = document.getElementById(`liujo-recently-viewed-grid-${sectionId}`);
+      const emptyMsg = document.getElementById(`liujo-recently-viewed-empty-${sectionId}`);
+      if (!grid) return;
+
+      try {
+        let viewed = JSON.parse(localStorage.getItem('liujo_recently_viewed') || '[]');
+        // Filter out current product so user sees items browsed before
+        let filtered = viewed.filter(p => String(p.id) !== String(currentProductId));
+
+        if (!filtered || filtered.length === 0) {
+          // If no other products in history, show items from history anyway or fallback
+          if (viewed.length > 0) {
+            filtered = viewed;
+          }
+        }
+
+        if (filtered.length === 0) {
+          grid.innerHTML = '';
+          if (emptyMsg) emptyMsg.style.display = 'block';
+          return;
+        }
+
+        if (emptyMsg) emptyMsg.style.display = 'none';
+
+        const maxItems = {{ section.settings.products_to_show | default: 4 }};
+        const itemsToDisplay = filtered.slice(0, maxItems);
+
+        grid.innerHTML = itemsToDisplay.map(prod => `
+          <li class="liujo-tab-card">
+            <div class="liujo-tab-card-media">
+              ${prod.badge ? `<span class="liujo-tab-badge">${prod.badge}</span>` : ''}
+              <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="${prod.id}" aria-label="Add to Wishlist">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <a href="${prod.url}">
+                <img src="${prod.image}" alt="${prod.title}" class="img-primary ${prod.secondary_image ? 'has-secondary' : ''}" loading="lazy">
+                ${prod.secondary_image ? `<img src="${prod.secondary_image}" alt="${prod.title}" class="img-secondary" loading="lazy">` : ''}
+              </a>
+            </div>
+            <div class="liujo-tab-info">
+              <a href="${prod.url}" class="liujo-tab-title">${prod.title}</a>
+              <div class="liujo-tab-price">
+                <span>${prod.price}</span>
+                ${prod.compare_at_price ? `<span class="liujo-tab-price-compare">${prod.compare_at_price}</span>` : ''}
+              </div>
+            </div>
+          </li>
+        `).join('');
+
+      } catch (err) {
+        console.error('Error rendering recently viewed:', err);
+      }
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Liu Jo Product Tabs",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_1_title",
+      "label": "First Tab Title",
+      "default": "YOU MIGHT LIKE"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_title",
+      "label": "Second Tab Title",
+      "default": "RECENTLY VIEWED"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Fallback Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Number of products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Desktop columns"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Recently Viewed Empty State Text",
+      "default": "No recently viewed items yet"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liu Jo Product Tabs"
+    }
+  ]
+}
+{% endschema %}
