@@ -1514,16 +1514,22 @@ body.has-search-open .liujo-megamenu {
   border-top: 1px solid #222;
 }
 
-/* Liu Jo Back to Top Bar (Image Parity) */
+/* Liu Jo Back to Top Bar (Image 1 Parity) */
 .liujo-back-to-top {
   width: 100%;
+  background-color: var(--liujo-white, #ffffff);
+}
+
+.liujo-back-to-top__container {
+  max-width: var(--liujo-container-max, 1360px);
+  margin: 0 auto;
+  padding: 18px 32px;
   border-top: 1px solid #ebebeb;
   border-bottom: 1px solid #ebebeb;
-  background-color: var(--liujo-white, #ffffff);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 18px 0;
+  box-sizing: border-box;
 }
 
 .liujo-back-to-top__btn {
@@ -1544,21 +1550,31 @@ body.has-search-open .liujo-megamenu {
   opacity: 0.6;
 }
 
-/* Pre-footer: Help & Newsletter */
+/* Pre-footer: Help & Newsletter (Image 1 Parity) */
 .liujo-prefooter {
-  background-color: var(--liujo-white);
-  color: var(--liujo-black);
-  padding: 60px 0;
+  background-color: var(--liujo-white, #ffffff);
+  color: var(--liujo-black, #000000);
+  padding: 50px 0 60px 0;
   border-top: none;
 }
 
 .liujo-prefooter__container {
-  max-width: var(--liujo-container-max);
+  max-width: var(--liujo-container-max, 1360px);
   margin: 0 auto;
   padding: 0 32px;
   display: grid;
   grid-template-columns: 1fr 1.6fr;
-  gap: 60px;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+.liujo-help-block {
+  padding-right: 48px;
+}
+
+.liujo-newsletter-block {
+  border-left: 1px solid #ebebeb;
+  padding-left: 48px;
 }
 
 @media (max-width: 991px) {
@@ -1566,6 +1582,18 @@ body.has-search-open .liujo-megamenu {
     grid-template-columns: 1fr;
     gap: 40px;
     padding: 0 20px;
+  }
+  .liujo-help-block {
+    padding-right: 0;
+  }
+  .liujo-newsletter-block {
+    border-left: none;
+    border-top: 1px solid #ebebeb;
+    padding-left: 0;
+    padding-top: 32px;
+  }
+  .liujo-back-to-top__container {
+    padding: 16px 20px;
   }
 }
 

@@ -4,12 +4,14 @@
 {% endcomment %}
 
 <footer class="liujo-footer" data-section-id="{{ section.id }}" data-section-type="liujo-footer">
-  <!-- Liu Jo Back to Top Bar (Image Parity) -->
+  <!-- Liu Jo Back to Top Bar (Image 1 Parity) -->
   {%- if section.settings.show_back_to_top != false -%}
     <div class="liujo-back-to-top">
-      <button type="button" class="liujo-back-to-top__btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" aria-label="Go back to top">
-        {{ section.settings.back_to_top_text | default: 'GO BACK TO' }}
-      </button>
+      <div class="liujo-back-to-top__container">
+        <button type="button" class="liujo-back-to-top__btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" aria-label="Go back to top">
+          {{ section.settings.back_to_top_text | default: 'GO BACK TO' }}
+        </button>
+      </div>
     </div>
   {%- endif -%}
 
