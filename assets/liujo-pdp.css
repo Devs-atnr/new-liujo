@@ -36,6 +36,27 @@ product-component .page-width,
   width: 100% !important;
 }
 
+/* Media Gallery: Remove Background and Numbers completely */
+.product.grid,
+.product__media-wrapper,
+.product__media-list,
+.product__media-item,
+.product__media-item .media,
+.product__media-item .media > *,
+.product-media-container {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.slider-buttons,
+.slider-counter,
+.product__media-wrapper .slider-buttons,
+.product__media-wrapper .slider-counter,
+.product__media-wrapper .slider-button {
+  display: none !important;
+}
+
+
 @media (min-width: 990px) {
   .product.grid {
     display: flex !important;
@@ -43,7 +64,8 @@ product-component .page-width,
     align-items: flex-start !important;
     width: 100% !important;
     max-width: 100% !important;
-    background-color: #ebecee !important;
+    background-color: transparent !important;
+    background: transparent !important;
   }
 
   /* Left Column: 1 row 2 image, 2 row 2 image, 3 row 3 image (Liu Jo Parity) */
@@ -53,7 +75,8 @@ product-component .page-width,
     width: 65% !important;
     margin: 0 !important;
     padding: 0 !important;
-    background-color: #ebecee !important;
+    background-color: transparent !important;
+    background: transparent !important;
   }
 
   .product__media-list {
@@ -64,7 +87,8 @@ product-component .page-width,
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
-    background-color: #ebecee !important;
+    background-color: transparent !important;
+    background: transparent !important;
   }
 
   /* Default item width: 50% (Row 1 & Row 2 = 2 images per row) */
@@ -75,7 +99,8 @@ product-component .page-width,
     padding: 0 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
-    background-color: #ebecee !important;
+    background-color: transparent !important;
+    background: transparent !important;
   }
 
   /* Row 1 & Row 2: Images 1, 2, 3, 4 = 2 images per row (50% each) */
@@ -105,9 +130,18 @@ product-component .page-width,
   .product__media-item .media {
     aspect-ratio: 28 / 39 !important;
     width: 100% !important;
-    background-color: #ebecee !important;
+    background-color: transparent !important;
+    background: transparent !important;
     overflow: hidden !important;
     position: relative !important;
+  }
+
+  /* Remove slider counter and buttons beneath gallery */
+  .slider-buttons,
+  .slider-counter,
+  .product__media-wrapper .slider-buttons,
+  .product__media-wrapper .slider-counter {
+    display: none !important;
   }
 
   .product__media-item img {

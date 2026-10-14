@@ -134,7 +134,8 @@
         </ol>
       </div>
     {%- endif -%}
-    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
+    {% comment %} Liu Jo PDP: Slider counter/number removed per user request {% endcomment %}
+    <div class="slider-buttons quick-add-hidden hidden" style="display: none !important;">
       <button
         type="button"
         class="slider-button slider-button--prev"
