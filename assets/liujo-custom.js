@@ -1487,10 +1487,72 @@ function initLiuJoPdpInteractions() {
       }
     }, 150);
   });
+  // Initialize mobile gallery dash sync
+  initLiuJoMobileGalleryIndicators();
+}
+
+// 15. LIU JO MOBILE GALLERY INDICATORS & PEEK SCROLL SYNC
+function initLiuJoMobileGalleryIndicators() {
+  const galleries = document.querySelectorAll('media-gallery');
+  galleries.forEach(gallery => {
+    const slider = gallery.querySelector('.product__media-list.slider--mobile');
+    const dashes = gallery.querySelectorAll('.liujo-indicator-dash');
+    if (!slider || dashes.length === 0) return;
+
+    const slides = slider.querySelectorAll('.product__media-item.slider__slide');
+    if (slides.length === 0) return;
+
+    let ticking = false;
+
+    function updateActiveDash() {
+      const scrollPos = slider.scrollLeft;
+      const firstSlide = slides[0];
+      const slideWidth = firstSlide ? firstSlide.getBoundingClientRect().width : (window.innerWidth * 0.86);
+
+      // Determine active slide based on scroll offset
+      let activeIndex = Math.round(scrollPos / (slideWidth + 4));
+      if (activeIndex < 0) activeIndex = 0;
+      if (activeIndex >= dashes.length) activeIndex = dashes.length - 1;
+
+      dashes.forEach((dash, idx) => {
+        if (idx === activeIndex) {
+          dash.classList.add('is-active');
+        } else {
+          dash.classList.remove('is-active');
+        }
+      });
+
+      ticking = false;
+    }
+
+    slider.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateActiveDash);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Allow clicking dashes to navigate directly to slide
+    dashes.forEach((dash, idx) => {
+      dash.style.cursor = 'pointer';
+      dash.style.pointerEvents = 'auto';
+      dash.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (slides[idx]) {
+          slides[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        }
+      });
+    });
+
+    // Initial sync
+    updateActiveDash();
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   initLiuJoPdpInteractions();
+  initLiuJoMobileGalleryIndicators();
 });
+
 
 

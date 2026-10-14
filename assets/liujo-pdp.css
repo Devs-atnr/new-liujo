@@ -21,7 +21,7 @@
     align-items: flex-start !important;
   }
 
-  /* Left Column: 2x2 Editorial Image Grid (Image 1 Parity) */
+  /* Left Column: 1 row 2 image, 2 row 2 image, 3 row 3 image (Liu Jo Parity) */
   .product__media-wrapper {
     flex: 0 0 64% !important;
     max-width: 64% !important;
@@ -31,8 +31,8 @@
   }
 
   .product__media-list {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
     gap: 4px !important;
     list-style: none !important;
     padding: 0 !important;
@@ -40,15 +40,42 @@
     width: 100% !important;
   }
 
+  /* Default item width: 50% (Row 1 & Row 2 = 2 images per row) */
   .product__media-item {
-    width: 100% !important;
-    max-width: 100% !important;
+    flex: 0 0 calc(50% - 2px) !important;
+    max-width: calc(50% - 2px) !important;
+    width: calc(50% - 2px) !important;
     padding: 0 !important;
     margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Row 1 & Row 2: Images 1, 2, 3, 4 = 2 images per row (50% each) */
+  .product__media-item:nth-child(1),
+  .product__media-item:nth-child(2),
+  .product__media-item:nth-child(3),
+  .product__media-item:nth-child(4) {
+    flex: 0 0 calc(50% - 2px) !important;
+    max-width: calc(50% - 2px) !important;
+    width: calc(50% - 2px) !important;
+  }
+
+  /* Row 3 onwards: Images 5, 6, 7... = 3 images per row (33.333% each) */
+  .product__media-item:nth-child(n+5) {
+    flex: 0 0 calc(33.333% - 2.67px) !important;
+    max-width: calc(33.333% - 2.67px) !important;
+    width: calc(33.333% - 2.67px) !important;
+  }
+
+  .product__media-item:only-child,
+  .product__media-item--single {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
   .product__media-item .media {
-    aspect-ratio: 3 / 4 !important;
+    aspect-ratio: 28 / 39 !important;
     width: 100% !important;
     background-color: #f7f7f7 !important;
     overflow: hidden !important;
@@ -59,6 +86,7 @@
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    object-position: center top !important;
     display: block !important;
     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
   }
@@ -179,11 +207,19 @@
 .liujo-pdp-title {
   font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
   font-size: clamp(20px, 2vw, 26px) !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   line-height: 1.25 !important;
   color: #111 !important;
   margin: 0 !important;
-  text-transform: none !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+.liujo-pdp-title-divider {
+  border: none !important;
+  border-top: 1px solid #777 !important;
+  margin: 16px 0 20px 0 !important;
+  width: 100% !important;
 }
 
 .liujo-pdp-share-btn {
@@ -712,3 +748,158 @@ details[open] > .liujo-accordion-summary .liujo-accordion-chevron {
     cursor: pointer;
   }
 }
+
+/* ==========================================================================
+   10. MOBILE PDP GALLERY & CONTENT LAYOUT (Pixel-perfect Parity with Liu Jo Reference)
+   ========================================================================== */
+@media (max-width: 989px) {
+  /* Hide breadcrumbs, Tamara installment banner, and share button on mobile as in reference */
+  .liujo-pdp-breadcrumbs,
+  .liujo-tamara-banner,
+  .liujo-pdp-share-btn,
+  .slider-buttons {
+    display: none !important;
+  }
+
+  .product.grid {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .product__media-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  slider-component {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Horizontal swipeable gallery with 1 full slide + peek on right */
+  .product__media-list.slider--mobile {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 4px !important;
+    list-style: none !important;
+  }
+
+  .product__media-list.slider--mobile::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Slide: 86vw wide so ~14vw of the next image peeks from the right */
+  .product__media-item.slider__slide {
+    flex: 0 0 86vw !important;
+    max-width: 86vw !important;
+    width: 86vw !important;
+    scroll-snap-align: start !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Space after last slide so it doesn't get clipped */
+  .product__media-list.slider--mobile::after {
+    content: '' !important;
+    flex: 0 0 14vw !important;
+    width: 14vw !important;
+    height: 1px !important;
+  }
+
+  .product__media-item .media {
+    aspect-ratio: 28 / 39 !important;
+    width: 100% !important;
+    height: auto !important;
+    background-color: #f0f0f2 !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .product__media-item img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+    display: block !important;
+  }
+
+  /* Dash indicators centered at the bottom of the active slide */
+  .liujo-mobile-indicators-wrap {
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 0 !important;
+    width: 86vw !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+  }
+
+  .liujo-mobile-indicators {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .liujo-indicator-dash {
+    width: 32px !important;
+    height: 2px !important;
+    background-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+    border-radius: 1px !important;
+    transition: background-color 0.25s ease, height 0.25s ease !important;
+  }
+
+  .liujo-indicator-dash.is-active {
+    background-color: #ffffff !important;
+    height: 2.5px !important;
+  }
+
+  /* Mobile Product Info section directly below gallery */
+  .product__info-wrapper {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 24px 20px 60px 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .liujo-pdp-sku {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #555 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 8px !important;
+  }
+
+  .liujo-pdp-title {
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    color: #111 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    line-height: 1.3 !important;
+    margin: 0 0 16px 0 !important;
+  }
+}
+

@@ -120,7 +120,7 @@
                   </p>
                 {%- when 'title' -%}
                   <div class="liujo-pdp-sku" id="LiuJoPdpSku-{{ section.id }}">
-                    SKU: <span id="LiuJoPdpSkuVal-{{ section.id }}">{{ product.selected_or_first_available_variant.sku | default: product.selected_or_first_available_variant.barcode | default: product.id }}</span>
+                    ITEM NO. <span id="LiuJoPdpSkuVal-{{ section.id }}">{{ product.selected_or_first_available_variant.sku | default: product.selected_or_first_available_variant.barcode | default: product.id }}</span>
                   </div>
                   <div class="liujo-pdp-title-row" {{ block.shopify_attributes }}>
                     <h1 class="liujo-pdp-title">{{ product.title | escape }}</h1>
@@ -135,6 +135,7 @@
                       <span>SHARE</span>
                     </button>
                   </div>
+                  <hr class="liujo-pdp-title-divider" />
                 {%- when 'price' -%}
                   <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                     {%- render 'price',

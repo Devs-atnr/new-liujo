@@ -125,6 +125,15 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
+    {%- if media_count > 1 -%}
+      <div class="liujo-mobile-indicators-wrap large-up-hide" aria-hidden="true">
+        <ol class="liujo-mobile-indicators">
+          {%- for i in (1..media_count) -%}
+            <li class="liujo-indicator-dash{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index }}"></li>
+          {%- endfor -%}
+        </ol>
+      </div>
+    {%- endif -%}
     <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
       <button
         type="button"
