@@ -9,7 +9,6 @@
  */
 {
   "current": {
-    "show_wishlist": true,
     "logo_width": 90,
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
@@ -102,7 +101,6 @@
     "drawer_shadow_horizontal_offset": 0,
     "drawer_shadow_vertical_offset": 4,
     "drawer_shadow_blur": 5,
-    "search_menu": "main-menu-copy-for-menu",
     "badge_position": "bottom left",
     "badge_corner_radius": 40,
     "sale_badge_color_scheme": "scheme-4",
@@ -129,6 +127,8 @@
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
     "customer_account_menu": "customer-account-main-menu",
+    "show_wishlist": false,
+    "search_menu": "main-menu-copy-for-menu",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
