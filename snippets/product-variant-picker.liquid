@@ -24,6 +24,11 @@
       {%- liquid
         assign swatch_count = option.values | map: 'swatch' | compact | size
         assign picker_type = block.settings.picker_type
+        assign opt_down = option.name | downcase
+        assign is_color = false
+        if opt_down contains 'color' or opt_down contains 'colour' or opt_down contains 'colore'
+          assign is_color = true
+        endif
 
         if swatch_count > 0 and block.settings.swatch_shape != 'none'
           if block.settings.picker_type == 'dropdown'
@@ -33,7 +38,23 @@
           endif
         endif
       -%}
-      {%- if picker_type == 'swatch' -%}
+      {%- if is_color -%}
+        <fieldset class="js product-form__input liujo-color-picker-fieldset">
+          <div class="liujo-color-row">
+            <div class="liujo-color-text-wrap">
+              <span class="liujo-color-bold-label">COLOUR:</span>
+              <span class="liujo-color-value" data-selected-value>{{ option.selected_value }}</span>
+            </div>
+            <div class="liujo-color-swatches-list">
+              {% render 'product-variant-options',
+                option: option,
+                block: block,
+                picker_type: 'swatch_circle'
+              %}
+            </div>
+          </div>
+        </fieldset>
+      {%- elsif picker_type == 'swatch' -%}
         <fieldset class="js product-form__input product-form__input--swatch">
           <legend class="form__label">
             {{ option.name }}:
@@ -48,8 +69,8 @@
           %}
         </fieldset>
       {%- elsif picker_type == 'button' -%}
-        <fieldset class="js product-form__input product-form__input--pill">
-          <div class="liujo-option-header-row">
+        <fieldset class="js product-form__input liujo-size-picker-fieldset">
+          <div class="liujo-size-header-row">
             <legend class="form__label">
               {{ option.name }}:
               <span data-selected-value>{{ option.selected_value }}</span>
@@ -61,11 +82,13 @@
               </button>
             {%- endif -%}
           </div>
-          {% render 'product-variant-options',
-            option: option,
-            block: block,
-            picker_type: picker_type
-          %}
+          <div class="liujo-size-boxes-list">
+            {% render 'product-variant-options',
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+          </div>
         </fieldset>
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">

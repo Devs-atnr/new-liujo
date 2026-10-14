@@ -1436,4 +1436,61 @@ function initLiuJoInfiniteScroll() {
   }
 }
 
+// 14. LIU JO PDP (PRODUCT DETAILS PAGE) INTERACTIONS
+function initLiuJoPdpInteractions() {
+  // Direct Buy It Now checkout handler
+  document.addEventListener('click', (e) => {
+    const buyNowBtn = e.target.closest('.liujo-pdp-buy-now-btn');
+    if (buyNowBtn && !buyNowBtn.disabled) {
+      e.preventDefault();
+      const form = buyNowBtn.closest('form') || document.querySelector('form[data-type="add-to-cart-form"]') || document.querySelector('product-form form');
+      if (form) {
+        const idInput = form.querySelector('input[name="id"]');
+        const qtyInput = form.querySelector('input[name="quantity"]') || document.querySelector('.liujo-qty-input');
+        const variantId = idInput ? idInput.value : '';
+        const qty = qtyInput ? qtyInput.value : '1';
+        if (variantId) {
+          window.location.href = `/cart/${variantId}:${qty}`;
+        }
+      }
+    }
+  });
+
+  // Variant radio input change (Update selected labels, Tamara amount, SKU)
+  document.addEventListener('change', (e) => {
+    const radio = e.target.closest('.liujo-swatch-radio, .liujo-size-radio, .product-form__input input[type="radio"]');
+    if (!radio) return;
+
+    const fieldset = radio.closest('fieldset');
+    if (fieldset) {
+      const selectedValSpan = fieldset.querySelector('[data-selected-value]');
+      if (selectedValSpan) {
+        selectedValSpan.textContent = radio.value;
+      }
+    }
+
+    // Update Tamara amount when variant price changes
+    setTimeout(() => {
+      const priceItem = document.querySelector('.price-item--regular, .price-item--sale');
+      const tamaraAmountEl = document.querySelector('.liujo-tamara-amount');
+      if (priceItem && tamaraAmountEl) {
+        const text = priceItem.textContent.trim();
+        const numMatch = text.match(/[\d,.]+/);
+        if (numMatch) {
+          const num = parseFloat(numMatch[0].replace(/,/g, ''));
+          if (!isNaN(num) && num > 0) {
+            const quarter = (num / 4).toFixed(2);
+            const currencyMatch = text.replace(/[\d,.\s]+/g, '').trim();
+            tamaraAmountEl.textContent = `${currencyMatch} ${quarter}`;
+          }
+        }
+      }
+    }, 150);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initLiuJoPdpInteractions();
+});
+
 

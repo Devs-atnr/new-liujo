@@ -1,451 +1,592 @@
 /* ==========================================================================
    LIU JO PRODUCT DETAILS PAGE (PDP) - LUXURY ITALIAN STYLING
-   Pixel-perfect parity with liujo.com
-   Stacked editorial gallery, sticky luxury buy column, size guide, accordions & mobile sticky bar
+   Pixel-perfect parity with liujo.com (Desktop & Mobile)
+   Image 1: 2x2 side-by-side editorial image grid on left
+   Image 2: Right content layout A to Z (Breadcrumb, Tamara, SKU, Title+Share,
+            Price, Size, Availability, Quantity + Wishlist + Add to Cart, Buy Now)
+   Image 3: Color circular swatches with double ring & Accordions (DESCRIPTION, DETAILS)
    ========================================================================== */
 
 /* Main PDP Grid Layout */
 .product.grid {
-  max-width: var(--liujo-container-max, 1440px);
-  margin: 0 auto;
-  padding: 16px 24px 60px;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
 }
 
 @media (min-width: 990px) {
   .product.grid {
-    display: flex;
-    gap: 48px;
-    align-items: flex-start;
+    display: flex !important;
+    gap: 0 !important;
+    align-items: flex-start !important;
   }
 
-  /* Left Column: Stacked Editorial Media Gallery */
+  /* Left Column: 2x2 Editorial Image Grid (Image 1 Parity) */
   .product__media-wrapper {
-    flex: 0 0 60% !important;
-    max-width: 60% !important;
-    width: 60% !important;
+    flex: 0 0 64% !important;
+    max-width: 64% !important;
+    width: 64% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  /* Right Column: Sticky Product Info Column */
+  .product__media-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .product__media-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .product__media-item .media {
+    aspect-ratio: 3 / 4 !important;
+    width: 100% !important;
+    background-color: #f7f7f7 !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  .product__media-item img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  }
+
+  .product__media-item:hover img {
+    transform: scale(1.02) !important;
+  }
+
+  /* Right Column: Sticky Product Info Column (Image 2 Parity) */
   .product__info-wrapper {
-    flex: 0 0 calc(40% - 48px) !important;
-    max-width: calc(40% - 48px) !important;
-    width: calc(40% - 48px) !important;
+    flex: 0 0 36% !important;
+    max-width: 36% !important;
+    width: 36% !important;
     position: sticky !important;
-    top: calc(var(--liujo-header-height-desk, 80px) + 20px) !important;
+    top: calc(var(--liujo-header-height-desk, 80px) + 10px) !important;
     align-self: flex-start !important;
-    padding-left: 10px !important;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
+    padding: 24px 44px 60px 44px !important;
+    max-height: calc(100vh - 90px) !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    scrollbar-width: thin !important;
   }
 
   .product__info-wrapper::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    width: 4px;
+  }
+
+  .product__info-wrapper::-webkit-scrollbar-thumb {
+    background: #ccc;
   }
 }
 
-/* 1. EDITORIAL MEDIA GALLERY */
-.product__media-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.product__media-item {
-  width: 100%;
-}
-
-.product__media-item .media {
-  aspect-ratio: 3 / 4 !important;
-  background-color: var(--liujo-light-gray, #f7f7f7);
-  overflow: hidden;
-  position: relative;
-}
-
-.product__media-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover !important;
-  display: block;
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.product__media-item:hover img {
-  transform: scale(1.02);
-}
-
-/* 2. BREADCRUMBS & SKU */
-.product__text.caption-with-letter-spacing {
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--liujo-mid-gray, #777);
-  margin-bottom: 8px;
-}
-
-.product__sku {
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--liujo-mid-gray, #888);
-  margin-bottom: 6px;
-}
-
-/* 3. PRODUCT TITLE & PRICE */
-.product__title h1 {
-  font-family: var(--liujo-font-main);
-  font-size: clamp(1.4rem, 2.2vw, 1.95rem);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--liujo-black, #111);
-  line-height: 1.25;
-  margin: 0 0 12px;
-}
-
-.price {
-  font-family: var(--liujo-font-main);
-  margin-bottom: 16px;
-}
-
-.price__regular .price-item--regular,
-.price__sale .price-item--sale {
-  font-size: 1.35rem !important;
-  font-weight: 600 !important;
-  color: var(--liujo-black, #111) !important;
-  letter-spacing: 0.03em !important;
-}
-
-.price__sale .price-item--regular {
-  font-size: 1.1rem !important;
-  color: var(--liujo-mid-gray, #888) !important;
-  text-decoration: line-through !important;
-  margin-left: 8px;
-}
-
-.price .badge {
-  background-color: var(--liujo-black, #000) !important;
-  color: var(--liujo-white, #fff) !important;
-  border-radius: 0 !important;
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-  padding: 4px 8px !important;
-  margin-left: 8px;
-}
-
-/* Installment terms badge (Klarna / Scalapay style) */
-.installment {
-  font-size: 11.5px;
-  letter-spacing: 0.03em;
-  color: var(--liujo-mid-gray, #666);
-  margin-bottom: 20px;
-}
-
-/* 4. OPTION HEADERS & SIZE GUIDE */
-.liujo-option-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.liujo-option-header-row .form__label {
-  margin-bottom: 0 !important;
-}
-
-.product-form__input .form__label {
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--liujo-black, #111);
-  display: block;
-}
-
-.product-form__input .form__label span[data-selected-value] {
-  font-weight: 500;
-  color: var(--liujo-mid-gray, #555);
-  margin-left: 4px;
-}
-
-.liujo-size-guide-link {
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: underline;
-  background: none;
-  border: none;
-  color: var(--liujo-black, #111);
-  cursor: pointer;
-  padding: 0;
-  transition: opacity 0.2s ease;
-}
-
-.liujo-size-guide-link:hover {
-  opacity: 0.7;
-}
-
-/* Swatches & Size Buttons */
-.product-form__input--pill {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  border: none;
-  padding: 0;
-  margin: 0 0 24px;
-}
-
-.product-form__input input[type='radio'] + label {
-  border: 1px solid var(--liujo-border-gray, #dcdcdc) !important;
-  border-radius: 0 !important;
-  min-width: 44px;
-  height: 40px;
-  padding: 0 14px !important;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--liujo-font-main);
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.06em !important;
-  color: var(--liujo-black, #111) !important;
-  background-color: var(--liujo-white, #fff) !important;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.product-form__input input[type='radio']:checked + label {
-  background-color: var(--liujo-black, #000) !important;
-  border-color: var(--liujo-black, #000) !important;
-  color: var(--liujo-white, #fff) !important;
-}
-
-.product-form__input input[type='radio'] + label:hover {
-  border-color: var(--liujo-black, #000) !important;
-}
-
-/* 5. BUY BUTTONS & WISHLIST */
-.product-form__buttons {
-  margin-bottom: 24px;
-}
-
-.product-form__submit {
-  border-radius: 0 !important;
-  background-color: var(--liujo-black, #000) !important;
-  color: var(--liujo-white, #fff) !important;
-  border: 1px solid var(--liujo-black, #000) !important;
-  font-family: var(--liujo-font-main) !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.22em !important;
-  text-transform: uppercase !important;
-  height: 52px !important;
-  padding: 0 24px !important;
+/* 1. BREADCRUMBS (Image 2 Parity) */
+.liujo-pdp-breadcrumbs {
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-bottom: 16px !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  color: #444 !important;
+  line-height: 1.4 !important;
 }
 
-.product-form__submit:hover {
-  background-color: var(--liujo-white, #fff) !important;
-  color: var(--liujo-black, #000) !important;
+.liujo-pdp-breadcrumbs a {
+  color: #222 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
 }
 
-.liujo-pdp-wishlist-btn {
-  width: 100%;
-  height: 48px;
-  margin-top: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border: 1px solid var(--liujo-black, #111);
-  background-color: var(--liujo-white, #fff);
-  color: var(--liujo-black, #111);
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.25s ease;
+.liujo-pdp-breadcrumbs a:hover {
+  color: #000 !important;
+  text-decoration: underline !important;
 }
 
-.liujo-pdp-wishlist-btn:hover {
-  background-color: #fafafa;
-  color: var(--liujo-accent-pink, #C4184E);
-  border-color: var(--liujo-accent-pink, #C4184E);
+.liujo-bc-bullet {
+  color: #777 !important;
+  font-size: 10px !important;
 }
 
-.liujo-pdp-wishlist-btn.is-active {
-  background-color: #fff0f3;
-  color: var(--liujo-accent-pink, #C4184E);
-  border-color: var(--liujo-accent-pink, #C4184E);
+.liujo-bc-current {
+  color: #444 !important;
+  font-weight: 400 !important;
 }
 
-.liujo-pdp-wishlist-btn.is-active svg {
-  fill: currentColor;
+/* 2. TAMARA INSTALLMENT BANNER (Image 2 Parity) */
+.liujo-tamara-banner {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  color: #333 !important;
+  margin-bottom: 24px !important;
+  line-height: 1.4 !important;
 }
 
-/* 6. BOUTIQUE SERVICES BAR */
-.liujo-pdp-services {
-  margin-top: 24px;
-  padding: 20px 0;
-  border-top: 1px solid var(--liujo-border-gray, #e5e5e5);
-  border-bottom: 1px solid var(--liujo-border-gray, #e5e5e5);
-}
-
-.liujo-pdp-service-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--liujo-font-main);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  color: var(--liujo-black, #222);
-  margin-bottom: 12px;
-}
-
-.liujo-pdp-service-item:last-child {
-  margin-bottom: 0;
-}
-
-.liujo-pdp-service-item svg {
-  stroke: var(--liujo-black, #111);
-  flex-shrink: 0;
-}
-
-/* 7. COLLAPSIBLE ACCORDIONS */
-.product__accordion {
-  border-bottom: 1px solid var(--liujo-border-gray, #e5e5e5);
-  margin-top: 0 !important;
-}
-
-.product__accordion details {
-  border: none !important;
-}
-
-.product__accordion summary {
-  padding: 20px 0 !important;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  list-style: none;
-}
-
-.product__accordion summary::-webkit-details-marker {
-  display: none;
-}
-
-.product__accordion .accordion__title {
-  font-family: var(--liujo-font-main) !important;
-  font-size: 11.5px !important;
+.liujo-tamara-amount {
   font-weight: 700 !important;
-  letter-spacing: 0.16em !important;
+  color: #111 !important;
+}
+
+.liujo-tamara-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #fbcfe8 0%, #fed7aa 100%) !important;
+  color: #111 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  padding: 2px 7px !important;
+  border-radius: 4px !important;
+  text-transform: lowercase !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* 3. SKU & TITLE + SHARE ROW (Image 2 Parity) */
+.liujo-pdp-sku {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  color: #777 !important;
+  letter-spacing: 0.04em !important;
+  margin-bottom: 8px !important;
+}
+
+.liujo-pdp-title-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin-bottom: 12px !important;
+}
+
+.liujo-pdp-title {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: clamp(20px, 2vw, 26px) !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  color: #111 !important;
+  margin: 0 !important;
+  text-transform: none !important;
+}
+
+.liujo-pdp-share-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: #e02424 !important; /* Coral / Red as in Image 2 */
+  text-decoration: underline !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  margin-top: 4px !important;
+}
+
+.liujo-pdp-share-btn svg {
+  stroke: #e02424 !important;
+}
+
+/* 4. PRICE (Image 2 Parity) */
+.price {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  margin-bottom: 20px !important;
+}
+
+.price .price-item--regular,
+.price .price-item--sale {
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #111 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* 5. COLOR VARIANT ROW & CIRCULAR SWATCHES (Image 3 Parity) */
+.liujo-color-picker-fieldset {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 0 20px 0 !important;
+}
+
+.liujo-color-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+.liujo-color-bold-label {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
-  color: var(--liujo-black, #111) !important;
+  color: #111 !important;
+}
+
+.liujo-color-value {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+  color: #333 !important;
+  margin-left: 6px !important;
+}
+
+.liujo-color-swatches-list {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.liujo-swatch-circle-label {
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  border: 1px solid #ddd !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  background: #fff !important;
+}
+
+.liujo-swatch-circle-inner {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  display: block !important;
+}
+
+/* Selected circular swatch: exact Liu Jo outer ring with gap (Image 3 Parity) */
+.liujo-swatch-radio:checked + .liujo-swatch-circle-label {
+  border-color: #111 !important;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #111 !important;
+}
+
+/* 6. SIZE VARIANT ROW & SQUARE BOXES (Image 2 Parity) */
+.liujo-size-picker-fieldset {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 0 16px 0 !important;
+}
+
+.liujo-size-header-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 8px !important;
+}
+
+.liujo-size-header-row .form__label {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #111 !important;
   margin: 0 !important;
 }
 
-.product__accordion .accordion__content {
-  font-family: var(--liujo-font-main);
-  font-size: 12.5px;
-  line-height: 1.7;
-  color: #555;
-  padding-bottom: 20px;
+.liujo-size-header-row .form__label span[data-selected-value] {
+  font-weight: 400 !important;
+  color: #333 !important;
+  margin-left: 4px !important;
 }
 
-.product__accordion .accordion__content ul {
-  padding-left: 20px;
-  margin: 8px 0;
+.liujo-size-boxes-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
 }
 
-.product__accordion .accordion__content li {
-  margin-bottom: 4px;
+.liujo-size-box-label {
+  min-width: 44px !important;
+  height: 40px !important;
+  border: 1px solid #111 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  padding: 0 14px !important;
+  transition: all 0.2s ease !important;
+  border-radius: 0 !important;
 }
 
-/* 8. SIZE GUIDE MODAL */
-.liujo-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.liujo-size-radio:checked + .liujo-size-box-label {
+  border: 2px solid #000000 !important;
+  font-weight: 700 !important;
 }
 
-.liujo-modal[hidden] {
-  display: none;
+.liujo-size-radio {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
-.liujo-modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+/* 7. AVAILABILITY (Image 2 Parity) */
+.liujo-pdp-availability {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 12.5px !important;
+  color: #222 !important;
+  margin: 14px 0 16px 0 !important;
 }
 
-.liujo-modal-dialog {
-  position: relative;
-  background-color: #fff;
-  width: 90%;
-  max-width: 680px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 32px 28px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  z-index: 2;
+.liujo-avail-label {
+  font-weight: 400 !important;
+  color: #555 !important;
 }
 
-.liujo-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 16px;
-  margin-bottom: 20px;
+.liujo-avail-count {
+  font-weight: 500 !important;
+  color: #111 !important;
+  margin-left: 4px !important;
 }
 
-.liujo-modal-title {
-  font-family: var(--liujo-font-main);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #111;
-  margin: 0;
+/* 8. QUANTITY & ADD TO CART ROW (Image 2 Parity) */
+.liujo-qty-label {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+  color: #333 !important;
+  margin-bottom: 8px !important;
 }
 
-.liujo-modal-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  color: #111;
-  display: flex;
-  align-items: center;
+.liujo-pdp-cart-row {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin-bottom: 10px !important;
 }
 
-.liujo-size-table-wrapper {
-  overflow-x: auto;
-  margin-bottom: 24px;
+.liujo-qty-box {
+  display: inline-flex !important;
+  align-items: center !important;
+  border: 1px solid #767676 !important;
+  height: 48px !important;
+  width: 115px !important;
+  background: #ffffff !important;
+  flex-shrink: 0 !important;
+  border-radius: 0 !important;
+}
+
+.liujo-qty-btn {
+  width: 36px !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  color: #111 !important;
+  padding: 0 !important;
+}
+
+.liujo-qty-input {
+  width: 43px !important;
+  height: 100% !important;
+  border: none !important;
+  background: transparent !important;
+  text-align: center !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #111 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  appearance: textfield !important;
+  -moz-appearance: textfield !important;
+}
+
+.liujo-qty-input::-webkit-outer-spin-button,
+.liujo-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+.liujo-pdp-wishlist-square {
+  width: 48px !important;
+  height: 48px !important;
+  border: 1px solid #111 !important;
+  background: #ffffff !important;
+  color: #111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  border-radius: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.liujo-pdp-wishlist-square:hover {
+  background: #fafafa !important;
+  color: #C4184E !important;
+  border-color: #C4184E !important;
+}
+
+.liujo-pdp-wishlist-square.is-active {
+  background: #fff0f3 !important;
+  color: #C4184E !important;
+  border-color: #C4184E !important;
+}
+
+.liujo-pdp-wishlist-square.is-active svg {
+  fill: currentColor !important;
+}
+
+.liujo-pdp-add-to-cart-btn {
+  flex: 1 !important;
+  height: 48px !important;
+  background: #222222 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  border-radius: 0 !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.liujo-pdp-add-to-cart-btn:hover {
+  background: #000000 !important;
+}
+
+/* 9. BUY IT NOW BUTTON (Image 2 Parity) */
+.liujo-pdp-buy-now-btn {
+  width: 100% !important;
+  height: 48px !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  border-radius: 0 !important;
+  margin-bottom: 24px !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.liujo-pdp-buy-now-btn:hover {
+  opacity: 0.88 !important;
+}
+
+/* 10. ACCORDIONS: DESCRIPTION, DETAILS, SHIPPING (Image 3 & Image 2 Parity) */
+.product__accordion {
+  border-top: 1px solid #e5e5e5 !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+  margin: 0 !important;
+}
+
+.product__accordion + .product__accordion {
+  border-top: none !important;
+}
+
+.liujo-accordion-summary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 18px 0 !important;
+  cursor: pointer !important;
+  list-style: none !important;
+}
+
+.liujo-accordion-summary::-webkit-details-marker {
+  display: none !important;
+}
+
+.liujo-accordion-title {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #777 !important;
+  margin: 0 !important;
+  transition: color 0.2s ease !important;
+}
+
+details[open] > .liujo-accordion-summary .liujo-accordion-title,
+.liujo-accordion-summary:hover .liujo-accordion-title {
+  color: #111 !important;
+}
+
+.liujo-accordion-chevron {
+  transition: transform 0.25s ease !important;
+  color: #777 !important;
+}
+
+details[open] > .liujo-accordion-summary .liujo-accordion-chevron {
+  transform: rotate(180deg) !important;
+  color: #111 !important;
+}
+
+.accordion__content {
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  color: #333 !important;
+  padding-bottom: 20px !important;
+}
+
+.liujo-pdp-details-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  color: #333 !important;
+}
+
+.liujo-pdp-text-line {
+  margin: 0 !important;
+}
+
+.liujo-pdp-composition-block,
+.liujo-pdp-care-block {
+  line-height: 1.6 !important;
 }
 
 .liujo-size-table {
