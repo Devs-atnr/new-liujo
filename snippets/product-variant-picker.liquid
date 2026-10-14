@@ -55,7 +55,8 @@
               {% render 'product-variant-options',
                 option: option,
                 block: block,
-                picker_type: 'swatch_circle'
+                picker_type: 'swatch_circle',
+                product_form_id: product_form_id
               %}
             </div>
           </div>
@@ -71,7 +72,8 @@
           {% render 'product-variant-options',
             option: option,
             block: block,
-            picker_type: picker_type
+            picker_type: picker_type,
+            product_form_id: product_form_id
           %}
         </fieldset>
       {%- elsif picker_type == 'button' -%}
@@ -81,18 +83,13 @@
               {{ option.name }}:
               <span data-selected-value>{{ option.selected_value }}</span>
             </legend>
-            {%- assign option_name_downcase = option.name | downcase -%}
-            {%- if option_name_downcase contains 'size' or option_name_downcase contains 'taglia' -%}
-              <button type="button" class="liujo-size-guide-link" data-size-modal-open>
-                Size Guide
-              </button>
-            {%- endif -%}
           </div>
           <div class="liujo-size-boxes-list">
             {% render 'product-variant-options',
               option: option,
               block: block,
-              picker_type: picker_type
+              picker_type: picker_type,
+              product_form_id: product_form_id
             %}
           </div>
         </fieldset>

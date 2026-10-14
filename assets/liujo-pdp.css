@@ -386,9 +386,9 @@ product-component .page-width,
 
 /* 7. VARIANT PICKER & COLOUR ROW */
 variant-selects {
-  display: block !important;
-  width: 100% !important;
-  margin-bottom: 16px !important;
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
 }
 
 .liujo-color-picker-fieldset {
@@ -471,21 +471,7 @@ variant-selects {
 }
 
 .liujo-size-guide-link {
-  border: 1px solid #767676 !important;
-  background: #ffffff !important;
-  color: #111111 !important;
-  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  padding: 4px 10px !important;
-  cursor: pointer !important;
-  border-radius: 0 !important;
-  transition: all 0.2s ease !important;
-}
-
-.liujo-size-guide-link:hover {
-  background: #f5f5f5 !important;
-  border-color: #000000 !important;
+  display: none !important;
 }
 
 /* 9. BUY BUTTONS, QUANTITY & AVAILABILITY */

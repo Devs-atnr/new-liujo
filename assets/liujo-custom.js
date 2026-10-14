@@ -1492,13 +1492,32 @@ function initLiuJoPdpInteractions() {
     }, 150);
   });
 
-  // Client-side deduplication guard for Size fieldset
-  const sizePickers = document.querySelectorAll('.liujo-size-picker-fieldset');
-  if (sizePickers.length > 1) {
-    for (let i = 1; i < sizePickers.length; i++) {
-      sizePickers[i].remove();
+  // Continuous deduplication guard for Variant and Size fieldsets
+  function dedupeLiuJoPickers() {
+    const variantSelects = document.querySelectorAll('variant-selects');
+    if (variantSelects.length > 1) {
+      for (let i = 1; i < variantSelects.length; i++) {
+        variantSelects[i].remove();
+      }
+    }
+    const sizePickers = document.querySelectorAll('.liujo-size-picker-fieldset');
+    if (sizePickers.length > 1) {
+      for (let i = 1; i < sizePickers.length; i++) {
+        sizePickers[i].remove();
+      }
+    }
+    const colorPickers = document.querySelectorAll('.liujo-color-picker-fieldset');
+    if (colorPickers.length > 1) {
+      for (let i = 1; i < colorPickers.length; i++) {
+        colorPickers[i].remove();
+      }
     }
   }
+  dedupeLiuJoPickers();
+  document.addEventListener('change', () => {
+    setTimeout(dedupeLiuJoPickers, 50);
+    setTimeout(dedupeLiuJoPickers, 200);
+  });
 
   // Initialize mobile gallery dash sync, installments, share modal, quantity limit & cart modal
   initLiuJoMobileGalleryIndicators();

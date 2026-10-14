@@ -168,8 +168,14 @@ if (!customElements.get('product-info')) {
 
       updateOptionValues(html) {
         const variantSelects = html.querySelector('variant-selects');
-        if (variantSelects) {
+        if (variantSelects && this.variantSelectors) {
           HTMLUpdateUtility.viewTransition(this.variantSelectors, variantSelects, this.preProcessHtmlCallbacks);
+          const allVariantSelects = this.querySelectorAll('variant-selects');
+          if (allVariantSelects.length > 1) {
+            for (let i = 1; i < allVariantSelects.length; i++) {
+              allVariantSelects[i].remove();
+            }
+          }
         }
       }
 
