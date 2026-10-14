@@ -1469,19 +1469,20 @@ function initLiuJoPdpInteractions() {
       }
     }
 
-    // Update Tamara amount when variant price changes
+    // Update Tamara & Tabby installments amount when variant price changes
     setTimeout(() => {
       const priceItem = document.querySelector('.price-item--regular, .price-item--sale');
-      const tamaraAmountEl = document.querySelector('.liujo-tamara-amount');
-      if (priceItem && tamaraAmountEl) {
+      const installmentAmountEls = document.querySelectorAll('[data-installment-amount]');
+      if (priceItem && installmentAmountEls.length > 0) {
         const text = priceItem.textContent.trim();
         const numMatch = text.match(/[\d,.]+/);
         if (numMatch) {
           const num = parseFloat(numMatch[0].replace(/,/g, ''));
           if (!isNaN(num) && num > 0) {
-            const quarter = (num / 4).toFixed(2);
-            const currencyMatch = text.replace(/[\d,.\s]+/g, '').trim();
-            tamaraAmountEl.textContent = `${currencyMatch} ${quarter}`;
+            const quarter = (num / 4).toFixed(1);
+            installmentAmountEls.forEach(el => {
+              el.textContent = `${quarter} SR`;
+            });
           }
         }
       }
@@ -1489,7 +1490,148 @@ function initLiuJoPdpInteractions() {
   });
   // Initialize mobile gallery dash sync
   initLiuJoMobileGalleryIndicators();
+  initLiuJoInstallmentsAnimation();
+  initLiuJoShareButton();
+  initLiuJoCartModal();
 }
+
+// 16. ALTERNATING TAMARA & TABBY INSTALLMENTS ANIMATION (Image 3 & Image 4 Parity)
+function initLiuJoInstallmentsAnimation() {
+  const sliders = document.querySelectorAll('.liujo-installments-slider');
+  sliders.forEach(slider => {
+    if (slider.dataset.sliderInitialized) return;
+    slider.dataset.sliderInitialized = 'true';
+
+    const slides = slider.querySelectorAll('.liujo-installment-slide');
+    if (slides.length < 2) return;
+
+    let currentIndex = 0;
+    setInterval(() => {
+      const currentSlide = slides[currentIndex];
+      currentIndex = (currentIndex + 1) % slides.length;
+      const nextSlide = slides[currentIndex];
+
+      currentSlide.classList.remove('is-active');
+      currentSlide.classList.add('is-prev');
+
+      nextSlide.classList.remove('is-prev');
+      nextSlide.classList.add('is-active');
+
+      setTimeout(() => {
+        currentSlide.classList.remove('is-prev');
+      }, 700);
+    }, 3500);
+  });
+}
+
+// 17. RED SHARE BUTTON HANDLER
+function initLiuJoShareButton() {
+  document.addEventListener('click', (e) => {
+    const shareBtn = e.target.closest('[data-liujo-share-btn]');
+    if (!shareBtn) return;
+    e.preventDefault();
+
+    const title = document.querySelector('.liujo-pdp-title')?.textContent?.trim() || document.title;
+    const url = window.location.href;
+
+    if (navigator.share) {
+      navigator.share({ title: title, url: url }).catch(() => {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        const span = shareBtn.querySelector('span');
+        const orig = span ? span.textContent : 'SHARE';
+        if (span) span.textContent = 'COPIED!';
+        setTimeout(() => {
+          if (span) span.textContent = orig;
+        }, 2000);
+      });
+    }
+  });
+}
+
+// 18. REAL-TIME ADD TO CART MODAL & CART UPDATE (Image 2 Parity)
+function initLiuJoCartModal() {
+  // Global close listener
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-liujo-cart-modal-close]')) {
+      e.preventDefault();
+      window.closeLiuJoCartModal();
+    }
+  });
+
+  // ESC key listener
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      window.closeLiuJoCartModal();
+    }
+  });
+}
+
+window.updateLiuJoCartCount = function() {
+  fetch('/cart.js')
+    .then((res) => res.json())
+    .then((cart) => {
+      const count = cart.item_count;
+      const desktopBubble = document.getElementById('cart-icon-bubble-desktop');
+      const mobileBubble = document.getElementById('cart-icon-bubble-mobile');
+
+      [desktopBubble, mobileBubble].forEach((bubble) => {
+        if (!bubble) return;
+        let badge = bubble.querySelector('.liujo-badge-count');
+        if (count > 0) {
+          if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'liujo-badge-count';
+            bubble.appendChild(badge);
+          }
+          badge.textContent = count;
+          badge.style.display = '';
+        } else if (badge) {
+          badge.remove();
+        }
+      });
+    })
+    .catch((err) => console.warn('Could not update cart count', err));
+};
+
+window.showLiuJoCartModal = function(itemData) {
+  const modal = document.getElementById('LiuJoCartModal');
+  if (!modal) return;
+
+  const titleEl = document.getElementById('LiuJoCartModalTitle');
+  const thumbEl = document.getElementById('LiuJoCartModalThumb');
+
+  if (itemData) {
+    let fullTitle = itemData.title || itemData.product_title || '';
+    if (itemData.product_title && itemData.variant_title && itemData.variant_title !== 'Default Title') {
+      fullTitle = `${itemData.product_title} - ${itemData.variant_title}`;
+    }
+    if (titleEl) titleEl.textContent = fullTitle;
+
+    const imgUrl = itemData.featured_image?.url || itemData.image || '';
+    if (thumbEl) {
+      if (imgUrl) {
+        thumbEl.src = imgUrl;
+        thumbEl.alt = fullTitle;
+        thumbEl.parentElement.style.display = '';
+      } else {
+        thumbEl.parentElement.style.display = 'none';
+      }
+    }
+  }
+
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeLiuJoCartModal = function() {
+  const modal = document.getElementById('LiuJoCartModal');
+  if (!modal) return;
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+};
 
 // 15. LIU JO MOBILE GALLERY INDICATORS & PEEK SCROLL SYNC
 function initLiuJoMobileGalleryIndicators() {

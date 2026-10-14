@@ -1,0 +1,29 @@
+<!-- Liu Jo Add to Cart Modal Popup (Image 2 Parity) -->
+<div id="LiuJoCartModal" class="liujo-cart-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="liujo-cart-modal-backdrop" data-liujo-cart-modal-close></div>
+  <div class="liujo-cart-modal-card">
+    <button type="button" class="liujo-cart-modal-close" data-liujo-cart-modal-close aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <div class="liujo-cart-modal-body">
+      <div class="liujo-cart-modal-thumb-wrapper">
+        <img id="LiuJoCartModalThumb" src="" alt="Product" width="70" height="90" loading="lazy">
+      </div>
+      <div class="liujo-cart-modal-info">
+        <h3 id="LiuJoCartModalTitle" class="liujo-cart-modal-title"></h3>
+        <p class="liujo-cart-modal-msg">is added to your shopping cart.</p>
+      </div>
+    </div>
+    <div class="liujo-cart-modal-actions">
+      <button type="button" class="liujo-cart-modal-btn liujo-cart-modal-btn--continue" data-liujo-cart-modal-close>
+        CONTINUE SHOPPING
+      </button>
+      <a href="{{ routes.cart_url }}" class="liujo-cart-modal-btn liujo-cart-modal-btn--viewcart">
+        VIEW CART
+      </a>
+    </div>
+  </div>
+</div>

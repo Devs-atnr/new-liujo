@@ -409,6 +409,8 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    {%- render 'liujo-cart-modal' -%}
+
     <script src="{{ 'liujo-custom.js' | asset_url }}?v={{ 'now' | date: '%s' }}" defer="defer"></script>
   </body>
 </html>

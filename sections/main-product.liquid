@@ -84,23 +84,39 @@
             id="ProductInfo-{{ section.id }}"
             class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
           >
-            <!-- Liu Jo Custom PDP Breadcrumbs (Image 2 Parity) -->
+            <!-- Liu Jo Custom PDP Breadcrumbs (Image 3 & Image 4 Parity) -->
             <nav class="liujo-pdp-breadcrumbs" aria-label="Breadcrumbs">
-              <a href="{{ routes.root_url }}">Liu Jo</a>
+              <a href="{{ routes.root_url }}">Home</a>
               <span class="liujo-bc-bullet">•</span>
               {%- if product.collections.size > 0 -%}
                 {%- assign primary_col = product.collections.first -%}
                 <a href="{{ primary_col.url }}">{{ primary_col.title }}</a>
-                {%- if product.type != blank -%}
-                  <span class="liujo-bc-bullet">•</span>
-                  <span>{{ product.type }}</span>
-                {%- endif -%}
               {%- else -%}
-                <a href="/collections/women">Women</a>
-                <span class="liujo-bc-bullet">•</span>
-                <span>Clothing</span>
+                <a href="/collections/all">Clothing</a>
               {%- endif -%}
+              <span class="liujo-bc-bullet">•</span>
+              <span class="liujo-bc-current">{{ product.title }}</span>
             </nav>
+
+            <!-- Alternating Tamara & Tabby Installments Banner (Image 3 & Image 4 Parity) -->
+            <div class="liujo-installments-banner" id="LiuJoInstallments-{{ section.id }}">
+              <div class="liujo-installments-slider">
+                <!-- Slide 1: Tamara -->
+                <div class="liujo-installment-slide is-active" data-slide-index="0">
+                  <span class="liujo-installment-text">
+                    Pay in 4 interest-free installments of <strong class="liujo-installment-amount" data-installment-amount>{{ product.selected_or_first_available_variant.price | divided_by: 400.0 | round: 2 }} SR</strong> with
+                  </span>
+                  <span class="liujo-tamara-badge">tamara</span>
+                </div>
+                <!-- Slide 2: Tabby -->
+                <div class="liujo-installment-slide" data-slide-index="1">
+                  <span class="liujo-installment-text">
+                    4 easy, interest-free payments of <strong class="liujo-installment-amount" data-installment-amount>{{ product.selected_or_first_available_variant.price | divided_by: 400.0 | round: 2 }} SR</strong> with
+                  </span>
+                  <span class="liujo-tabby-badge">tabby</span>
+                </div>
+              </div>
+            </div>
 
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
@@ -117,12 +133,21 @@
                   </p>
                 {%- when 'title' -%}
                   <div class="liujo-pdp-sku" id="LiuJoPdpSku-{{ section.id }}">
-                    ITEM NO. <span id="LiuJoPdpSkuVal-{{ section.id }}">{{ product.selected_or_first_available_variant.sku | default: product.selected_or_first_available_variant.barcode | default: product.id }}</span>
+                    SKU: <span id="LiuJoPdpSkuVal-{{ section.id }}">{{ product.selected_or_first_available_variant.sku | default: product.selected_or_first_available_variant.barcode | default: product.id }}</span>
                   </div>
                   <div class="liujo-pdp-title-row" {{ block.shopify_attributes }}>
                     <h1 class="liujo-pdp-title">{{ product.title | escape }}</h1>
+                    <button type="button" class="liujo-pdp-share-btn" data-liujo-share-btn aria-label="Share">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                      </svg>
+                      <span>SHARE</span>
+                    </button>
                   </div>
-                  <hr class="liujo-pdp-title-divider" />
                 {%- when 'price' -%}
                   <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                     {%- render 'price',

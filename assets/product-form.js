@@ -67,13 +67,21 @@ if (!customElements.get('product-form')) {
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
-            } else if (!this.cart) {
-              this.resolveCartLinesUpdate(linesUpdateDeferred);
-              window.location = window.routes.cart_url;
-              return;
             }
 
             this.resolveCartLinesUpdate(linesUpdateDeferred);
+
+            // Real-Time Liu Jo Cart Modal Popup (Image 2 Parity) & Header Cart Count Update
+            if (typeof window.showLiuJoCartModal === 'function') {
+              window.showLiuJoCartModal(response);
+            }
+            if (typeof window.updateLiuJoCartCount === 'function') {
+              window.updateLiuJoCartCount();
+            }
+
+            if (!this.cart) {
+              return;
+            }
 
             const startMarker = CartPerformance.createStartingMarker('add:wait-for-subscribers');
             if (!this.error)
