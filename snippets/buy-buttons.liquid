@@ -11,7 +11,7 @@
   @example
   {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true %}
 {% enddoc %}
-<div {{ block.shopify_attributes }}>
+<div class="product-form-block-wrapper" {{ block.shopify_attributes }}>
   {%- if product != blank -%}
     {%- liquid
       assign gift_card_recipient_feature_active = false
@@ -63,21 +63,30 @@
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}
 
-        <!-- Availability (Image 2 Parity) -->
-        <div class="liujo-pdp-availability" id="LiuJoAvailability-{{ section_id }}">
-          <span class="liujo-avail-label">Availability:</span>
-          <span class="liujo-avail-count">
-            {%- if product.selected_or_first_available_variant.available -%}
-              {%- if product.selected_or_first_available_variant.inventory_quantity > 0 -%}
-                {{ product.selected_or_first_available_variant.inventory_quantity }} In Stock
+        {%- assign has_avail_block = false -%}
+        {%- for b in section.blocks -%}
+          {%- if b.type == 'availability' or b.type == 'inventory' -%}
+            {%- assign has_avail_block = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- unless has_avail_block -%}
+          <!-- Availability (Image 2 Parity) -->
+          <div class="liujo-pdp-availability" id="LiuJoAvailability-{{ section_id }}">
+            <span class="liujo-avail-label">Availability:</span>
+            <span class="liujo-avail-count">
+              {%- if product.selected_or_first_available_variant.available -%}
+                {%- if product.selected_or_first_available_variant.inventory_quantity > 0 -%}
+                  {{ product.selected_or_first_available_variant.inventory_quantity }} In Stock
+                {%- else -%}
+                  In Stock
+                {%- endif -%}
               {%- else -%}
-                In Stock
+                Out of Stock
               {%- endif -%}
-            {%- else -%}
-              Out of Stock
-            {%- endif -%}
-          </span>
-        </div>
+            </span>
+          </div>
+        {%- endunless -%}
 
         <div class="product-form__buttons">
           {%- liquid

@@ -148,15 +148,13 @@ product-component .page-width,
   }
 }
 
-/* Product Info Container Flex Ordering matching Liu Jo Reference (media_1791988879173_8460355e.png) */
+/* Product Info Container Normal Block Flow for Dynamic Theme Customizer Drag & Drop */
 .product__info-container {
-  display: flex !important;
-  flex-direction: column !important;
+  display: block !important;
 }
 
 /* 1. BREADCRUMBS */
 .liujo-pdp-breadcrumbs {
-  order: 1 !important;
   display: flex !important;
   align-items: center !important;
   flex-wrap: wrap !important;
@@ -192,7 +190,6 @@ product-component .page-width,
 
 /* 2. ALTERNATING INSTALLMENTS BANNER (Tamara & Tabby - Image 3 & Image 4 Parity) */
 .liujo-installments-banner {
-  order: 2 !important;
   width: 100% !important;
   margin: 0 0 16px 0 !important;
   font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
@@ -279,7 +276,6 @@ product-component .page-width,
 
 /* 3. SKU */
 .liujo-pdp-sku {
-  order: 3 !important;
   font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Arial, sans-serif !important;
   font-size: 11px !important;
   font-weight: 500 !important;
@@ -292,7 +288,6 @@ product-component .page-width,
 /* 4. PRODUCT TITLE & SHARE BUTTON */
 .liujo-pdp-title-row,
 .product__title {
-  order: 4 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -343,12 +338,11 @@ product-component .page-width,
 /* 5. PRICE & RED/WHITE BADGE TAG (Image 1 Parity) */
 .price,
 [id^="price-"] {
-  order: 5 !important;
   display: flex !important;
   align-items: center !important;
   flex-wrap: wrap !important;
   gap: 12px !important;
-  margin: 4px 0 6px 0 !important;
+  margin: 4px 0 16px 0 !important;
 }
 
 .price .price__container {
@@ -392,15 +386,15 @@ product-component .page-width,
 
 /* 7. VARIANT PICKER & COLOUR ROW */
 variant-selects {
-  order: 7 !important;
-  display: contents !important;
+  display: block !important;
+  width: 100% !important;
+  margin-bottom: 16px !important;
 }
 
 .liujo-color-picker-fieldset {
-  order: 7 !important;
   border: none !important;
   padding: 0 !important;
-  margin: 0 0 20px 0 !important;
+  margin: 0 0 16px 0 !important;
 }
 
 .liujo-color-row {
@@ -471,7 +465,6 @@ variant-selects {
 
 /* 8. SIZE VARIANT ROW & SQUARE BOXES */
 .liujo-size-picker-fieldset {
-  order: 8 !important;
   border: none !important;
   padding: 0 !important;
   margin: 0 0 16px 0 !important;
@@ -496,27 +489,33 @@ variant-selects {
 }
 
 /* 9. BUY BUTTONS, QUANTITY & AVAILABILITY */
-.product-form__quantity,
+.product-form-block-wrapper,
 .product-form__buttons,
 product-form {
-  order: 9 !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+/* DIVIDER LINE BLOCK */
+.liujo-pdp-divider {
+  border: none !important;
+  border-top: 1px solid #e5e5e5 !important;
+  margin: 20px 0 !important;
+  width: 100% !important;
+  display: block !important;
 }
 
 /* 10. ACCORDIONS: DESCRIPTION & DETAILS (Below Buy Now) */
 .liujo-accordion-description {
-  order: 10 !important;
   border-top: 1px solid #e5e5e5 !important;
 }
 
 .liujo-accordion-details {
-  order: 11 !important;
   border-top: 1px solid #e5e5e5 !important;
-  border-bottom: 1px solid #e5e5e5 !important;
 }
 
 .liujo-accordion-other,
 .product__accordion {
-  order: 12 !important;
   border-bottom: 1px solid #e5e5e5 !important;
 }
 

@@ -84,39 +84,53 @@
             id="ProductInfo-{{ section.id }}"
             class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
           >
-            <!-- Liu Jo Custom PDP Breadcrumbs (Image 3 & Image 4 Parity) -->
-            <nav class="liujo-pdp-breadcrumbs" aria-label="Breadcrumbs">
-              <a href="{{ routes.root_url }}">Home</a>
-              <span class="liujo-bc-bullet">•</span>
-              {%- if product.collections.size > 0 -%}
-                {%- assign primary_col = product.collections.first -%}
-                <a href="{{ primary_col.url }}">{{ primary_col.title }}</a>
-              {%- else -%}
-                <a href="/collections/all">Clothing</a>
+            {%- assign has_breadcrumbs_block = false -%}
+            {%- assign has_installments_block = false -%}
+            {%- for b in section.blocks -%}
+              {%- if b.type == 'breadcrumbs' -%}
+                {%- assign has_breadcrumbs_block = true -%}
+              {%- elsif b.type == 'installments' -%}
+                {%- assign has_installments_block = true -%}
               {%- endif -%}
-              <span class="liujo-bc-bullet">•</span>
-              <span class="liujo-bc-current">{{ product.title }}</span>
-            </nav>
+            {%- endfor -%}
 
-            <!-- Alternating Tamara & Tabby Installments Banner (Image 3 & Image 4 Parity) -->
-            <div class="liujo-installments-banner" id="LiuJoInstallments-{{ section.id }}">
-              <div class="liujo-installments-slider">
-                <!-- Slide 1: Tamara -->
-                <div class="liujo-installment-slide is-active" data-slide-index="0">
-                  <span class="liujo-installment-text">
-                    Pay in 4 interest-free installments of <strong class="liujo-installment-amount" data-installment-amount>{{ product.selected_or_first_available_variant.price | divided_by: 400.0 | round: 2 }} SR</strong> with
-                  </span>
-                  <span class="liujo-tamara-badge">tamara</span>
-                </div>
-                <!-- Slide 2: Tabby -->
-                <div class="liujo-installment-slide" data-slide-index="1">
-                  <span class="liujo-installment-text">
-                    4 easy, interest-free payments of <strong class="liujo-installment-amount" data-installment-amount>{{ product.selected_or_first_available_variant.price | divided_by: 400.0 | round: 2 }} SR</strong> with
-                  </span>
-                  <span class="liujo-tabby-badge">tabby</span>
+            {%- unless has_breadcrumbs_block -%}
+              <!-- Liu Jo Custom PDP Breadcrumbs Fallback -->
+              <nav class="liujo-pdp-breadcrumbs" aria-label="Breadcrumbs">
+                <a href="{{ routes.root_url }}">Home</a>
+                <span class="liujo-bc-bullet">•</span>
+                {%- if product.collections.size > 0 -%}
+                  {%- assign primary_col = product.collections.first -%}
+                  <a href="{{ primary_col.url }}">{{ primary_col.title }}</a>
+                {%- else -%}
+                  <a href="/collections/all">Clothing</a>
+                {%- endif -%}
+                <span class="liujo-bc-bullet">•</span>
+                <span class="liujo-bc-current">{{ product.title }}</span>
+              </nav>
+            {%- endunless -%}
+
+            {%- unless has_installments_block -%}
+              <!-- Alternating Tamara & Tabby Installments Banner Fallback -->
+              <div class="liujo-installments-banner" id="LiuJoInstallments-{{ section.id }}">
+                <div class="liujo-installments-slider">
+                  <!-- Slide 1: Tamara -->
+                  <div class="liujo-installment-slide is-active" data-slide-index="0">
+                    <span class="liujo-installment-text">
+                      Pay in 4 interest-free installments of <strong class="liujo-installment-amount" data-installment-amount>{{ product.selected_or_first_available_variant.price | divided_by: 400.0 | round: 2 }} SR</strong> with
+                    </span>
+                    <span class="liujo-tamara-badge">tamara</span>
+                  </div>
+                  <!-- Slide 2: Tabby -->
+                  <div class="liujo-installment-slide" data-slide-index="1">
+                    <span class="liujo-installment-text">
+                      4 easy, interest-free payments of <strong class="liujo-installment-amount" data-installment-amount>{{ product.selected_or_first_available_variant.price | divided_by: 400.0 | round: 2 }} SR</strong> with
+                    </span>
+                    <span class="liujo-tabby-badge">tabby</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            {%- endunless -%}
 
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
             {%- assign variant_picker_rendered = false -%}
@@ -125,6 +139,55 @@
               {%- case block.type -%}
                 {%- when '@app' -%}
                   {% render block %}
+                {%- when 'breadcrumbs' -%}
+                  <nav class="liujo-pdp-breadcrumbs" aria-label="Breadcrumbs" {{ block.shopify_attributes }}>
+                    <a href="{{ routes.root_url }}">Home</a>
+                    <span class="liujo-bc-bullet">•</span>
+                    {%- if product.collections.size > 0 -%}
+                      {%- assign primary_col = product.collections.first -%}
+                      <a href="{{ primary_col.url }}">{{ primary_col.title }}</a>
+                    {%- else -%}
+                      <a href="/collections/all">Clothing</a>
+                    {%- endif -%}
+                    <span class="liujo-bc-bullet">•</span>
+                    <span class="liujo-bc-current">{{ product.title }}</span>
+                  </nav>
+                {%- when 'installments' -%}
+                  <div class="liujo-installments-banner" id="LiuJoInstallments-{{ section.id }}" {{ block.shopify_attributes }}>
+                    <div class="liujo-installments-slider">
+                      <!-- Slide 1: Tamara -->
+                      <div class="liujo-installment-slide is-active" data-slide-index="0">
+                        <span class="liujo-installment-text">
+                          Pay in 4 interest-free installments of <strong class="liujo-installment-amount" data-installment-amount>{{ product.selected_or_first_available_variant.price | divided_by: 400.0 | round: 2 }} SR</strong> with
+                        </span>
+                        <span class="liujo-tamara-badge">tamara</span>
+                      </div>
+                      <!-- Slide 2: Tabby -->
+                      <div class="liujo-installment-slide" data-slide-index="1">
+                        <span class="liujo-installment-text">
+                          4 easy, interest-free payments of <strong class="liujo-installment-amount" data-installment-amount>{{ product.selected_or_first_available_variant.price | divided_by: 400.0 | round: 2 }} SR</strong> with
+                        </span>
+                        <span class="liujo-tabby-badge">tabby</span>
+                      </div>
+                    </div>
+                  </div>
+                {%- when 'divider' -%}
+                  <hr class="liujo-pdp-divider" {{ block.shopify_attributes }}>
+                {%- when 'availability' -%}
+                  <div class="liujo-pdp-availability" id="LiuJoAvailability-{{ section.id }}" {{ block.shopify_attributes }}>
+                    <span class="liujo-avail-label">Availability:</span>
+                    <span class="liujo-avail-count">
+                      {%- if product.selected_or_first_available_variant.available -%}
+                        {%- if product.selected_or_first_available_variant.inventory_quantity > 0 -%}
+                          {{ product.selected_or_first_available_variant.inventory_quantity }} In Stock
+                        {%- else -%}
+                          In Stock
+                        {%- endif -%}
+                      {%- else -%}
+                        Out of Stock
+                      {%- endif -%}
+                    </span>
+                  </div>
                 {%- when 'text' -%}
                   <p
                     class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
@@ -133,9 +196,18 @@
                     {{- block.settings.text -}}
                   </p>
                 {%- when 'title' -%}
-                  <div class="liujo-pdp-sku" id="LiuJoPdpSku-{{ section.id }}">
-                    SKU: <span id="LiuJoPdpSkuVal-{{ section.id }}">{{ product.selected_or_first_available_variant.sku | default: product.selected_or_first_available_variant.barcode | default: product.id }}</span>
-                  </div>
+                  {%- assign has_sku_block = false -%}
+                  {%- for b in section.blocks -%}
+                    {%- if b.type == 'sku' -%}
+                      {%- assign has_sku_block = true -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- unless has_sku_block -%}
+                    <div class="liujo-pdp-sku" id="LiuJoPdpSku-{{ section.id }}">
+                      SKU: <span id="LiuJoPdpSkuVal-{{ section.id }}">{{ product.selected_or_first_available_variant.sku | default: product.selected_or_first_available_variant.barcode | default: product.id }}</span>
+                    </div>
+                  {%- endunless -%}
                   <div class="liujo-pdp-title-row" {{ block.shopify_attributes }}>
                     <h1 class="liujo-pdp-title">{{ product.title | escape }}</h1>
                     <button type="button" class="liujo-pdp-share-btn" data-liujo-share-btn aria-label="Share">
@@ -240,7 +312,9 @@
                     </details>
                   </div>
                 {%- when 'sku' -%}
-                  {% comment %} Rendered directly above title {% endcomment %}
+                  <div class="liujo-pdp-sku" id="LiuJoPdpSku-{{ section.id }}" {{ block.shopify_attributes }}>
+                    SKU: <span id="LiuJoPdpSkuVal-{{ section.id }}">{{ product.selected_or_first_available_variant.sku | default: product.selected_or_first_available_variant.barcode | default: product.id }}</span>
+                  </div>
                 {%- when 'custom_liquid' -%}
                   {{ block.settings.custom_liquid }}
                 {%- when 'collapsible_tab' -%}
@@ -842,6 +916,25 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "limit": 1
+    },
+    {
+      "type": "installments",
+      "name": "Installments Banner",
+      "limit": 1
+    },
+    {
+      "type": "availability",
+      "name": "Availability (Stock)",
+      "limit": 1
+    },
+    {
+      "type": "divider",
+      "name": "Divider Line"
     },
     {
       "type": "text",
