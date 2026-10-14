@@ -392,13 +392,27 @@
     color: #111111 !important;
   }
 
-  .mobile-facets__submenu {
+  .mobile-facets__main.submenu-open,
+  .js .mobile-facets .submenu-open {
+    visibility: visible !important;
+    overflow: visible !important;
+  }
+
+  .mobile-facets__submenu,
+  .js .mobile-facets__submenu,
+  .js details[open] > .mobile-facets__submenu,
+  .js details[open].menu-opening > .mobile-facets__submenu {
     position: static !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    right: auto !important;
     transform: none !important;
     width: 100% !important;
     height: auto !important;
     visibility: visible !important;
     opacity: 1 !important;
+    display: block !important;
     border: none !important;
     padding: 18px 24px 28px 24px !important;
     background: #ffffff !important;
@@ -452,9 +466,21 @@
     display: none !important;
   }
 
-  .mobile-facets__item input[type="checkbox"] {
-    appearance: none !important;
-    -webkit-appearance: none !important;
+  /* Native input hidden visually */
+  .liujo-facet-native-input,
+  input.mobile-facets__checkbox {
+    position: absolute !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* Custom Checkbox: Exact Liu Jo square parity */
+  .liujo-custom-checkbox {
     width: 18px !important;
     height: 18px !important;
     min-width: 18px !important;
@@ -462,20 +488,25 @@
     border: 1px solid #999999 !important;
     border-radius: 0 !important;
     background-color: #ffffff !important;
-    cursor: pointer !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
     position: relative !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
     margin: 0 !important;
     padding: 0 !important;
-    display: block !important;
-    flex-shrink: 0 !important;
   }
 
-  .mobile-facets__item input[type="checkbox"]:checked {
-    background-color: #ffffff !important;
+  .liujo-facet-native-input:checked + .liujo-custom-checkbox,
+  input.mobile-facets__checkbox:checked + .liujo-custom-checkbox,
+  .mobile-facets__label.active .liujo-custom-checkbox {
     border-color: #000000 !important;
+    background-color: #ffffff !important;
   }
 
-  .mobile-facets__item input[type="checkbox"]:checked::after {
+  .liujo-facet-native-input:checked + .liujo-custom-checkbox::after,
+  input.mobile-facets__checkbox:checked + .liujo-custom-checkbox::after,
+  .mobile-facets__label.active .liujo-custom-checkbox::after {
     content: '' !important;
     position: absolute !important;
     left: 5px !important;
@@ -485,6 +516,7 @@
     border: solid #000000 !important;
     border-width: 0 2px 2px 0 !important;
     transform: rotate(45deg) !important;
+    display: block !important;
   }
 
   .facet-checkbox__text {
@@ -626,17 +658,33 @@
     justify-content: space-between !important;
     gap: 24px !important;
     width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .facets__wrapper {
     display: flex !important;
     align-items: center !important;
-    flex-wrap: wrap !important;
-    gap: 24px !important;
+    flex-wrap: nowrap !important;
+    gap: 28px !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .facets__heading {
     display: none !important;
+  }
+
+  .facets__form > .product-count,
+  .facets-container > .product-count,
+  .facets .product-count {
+    display: none !important;
+  }
+
+  .liujo-desktop-toolbar-right {
+    margin-left: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
   }
 
   .facets__disclosure {
@@ -648,10 +696,17 @@
     padding: 6px 0 !important;
     cursor: pointer !important;
     font-family: var(--liujo-font-main) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    list-style: none !important;
+  }
+
+  .facets__summary::-webkit-details-marker {
+    display: none !important;
   }
 
   .facets__summary > div {
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     gap: 6px !important;
   }
@@ -664,22 +719,32 @@
     color: #111 !important;
   }
 
-  .facets__summary .icon-caret {
+  .facets__summary .liujo-desktop-caret {
+    display: inline-block !important;
     width: 8px !important;
-    height: 8px !important;
-    transition: transform 0.2s ease;
+    height: 5px !important;
+    margin-left: 6px !important;
+    vertical-align: middle !important;
+    transition: transform 0.2s ease !important;
+    color: #111 !important;
+    fill: currentColor !important;
+    flex-shrink: 0 !important;
   }
 
-  details[open] > .facets__summary .icon-caret {
-    transform: rotate(180deg);
+  details[open] > .facets__summary .liujo-desktop-caret {
+    transform: rotate(180deg) !important;
   }
 
-  /* Desktop Filter Popup Modal (Screenshot 2) */
+  .facets__summary .icon-caret {
+    display: none !important;
+  }
+
+  /* Desktop Filter Popup Modal (Exact Liu Jo Parity) */
   .facets__display {
     position: absolute !important;
     top: calc(100% + 10px) !important;
     left: 0 !important;
-    width: 580px !important;
+    width: 480px !important;
     max-width: calc(100vw - 48px) !important;
     background: #fff !important;
     border: 1px solid #e0e0e0 !important;
@@ -687,6 +752,7 @@
     padding: 24px 24px 20px 24px !important;
     z-index: 100 !important;
     border-radius: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .liujo-facet-popup-close {
@@ -714,9 +780,9 @@
 
   .facets__list {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 16px 14px !important;
-    padding: 10px 6px 20px 0 !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px 20px !important;
+    padding: 10px 6px 16px 0 !important;
     margin: 0 !important;
     max-height: 270px !important;
     overflow-y: auto !important;
@@ -756,9 +822,18 @@
     padding: 0 !important;
   }
 
+  .facet-checkbox .desktop-facets__checkbox,
+  .facet-checkbox .liujo-facet-native-input,
   .facet-checkbox input[type="checkbox"] {
-    appearance: none !important;
-    -webkit-appearance: none !important;
+    position: absolute !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+    margin: 0 !important;
+  }
+
+  .facet-checkbox .liujo-custom-checkbox {
     width: 18px !important;
     height: 18px !important;
     min-width: 18px !important;
@@ -772,15 +847,18 @@
     display: inline-block !important;
     vertical-align: middle !important;
     flex-shrink: 0 !important;
+    box-sizing: border-box !important;
   }
 
-  .facet-checkbox input[type="checkbox"]:checked {
+  .facet-checkbox input:checked + .liujo-custom-checkbox,
+  .facet-checkbox input:checked ~ .liujo-custom-checkbox {
     background-color: #ffffff !important;
     border-color: #000000 !important;
     border-width: 1.5px !important;
   }
 
-  .facet-checkbox input[type="checkbox"]:checked::after {
+  .facet-checkbox input:checked + .liujo-custom-checkbox::after,
+  .facet-checkbox input:checked ~ .liujo-custom-checkbox::after {
     content: '' !important;
     position: absolute !important;
     left: 5px !important;
@@ -788,8 +866,9 @@
     width: 5px !important;
     height: 10px !important;
     border: solid #000000 !important;
-    border-width: 0 2.5px 2.5px 0 !important;
+    border-width: 0 2px 2px 0 !important;
     transform: rotate(45deg) !important;
+    display: block !important;
   }
 
   .facet-checkbox svg {

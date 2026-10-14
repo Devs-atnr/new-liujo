@@ -1247,6 +1247,59 @@ function initLiuJoToolbar() {
       }
     });
   });
+
+  // Real-time badge counter increase & decrease on checkbox change
+  document.addEventListener('change', (e) => {
+    const input = e.target.closest('#FacetFiltersFormMobile input[type="checkbox"], #FacetFiltersForm input[type="checkbox"]');
+    if (!input) return;
+
+    // 1. Update the parent category details count badge immediately
+    const details = input.closest('details');
+    if (details) {
+      const checkedInCategory = details.querySelectorAll('input[type="checkbox"]:checked').length;
+      let badge = details.querySelector('.liujo-filter-count-badge');
+      if (!badge) {
+        const titleEl = details.querySelector('.mobile-facets__summary-title') || details.querySelector('summary > div > span') || details.querySelector('summary span');
+        if (titleEl) {
+          badge = document.createElement('span');
+          badge.className = 'liujo-filter-count-badge';
+          titleEl.appendChild(badge);
+        }
+      }
+      if (badge) {
+        badge.textContent = checkedInCategory;
+        badge.style.display = checkedInCategory > 0 ? 'inline-flex' : 'none';
+      }
+    }
+
+    // 2. Update the toolbar FILTER trigger badge immediately
+    const formMobile = document.getElementById('FacetFiltersFormMobile');
+    if (formMobile) {
+      const totalChecked = formMobile.querySelectorAll('input[type="checkbox"]:checked').length;
+      const filterBtn = document.getElementById('LiuJoMobileFilterTrigger');
+      if (filterBtn) {
+        let toolbarBadge = filterBtn.querySelector('.liujo-toolbar-filter-badge') || filterBtn.querySelector('.liujo-filter-count-badge');
+        if (!toolbarBadge) {
+          toolbarBadge = document.createElement('span');
+          toolbarBadge.className = 'liujo-filter-count-badge liujo-toolbar-filter-badge';
+          filterBtn.appendChild(toolbarBadge);
+        }
+        toolbarBadge.textContent = totalChecked;
+        toolbarBadge.style.display = totalChecked > 0 ? 'inline-flex' : 'none';
+      }
+    }
+  });
+
+  // Reset count badges on clear
+  document.addEventListener('click', (e) => {
+    const clearBtn = e.target.closest('.mobile-facets__clear, .mobile-facets__clear-wrapper');
+    if (clearBtn) {
+      document.querySelectorAll('.liujo-filter-count-badge').forEach(b => {
+        b.textContent = '0';
+        b.style.display = 'none';
+      });
+    }
+  });
 }
 
 // 12. DYNAMIC STICKY OFFSETS FOR HEADER & FILTER BAR
