@@ -1063,7 +1063,22 @@ function initLiuJoSearchDrawer() {
 
 // 11. LIU JO PLP & SEARCH TOOLBAR CONTROLLER (DESKTOP & MOBILE)
 function initLiuJoToolbar() {
+  function updateSortButtonState() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasSort = urlParams.has('sort_by') && urlParams.get('sort_by') !== '';
+    const mobTrigger = document.getElementById('LiuJoMobileSortTrigger');
+    if (mobTrigger && hasSort) {
+      mobTrigger.classList.add('is-selected');
+    }
+  }
+  updateSortButtonState();
+
   function applySort(sortVal) {
+    const mobTrigger = document.getElementById('LiuJoMobileSortTrigger');
+    if (mobTrigger) {
+      mobTrigger.classList.add('is-selected');
+    }
+
     let updated = false;
     document.querySelectorAll('select[name="sort_by"]').forEach(sel => {
       sel.value = sortVal;
@@ -1149,6 +1164,7 @@ function initLiuJoToolbar() {
       }
       const trigger = document.getElementById('LiuJoMobileSortTrigger');
       if (trigger) {
+        trigger.classList.add('is-selected');
         trigger.classList.remove('is-active');
         trigger.setAttribute('aria-expanded', 'false');
       }

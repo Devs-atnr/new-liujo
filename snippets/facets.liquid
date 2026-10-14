@@ -46,7 +46,7 @@
       {%- else -%}
         PRODUCTS
       {%- endif -%}
-      <span class="liujo-plp-count">({{ results.results_count | default: results.products_count | default: results.all_products_count }})</span>
+      <span class="liujo-plp-count" style="display: none;">({{ results.results_count | default: results.products_count | default: results.all_products_count }})</span>
     </h1>
     <button type="button" class="liujo-mobile-grid-toggle-btn" data-liujo-grid-toggle-mobile aria-label="Toggle Grid View">
       <svg class="icon-grid-2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -61,7 +61,7 @@
 
   <!-- Liu Jo Mobile 50/50 Split Toolbar: SORT BY | FILTER -->
   <div class="liujo-plp-split-toolbar large-up-hide medium-hide">
-    <button type="button" class="liujo-split-btn liujo-split-btn--sort" id="LiuJoMobileSortTrigger" aria-expanded="false">
+    <button type="button" class="liujo-split-btn liujo-split-btn--sort{% if results.sort_by != blank %} is-selected{% endif %}" id="LiuJoMobileSortTrigger" aria-expanded="false">
       <span>SORT BY</span>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M7 3v18m0-18l4 4M7 3L3 7m14 18V7m0 14l4-4m-4 4l-4-4"/>

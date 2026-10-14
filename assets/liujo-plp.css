@@ -136,25 +136,28 @@
     align-items: center !important;
     justify-content: space-between !important;
     width: 100% !important;
-    padding: 14px 16px 12px 16px !important;
+    height: 46px !important;
+    padding: 0 16px !important;
     background: #ffffff !important;
+    border-top: 1px solid #ebebeb !important;
+    border-bottom: 1px solid #111111 !important;
     box-sizing: border-box !important;
+    margin: 0 !important;
   }
 
   .liujo-plp-mobile-title {
     font-family: var(--liujo-font-main) !important;
-    font-size: 13px !important;
+    font-size: 13.5px !important;
     font-weight: 700 !important;
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.06em !important;
     text-transform: uppercase !important;
     color: #111111 !important;
     margin: 0 !important;
+    line-height: 1 !important;
   }
 
   .liujo-plp-count {
-    font-weight: 500 !important;
-    color: #666666 !important;
-    margin-left: 3px !important;
+    display: none !important;
   }
 
   .liujo-mobile-grid-toggle-btn {
@@ -193,20 +196,22 @@
   }
 
   .liujo-plp-split-toolbar {
-    display: flex;
-    width: 100%;
-    border-top: 1px solid #111;
-    border-bottom: 1px solid #111;
-    background: #fff;
-    position: -webkit-sticky;
-    position: sticky;
-    top: var(--liujo-header-h-mob, 60px);
-    z-index: 90;
+    display: flex !important;
+    width: 100% !important;
+    border-top: none !important;
+    border-bottom: 1px solid #111111 !important;
+    background: #ffffff !important;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: var(--liujo-header-h-mob, 56px) !important;
+    z-index: 90 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .liujo-split-btn {
     flex: 1 1 50% !important;
-    height: 40px !important;
+    height: 42px !important;
     background: #ffffff !important;
     color: #111111 !important;
     border: none !important;
@@ -220,8 +225,9 @@
     letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
     cursor: pointer !important;
-    transition: background 0.15s ease !important;
+    transition: background 0.15s ease, color 0.15s ease !important;
     padding: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .liujo-split-btn--sort {
@@ -230,6 +236,42 @@
 
   .liujo-split-btn svg {
     stroke: #111111 !important;
+    transition: stroke 0.15s ease !important;
+  }
+
+  /* SORT BY: Complete Solid Black when Active/Selected/Open (Image Parity) */
+  .liujo-split-btn--sort.is-selected,
+  .liujo-split-btn--sort.is-active,
+  .liujo-split-btn--sort[aria-expanded="true"] {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-color: #000000 !important;
+  }
+
+  .liujo-split-btn--sort.is-selected svg,
+  .liujo-split-btn--sort.is-active svg,
+  .liujo-split-btn--sort[aria-expanded="true"] svg {
+    stroke: #ffffff !important;
+  }
+
+  /* FILTER: Active/Open State */
+  .liujo-split-btn--filter.is-selected,
+  .liujo-split-btn--filter.is-active,
+  .liujo-split-btn--filter[aria-expanded="true"] {
+    background: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  .liujo-split-btn--filter.is-selected svg,
+  .liujo-split-btn--filter.is-active svg,
+  .liujo-split-btn--filter[aria-expanded="true"] svg {
+    stroke: #ffffff !important;
+  }
+
+  .liujo-split-btn--filter.is-selected .liujo-toolbar-filter-badge,
+  .liujo-split-btn--filter[aria-expanded="true"] .liujo-toolbar-filter-badge {
+    background: #ffffff !important;
+    color: #000000 !important;
   }
 
   /* Mobile Sort Dropdown */
@@ -1057,19 +1099,37 @@
   .collection.page-width,
   .template-search__results.page-width,
   .template-search__header.page-width {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  div[class*="section-"][class*="-padding"] {
+    padding-top: 0 !important;
+  }
+
+  .facets-wrapper {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .product-grid-container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 
   #product-grid.product-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    padding: 12px 12px 48px 12px !important;
-    gap: 16px 8px !important;
+    padding: 0 2px 48px 2px !important;
+    gap: 16px 4px !important;
+    margin: 0 !important;
   }
 
   #product-grid.product-grid.grid--mobile-compact {
     grid-template-columns: 1fr !important;
-    gap: 24px !important;
+    gap: 20px !important;
+    padding: 0 4px 48px 4px !important;
   }
 }
 
