@@ -1514,12 +1514,42 @@ body.has-search-open .liujo-megamenu {
   border-top: 1px solid #222;
 }
 
+/* Liu Jo Back to Top Bar (Image Parity) */
+.liujo-back-to-top {
+  width: 100%;
+  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
+  background-color: var(--liujo-white, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 0;
+}
+
+.liujo-back-to-top__btn {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--liujo-black, #000000);
+  cursor: pointer;
+  padding: 4px 16px;
+  transition: opacity 0.2s ease;
+}
+
+.liujo-back-to-top__btn:hover {
+  opacity: 0.6;
+}
+
 /* Pre-footer: Help & Newsletter */
 .liujo-prefooter {
   background-color: var(--liujo-white);
   color: var(--liujo-black);
   padding: 60px 0;
-  border-top: 1px solid var(--liujo-border-gray);
+  border-top: none;
 }
 
 .liujo-prefooter__container {
@@ -1573,6 +1603,16 @@ body.has-search-open .liujo-megamenu {
   font-size: 13px;
   color: var(--liujo-mid-gray);
   margin-bottom: 20px;
+}
+
+.liujo-nl-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--liujo-black, #000000);
+  margin-bottom: 8px;
 }
 
 .liujo-nl-form-row {

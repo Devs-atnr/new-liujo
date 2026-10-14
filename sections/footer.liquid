@@ -4,11 +4,20 @@
 {% endcomment %}
 
 <footer class="liujo-footer" data-section-id="{{ section.id }}" data-section-type="liujo-footer">
+  <!-- Liu Jo Back to Top Bar (Image Parity) -->
+  {%- if section.settings.show_back_to_top != false -%}
+    <div class="liujo-back-to-top">
+      <button type="button" class="liujo-back-to-top__btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" aria-label="Go back to top">
+        {{ section.settings.back_to_top_text | default: 'GO BACK TO' }}
+      </button>
+    </div>
+  {%- endif -%}
+
   <div class="liujo-prefooter">
     <div class="liujo-prefooter__container">
       <!-- Left: Customer Help Desk -->
       <div class="liujo-help-block">
-        <h3>{{ section.settings.help_title | default: 'May we help you?' }}</h3>
+        <h3>{{ section.settings.help_title | default: 'MAY WE HELP YOU?' | upcase }}</h3>
         <p>
           Phone
           <strong>
@@ -17,17 +26,18 @@
           {{ section.settings.help_hours | default: 'Monday to Friday, 9.00 to 18.00' }}
         </p>
         <a href="{{ section.settings.help_link | default: '/pages/contact' }}" class="btn-link-editorial">
-          Email us
+          EMAIL US
         </a>
       </div>
 
       <!-- Right: Newsletter Signup -->
       <div class="liujo-newsletter-block">
-        <h3>{{ section.settings.newsletter_title | default: 'Sign up for updates' }}</h3>
+        <h3>{{ section.settings.newsletter_title | default: 'SIGN UP FOR UPDATES' | upcase }}</h3>
         <p>Subscribe to our newsletter.</p>
 
         {% form 'customer', class: 'liujo-newsletter-form' %}
           <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="liujo-nl-label">EMAIL</label>
           <div class="liujo-nl-form-row">
             <input type="email"
                    name="contact[email]"
@@ -35,25 +45,27 @@
                    value="{{ form.email }}"
                    placeholder="Email address"
                    required>
-            <button type="submit" class="liujo-nl-submit">
+            <button type="submit" class="liujo-nl-submit" style="display: none;">
               Subscribe
             </button>
           </div>
 
-          <div class="liujo-nl-gender-pills">
-            <label class="liujo-gender-label">
-              <input type="checkbox" name="customer[note][woman]" value="true" checked>
-              <span>Woman</span>
-            </label>
-            <label class="liujo-gender-label">
-              <input type="checkbox" name="customer[note][man]" value="true">
-              <span>Man</span>
-            </label>
-            <label class="liujo-gender-label">
-              <input type="checkbox" name="customer[note][girl]" value="true">
-              <span>Girl</span>
-            </label>
-          </div>
+          {%- if section.settings.show_gender_pills -%}
+            <div class="liujo-nl-gender-pills">
+              <label class="liujo-gender-label">
+                <input type="checkbox" name="customer[note][woman]" value="true" checked>
+                <span>Woman</span>
+              </label>
+              <label class="liujo-gender-label">
+                <input type="checkbox" name="customer[note][man]" value="true">
+                <span>Man</span>
+              </label>
+              <label class="liujo-gender-label">
+                <input type="checkbox" name="customer[note][girl]" value="true">
+                <span>Girl</span>
+              </label>
+            </div>
+          {%- endif -%}
 
           {%- if form.posted_successfully? -%}
             <p class="liujo-nl-success" style="color: #2e7d32; font-size: 13px; margin-bottom: 8px;">
@@ -191,6 +203,22 @@
   "settings": [
     {
       "type": "header",
+      "content": "Back To Top"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back_to_top",
+      "default": true,
+      "label": "Show 'GO BACK TO' bar"
+    },
+    {
+      "type": "text",
+      "id": "back_to_top_text",
+      "default": "GO BACK TO",
+      "label": "Back to top button text"
+    },
+    {
+      "type": "header",
       "content": "Customer Help"
     },
     {
@@ -225,6 +253,12 @@
       "id": "newsletter_title",
       "label": "Newsletter Title",
       "default": "Sign up for updates"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gender_pills",
+      "default": false,
+      "label": "Show gender checkboxes"
     },
     {
       "type": "header",
