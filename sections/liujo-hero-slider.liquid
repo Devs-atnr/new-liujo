@@ -54,48 +54,26 @@
               font-size: {{ block.settings.heading_size_mobile | default: 28 }}px;
             }
           }
-          {%- if block.settings.button_style == 'underline' -%}
-            .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn {
-              font-size: {{ block.settings.button_font_size | default: 11 }}px;
-              color: {{ block.settings.button_text_color | default: '#ffffff' }} !important;
-              background-color: transparent !important;
-              border: none !important;
-              border-bottom: 1px solid {{ block.settings.button_border_color | default: '#ffffff' }} !important;
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              padding: 4px 2px !important;
-              font-weight: 600;
-              letter-spacing: 0.22em;
-              text-transform: uppercase;
-              text-decoration: none;
-              transition: opacity 0.3s ease;
-            }
-            .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn:hover {
-              opacity: 0.7;
-            }
-          {%- else -%}
-            .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn {
-              font-size: {{ block.settings.button_font_size | default: 11 }}px;
-              color: {{ block.settings.button_text_color | default: '#ffffff' }} !important;
-              background-color: {{ block.settings.button_bg_color | default: 'transparent' }} !important;
-              border: 1px solid {{ block.settings.button_border_color | default: '#ffffff' }} !important;
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              padding: 14px 38px;
-              font-weight: 600;
-              letter-spacing: 0.2em;
-              text-transform: uppercase;
-              text-decoration: none;
-              transition: all 0.3s ease;
-            }
-            .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn:hover {
-              color: {{ block.settings.button_hover_text_color | default: '#000000' }} !important;
-              background-color: {{ block.settings.button_hover_bg_color | default: '#ffffff' }} !important;
-              border-color: {{ block.settings.button_hover_bg_color | default: '#ffffff' }} !important;
-            }
-          {%- endif -%}
+          .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn {
+            font-size: {{ block.settings.button_font_size | default: 11 }}px;
+            color: {{ block.settings.button_text_color | default: '#ffffff' }} !important;
+            background-color: {{ block.settings.button_bg_color | default: 'transparent' }} !important;
+            border: 1px solid {{ block.settings.button_border_color | default: '#ffffff' }} !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 38px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+          }
+          .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn:hover {
+            color: {{ block.settings.button_hover_text_color | default: '#000000' }} !important;
+            background-color: {{ block.settings.button_hover_bg_color | default: '#ffffff' }} !important;
+            border-color: {{ block.settings.button_hover_bg_color | default: '#ffffff' }} !important;
+          }
         </style>
 
         <picture>
@@ -104,7 +82,7 @@
           {%- elsif block.settings.demo_image_mobile != blank -%}
             <source media="(max-width: 767px)" srcset="{{ block.settings.demo_image_mobile }}">
           {%- elsif block.settings.image_desktop == blank -%}
-            <source media="(max-width: 767px)" srcset="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw7da55953/the-gigi-hadid-edit/drop1/HP/Drop-1-mob.jpg">
+            <source media="(max-width: 767px)" srcset="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwc9a97ec1/the-gigi-hadid-edit/drop1/HP/Hero-2-mob.jpg">
           {%- endif -%}
 
           {%- if block.settings.image_desktop != blank -%}
@@ -112,8 +90,8 @@
           {%- elsif block.settings.demo_image_desktop != blank -%}
             <img src="{{ block.settings.demo_image_desktop }}" alt="{{ block.settings.heading | default: 'Liu Jo Looks' | escape }}" class="liujo-hero-slide__image" loading="lazy">
           {%- else -%}
-            <!-- Official Liu Jo High Resolution Editorial Lookbook Image (Image 1 & 2 Parity) -->
-            <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw15542571/the-gigi-hadid-edit/drop1/HP/Drop-1-desk.jpg" alt="Liu Jo Looks" class="liujo-hero-slide__image" loading="lazy">
+            <!-- Official Liu Jo High Resolution Editorial Image -->
+            <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg" alt="Liu Jo Looks" class="liujo-hero-slide__image" loading="lazy">
           {%- endif -%}
         </picture>
 
@@ -338,16 +316,6 @@
           "id": "button_label",
           "label": "Button Name / Label",
           "default": "Discover Collection"
-        },
-        {
-          "type": "select",
-          "id": "button_style",
-          "label": "Button Style",
-          "options": [
-            { "value": "underline", "label": "Minimal Underline (Reference Image Parity)" },
-            { "value": "outline", "label": "Outline Border" }
-          ],
-          "default": "underline"
         },
         {
           "type": "url",
