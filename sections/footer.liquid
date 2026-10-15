@@ -37,48 +37,75 @@
         <h3>{{ section.settings.newsletter_title | default: 'SIGN UP FOR UPDATES' | upcase }}</h3>
         <p>Subscribe to our newsletter.</p>
 
-        {% form 'customer', class: 'liujo-newsletter-form' %}
+        {% form 'customer', class: 'liujo-newsletter-form', id: 'liujo-newsletter-form' %}
           <input type="hidden" name="contact[tags]" value="newsletter">
-          <label class="liujo-nl-label">EMAIL</label>
+          <label class="liujo-nl-label" for="nl-email-input">EMAIL</label>
           <div class="liujo-nl-form-row">
             <input type="email"
+                   id="nl-email-input"
                    name="contact[email]"
-                   class="liujo-nl-input"
+                   class="liujo-nl-input liujo-nl-email-input"
                    value="{{ form.email }}"
                    placeholder="Email address"
+                   autocomplete="email"
                    required>
-            <button type="submit" class="liujo-nl-submit" style="display: none;" aria-label="Subscribe">
-              Subscribe
-            </button>
           </div>
-
-          {%- if section.settings.show_gender_pills -%}
-            <div class="liujo-nl-gender-pills">
-              <label class="liujo-gender-label">
-                <input type="checkbox" name="customer[note][woman]" value="true" checked>
-                <span>Woman</span>
-              </label>
-              <label class="liujo-gender-label">
-                <input type="checkbox" name="customer[note][man]" value="true">
-                <span>Man</span>
-              </label>
-              <label class="liujo-gender-label">
-                <input type="checkbox" name="customer[note][girl]" value="true">
-                <span>Girl</span>
-              </label>
-            </div>
-          {%- endif -%}
-
-          {%- if form.posted_successfully? -%}
-            <p class="liujo-nl-success" style="color: #2e7d32; font-size: 13px; margin-bottom: 8px;">
-              Thank you for subscribing to Liu Jo updates!
-            </p>
-          {%- endif -%}
 
           <div class="liujo-nl-privacy">
             By entering your e-mail address you declare that you wish to subscribe to the Liu Jo newsletter. For further information,
             <a href="/pages/privacy-policy">please see our Privacy Policy</a>.
           </div>
+
+          <!-- Expandable Details: First Name, Last Name, Gender & Confirm Registration (Image 3 Parity) -->
+          <div class="liujo-nl-details" data-liujo-nl-details>
+            <div class="liujo-nl-names-row">
+              <div class="liujo-nl-field">
+                <label class="liujo-nl-label" for="nl-first-name">FIRST NAME</label>
+                <input type="text"
+                       id="nl-first-name"
+                       name="contact[first_name]"
+                       class="liujo-nl-input"
+                       autocomplete="given-name">
+              </div>
+              <div class="liujo-nl-field">
+                <label class="liujo-nl-label" for="nl-last-name">LAST NAME</label>
+                <input type="text"
+                       id="nl-last-name"
+                       name="contact[last_name]"
+                       class="liujo-nl-input"
+                       autocomplete="family-name">
+              </div>
+            </div>
+
+            <div class="liujo-nl-actions-row">
+              <div class="liujo-nl-gender-pills">
+                <label class="liujo-gender-label">
+                  <input type="checkbox" name="customer[note][woman]" value="true" checked>
+                  <span>Woman</span>
+                </label>
+                <label class="liujo-gender-label">
+                  <input type="checkbox" name="customer[note][man]" value="true">
+                  <span>Man</span>
+                </label>
+                <label class="liujo-gender-label">
+                  <input type="checkbox" name="customer[note][girl]" value="true">
+                  <span>Girl</span>
+                </label>
+              </div>
+
+              <div class="liujo-nl-submit-wrap">
+                <button type="submit" class="liujo-nl-submit-btn">
+                  CONFIRM REGISTRATION
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {%- if form.posted_successfully? -%}
+            <p class="liujo-nl-success" style="color: #2e7d32; font-size: 13px; margin-top: 14px;">
+              Thank you for subscribing to Liu Jo updates!
+            </p>
+          {%- endif -%}
         {% endform %}
       </div>
     </div>
@@ -193,6 +220,37 @@
       </div>
     </div>
   </div>
+
+  <script>
+    (function() {
+      function setupNlExpand() {
+        var form = document.querySelector('.liujo-newsletter-form');
+        if (!form) return;
+        var emailInput = form.querySelector('.liujo-nl-email-input') || form.querySelector('input[type="email"]');
+        if (!emailInput) return;
+
+        function expand() {
+          if (!form.classList.contains('is-expanded')) {
+            form.classList.add('is-expanded');
+          }
+        }
+
+        emailInput.addEventListener('focus', expand);
+        emailInput.addEventListener('click', expand);
+        emailInput.addEventListener('input', expand);
+
+        if (emailInput.value && emailInput.value.trim().length > 0) {
+          expand();
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupNlExpand);
+      } else {
+        setupNlExpand();
+      }
+    })();
+  </script>
 </footer>
 
 {% schema %}

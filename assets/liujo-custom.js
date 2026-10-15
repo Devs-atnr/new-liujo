@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLiuJoCarousels();
   initLiuJoMobileDrawer();
   initLiuJoFooterAccordions();
+  initLiuJoNewsletterExpand();
   initLiuJoWishlist();
   initLiuJoAnnouncementBar();
   initLiuJoSizeGuideModal();
@@ -224,6 +225,29 @@ function initLiuJoFooterAccordions() {
         links.classList.add('is-open');
       }
     });
+  });
+}
+
+// 4b. NEWSLETTER DETAILS EXPAND (IMAGE 3 PARITY)
+function initLiuJoNewsletterExpand() {
+  const forms = document.querySelectorAll('.liujo-newsletter-form');
+  forms.forEach(form => {
+    const emailInput = form.querySelector('.liujo-nl-email-input') || form.querySelector('input[type="email"]');
+    if (!emailInput) return;
+
+    function openForm() {
+      if (!form.classList.contains('is-expanded')) {
+        form.classList.add('is-expanded');
+      }
+    }
+
+    emailInput.addEventListener('focus', openForm);
+    emailInput.addEventListener('click', openForm);
+    emailInput.addEventListener('input', openForm);
+
+    if (emailInput.value && emailInput.value.trim().length > 0) {
+      openForm();
+    }
   });
 }
 
