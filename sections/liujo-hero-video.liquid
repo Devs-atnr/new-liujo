@@ -76,6 +76,8 @@
   </style>
 
   <div class="liujo-hero-video__wrapper">
+    <!-- Video Area (contains video + controls, positioned container on mobile) -->
+    <div class="liujo-hero-video__video-area">
     <!-- Desktop Video -->
     {%- assign has_mobile_video = false -%}
     {%- if section.settings.video_url_mobile != blank -%}
@@ -119,6 +121,7 @@
         </button>
       </div>
     {%- endif -%}
+    </div><!-- /.liujo-hero-video__video-area -->
 
     <!-- Color Overlay Layer -->
     <div class="liujo-hero-video__overlay"></div>

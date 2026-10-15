@@ -977,10 +977,21 @@ body.has-search-open .liujo-megamenu {
     display: flex;
     flex-direction: column;
   }
-  .liujo-hero-video__media {
-    position: relative !important;
+  .liujo-hero-video__video-area {
+    position: relative;
+    width: 100%;
     height: 65vh;
     min-height: 380px;
+    overflow: hidden;
+  }
+  .liujo-hero-video__media {
+    position: relative !important;
+    height: 100%;
+    min-height: 0;
+  }
+  .liujo-hero-video__controls {
+    bottom: 16px;
+    right: 16px;
   }
   .liujo-hero-video__overlay {
     display: none;
@@ -1002,19 +1013,19 @@ body.has-search-open .liujo-megamenu {
   }
   .liujo-hero-video__title {
     color: var(--liujo-black) !important;
-    font-size: 28px !important;
-    margin-bottom: 14px;
+    font-size: 22px !important;
+    margin-bottom: 10px;
     letter-spacing: 0.06em;
   }
   .liujo-hero-video__btn {
     color: var(--liujo-black) !important;
-    border-color: var(--liujo-black) !important;
+    border: none !important;
     background-color: transparent !important;
-    padding: 12px 32px !important;
-  }
-  .liujo-hero-video__btn:hover {
-    color: var(--liujo-white) !important;
-    background-color: var(--liujo-black) !important;
+    padding: 0 !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-size: 11px !important;
+    letter-spacing: 0.15em;
   }
 }
 
@@ -1154,10 +1165,10 @@ body.has-search-open .liujo-megamenu {
 
 @media (max-width: 767px) {
   .liujo-carousel-track {
-    gap: 12px;
+    gap: 0;
   }
   .liujo-product-card-wrap {
-    flex: 0 0 calc(50% - 10px);
+    flex: 0 0 50%;
     min-width: 150px;
   }
 }
