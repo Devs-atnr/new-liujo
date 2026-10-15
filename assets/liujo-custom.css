@@ -47,9 +47,7 @@ h1, h2, h3, h4, h5, h6,
 input, textarea, select, button,
 .button, .badge, .price, .caption,
 .liujo-header, .liujo-megamenu, .liujo-mob-drawer,
-.liujo-search-drawer, .product-card, .price,
-.liujo-footer, .liujo-prefooter, .liujo-help-block,
-.liujo-newsletter-block, .liujo-tabs-section {
+.liujo-search-drawer, .product-card, .price {
   font-family: "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   letter-spacing: 0.04em;
   color: var(--liujo-black);

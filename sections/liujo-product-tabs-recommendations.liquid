@@ -115,22 +115,7 @@
     width: 100%;
     cursor: grab;
     user-select: none;
-    -webkit-user-select: none;
     gap: 0 !important;
-  }
-
-  .liujo-tabs-section,
-  .liujo-tabs-section * {
-    font-family: "Red Hat Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-  }
-
-  .liujo-tabs-track,
-  .liujo-tabs-track *,
-  .liujo-tab-card,
-  .liujo-tab-card a,
-  .liujo-tab-card img {
-    -webkit-user-drag: none !important;
-    user-drag: none !important;
   }
 
   .liujo-tabs-track::-webkit-scrollbar {
@@ -833,10 +818,6 @@
 
         grid.innerHTML = cards.join('');
 
-        grid.querySelectorAll('img, a').forEach(function(el) {
-          el.setAttribute('draggable', 'false');
-        });
-
         if (window.syncLiuJoWishlistButtons) {
           window.syncLiuJoWishlistButtons();
         }
@@ -852,10 +833,7 @@
       if (!track || track._hasLiuJoCarousel) return;
       track._hasLiuJoCarousel = true;
 
-      track.ondragstart = function(e) { e.preventDefault(); return false; };
-      track.querySelectorAll('img, a').forEach(function(el) {
-        el.setAttribute('draggable', 'false');
-      });
+      track.ondragstart = function(e) { e.preventDefault(); };
 
       // Mouse Wheel Horizontal Scroll
       var wheelTimer = null;
@@ -913,7 +891,7 @@
         track.style.scrollSnapType = 'x proximity';
         setTimeout(function() {
           hasDragged = false;
-        }, 150);
+        }, 80);
       });
 
       // Touch Events for Mobile Swiping
@@ -936,15 +914,15 @@
       track.addEventListener('touchend', function() {
         setTimeout(function() {
           touchDragged = false;
-        }, 150);
+        }, 80);
       });
 
-      // Card Click Navigation: Intercept in capture phase so link navigation is suppressed during drag
+      // Card Click Navigation
       track.addEventListener('click', function(e) {
         if (hasDragged || touchDragged) {
           e.preventDefault();
           e.stopPropagation();
-          return false;
+          return;
         }
         if (e.target.closest('[data-liujo-wishlist]')) return;
 
@@ -957,7 +935,7 @@
             window.location.href = link.href;
           }
         }
-      }, true);
+      });
     };
 
     // 5. Initialize All Tab Sections

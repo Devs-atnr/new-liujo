@@ -2055,72 +2055,61 @@ window.closeLiuJoCartModal = function() {
   document.body.style.overflow = '';
 };
 
-// 15. LIU JO MOBILE GALLERY CONTINUOUS SCROLLBAR & SYNC (Image 1 & 2 Parity)
+// 15. LIU JO MOBILE GALLERY INDICATORS & PEEK SCROLL SYNC
 function initLiuJoMobileGalleryIndicators() {
   const galleries = document.querySelectorAll('media-gallery');
   galleries.forEach(gallery => {
     const slider = gallery.querySelector('.product__media-list.slider--mobile');
-    const scrollbarThumb = gallery.querySelector('[data-media-scrollbar-thumb]');
-    const scrollbarTrack = gallery.querySelector('[data-media-scrollbar-track]');
     const dashes = gallery.querySelectorAll('.liujo-indicator-dash');
-
-    if (!slider) return;
+    if (!slider || dashes.length === 0) return;
 
     const slides = slider.querySelectorAll('.product__media-item.slider__slide');
-    if (slides.length <= 1) return;
+    if (slides.length === 0) return;
 
     let ticking = false;
 
-    function updateScrollProgress() {
+    function updateActiveDash() {
       const scrollPos = slider.scrollLeft;
-      const maxScroll = slider.scrollWidth - slider.clientWidth;
+      const firstSlide = slides[0];
+      const slideWidth = firstSlide ? firstSlide.getBoundingClientRect().width : (window.innerWidth * 0.86);
 
-      if (scrollbarThumb && scrollbarTrack && maxScroll > 0) {
-        const trackWidth = scrollbarTrack.offsetWidth;
-        const thumbWidth = scrollbarThumb.offsetWidth;
-        const maxTranslate = Math.max(0, trackWidth - thumbWidth);
-        const ratio = Math.max(0, Math.min(1, scrollPos / maxScroll));
-        scrollbarThumb.style.transform = `translateX(${ratio * maxTranslate}px)`;
-      }
+      // Determine active slide based on scroll offset
+      let activeIndex = Math.round(scrollPos / (slideWidth + 4));
+      if (activeIndex < 0) activeIndex = 0;
+      if (activeIndex >= dashes.length) activeIndex = dashes.length - 1;
 
-      if (dashes.length > 0) {
-        const firstSlide = slides[0];
-        const slideWidth = firstSlide ? firstSlide.getBoundingClientRect().width : (window.innerWidth * 0.86);
-        let activeIndex = Math.round(scrollPos / (slideWidth + 4));
-        if (activeIndex < 0) activeIndex = 0;
-        if (activeIndex >= dashes.length) activeIndex = dashes.length - 1;
-
-        dashes.forEach((dash, idx) => {
-          if (idx === activeIndex) {
-            dash.classList.add('is-active');
-          } else {
-            dash.classList.remove('is-active');
-          }
-        });
-      }
+      dashes.forEach((dash, idx) => {
+        if (idx === activeIndex) {
+          dash.classList.add('is-active');
+        } else {
+          dash.classList.remove('is-active');
+        }
+      });
 
       ticking = false;
     }
 
     slider.addEventListener('scroll', () => {
       if (!ticking) {
-        requestAnimationFrame(updateScrollProgress);
+        requestAnimationFrame(updateActiveDash);
         ticking = true;
       }
     }, { passive: true });
 
-    if (scrollbarTrack) {
-      scrollbarTrack.addEventListener('click', (e) => {
-        const rect = scrollbarTrack.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-        const maxScroll = slider.scrollWidth - slider.clientWidth;
-        slider.scrollTo({ left: ratio * maxScroll, behavior: 'smooth' });
+    // Allow clicking dashes to navigate directly to slide
+    dashes.forEach((dash, idx) => {
+      dash.style.cursor = 'pointer';
+      dash.style.pointerEvents = 'auto';
+      dash.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (slides[idx]) {
+          slides[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        }
       });
-    }
+    });
 
-    updateScrollProgress();
-    window.addEventListener('resize', updateScrollProgress, { passive: true });
+    // Initial sync
+    updateActiveDash();
   });
 }
 
