@@ -1518,15 +1518,14 @@ body.has-search-open .liujo-megamenu {
 .liujo-back-to-top {
   width: 100%;
   background-color: var(--liujo-white, #ffffff);
-  border-top: 1px solid #ebebeb;
-  border-bottom: none;
 }
 
 .liujo-back-to-top__container {
   max-width: var(--liujo-container-max, 1360px);
   margin: 0 auto;
-  padding: 18px 32px;
-  border: none;
+  padding: 16px 32px;
+  border-top: 1px solid #e9e9e9;
+  border-bottom: 1px solid #e9e9e9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1558,7 +1557,7 @@ body.has-search-open .liujo-megamenu {
   color: var(--liujo-black, #000000);
   padding: 48px 0 60px 0;
   border-top: none;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid #e9e9e9;
 }
 
 .liujo-prefooter__container {
@@ -1577,10 +1576,10 @@ body.has-search-open .liujo-megamenu {
   content: '';
   position: absolute;
   left: 50%;
-  top: 8%;
-  bottom: 8%;
+  top: 6%;
+  bottom: 6%;
   width: 1px;
-  background-color: #ebebeb;
+  background-color: #e9e9e9;
   transform: translateX(-50%);
   pointer-events: none;
 }
