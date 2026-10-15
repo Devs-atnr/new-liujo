@@ -1518,14 +1518,16 @@ body.has-search-open .liujo-megamenu {
 .liujo-back-to-top {
   width: 100%;
   background-color: var(--liujo-white, #ffffff);
+  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
 }
 
 .liujo-back-to-top__container {
   max-width: var(--liujo-container-max, 1360px);
   margin: 0 auto;
   padding: 16px 32px;
-  border-top: 1px solid #ebebeb;
-  border-bottom: 1px solid #ebebeb;
+  border-top: none;
+  border-bottom: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1552,10 +1554,12 @@ body.has-search-open .liujo-megamenu {
 
 /* Pre-footer: Help & Newsletter (Image 3 Parity) */
 .liujo-prefooter {
+  width: 100%;
   background-color: var(--liujo-white, #ffffff);
   color: var(--liujo-black, #000000);
-  padding: 48px 0 56px 0;
+  padding: 0;
   border-top: none;
+  border-bottom: 1px solid #ebebeb;
 }
 
 .liujo-prefooter__container {
@@ -1569,30 +1573,29 @@ body.has-search-open .liujo-megamenu {
 }
 
 .liujo-help-block {
-  padding-right: 48px;
+  padding: 48px 48px 56px 0;
   box-sizing: border-box;
 }
 
 .liujo-newsletter-block {
-  border-left: 1px solid #ebebeb; /* Center dividing border */
-  padding-left: 48px;
+  border-left: 1px solid #ebebeb; /* Seamless T-junction connecting from back-to-top border */
+  padding: 48px 0 56px 48px;
   box-sizing: border-box;
 }
 
 @media (max-width: 991px) {
   .liujo-prefooter__container {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 0;
     padding: 0 20px;
   }
   .liujo-help-block {
-    padding-right: 0;
+    padding: 32px 0 24px 0;
   }
   .liujo-newsletter-block {
     border-left: none;
     border-top: 1px solid #ebebeb;
-    padding-left: 0;
-    padding-top: 32px;
+    padding: 32px 0 40px 0;
   }
   .liujo-back-to-top__container {
     padding: 14px 20px;
