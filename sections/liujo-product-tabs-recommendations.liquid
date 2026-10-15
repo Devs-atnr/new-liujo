@@ -1,13 +1,43 @@
 {% comment %}
   LIU JO PRODUCT TABS RECOMMENDATIONS SECTION
-  - Container-constrained layout matching Image 2 with left/right space and margin below tabs.
+  - Container-constrained layout matching Image 3 with left/right space and margin below tabs.
   - Dual tabs: "YOU MIGHT LIKE" and "RECENTLY VIEWED".
-  - "RECENTLY VIEWED" tab is hidden dynamically when no previous products have been viewed, and appears in full working condition once viewed.
+  - Tab navigation with continuous baseline and solid black active indicator (Image 3 Parity).
   - Seamless 0px gap between cards (4 full cards visible across desktop screen = 25% each inside container).
-  - Every card pulls real store products (or fallback) so clicking navigates to that exact product's page.
-  - Mouse wheel scrolls horizontally smoothly over the track without visible scrollbars.
-  - Clean typography matching Image 2.
+  - Every card pulls real store products so clicking navigates to that exact product's page.
+  - Recently Viewed is always full (padded with recommendations) so cards never sit isolated with empty space, and swiping always works smoothly.
+  - Mouse wheel scrolls horizontally without visible scrollbars; mouse drag and touch swipe work seamlessly.
 {% endcomment %}
+
+{%- capture fallback_rec_json -%}
+[
+  {%- assign rec_count = 0 -%}
+  {%- assign src_products = recommendations.products -%}
+  {%- if src_products == blank or src_products.size == 0 -%}
+    {%- assign src_products = collections[section.settings.collection].products -%}
+  {%- endif -%}
+  {%- if src_products == blank or src_products.size == 0 -%}
+    {%- assign src_products = collections.all.products -%}
+  {%- endif -%}
+  {%- for prod in src_products -%}
+    {%- if prod.id != product.id -%}
+      {%- if rec_count > 0 -%},{%- endif -%}
+      {
+        "id": {{ prod.id | json }},
+        "title": {{ prod.title | json }},
+        "url": {{ prod.url | json }},
+        "image": {{ prod.featured_media | image_url: width: 600 | json }},
+        "secondary_image": {% if prod.media.size > 1 %}{{ prod.media[1] | image_url: width: 600 | json }}{% else %}null{% endif %},
+        "price": {{ prod.price | money | json }},
+        "compare_at_price": {% if prod.compare_at_price > prod.price %}{{ prod.compare_at_price | money | json }}{% else %}null{% endif %},
+        "badge": {% if prod.tags contains 'THE GIGI HADID EDIT' or prod.tags contains 'gigi-hadid' %}"THE GIGI HADID EDIT"{% else %}null{% endif %}
+      }
+      {%- assign rec_count = rec_count | plus: 1 -%}
+      {%- if rec_count >= 12 -%}{%- break -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+]
+{%- endcapture -%}
 
 <style>
   .liujo-tabs-section-{{ section.id }} {
@@ -29,11 +59,12 @@
     width: 100%;
   }
 
+  /* Tabs Navigation Header (Image 3 Parity) */
   .liujo-tabs-nav-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: none !important;
+    border-bottom: 1px solid #ebebeb;
     margin-bottom: 36px;
     position: relative;
     width: 100%;
@@ -42,16 +73,15 @@
   .liujo-tabs-nav {
     display: inline-flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    gap: 36px;
     position: relative;
-    gap: 0;
   }
 
   .liujo-tab-button {
     background: transparent;
     border: none;
-    border-bottom: 1px solid #dcdcdc;
-    padding: 12px 28px 14px 28px;
+    padding: 12px 10px 14px 10px;
     font-family: inherit;
     font-size: 13px;
     font-weight: 500;
@@ -60,23 +90,24 @@
     color: #767676;
     cursor: pointer;
     position: relative;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: color 0.2s ease;
     outline: none;
-    margin: 0;
   }
 
-  .liujo-tab-button:hover {
-    color: #000000;
-  }
-
+  .liujo-tab-button:hover,
   .liujo-tab-button.is-active {
     color: #000000;
     font-weight: 600;
-    border-bottom: 2.5px solid #000000;
   }
 
   .liujo-tab-button.is-active::after {
-    display: none !important;
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
   }
 
   .liujo-tab-panel {
@@ -316,19 +347,19 @@
       margin-bottom: 24px;
     }
     .liujo-tabs-nav {
-      gap: 0;
+      gap: 24px;
     }
     .liujo-tab-button {
       font-size: 11px;
       letter-spacing: 0.08em;
-      padding: 10px 14px 12px 14px;
+      padding: 10px 4px 12px 4px;
     }
   }
 </style>
 
 <div class="liujo-tabs-section liujo-tabs-section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="liujo-tabs-container">
-    <!-- Tabs Navigation Header (Image 2 Parity) -->
+    <!-- Tabs Navigation Header (Image 3 Parity) -->
     <div class="liujo-tabs-nav-wrapper">
       <div class="liujo-tabs-nav" role="tablist">
         <button
@@ -508,11 +539,6 @@
             {%- assign fallback_url = '/collections/all' -%}
             <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
               <div class="liujo-tab-card-media">
-                {%- if section.settings.show_wishlist != false and settings.show_wishlist != false -%}
-                  <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="fallback-flannel" aria-label="Add to Wishlist">
-                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                  </button>
-                {%- endif -%}
                 <a href="{{ fallback_url }}" class="liujo-tab-card-link">
                   <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4143de39/images/E-WF6309T743A02069-3-N.jpeg?sw=594&sh=826" alt="Flare trousers in flannel" class="img-primary has-secondary" loading="lazy">
                   <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw1fd02bed/images/E-WF6309T743A02069-4-N.jpeg?sw=594&sh=826" alt="Flare trousers in flannel" class="img-secondary" loading="lazy">
@@ -520,20 +546,12 @@
               </div>
               <div class="liujo-tab-info">
                 <a href="{{ fallback_url }}" class="liujo-tab-title">Flare trousers in flannel</a>
-                {%- if section.settings.show_price -%}
-                  <div class="liujo-tab-price"><span>€ 159.00</span></div>
-                {%- endif -%}
               </div>
             </li>
 
             <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
               <div class="liujo-tab-card-media">
                 <span class="liujo-tab-badge">THE GIGI HADID EDIT</span>
-                {%- if section.settings.show_wishlist != false and settings.show_wishlist != false -%}
-                  <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="fallback-gigi-flare" aria-label="Add to Wishlist">
-                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                  </button>
-                {%- endif -%}
                 <a href="{{ fallback_url }}" class="liujo-tab-card-link">
                   <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw38804d25/images/E-ZB7305D041679212-3-N.jpeg?sw=594&sh=826" alt="Flare jeans with belt jewel" class="img-primary has-secondary" loading="lazy">
                   <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw7e7b58ae/images/E-ZB7305D041679212-4-N.jpeg?sw=594&sh=826" alt="Flare jeans with belt jewel" class="img-secondary" loading="lazy">
@@ -541,19 +559,11 @@
               </div>
               <div class="liujo-tab-info">
                 <a href="{{ fallback_url }}" class="liujo-tab-title">Flare jeans with belt jewel</a>
-                {%- if section.settings.show_price -%}
-                  <div class="liujo-tab-price"><span>€ 239.00</span></div>
-                {%- endif -%}
               </div>
             </li>
 
             <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
               <div class="liujo-tab-card-media">
-                {%- if section.settings.show_wishlist != false and settings.show_wishlist != false -%}
-                  <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="fallback-tshirt" aria-label="Add to Wishlist">
-                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                  </button>
-                {%- endif -%}
                 <a href="{{ fallback_url }}" class="liujo-tab-card-link">
                   <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-4-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-primary has-secondary" loading="lazy">
                   <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-3-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-secondary" loading="lazy">
@@ -561,19 +571,11 @@
               </div>
               <div class="liujo-tab-info">
                 <a href="{{ fallback_url }}" class="liujo-tab-title">T-shirt with print</a>
-                {%- if section.settings.show_price -%}
-                  <div class="liujo-tab-price"><span>€ 99.00</span></div>
-                {%- endif -%}
               </div>
             </li>
 
             <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
               <div class="liujo-tab-card-media">
-                {%- if section.settings.show_wishlist != false and settings.show_wishlist != false -%}
-                  <button type="button" class="liujo-tab-wishlist" data-liujo-wishlist data-product-id="fallback-tweed-skirt" aria-label="Add to Wishlist">
-                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                  </button>
-                {%- endif -%}
                 <a href="{{ fallback_url }}" class="liujo-tab-card-link">
                   <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw283c7518/images/E-WF6294T716AL9168-1-N.jpeg?sw=855&sh=1189" alt="Mini skirt in tweed" class="img-primary has-secondary" loading="lazy">
                   <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwbe55b9d2/images/E-WF6294T716AL9168-2-N.jpeg?sw=855&sh=1189" alt="Mini skirt in tweed" class="img-secondary" loading="lazy">
@@ -581,9 +583,6 @@
               </div>
               <div class="liujo-tab-info">
                 <a href="{{ fallback_url }}" class="liujo-tab-title">Mini skirt in tweed</a>
-                {%- if section.settings.show_price -%}
-                  <div class="liujo-tab-price"><span>€ 139.00</span></div>
-                {%- endif -%}
               </div>
             </li>
           {%- endif -%}
@@ -622,6 +621,7 @@
     const rvwTabBtn = document.getElementById(`tab-btn-recently-viewed-${sectionId}`);
     const rvwPanel = document.getElementById(`panel-recently-viewed-${sectionId}`);
     const recPanel = document.getElementById(`panel-recommendations-${sectionId}`);
+    const fallbackRecs = {{ fallback_rec_json }};
 
     // 1. Check existing recently viewed items in localStorage
     let viewed = [];
@@ -631,7 +631,6 @@
       viewed = [];
     }
 
-    // Filter out current product to check if visitor has viewed other products previously
     const otherViewed = viewed.filter(p => String(p.id) !== String(currentProductId) && p.url);
 
     // Dynamic visibility: Hide "RECENTLY VIEWED" tab if user has NOT viewed other products yet
@@ -712,6 +711,20 @@
         let stored = JSON.parse(localStorage.getItem('liujo_recently_viewed') || '[]');
         let items = stored.filter(p => String(p.id) !== String(currentProductId) && p.url);
 
+        // Pad with recommendations so the slider always has at least 8 items,
+        // eliminating empty whitespace and ensuring swiping always works!
+        if (items.length > 0 && Array.isArray(fallbackRecs)) {
+          const existingIds = new Set(items.map(p => String(p.id)));
+          existingIds.add(String(currentProductId));
+          for (const rec of fallbackRecs) {
+            if (!existingIds.has(String(rec.id))) {
+              items.push(rec);
+              existingIds.add(String(rec.id));
+            }
+            if (items.length >= 8) break;
+          }
+        }
+
         if (items.length === 0) {
           if (rvwTabBtn) rvwTabBtn.style.display = 'none';
           if (emptyMsg) emptyMsg.style.display = 'block';
@@ -724,7 +737,7 @@
         const showWishlist = {{ section.settings.show_wishlist | default: true | json }} && {{ settings.show_wishlist | default: true | json }};
         const showPrice = {{ section.settings.show_price | default: false | json }};
         const maxItems = {{ section.settings.products_to_show | default: 12 }};
-        const itemsToDisplay = items.slice(0, maxItems);
+        const itemsToDisplay = items.slice(0, Math.max(maxItems, 8));
 
         grid.innerHTML = itemsToDisplay.map(prod => `
           <li class="liujo-tab-card" data-product-url="${prod.url}">
@@ -764,88 +777,94 @@
     // 5. Mouse Wheel Horizontal Scrolling, Mouse Drag Swipe & Touch Swipe
     function initSliderInteractions(container) {
       const track = container.querySelector('[data-tabs-track]');
-      if (!track || track.dataset.sliderInitialized === 'true') return;
-      track.dataset.sliderInitialized = 'true';
+      if (!track) return;
 
-      // (A) Prevent native HTML5 image drag so dragging slider is smooth
-      track.addEventListener('dragstart', (e) => e.preventDefault());
+      // Prevent native HTML5 image dragging
+      track.ondragstart = (e) => e.preventDefault();
 
-      // (B) Mouse Wheel Horizontal Scrolling
-      track.addEventListener('wheel', (e) => {
+      // Mouse Wheel Horizontal Scrolling
+      track.onwheel = (e) => {
         if (Math.abs(e.deltaY) > 0 || Math.abs(e.deltaX) > 0) {
           e.preventDefault();
           const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-          track.scrollBy({
-            left: delta * 1.25,
-            behavior: 'auto'
-          });
+          track.scrollLeft += delta * 1.25;
         }
-      }, { passive: false });
+      };
 
-      // (C) Mouse Drag / Swipe
-      let isDragging = false;
+      // Mouse Drag & Swipe
+      let isDown = false;
       let startX = 0;
-      let initialScrollLeft = 0;
+      let scrollLeft = 0;
       let hasDragged = false;
 
-      track.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return; // Only primary mouse button
-        isDragging = true;
+      track.onmousedown = (e) => {
+        if (e.button !== 0) return;
+        isDown = true;
         hasDragged = false;
         startX = e.pageX;
-        initialScrollLeft = track.scrollLeft;
+        scrollLeft = track.scrollLeft;
         track.classList.add('is-dragging');
         track.style.scrollSnapType = 'none';
-      });
+        track.style.scrollBehavior = 'auto';
+        e.preventDefault();
+      };
 
-      window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
+      const onMouseMove = (e) => {
+        if (!isDown) return;
         const diff = e.pageX - startX;
         if (Math.abs(diff) > 5) {
           hasDragged = true;
         }
-        track.scrollLeft = initialScrollLeft - (diff * 1.4);
-      });
-
-      const stopDrag = () => {
-        if (isDragging) {
-          isDragging = false;
-          track.classList.remove('is-dragging');
-          track.style.scrollSnapType = 'x proximity';
-          setTimeout(() => {
-            hasDragged = false;
-          }, 80);
-        }
+        track.scrollLeft = scrollLeft - (diff * 1.5);
       };
 
-      window.addEventListener('mouseup', stopDrag);
+      const onMouseUp = () => {
+        if (!isDown) return;
+        isDown = false;
+        track.classList.remove('is-dragging');
+        track.style.scrollSnapType = 'x proximity';
+        setTimeout(() => {
+          hasDragged = false;
+        }, 100);
+      };
 
-      // (D) Touch Swipe Tracking
+      if (track._mouseMoveHandler) {
+        window.removeEventListener('mousemove', track._mouseMoveHandler);
+      }
+      if (track._mouseUpHandler) {
+        window.removeEventListener('mouseup', track._mouseUpHandler);
+      }
+      track._mouseMoveHandler = onMouseMove;
+      track._mouseUpHandler = onMouseUp;
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+
+      // Touch events for mobile swiping
       let touchStartX = 0;
       let touchDragged = false;
 
-      track.addEventListener('touchstart', (e) => {
+      track.ontouchstart = (e) => {
         if (e.touches.length !== 1) return;
         touchStartX = e.touches[0].pageX;
         touchDragged = false;
-      }, { passive: true });
+      };
 
-      track.addEventListener('touchmove', (e) => {
+      track.ontouchmove = (e) => {
         if (e.touches.length !== 1) return;
         const touchX = e.touches[0].pageX;
         if (Math.abs(touchX - touchStartX) > 8) {
           touchDragged = true;
         }
-      }, { passive: true });
+      };
 
-      track.addEventListener('touchend', () => {
+      track.ontouchend = () => {
         setTimeout(() => {
           touchDragged = false;
-        }, 80);
-      });
+        }, 100);
+      };
 
-      // (E) Click Preservation: Open product only on genuine click (not swipe)
-      track.addEventListener('click', (e) => {
+      // Card click navigation
+      track.onclick = (e) => {
         if (hasDragged || touchDragged) {
           e.preventDefault();
           e.stopPropagation();
@@ -867,7 +886,7 @@
             window.location.href = link.href;
           }
         }
-      });
+      };
     }
 
     // Initialize all panels
