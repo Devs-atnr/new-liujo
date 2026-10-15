@@ -126,12 +126,10 @@
       {%- endfor -%}
     </ul>
     {%- if media_count > 1 -%}
-      <div class="liujo-mobile-indicators-wrap large-up-hide" aria-hidden="true">
-        <ol class="liujo-mobile-indicators">
-          {%- for i in (1..media_count) -%}
-            <li class="liujo-indicator-dash{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index }}"></li>
-          {%- endfor -%}
-        </ol>
+      <div class="liujo-mobile-scrollbar-wrap large-up-hide" aria-hidden="true">
+        <div class="liujo-mobile-scrollbar-track" data-media-scrollbar-track>
+          <div class="liujo-mobile-scrollbar-thumb" data-media-scrollbar-thumb style="width: {{ 100.0 | divided_by: media_count | at_least: 18 }}%;"></div>
+        </div>
       </div>
     {%- endif -%}
     {% comment %} Liu Jo PDP: Slider counter/number removed per user request {% endcomment %}
