@@ -1511,13 +1511,15 @@ body.has-search-open .liujo-megamenu {
 .liujo-footer {
   background-color: var(--liujo-black);
   color: var(--liujo-white);
-  border-top: 1px solid #222;
+  border-top: none;
 }
 
 /* Liu Jo Back to Top Bar (Image 2 Parity) */
 .liujo-back-to-top {
   width: 100%;
   background-color: var(--liujo-white, #ffffff);
+  margin: 0;
+  padding: 0;
 }
 
 .liujo-back-to-top__container {
@@ -1525,7 +1527,7 @@ body.has-search-open .liujo-megamenu {
   margin: 0 auto;
   padding: 16px 32px;
   border-top: 1px solid #e9e9e9;
-  border-bottom: 1px solid #e9e9e9;
+  border-bottom: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1550,14 +1552,15 @@ body.has-search-open .liujo-megamenu {
   opacity: 0.6;
 }
 
-/* Pre-footer: Help & Newsletter (Image 2 Parity) */
+/* Pre-footer: Help & Newsletter (Exact T-Line Parity) */
 .liujo-prefooter {
   width: 100%;
   background-color: var(--liujo-white, #ffffff);
   color: var(--liujo-black, #000000);
-  padding: 48px 0 60px 0;
+  padding: 0;
+  margin: 0;
   border-top: none;
-  border-bottom: 1px solid #e9e9e9;
+  border-bottom: none;
 }
 
 .liujo-prefooter__container {
@@ -1569,15 +1572,16 @@ body.has-search-open .liujo-megamenu {
   gap: 0;
   position: relative;
   box-sizing: border-box;
+  border-top: 1px solid #e9e9e9; /* Top horizontal bar of the T */
 }
 
-/* Half vertical line in the center (Image 2 Parity) */
+/* Half vertical line in the center forming exact T intersection (Image 2 Parity) */
 .liujo-prefooter__container::before {
   content: '';
   position: absolute;
   left: 50%;
-  top: 6%;
-  bottom: 6%;
+  top: 0;
+  bottom: 0;
   width: 1px;
   background-color: #e9e9e9;
   transform: translateX(-50%);
@@ -1585,13 +1589,13 @@ body.has-search-open .liujo-megamenu {
 }
 
 .liujo-help-block {
-  padding-right: 56px;
+  padding: 48px 56px 60px 0;
   border: none !important;
   box-sizing: border-box;
 }
 
 .liujo-newsletter-block {
-  padding-left: 56px;
+  padding: 48px 0 60px 56px;
   border-left: none !important;
   box-sizing: border-box;
 }
@@ -1604,13 +1608,14 @@ body.has-search-open .liujo-megamenu {
     grid-template-columns: 1fr;
     gap: 0;
     padding: 0 20px;
+    border-top: 1px solid #e9e9e9;
   }
   .liujo-help-block {
-    padding: 0 0 32px 0;
-    border-bottom: 1px solid #ebebeb !important;
+    padding: 32px 0;
+    border-bottom: 1px solid #e9e9e9 !important;
   }
   .liujo-newsletter-block {
-    padding: 32px 0 0 0;
+    padding: 32px 0 40px 0;
     border-top: none !important;
   }
   .liujo-back-to-top__container {
@@ -1681,22 +1686,80 @@ body.has-search-open .liujo-megamenu {
   width: 100%;
   padding: 12px 16px;
   border: 1px solid #ebebeb;
-  border-radius: 0;
+  border-radius: 0 !important;
   font-family: inherit;
   font-size: 13px;
   color: var(--liujo-black, #000000);
   background-color: #ffffff;
-  outline: none;
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
   box-sizing: border-box;
   transition: border-color 0.2s ease;
+  -webkit-appearance: none !important;
+  appearance: none !important;
 }
 
 .liujo-nl-input::placeholder {
   color: #888888;
 }
 
-.liujo-nl-input:focus {
+.liujo-nl-input:hover {
   border-color: #000000;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.liujo-nl-input:focus,
+.liujo-nl-input:focus-visible,
+.liujo-nl-input:active,
+.liujo-nl-input.focused {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  border-color: #000000 !important;
+}
+
+.liujo-nl-form-row:focus-within,
+.liujo-nl-input:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Universal Zero Box Shadow on Search & Form Inputs */
+.liujo-search-bar__input,
+.liujo-search-bar__input:focus,
+.liujo-search-bar__input:focus-visible,
+.liujo-search-bar__input:hover,
+.liujo-search-bar__input:active,
+.liujo-search-bar__input.focused,
+.search__input:focus,
+.search__input:focus-visible,
+.search__input:active,
+.search__input.focused,
+input.search__input:focus,
+input.search__input:focus-visible,
+.field__input:focus,
+.field__input:focus-visible,
+.field__input:active,
+.field__input.focused,
+input[type="search"]:focus,
+input[type="search"]:focus-visible,
+input[type="search"]:active,
+input[type="email"]:focus,
+input[type="email"]:focus-visible,
+input[type="email"]:active {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
 }
 
 .liujo-nl-submit {
