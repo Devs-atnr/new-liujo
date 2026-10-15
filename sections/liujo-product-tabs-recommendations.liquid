@@ -27,7 +27,7 @@
   .liujo-tabs-container {
     max-width: var(--liujo-container-max, 1360px);
     margin: 0 auto;
-    padding: 0 32px;
+    padding: 0;
     box-sizing: border-box;
     width: 100%;
   }
@@ -41,6 +41,8 @@
     margin-bottom: 36px;
     position: relative;
     width: 100%;
+    padding: 0 32px;
+    box-sizing: border-box;
   }
 
   .liujo-tabs-nav {
@@ -110,13 +112,13 @@
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
     margin: 0;
-    padding: 0 0 16px 0;
+    padding: 0;
     list-style: none;
     width: 100%;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
-    gap: 16px !important;
+    gap: 0 !important;
   }
 
   .liujo-tabs-track::-webkit-scrollbar {
@@ -130,11 +132,11 @@
     scroll-behavior: auto !important;
   }
 
-  /* 4 cards visible side by side with 16px gap inside container */
+  /* 4 cards visible edge-to-edge, no gap */
   .liujo-tab-card {
-    flex: 0 0 calc((100% - 48px) / 4) !important;
-    width: calc((100% - 48px) / 4) !important;
-    min-width: 250px !important;
+    flex: 0 0 25% !important;
+    width: 25% !important;
+    min-width: 0 !important;
     box-sizing: border-box;
     position: relative;
     display: flex;
@@ -239,7 +241,7 @@
   .liujo-tab-info {
     display: flex;
     flex-direction: column;
-    padding: 12px 6px 18px 0;
+    padding: 10px 10px 16px 10px;
   }
 
   .liujo-tab-title {
@@ -321,11 +323,11 @@
 
   @media (max-width: 1024px) {
     .liujo-tab-card {
-      flex: 0 0 calc((100% - 32px) / 3) !important;
-      width: calc((100% - 32px) / 3) !important;
-      min-width: 220px !important;
+      flex: 0 0 33.333% !important;
+      width: 33.333% !important;
+      min-width: 0 !important;
     }
-    .liujo-tabs-container {
+    .liujo-tabs-nav-wrapper {
       padding: 0 20px;
     }
   }
@@ -346,18 +348,19 @@
       right: 4px;
     }
     .liujo-tabs-track {
-      gap: 12px !important;
+      gap: 0 !important;
     }
     .liujo-tab-card {
-      flex: 0 0 calc((100% - 12px) / 2) !important;
-      width: calc((100% - 12px) / 2) !important;
-      min-width: 150px !important;
+      flex: 0 0 33.333% !important;
+      width: 33.333% !important;
+      min-width: 0 !important;
     }
     .liujo-tabs-container {
-      padding: 0 16px;
+      padding: 0;
     }
     .liujo-tabs-nav-wrapper {
       margin-bottom: 24px;
+      padding: 0 16px;
     }
     .liujo-tabs-nav {
       gap: 24px;
