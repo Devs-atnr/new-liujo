@@ -98,11 +98,13 @@
       "type": "liujo-product-tabs-recommendations",
       "settings": {
         "show_wishlist": true,
-        "show_price": false,
+        "show_price": true,
         "tab_1_title": "YOU MIGHT LIKE",
         "tab_2_title": "RECENTLY VIEWED",
         "collection": "",
-        "products_to_show": 16,
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
         "empty_text": "No recently viewed items yet",
         "padding_top": 48,
         "padding_bottom": 48

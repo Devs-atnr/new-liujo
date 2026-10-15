@@ -104,18 +104,19 @@
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x proximity;
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y pinch-zoom;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
     margin: 0;
-    padding: 0;
+    padding: 0 0 16px 0;
     list-style: none;
     width: 100%;
     cursor: grab;
     user-select: none;
-    gap: 0 !important;
+    -webkit-user-select: none;
+    gap: 16px !important;
   }
 
   .liujo-tabs-track::-webkit-scrollbar {
@@ -129,12 +130,12 @@
     scroll-snap-type: none;
   }
 
-  /* 4 cards visible side by side with 0px gap inside container */
+  /* 4 cards visible side by side with 16px gap inside container */
   .liujo-tab-card {
-    flex: 0 0 25%;
-    width: 25%;
-    min-width: 25%;
-    max-width: 25%;
+    flex: 0 0 calc((100% - 48px) / 4) !important;
+    width: calc((100% - 48px) / 4) !important;
+    min-width: calc((100% - 48px) / 4) !important;
+    max-width: calc((100% - 48px) / 4) !important;
     scroll-snap-align: start;
     box-sizing: border-box;
     position: relative;
@@ -245,42 +246,79 @@
 
   .liujo-tab-title {
     font-family: inherit;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 400;
     color: #000000;
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
     line-height: 1.4;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     letter-spacing: 0.02em;
-    display: block;
+    display: inline-block;
+    max-width: 100%;
   }
 
   .liujo-tab-title:hover {
     text-decoration: underline;
+    opacity: 0.7;
   }
 
   .liujo-tab-price {
     font-family: inherit;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     color: #000000;
-    margin-top: 3px;
+    margin-top: 4px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
 
   .liujo-tab-price-compare {
     color: #888888;
     text-decoration: line-through;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 11px;
   }
 
+  /* Circular Carousel Control Arrows (Image Parity) */
   .liujo-tabs-arrow {
-    display: none !important;
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    transition: all 0.25s ease;
+    color: #111111;
+    padding: 0;
+    outline: none;
+  }
+
+  .liujo-tabs-arrow:hover {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #000000;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .liujo-tabs-arrow.arrow-prev {
+    left: 8px;
+  }
+
+  .liujo-tabs-arrow.arrow-next {
+    right: 8px;
   }
 
   .liujo-tab-empty-msg {
@@ -294,22 +332,39 @@
 
   @media (max-width: 1024px) {
     .liujo-tab-card {
-      flex: 0 0 33.333%;
-      width: 33.333%;
-      min-width: 33.333%;
-      max-width: 33.333%;
+      flex: 0 0 calc((100% - 32px) / 3) !important;
+      width: calc((100% - 32px) / 3) !important;
+      min-width: calc((100% - 32px) / 3) !important;
+      max-width: calc((100% - 32px) / 3) !important;
     }
     .liujo-tabs-container {
-      padding: 0 24px;
+      padding: 0 20px;
     }
   }
 
   @media (max-width: 767px) {
+    .liujo-tabs-arrow {
+      width: 32px;
+      height: 32px;
+    }
+    .liujo-tabs-arrow svg {
+      width: 13px;
+      height: 13px;
+    }
+    .liujo-tabs-arrow.arrow-prev {
+      left: 4px;
+    }
+    .liujo-tabs-arrow.arrow-next {
+      right: 4px;
+    }
+    .liujo-tabs-track {
+      gap: 12px !important;
+    }
     .liujo-tab-card {
-      flex: 0 0 50%;
-      width: 50%;
-      min-width: 50%;
-      max-width: 50%;
+      flex: 0 0 calc((100% - 12px) / 2) !important;
+      width: calc((100% - 12px) / 2) !important;
+      min-width: calc((100% - 12px) / 2) !important;
+      max-width: calc((100% - 12px) / 2) !important;
     }
     .liujo-tabs-container {
       padding: 0 16px;
@@ -401,6 +456,11 @@
       aria-labelledby="tab-btn-recommendations-{{ section.id }}"
     >
       <div class="liujo-tabs-slider-wrap">
+        <!-- Prev Arrow Button -->
+        <button type="button" class="liujo-tabs-arrow arrow-prev" data-tabs-prev aria-label="Previous Products">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+
         <ul class="liujo-tabs-track liujo-recommendations-track" data-tabs-track>
           {%- assign rec_products = recommendations.products -%}
           {%- assign curated_collection = collections[section.settings.collection] -%}
@@ -540,17 +600,69 @@
           {%- endif -%}
 
           {%- if shown_count == 0 -%}
-            <!-- Fallback Liu Jo High-Fashion Cards if store has no products yet -->
+            <!-- Fallback Liu Jo High-Fashion Cards (Image Parity) -->
             {%- assign fallback_url = '/collections/all' -%}
             <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
               <div class="liujo-tab-card-media">
                 <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4143de39/images/E-WF6309T743A02069-3-N.jpeg?sw=594&sh=826" alt="Flare trousers in flannel" class="img-primary has-secondary" loading="lazy">
-                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw1fd02bed/images/E-WF6309T743A02069-4-N.jpeg?sw=594&sh=826" alt="Flare trousers in flannel" class="img-secondary" loading="lazy">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwad3a193a/images/E-4B7001PX002S1815-7-N.jpeg?sw=594&sh=826" alt="Monogram Platform Sandals" class="img-primary has-secondary" loading="lazy">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw398aeb5d/images/E-4B7001PX002S1815-6-N.jpeg?sw=594&sh=826" alt="Monogram Platform Sandals" class="img-secondary" loading="lazy">
                 </a>
               </div>
               <div class="liujo-tab-info">
-                <a href="{{ fallback_url }}" class="liujo-tab-title">Flare trousers in flannel</a>
+                <a href="{{ fallback_url }}" class="liujo-tab-title">Monogram Platform Sandals</a>
+                <div class="liujo-tab-price">
+                  <span>€ 233.00</span>
+                  <span class="liujo-tab-price-compare">€ 775.00</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
+              <div class="liujo-tab-card-media">
+                <a href="{{ fallback_url }}" class="liujo-tab-card-link">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0fc7c95b/images/E-ZB7301T055B79215-4-N.jpeg?sw=594&sh=826" alt="Sneakers with All-Over Rhinestones" class="img-primary has-secondary" loading="lazy">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb9dbf93d/images/E-ZB7301T055B79215-3-N.jpeg?sw=594&sh=826" alt="Sneakers with All-Over Rhinestones" class="img-secondary" loading="lazy">
+                </a>
+              </div>
+              <div class="liujo-tab-info">
+                <a href="{{ fallback_url }}" class="liujo-tab-title">Sneakers with All-Over Rhinestones</a>
+                <div class="liujo-tab-price">
+                  <span>€ 188.00</span>
+                  <span class="liujo-tab-price-compare">€ 625.00</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
+              <div class="liujo-tab-card-media">
+                <a href="{{ fallback_url }}" class="liujo-tab-card-link">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4f25c2d3/images/E-WF6299T498002069-1-N.jpeg?sw=594&sh=826" alt="Silk-Blend Blouse" class="img-primary has-secondary" loading="lazy">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0f1110e5/images/E-WF6299T498002069-2-N.jpeg?sw=594&sh=826" alt="Silk-Blend Blouse" class="img-secondary" loading="lazy">
+                </a>
+              </div>
+              <div class="liujo-tab-info">
+                <a href="{{ fallback_url }}" class="liujo-tab-title">Silk-Blend Blouse</a>
+                <div class="liujo-tab-price">
+                  <span>€ 315.00</span>
+                  <span class="liujo-tab-price-compare">€ 1,050.00</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
+              <div class="liujo-tab-card-media">
+                <a href="{{ fallback_url }}" class="liujo-tab-card-link">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4143de39/images/E-WF6309T743A02069-3-N.jpeg?sw=594&sh=826" alt="Silk-Blend Trousers" class="img-primary has-secondary" loading="lazy">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw1fd02bed/images/E-WF6309T743A02069-4-N.jpeg?sw=594&sh=826" alt="Silk-Blend Trousers" class="img-secondary" loading="lazy">
+                </a>
+              </div>
+              <div class="liujo-tab-info">
+                <a href="{{ fallback_url }}" class="liujo-tab-title">Silk-Blend Trousers</a>
+                <div class="liujo-tab-price">
+                  <span>€ 315.00</span>
+                  <span class="liujo-tab-price-compare">€ 1,050.00</span>
+                </div>
               </div>
             </li>
 
@@ -564,18 +676,24 @@
               </div>
               <div class="liujo-tab-info">
                 <a href="{{ fallback_url }}" class="liujo-tab-title">Flare jeans with belt jewel</a>
+                <div class="liujo-tab-price">
+                  <span>€ 239.00</span>
+                </div>
               </div>
             </li>
 
             <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
               <div class="liujo-tab-card-media">
                 <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-4-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-primary has-secondary" loading="lazy">
-                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-3-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-secondary" loading="lazy">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw1bbca6b9/images/E-WF6256T743AX0797-1-N.jpeg?sw=594&sh=826" alt="Blazer in flannel" class="img-primary has-secondary" loading="lazy">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw6fa71391/images/E-WF6256T743AX0797-2-N.jpeg?sw=594&sh=826" alt="Blazer in flannel" class="img-secondary" loading="lazy">
                 </a>
               </div>
               <div class="liujo-tab-info">
-                <a href="{{ fallback_url }}" class="liujo-tab-title">T-shirt with print</a>
+                <a href="{{ fallback_url }}" class="liujo-tab-title">Blazer in flannel</a>
+                <div class="liujo-tab-price">
+                  <span>€ 299.00</span>
+                </div>
               </div>
             </li>
 
@@ -588,10 +706,33 @@
               </div>
               <div class="liujo-tab-info">
                 <a href="{{ fallback_url }}" class="liujo-tab-title">Mini skirt in tweed</a>
+                <div class="liujo-tab-price">
+                  <span>€ 179.00</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
+              <div class="liujo-tab-card-media">
+                <a href="{{ fallback_url }}" class="liujo-tab-card-link">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-4-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-primary has-secondary" loading="lazy">
+                  <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-3-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-secondary" loading="lazy">
+                </a>
+              </div>
+              <div class="liujo-tab-info">
+                <a href="{{ fallback_url }}" class="liujo-tab-title">T-shirt with print</a>
+                <div class="liujo-tab-price">
+                  <span>€ 119.00</span>
+                </div>
               </div>
             </li>
           {%- endif -%}
         </ul>
+
+        <!-- Next Arrow Button -->
+        <button type="button" class="liujo-tabs-arrow arrow-next" data-tabs-next aria-label="Next Products">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
     </div>
 
@@ -603,7 +744,76 @@
       aria-labelledby="tab-btn-recently-viewed-{{ section.id }}"
     >
       <div class="liujo-tabs-slider-wrap">
+        <!-- Prev Arrow Button -->
+        <button type="button" class="liujo-tabs-arrow arrow-prev" data-tabs-prev aria-label="Previous Products">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+
         <ul class="liujo-tabs-track liujo-recently-viewed-track" data-tabs-track id="liujo-recently-viewed-grid-{{ section.id }}">
+          <li class="liujo-tab-card" data-product-url="/collections/all">
+            <div class="liujo-tab-card-media">
+              <a href="/collections/all" class="liujo-tab-card-link">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwad3a193a/images/E-4B7001PX002S1815-7-N.jpeg?sw=594&sh=826" alt="Monogram Platform Sandals" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw398aeb5d/images/E-4B7001PX002S1815-6-N.jpeg?sw=594&sh=826" alt="Monogram Platform Sandals" class="img-secondary" loading="lazy">
+              </a>
+            </div>
+            <div class="liujo-tab-info">
+              <a href="/collections/all" class="liujo-tab-title">Monogram Platform Sandals</a>
+              <div class="liujo-tab-price">
+                <span>€ 233.00</span>
+                <span class="liujo-tab-price-compare">€ 775.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="liujo-tab-card" data-product-url="/collections/all">
+            <div class="liujo-tab-card-media">
+              <a href="/collections/all" class="liujo-tab-card-link">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0fc7c95b/images/E-ZB7301T055B79215-4-N.jpeg?sw=594&sh=826" alt="Sneakers with All-Over Rhinestones" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb9dbf93d/images/E-ZB7301T055B79215-3-N.jpeg?sw=594&sh=826" alt="Sneakers with All-Over Rhinestones" class="img-secondary" loading="lazy">
+              </a>
+            </div>
+            <div class="liujo-tab-info">
+              <a href="/collections/all" class="liujo-tab-title">Sneakers with All-Over Rhinestones</a>
+              <div class="liujo-tab-price">
+                <span>€ 188.00</span>
+                <span class="liujo-tab-price-compare">€ 625.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="liujo-tab-card" data-product-url="/collections/all">
+            <div class="liujo-tab-card-media">
+              <a href="/collections/all" class="liujo-tab-card-link">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4f25c2d3/images/E-WF6299T498002069-1-N.jpeg?sw=594&sh=826" alt="Silk-Blend Blouse" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0f1110e5/images/E-WF6299T498002069-2-N.jpeg?sw=594&sh=826" alt="Silk-Blend Blouse" class="img-secondary" loading="lazy">
+              </a>
+            </div>
+            <div class="liujo-tab-info">
+              <a href="/collections/all" class="liujo-tab-title">Silk-Blend Blouse</a>
+              <div class="liujo-tab-price">
+                <span>€ 315.00</span>
+                <span class="liujo-tab-price-compare">€ 1,050.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="liujo-tab-card" data-product-url="/collections/all">
+            <div class="liujo-tab-card-media">
+              <a href="/collections/all" class="liujo-tab-card-link">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4143de39/images/E-WF6309T743A02069-3-N.jpeg?sw=594&sh=826" alt="Silk-Blend Trousers" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw1fd02bed/images/E-WF6309T743A02069-4-N.jpeg?sw=594&sh=826" alt="Silk-Blend Trousers" class="img-secondary" loading="lazy">
+              </a>
+            </div>
+            <div class="liujo-tab-info">
+              <a href="/collections/all" class="liujo-tab-title">Silk-Blend Trousers</a>
+              <div class="liujo-tab-price">
+                <span>€ 315.00</span>
+                <span class="liujo-tab-price-compare">€ 1,050.00</span>
+              </div>
+            </div>
+          </li>
+
           <li class="liujo-tab-card" data-product-url="/collections/all">
             <div class="liujo-tab-card-media">
               <span class="liujo-tab-badge">THE GIGI HADID EDIT</span>
@@ -614,41 +824,12 @@
             </div>
             <div class="liujo-tab-info">
               <a href="/collections/all" class="liujo-tab-title">Flare jeans with belt jewel</a>
+              <div class="liujo-tab-price">
+                <span>€ 239.00</span>
+              </div>
             </div>
           </li>
-          <li class="liujo-tab-card" data-product-url="/collections/all">
-            <div class="liujo-tab-card-media">
-              <a href="/collections/all" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4143de39/images/E-WF6309T743A02069-3-N.jpeg?sw=594&sh=826" alt="Flare trousers in flannel" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw1fd02bed/images/E-WF6309T743A02069-4-N.jpeg?sw=594&sh=826" alt="Flare trousers in flannel" class="img-secondary" loading="lazy">
-              </a>
-            </div>
-            <div class="liujo-tab-info">
-              <a href="/collections/all" class="liujo-tab-title">Flare trousers in flannel</a>
-            </div>
-          </li>
-          <li class="liujo-tab-card" data-product-url="/collections/all">
-            <div class="liujo-tab-card-media">
-              <a href="/collections/all" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw283c7518/images/E-WF6294T716AL9168-1-N.jpeg?sw=855&sh=1189" alt="Mini skirt in tweed" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwbe55b9d2/images/E-WF6294T716AL9168-2-N.jpeg?sw=855&sh=1189" alt="Mini skirt in tweed" class="img-secondary" loading="lazy">
-              </a>
-            </div>
-            <div class="liujo-tab-info">
-              <a href="/collections/all" class="liujo-tab-title">Mini skirt in tweed</a>
-            </div>
-          </li>
-          <li class="liujo-tab-card" data-product-url="/collections/all">
-            <div class="liujo-tab-card-media">
-              <a href="/collections/all" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-4-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-3-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-secondary" loading="lazy">
-              </a>
-            </div>
-            <div class="liujo-tab-info">
-              <a href="/collections/all" class="liujo-tab-title">T-shirt with print</a>
-            </div>
-          </li>
+
           <li class="liujo-tab-card" data-product-url="/collections/all">
             <div class="liujo-tab-card-media">
               <a href="/collections/all" class="liujo-tab-card-link">
@@ -658,42 +839,47 @@
             </div>
             <div class="liujo-tab-info">
               <a href="/collections/all" class="liujo-tab-title">Blazer in flannel</a>
+              <div class="liujo-tab-price">
+                <span>€ 299.00</span>
+              </div>
             </div>
           </li>
+
           <li class="liujo-tab-card" data-product-url="/collections/all">
             <div class="liujo-tab-card-media">
               <a href="/collections/all" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw8374fb24/images/E-WF6258T743A02069-1-N.jpeg?sw=594&sh=826" alt="Long coat with belt" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw46603a1d/images/E-WF6258T743A02069-2-N.jpeg?sw=594&sh=826" alt="Long coat with belt" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw283c7518/images/E-WF6294T716AL9168-1-N.jpeg?sw=855&sh=1189" alt="Mini skirt in tweed" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwbe55b9d2/images/E-WF6294T716AL9168-2-N.jpeg?sw=855&sh=1189" alt="Mini skirt in tweed" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="/collections/all" class="liujo-tab-title">Long coat with belt</a>
+              <a href="/collections/all" class="liujo-tab-title">Mini skirt in tweed</a>
+              <div class="liujo-tab-price">
+                <span>€ 179.00</span>
+              </div>
             </div>
           </li>
+
           <li class="liujo-tab-card" data-product-url="/collections/all">
             <div class="liujo-tab-card-media">
               <a href="/collections/all" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4f25c2d3/images/E-WF6299T498002069-1-N.jpeg?sw=594&sh=826" alt="Satin blouse with bow" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0f1110e5/images/E-WF6299T498002069-2-N.jpeg?sw=594&sh=826" alt="Satin blouse with bow" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-4-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-3-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="/collections/all" class="liujo-tab-title">Satin blouse with bow</a>
-            </div>
-          </li>
-          <li class="liujo-tab-card" data-product-url="/collections/all">
-            <div class="liujo-tab-card-media">
-              <a href="/collections/all" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw76aa4efb/images/E-UF6001D461577908-1-N.jpeg?sw=594&sh=826" alt="Bootcut jeans with embroidery" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw259b66ce/images/E-UF6001D461577908-2-N.jpeg?sw=594&sh=826" alt="Bootcut jeans with embroidery" class="img-secondary" loading="lazy">
-              </a>
-            </div>
-            <div class="liujo-tab-info">
-              <a href="/collections/all" class="liujo-tab-title">Bootcut jeans with embroidery</a>
+              <a href="/collections/all" class="liujo-tab-title">T-shirt with print</a>
+              <div class="liujo-tab-price">
+                <span>€ 119.00</span>
+              </div>
             </div>
           </li>
         </ul>
+
+        <!-- Next Arrow Button -->
+        <button type="button" class="liujo-tabs-arrow arrow-next" data-tabs-next aria-label="Next Products">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -741,7 +927,8 @@
           url: {{ product.url | json }},
           image: {{ product.featured_media | image_url: width: 600 | json }},
           secondary_image: {% if product.media.size > 1 %}{{ product.media[1] | image_url: width: 600 | json }}{% else %}null{% endif %},
-          price: {{ product.price | money | json }}
+          price: {{ product.price | money | json }},
+          compare_at_price: {% if product.compare_at_price > product.price %}{{ product.compare_at_price | money | json }}{% else %}null{% endif %}
         };
 
         var stored = [];
@@ -798,7 +985,7 @@
               '</div>' +
               '<div class="liujo-tab-info">' +
                 '<a href="' + prod.url + '" class="liujo-tab-title">' + (prod.title || '') + '</a>' +
-                (prod.price ? '<div class="liujo-tab-price"><span>' + prod.price + '</span></div>' : '') +
+                (prod.price ? '<div class="liujo-tab-price"><span>' + prod.price + '</span>' + (prod.compare_at_price ? '<span class="liujo-tab-price-compare">' + prod.compare_at_price + '</span>' : '') + '</div>' : '') +
               '</div>' +
             '</li>'
           );
@@ -821,16 +1008,75 @@
         if (window.syncLiuJoWishlistButtons) {
           window.syncLiuJoWishlistButtons();
         }
+
+        var parentPanel = grid.closest('.liujo-tab-panel');
+        if (parentPanel && typeof window.initTabsCarouselTrack === 'function') {
+          window.initTabsCarouselTrack(parentPanel);
+        }
       } catch (e) {
         console.error('Error updating recently viewed:', e);
       }
     };
 
-    // 4. Carousel Interactions: Smooth Drag, Wheel Scroll & Touch Swipe for Both Tracks
+    // 4. Carousel Interactions: Smooth Drag, Wheel Scroll, Touch Swipe & Arrows for Both Tracks
     window.initTabsCarouselTrack = function(container) {
       if (!container) return;
       var track = container.querySelector('[data-tabs-track]');
-      if (!track || track._hasLiuJoCarousel) return;
+      if (!track) return;
+
+      var prevBtn = container.querySelector('[data-tabs-prev]');
+      var nextBtn = container.querySelector('[data-tabs-next]');
+
+      function getStep() {
+        var card = track.querySelector('.liujo-tab-card');
+        var cardW = card ? card.getBoundingClientRect().width : 300;
+        var gap = window.innerWidth <= 767 ? 12 : 16;
+        var colsToSlide = window.innerWidth <= 767 ? 1 : 2;
+        return (cardW + gap) * colsToSlide;
+      }
+
+      function updateArrows() {
+        if (prevBtn) {
+          if (track.scrollLeft <= 8) {
+            prevBtn.style.opacity = '0.35';
+          } else {
+            prevBtn.style.opacity = '1';
+          }
+        }
+        if (nextBtn) {
+          var maxScroll = track.scrollWidth - track.clientWidth - 8;
+          if (track.scrollLeft >= maxScroll) {
+            nextBtn.style.opacity = '0.35';
+          } else {
+            nextBtn.style.opacity = '1';
+          }
+        }
+      }
+
+      if (prevBtn && !prevBtn._hasBound) {
+        prevBtn._hasBound = true;
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          track.scrollBy({ left: -getStep(), behavior: 'smooth' });
+          setTimeout(updateArrows, 350);
+        });
+      }
+
+      if (nextBtn && !nextBtn._hasBound) {
+        nextBtn._hasBound = true;
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          track.scrollBy({ left: getStep(), behavior: 'smooth' });
+          setTimeout(updateArrows, 350);
+        });
+      }
+
+      track.addEventListener('scroll', updateArrows, { passive: true });
+      updateArrows();
+
+      if (track._hasLiuJoCarousel) return;
       track._hasLiuJoCarousel = true;
 
       track.ondragstart = function(e) { e.preventDefault(); };
@@ -983,7 +1229,7 @@
     {
       "type": "checkbox",
       "id": "show_price",
-      "default": false,
+      "default": true,
       "label": "Show price under product title"
     },
     {
