@@ -48,9 +48,34 @@
     @media (max-width: 767px) {
       .liujo-hero-video--{{ s_id }} .liujo-hero-video__tagline {
         font-size: {{ section.settings.tagline_size_mobile | default: 11 }}px;
+        color: {{ section.settings.mob_tagline_color | default: '#888888' }} !important;
       }
       .liujo-hero-video--{{ s_id }} .liujo-hero-video__title {
-        font-size: {{ section.settings.heading_size_mobile | default: 32 }}px;
+        font-size: {{ section.settings.mob_heading_size | default: 22 }}px;
+        color: {{ section.settings.mob_heading_color | default: '#000000' }} !important;
+      }
+      .liujo-hero-video--{{ s_id }} .liujo-hero-video__content-wrap {
+        background: {{ section.settings.mob_content_bg | default: '#ffffff' }};
+        padding: {{ section.settings.mob_content_padding_top | default: 28 }}px 20px {{ section.settings.mob_content_padding_bottom | default: 24 }}px !important;
+      }
+      .liujo-hero-video--{{ s_id }} .liujo-hero-video__btn {
+        color: {{ section.settings.mob_button_color | default: '#000000' }} !important;
+        font-size: {{ section.settings.mob_button_font_size | default: 11 }}px !important;
+        {% if section.settings.mob_button_style == 'underline' %}
+          border: none !important;
+          background-color: transparent !important;
+          padding: 0 !important;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        {% elsif section.settings.mob_button_style == 'filled' %}
+          background-color: {{ section.settings.mob_button_bg | default: '#000000' }} !important;
+          border: 1px solid {{ section.settings.mob_button_bg | default: '#000000' }} !important;
+          padding: 12px 32px;
+        {% else %}
+          background-color: transparent !important;
+          border: 1px solid {{ section.settings.mob_button_border_color | default: '#000000' }} !important;
+          padding: 12px 32px;
+        {% endif %}
       }
     }
     .liujo-hero-video--{{ s_id }} .liujo-hero-video__btn {
@@ -389,6 +414,97 @@
       "id": "button_hover_bg_color",
       "label": "Button Hover Background Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "── Mobile Content Block ──"
+    },
+    {
+      "type": "color",
+      "id": "mob_content_bg",
+      "label": "Mobile Content Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "mob_tagline_color",
+      "label": "Mobile Tagline Color",
+      "default": "#888888"
+    },
+    {
+      "type": "color",
+      "id": "mob_heading_color",
+      "label": "Mobile Heading Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "mob_heading_size",
+      "min": 14,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Heading Font Size",
+      "default": 22
+    },
+    {
+      "type": "select",
+      "id": "mob_button_style",
+      "label": "Mobile Button Style",
+      "options": [
+        { "value": "underline", "label": "Underline Text Only" },
+        { "value": "outline", "label": "Outline Border" },
+        { "value": "filled", "label": "Filled Button" }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "color",
+      "id": "mob_button_color",
+      "label": "Mobile Button Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "mob_button_bg",
+      "label": "Mobile Button Background (Filled only)",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "mob_button_border_color",
+      "label": "Mobile Button Border (Outline only)",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "mob_button_font_size",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Button Font Size",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "mob_content_padding_top",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Content Padding Top",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mob_content_padding_bottom",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Content Padding Bottom",
+      "default": 24
     }
   ],
   "presets": [

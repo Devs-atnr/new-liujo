@@ -1000,31 +1000,16 @@ body.has-search-open .liujo-megamenu {
     position: relative !important;
     inset: auto !important;
     display: block !important;
-    background: #ffffff;
-    padding: 28px 20px 24px !important;
     text-align: center;
   }
-  .liujo-hero-video__content {
-    color: var(--liujo-black);
-  }
   .liujo-hero-video__tagline {
-    color: #888888 !important;
     margin-bottom: 8px;
   }
   .liujo-hero-video__title {
-    color: var(--liujo-black) !important;
-    font-size: 22px !important;
     margin-bottom: 10px;
     letter-spacing: 0.06em;
   }
   .liujo-hero-video__btn {
-    color: var(--liujo-black) !important;
-    border: none !important;
-    background-color: transparent !important;
-    padding: 0 !important;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    font-size: 11px !important;
     letter-spacing: 0.15em;
   }
 }
@@ -1247,6 +1232,23 @@ body.has-search-open .liujo-megamenu {
 
 .liujo-card-info {
   padding: 0 4px;
+}
+
+@media (max-width: 767px) {
+  .liujo-card-info {
+    padding: 0 8px;
+  }
+  .liujo-card-title {
+    font-size: 11px;
+  }
+  .liujo-card-price {
+    font-size: 11px;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .liujo-card-price-compare {
+    font-size: 10px;
+  }
 }
 
 .liujo-card-title {

@@ -36,7 +36,18 @@
         "button_bg_color": "rgba(0,0,0,0)",
         "button_border_color": "#ffffff",
         "button_hover_text_color": "#000000",
-        "button_hover_bg_color": "#ffffff"
+        "button_hover_bg_color": "#ffffff",
+        "mob_content_bg": "#ffffff",
+        "mob_tagline_color": "#888888",
+        "mob_heading_color": "#000000",
+        "mob_heading_size": 22,
+        "mob_button_style": "underline",
+        "mob_button_color": "#000000",
+        "mob_button_bg": "#000000",
+        "mob_button_border_color": "#000000",
+        "mob_button_font_size": 11,
+        "mob_content_padding_top": 28,
+        "mob_content_padding_bottom": 24
       }
     },
     "hero_slider": {
