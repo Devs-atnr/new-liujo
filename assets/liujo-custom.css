@@ -1125,11 +1125,15 @@ body.has-search-open .liujo-megamenu {
   display: flex;
   gap: 20px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding-bottom: 16px;
+}
+
+.liujo-carousel-track.is-dragging {
+  scroll-snap-type: none !important;
+  scroll-behavior: auto !important;
 }
 
 .liujo-carousel-track::-webkit-scrollbar {

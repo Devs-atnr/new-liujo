@@ -98,7 +98,7 @@
       "type": "liujo-product-tabs-recommendations",
       "settings": {
         "show_wishlist": true,
-        "show_price": true,
+        "show_price": false,
         "tab_1_title": "YOU MIGHT LIKE",
         "tab_2_title": "RECENTLY VIEWED",
         "collection": "",
