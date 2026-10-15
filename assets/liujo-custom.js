@@ -100,26 +100,57 @@ function initLiuJoCarousels() {
       });
     }
 
-    // Touch & Mouse Drag to Scroll
+    // Smooth Mouse Drag to Scroll with momentum
     let isDown = false;
     let startX;
     let scrollLeft;
+    let velX = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let momentumId = null;
+
+    function stopMomentum() {
+      if (momentumId) {
+        cancelAnimationFrame(momentumId);
+        momentumId = null;
+      }
+    }
+
+    function applyMomentum() {
+      if (Math.abs(velX) < 0.5) {
+        momentumId = null;
+        return;
+      }
+      track.scrollLeft += velX;
+      velX *= 0.92;
+      momentumId = requestAnimationFrame(applyMomentum);
+    }
 
     track.addEventListener('mousedown', (e) => {
+      stopMomentum();
       isDown = true;
       track.classList.add('is-dragging');
       startX = e.pageX - track.offsetLeft;
       scrollLeft = track.scrollLeft;
+      lastX = e.pageX;
+      lastTime = Date.now();
+      velX = 0;
     });
 
     track.addEventListener('mouseleave', () => {
-      isDown = false;
-      track.classList.remove('is-dragging');
+      if (isDown) {
+        isDown = false;
+        track.classList.remove('is-dragging');
+        applyMomentum();
+      }
     });
 
     track.addEventListener('mouseup', () => {
-      isDown = false;
-      track.classList.remove('is-dragging');
+      if (isDown) {
+        isDown = false;
+        track.classList.remove('is-dragging');
+        applyMomentum();
+      }
     });
 
     track.addEventListener('mousemove', (e) => {
@@ -128,6 +159,14 @@ function initLiuJoCarousels() {
       const x = e.pageX - track.offsetLeft;
       const walk = (x - startX) * 1.5;
       track.scrollLeft = scrollLeft - walk;
+
+      const now = Date.now();
+      const dt = now - lastTime;
+      if (dt > 0) {
+        velX = (lastX - e.pageX) * (16 / dt);
+      }
+      lastX = e.pageX;
+      lastTime = now;
     });
   });
 }

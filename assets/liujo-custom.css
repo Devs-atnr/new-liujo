@@ -921,6 +921,20 @@ body.has-search-open .liujo-megamenu {
   left: 0;
 }
 
+/* Desktop / Mobile video switching */
+.liujo-hero-video__media--mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .liujo-hero-video__media--desktop {
+    display: none;
+  }
+  .liujo-hero-video__media--mobile {
+    display: block;
+  }
+}
+
 .liujo-hero-video__overlay {
   position: absolute;
   inset: 0;
@@ -1202,43 +1216,21 @@ body.has-search-open .liujo-megamenu {
   color: #d0021b;
 }
 
-/* Carousel Control Arrows */
+/* Carousel Control Arrows — hidden; smooth drag scroll only */
 .liujo-carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  background-color: var(--liujo-white);
-  border: 1px solid var(--liujo-border-gray);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.25s ease;
+  display: none;
 }
 
-.liujo-carousel-arrow:hover {
-  background-color: var(--liujo-black);
-  color: var(--liujo-white);
-  border-color: var(--liujo-black);
+/* Smooth drag cursor for carousel */
+.liujo-carousel-track {
+  cursor: grab;
 }
 
-.liujo-carousel-arrow.arrow-prev {
-  left: 20px;
-}
-
-.liujo-carousel-arrow.arrow-next {
-  right: 20px;
-}
-
-@media (max-width: 767px) {
-  .liujo-carousel-arrow {
-    display: none;
-  }
+.liujo-carousel-track.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  user-select: none;
 }
 
 /* ==========================================================================

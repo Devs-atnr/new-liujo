@@ -77,24 +77,28 @@
 
   <div class="liujo-hero-video__wrapper">
     <!-- Desktop Video -->
+    {%- assign has_mobile_video = false -%}
+    {%- if section.settings.video_url_mobile != blank -%}
+      {%- assign has_mobile_video = true -%}
+    {%- endif -%}
+
     {%- if section.settings.video_url != blank -%}
-      <video class="liujo-hero-video__media{% if section.settings.video_url_mobile != blank %} large-up-show{% endif %}"
+      <video class="liujo-hero-video__media{% if has_mobile_video %} liujo-hero-video__media--desktop{% endif %}"
              autoplay loop muted playsinline
              poster="{% if section.settings.poster_image != blank %}{{ section.settings.poster_image | image_url: width: 2000 }}{% else %}https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg{% endif %}">
         <source src="{{ section.settings.video_url }}" type="video/mp4">
       </video>
     {%- else -%}
-      <video class="liujo-hero-video__media"
+      <video class="liujo-hero-video__media{% if has_mobile_video %} liujo-hero-video__media--desktop{% endif %}"
              autoplay loop muted playsinline
              poster="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg">
         <source src="https://media.liujo.com/PUBLIC/VIDEO/Liu_Jo_camp_15s_16х9.mp4" type="video/mp4">
       </video>
     {%- endif -%}
 
-    <!-- Optional Dedicated Mobile Video -->
-    {%- if section.settings.video_url_mobile != blank -%}
-      <video class="liujo-hero-video__media small-hide medium-hide"
-             style="display: none;"
+    <!-- Dedicated Mobile Video (9:16 vertical) -->
+    {%- if has_mobile_video -%}
+      <video class="liujo-hero-video__media liujo-hero-video__media--mobile"
              autoplay loop muted playsinline
              poster="{% if section.settings.poster_image_mobile != blank %}{{ section.settings.poster_image_mobile | image_url: width: 1000 }}{% elsif section.settings.poster_image != blank %}{{ section.settings.poster_image | image_url: width: 1000 }}{% else %}https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwc9a97ec1/the-gigi-hadid-edit/drop1/HP/Hero-2-mob.jpg{% endif %}">
         <source src="{{ section.settings.video_url_mobile }}" type="video/mp4">

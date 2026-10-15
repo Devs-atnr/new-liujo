@@ -13,7 +13,7 @@
       "type": "liujo-hero-video",
       "settings": {
         "video_url": "https://media.liujo.com/PUBLIC/VIDEO/Liu_Jo_camp_15s_16х9.mp4",
-        "video_url_mobile": "",
+        "video_url_mobile": "https://media.liujo.com/PUBLIC/VIDEO/Liu_Jo_camp_15s_9х16.mp4",
         "show_controls": true,
         "height_desktop": "85vh",
         "height_mobile": "75vh",
