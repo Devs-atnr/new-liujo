@@ -1514,7 +1514,7 @@ body.has-search-open .liujo-megamenu {
   border-top: 1px solid #222;
 }
 
-/* Liu Jo Back to Top Bar (Image 1 Parity) */
+/* Liu Jo Back to Top Bar (Image 3 Parity) */
 .liujo-back-to-top {
   width: 100%;
   background-color: var(--liujo-white, #ffffff);
@@ -1523,7 +1523,7 @@ body.has-search-open .liujo-megamenu {
 .liujo-back-to-top__container {
   max-width: var(--liujo-container-max, 1360px);
   margin: 0 auto;
-  padding: 18px 32px;
+  padding: 16px 32px;
   border-top: 1px solid #ebebeb;
   border-bottom: 1px solid #ebebeb;
   display: flex;
@@ -1537,7 +1537,7 @@ body.has-search-open .liujo-megamenu {
   border: none;
   font-family: inherit;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--liujo-black, #000000);
@@ -1550,11 +1550,11 @@ body.has-search-open .liujo-megamenu {
   opacity: 0.6;
 }
 
-/* Pre-footer: Help & Newsletter (Image 1 Parity) */
+/* Pre-footer: Help & Newsletter (Image 3 Parity) */
 .liujo-prefooter {
   background-color: var(--liujo-white, #ffffff);
   color: var(--liujo-black, #000000);
-  padding: 50px 0 60px 0;
+  padding: 48px 0 56px 0;
   border-top: none;
 }
 
@@ -1563,24 +1563,26 @@ body.has-search-open .liujo-megamenu {
   margin: 0 auto;
   padding: 0 32px;
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
+  grid-template-columns: 1fr 1fr; /* Exact center half (50% / 50%) */
   gap: 0;
   box-sizing: border-box;
 }
 
 .liujo-help-block {
   padding-right: 48px;
+  box-sizing: border-box;
 }
 
 .liujo-newsletter-block {
-  border-left: 1px solid #ebebeb;
+  border-left: 1px solid #ebebeb; /* Center dividing border */
   padding-left: 48px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 991px) {
   .liujo-prefooter__container {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
     padding: 0 20px;
   }
   .liujo-help-block {
@@ -1593,60 +1595,67 @@ body.has-search-open .liujo-megamenu {
     padding-top: 32px;
   }
   .liujo-back-to-top__container {
-    padding: 16px 20px;
+    padding: 14px 20px;
   }
 }
 
 .liujo-help-block h3 {
-  font-size: 18px;
+  font-family: inherit;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  color: var(--liujo-black, #000000);
+  margin-bottom: 14px;
 }
 
 .liujo-help-block p {
-  font-size: 13px;
-  color: var(--liujo-mid-gray);
+  font-family: inherit;
+  font-size: 12px;
+  color: #666666;
   line-height: 1.6;
   margin-bottom: 16px;
 }
 
 .liujo-help-block strong a {
-  color: var(--liujo-black);
+  color: var(--liujo-black, #000000);
   text-decoration: none;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .liujo-newsletter-block h3 {
-  font-size: 18px;
+  font-family: inherit;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.liujo-newsletter-block p {
-  font-size: 13px;
-  color: var(--liujo-mid-gray);
-  margin-bottom: 20px;
-}
-
-.liujo-nl-label {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--liujo-black, #000000);
   margin-bottom: 8px;
 }
 
+.liujo-newsletter-block p {
+  font-family: inherit;
+  font-size: 12px;
+  color: #666666;
+  margin-bottom: 18px;
+}
+
+.liujo-nl-label {
+  display: block;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--liujo-black, #000000);
+  margin-bottom: 6px;
+}
+
 .liujo-nl-form-row {
   display: flex;
   gap: 12px;
-  max-width: 550px;
+  max-width: 520px;
   margin-bottom: 16px;
 }
 
@@ -1658,54 +1667,66 @@ body.has-search-open .liujo-megamenu {
 
 .liujo-nl-input {
   flex: 1;
-  padding: 14px 18px;
-  border: 1px solid var(--liujo-border-gray);
-  font-family: var(--liujo-font-main);
+  padding: 8px 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #000000;
+  border-radius: 0;
+  font-family: inherit;
   font-size: 13px;
+  color: var(--liujo-black, #000000);
+  background: transparent;
   outline: none;
   transition: border-color 0.2s ease;
 }
 
 .liujo-nl-input:focus {
-  border-color: var(--liujo-black);
+  border-bottom-color: #000000;
 }
 
 .liujo-nl-submit {
-  padding: 14px 30px;
-  background-color: var(--liujo-black);
-  color: var(--liujo-white);
-  border: 1px solid var(--liujo-black);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  padding: 8px 10px;
+  background-color: transparent;
+  color: var(--liujo-black, #000000);
+  border: none;
+  border-bottom: 1px solid #000000;
+  border-radius: 0;
   cursor: pointer;
-  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
 }
 
 .liujo-nl-submit:hover {
-  background-color: #333;
+  background-color: transparent;
+  opacity: 0.6;
 }
 
 .liujo-nl-gender-pills {
   display: flex;
-  gap: 20px;
+  gap: 24px;
+  margin-top: 14px;
   margin-bottom: 14px;
 }
 
 .liujo-gender-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  font-family: inherit;
   font-size: 12px;
-  color: #333;
+  color: #000000;
   cursor: pointer;
 }
 
 .liujo-nl-privacy {
+  font-family: inherit;
   font-size: 11px;
-  color: #888;
+  color: #888888;
   line-height: 1.5;
+  margin-top: 10px;
 }
 
 .liujo-nl-privacy a {
