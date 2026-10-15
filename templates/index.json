@@ -13,11 +13,30 @@
       "type": "liujo-hero-video",
       "settings": {
         "video_url": "https://media.liujo.com/PUBLIC/VIDEO/Liu_Jo_camp_15s_16х9.mp4",
+        "video_url_mobile": "",
+        "show_controls": true,
+        "height_desktop": "85vh",
+        "height_mobile": "75vh",
+        "overlay_color": "#000000",
         "overlay_opacity": 20,
+        "content_alignment": "center",
+        "content_position": "center",
         "tagline": "Campaign 2026",
+        "tagline_size_desktop": 13,
+        "tagline_size_mobile": 11,
+        "tagline_color": "#ffffff",
         "heading": "The Gigi Hadid Edit",
+        "heading_size_desktop": 52,
+        "heading_size_mobile": 32,
+        "heading_color": "#ffffff",
         "button_label": "Discover",
-        "button_link": "/collections/all"
+        "button_link": "/collections/all",
+        "button_font_size": 11,
+        "button_text_color": "#ffffff",
+        "button_bg_color": "rgba(0,0,0,0)",
+        "button_border_color": "#ffffff",
+        "button_hover_text_color": "#000000",
+        "button_hover_bg_color": "#ffffff"
       }
     },
     "hero_slider": {
@@ -26,17 +45,38 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "demo_image_desktop": "",
+            "demo_image_mobile": "",
+            "overlay_color": "#000000",
             "overlay_opacity": 15,
+            "content_alignment": "center",
+            "content_position": "center",
+            "subheading": "",
+            "subheading_size_desktop": 13,
+            "subheading_size_mobile": 11,
+            "subheading_color": "#ffffff",
             "heading": "Explore the Looks",
+            "heading_size_desktop": 48,
+            "heading_size_mobile": 28,
+            "heading_color": "#ffffff",
             "button_label": "Discover Collection",
-            "button_link": "/collections/all"
+            "button_link": "/collections/all",
+            "button_font_size": 11,
+            "button_text_color": "#ffffff",
+            "button_bg_color": "rgba(0,0,0,0)",
+            "button_border_color": "#ffffff",
+            "button_hover_text_color": "#000000",
+            "button_hover_bg_color": "#ffffff"
           }
         }
       },
       "block_order": [
         "slide_1"
       ],
-      "settings": {}
+      "settings": {
+        "slide_height_desktop": "85vh",
+        "slide_height_mobile": "70vh"
+      }
     },
     "product_carousel": {
       "type": "liujo-product-carousel",
@@ -114,17 +154,55 @@
         "banner_shirts": {
           "type": "banner",
           "settings": {
-            "title": "Shirts",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg",
-            "link": "/collections/all"
+            "aspect_ratio": "1 / 1",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20,
+            "content_alignment": "center",
+            "content_position": "center",
+            "subheading": "",
+            "subheading_size_desktop": 12,
+            "subheading_size_mobile": 10,
+            "subheading_color": "#ffffff",
+            "title": "Shirts",
+            "title_size_desktop": 30,
+            "title_size_mobile": 22,
+            "title_color": "#ffffff",
+            "button_label": "",
+            "link": "/collections/all",
+            "button_font_size": 11,
+            "button_text_color": "#ffffff",
+            "button_bg_color": "rgba(0,0,0,0)",
+            "button_border_color": "#ffffff",
+            "button_hover_text_color": "#000000",
+            "button_hover_bg_color": "#ffffff"
           }
         },
         "banner_jackets": {
           "type": "banner",
           "settings": {
-            "title": "Jackets",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg",
-            "link": "/collections/all"
+            "aspect_ratio": "1 / 1",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20,
+            "content_alignment": "center",
+            "content_position": "center",
+            "subheading": "",
+            "subheading_size_desktop": 12,
+            "subheading_size_mobile": 10,
+            "subheading_color": "#ffffff",
+            "title": "Jackets",
+            "title_size_desktop": 30,
+            "title_size_mobile": 22,
+            "title_color": "#ffffff",
+            "button_label": "",
+            "link": "/collections/all",
+            "button_font_size": 11,
+            "button_text_color": "#ffffff",
+            "button_bg_color": "rgba(0,0,0,0)",
+            "button_border_color": "#ffffff",
+            "button_hover_text_color": "#000000",
+            "button_hover_bg_color": "#ffffff"
           }
         }
       },
@@ -132,7 +210,14 @@
         "banner_shirts",
         "banner_jackets"
       ],
-      "settings": {}
+      "settings": {
+        "columns_desktop": "2",
+        "columns_mobile": "1",
+        "aspect_ratio": "1 / 1",
+        "gap_desktop": 16,
+        "gap_mobile": 12,
+        "full_width": false
+      }
     },
     "split_banners_bottoms": {
       "type": "liujo-split-banners",
@@ -140,17 +225,55 @@
         "banner_jeans": {
           "type": "banner",
           "settings": {
-            "title": "Jeans",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
-            "link": "/collections/all"
+            "aspect_ratio": "1 / 1",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20,
+            "content_alignment": "center",
+            "content_position": "center",
+            "subheading": "",
+            "subheading_size_desktop": 12,
+            "subheading_size_mobile": 10,
+            "subheading_color": "#ffffff",
+            "title": "Jeans",
+            "title_size_desktop": 30,
+            "title_size_mobile": 22,
+            "title_color": "#ffffff",
+            "button_label": "",
+            "link": "/collections/all",
+            "button_font_size": 11,
+            "button_text_color": "#ffffff",
+            "button_bg_color": "rgba(0,0,0,0)",
+            "button_border_color": "#ffffff",
+            "button_hover_text_color": "#000000",
+            "button_hover_bg_color": "#ffffff"
           }
         },
         "banner_shoes": {
           "type": "banner",
           "settings": {
-            "title": "Shoes",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg",
-            "link": "/collections/all"
+            "aspect_ratio": "1 / 1",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20,
+            "content_alignment": "center",
+            "content_position": "center",
+            "subheading": "",
+            "subheading_size_desktop": 12,
+            "subheading_size_mobile": 10,
+            "subheading_color": "#ffffff",
+            "title": "Shoes",
+            "title_size_desktop": 30,
+            "title_size_mobile": 22,
+            "title_color": "#ffffff",
+            "button_label": "",
+            "link": "/collections/all",
+            "button_font_size": 11,
+            "button_text_color": "#ffffff",
+            "button_bg_color": "rgba(0,0,0,0)",
+            "button_border_color": "#ffffff",
+            "button_hover_text_color": "#000000",
+            "button_hover_bg_color": "#ffffff"
           }
         }
       },
@@ -158,17 +281,44 @@
         "banner_jeans",
         "banner_shoes"
       ],
-      "settings": {}
+      "settings": {
+        "columns_desktop": "2",
+        "columns_mobile": "1",
+        "aspect_ratio": "1 / 1",
+        "gap_desktop": 16,
+        "gap_mobile": 12,
+        "full_width": false
+      }
     },
     "editorial_story": {
       "type": "liujo-editorial-story",
+      "disabled": true,
       "settings": {
         "image_position": "left",
+        "bg_color": "#fafafa",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "demo_image_url": "",
         "tagline": "Liu Jo Heritage",
+        "tagline_size_desktop": 12,
+        "tagline_size_mobile": 11,
+        "tagline_color": "#888888",
         "heading": "Italian Glamour & Contemporary Femininity",
+        "heading_size_desktop": 36,
+        "heading_size_mobile": 24,
+        "heading_color": "#111111",
         "description": "Born in the heart of the Italian fashion district of Carpi in 1995, Liu Jo embodies modern elegance and timeless allure. Every piece celebrates natural beauty through tailor-made fits, premium materials, and distinctive Italian craftsmanship.",
+        "description_size_desktop": 15,
+        "description_size_mobile": 13,
+        "description_color": "#555555",
         "button_label": "Read Our Story",
-        "button_link": "/pages/about"
+        "button_link": "/pages/about",
+        "button_font_size": 11,
+        "button_text_color": "#111111",
+        "button_bg_color": "rgba(0,0,0,0)",
+        "button_border_color": "#111111",
+        "button_hover_text_color": "#ffffff",
+        "button_hover_bg_color": "#111111"
       }
     },
     "boutique_services": {
@@ -213,6 +363,7 @@
         "service_3",
         "service_4"
       ],
+      "disabled": true,
       "settings": {}
     },
     "social_gallery": {
@@ -269,6 +420,7 @@
         "tile_5",
         "tile_6"
       ],
+      "disabled": true,
       "settings": {
         "title": "@LIUJO ON INSTAGRAM",
         "subtitle": "Tag @liujo and #LiuJoPeople to be featured in our lookbook"
