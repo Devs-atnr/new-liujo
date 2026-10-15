@@ -3,13 +3,92 @@
   Matches the "Explore the Looks" draggable product list carousel on https://www.liujo.com
 {% endcomment %}
 
-<div class="liujo-product-carousel-section" data-section-id="{{ section.id }}" data-section-type="liujo-product-carousel" data-liujo-carousel>
-  <div class="liujo-section-header">
-    <h2 class="liujo-title-display">{{ section.settings.title | default: 'Explore the Looks' }}</h2>
-    {%- if section.settings.subtitle != blank -%}
-      <div class="liujo-subtitle" style="margin-top: 8px;">{{ section.settings.subtitle }}</div>
-    {%- endif -%}
-  </div>
+<div class="liujo-product-carousel-section liujo-product-carousel-section--{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="liujo-product-carousel" data-liujo-carousel>
+  <style>
+    .liujo-product-carousel-section--{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | default: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | default: 40 }}px;
+      background-color: {{ section.settings.bg_color | default: '#ffffff' }};
+      width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .liujo-product-carousel-section--{{ section.id }} .liujo-carousel-track-wrapper {
+      padding: 0 !important;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+    .liujo-product-carousel-section--{{ section.id }} .liujo-carousel-track {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: {{ section.settings.gap_desktop | default: 0 }}px !important;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scroll-behavior: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none !important;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      width: 100%;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .liujo-product-carousel-section--{{ section.id }} .liujo-carousel-track::-webkit-scrollbar {
+      display: none !important;
+    }
+    .liujo-product-carousel-section--{{ section.id }} .liujo-carousel-track,
+    .liujo-product-carousel-section--{{ section.id }} .liujo-carousel-track *,
+    .liujo-product-carousel-section--{{ section.id }} .liujo-product-card-wrap,
+    .liujo-product-carousel-section--{{ section.id }} .liujo-product-card-wrap img,
+    .liujo-product-carousel-section--{{ section.id }} .liujo-product-card-wrap a {
+      -webkit-user-drag: none !important;
+      user-drag: none !important;
+    }
+    .liujo-product-carousel-section--{{ section.id }} .liujo-product-card-wrap {
+      flex: 0 0 calc(100% / {{ section.settings.columns_desktop | default: 6 }}) !important;
+      min-width: calc(100% / {{ section.settings.columns_desktop | default: 6 }}) !important;
+      max-width: calc(100% / {{ section.settings.columns_desktop | default: 6 }}) !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box;
+      scroll-snap-align: start;
+    }
+    @media (max-width: 1024px) {
+      .liujo-product-carousel-section--{{ section.id }} .liujo-product-card-wrap {
+        flex: 0 0 25% !important;
+        min-width: 25% !important;
+        max-width: 25% !important;
+      }
+    }
+    @media (max-width: 767px) {
+      .liujo-product-carousel-section--{{ section.id }} .liujo-carousel-track {
+        gap: {{ section.settings.gap_mobile | default: 0 }}px !important;
+      }
+      .liujo-product-carousel-section--{{ section.id }} .liujo-product-card-wrap {
+        flex: 0 0 calc(100% / {{ section.settings.columns_mobile | default: 2 }}) !important;
+        min-width: calc(100% / {{ section.settings.columns_mobile | default: 2 }}) !important;
+        max-width: calc(100% / {{ section.settings.columns_mobile | default: 2 }}) !important;
+      }
+    }
+    {% unless section.settings.show_arrows %}
+      .liujo-product-carousel-section--{{ section.id }} .liujo-carousel-arrow {
+        display: none !important;
+      }
+    {% endunless %}
+  </style>
+
+  {%- if section.settings.show_header and section.settings.title != blank -%}
+    <div class="liujo-section-header" style="text-align: center; margin-bottom: 24px;">
+      <h2 class="liujo-title-display">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <div class="liujo-subtitle" style="margin-top: 8px;">{{ section.settings.subtitle }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 
   <div class="liujo-carousel-track-wrapper">
     <!-- Prev Arrow Button -->
@@ -98,10 +177,105 @@
   {%- endif -%}
 </div>
 
+<script>
+  (function() {
+    function initHomepageCarousel() {
+      var section = document.querySelector('.liujo-product-carousel-section--{{ section.id }}');
+      if (!section) return;
+      var track = section.querySelector('[data-carousel-track]');
+      if (!track || track._hasLiuJoDrag) return;
+      track._hasLiuJoDrag = true;
+
+      track.querySelectorAll('img, a').forEach(function(el) {
+        el.setAttribute('draggable', 'false');
+      });
+
+      // Mouse Wheel Horizontal Scroll
+      var wheelTimer = null;
+      track.addEventListener('wheel', function(e) {
+        var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        if (Math.abs(delta) > 0) {
+          var canScrollRight = delta > 0 && (track.scrollLeft + track.clientWidth < track.scrollWidth - 4);
+          var canScrollLeft = delta < 0 && track.scrollLeft > 4;
+          if (canScrollRight || canScrollLeft) {
+            e.preventDefault();
+            track.style.scrollSnapType = 'none';
+            track.scrollLeft += delta * 1.25;
+            clearTimeout(wheelTimer);
+            wheelTimer = setTimeout(function() {
+              track.style.scrollSnapType = 'x proximity';
+            }, 120);
+          }
+        }
+      }, { passive: false });
+
+      // Mouse Drag
+      var isDown = false;
+      var startX = 0;
+      var scrollLeft = 0;
+      var hasDragged = false;
+
+      track.addEventListener('mousedown', function(e) {
+        if (e.button !== 0) return;
+        if (e.target.closest('button, [data-liujo-wishlist]')) return;
+        isDown = true;
+        hasDragged = false;
+        startX = e.pageX;
+        scrollLeft = track.scrollLeft;
+      });
+
+      window.addEventListener('mousemove', function(e) {
+        if (!isDown) return;
+        var diff = e.pageX - startX;
+        if (Math.abs(diff) > 5) {
+          hasDragged = true;
+          track.classList.add('is-dragging');
+          track.style.scrollSnapType = 'none';
+          e.preventDefault();
+        }
+        if (hasDragged) {
+          track.scrollLeft = scrollLeft - (diff * 1.35);
+        }
+      });
+
+      window.addEventListener('mouseup', function() {
+        if (!isDown) return;
+        isDown = false;
+        track.classList.remove('is-dragging');
+        track.style.scrollSnapType = 'x proximity';
+        setTimeout(function() {
+          hasDragged = false;
+        }, 150);
+      });
+
+      // Capture phase click listener prevents opening link when dragged
+      track.addEventListener('click', function(e) {
+        if (hasDragged) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+      }, true);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHomepageCarousel);
+    } else {
+      initHomepageCarousel();
+    }
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Liu Jo Product Carousel",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show Header (Title / Subtitle)",
+      "default": false
+    },
     {
       "type": "text",
       "id": "title",
@@ -129,16 +303,83 @@
       "label": "Number of products to show"
     },
     {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Desktop Columns Visible",
+      "options": [
+        { "value": "4", "label": "4 Columns" },
+        { "value": "5", "label": "5 Columns" },
+        { "value": "6", "label": "6 Columns (Reference Image Parity)" }
+      ],
+      "default": "6"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile Columns Visible",
+      "options": [
+        { "value": "2", "label": "2 Columns (Reference Image Parity)" },
+        { "value": "3", "label": "3 Columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Gap",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Gap",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Navigation Arrows",
+      "default": false
+    },
+    {
       "type": "checkbox",
       "id": "show_view_all",
       "label": "Show 'View all' button",
-      "default": true
+      "default": false
     },
     {
       "type": "text",
       "id": "view_all_label",
       "label": "View All Button Label",
       "default": "See all Clothing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 30
     }
   ],
   "presets": [

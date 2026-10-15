@@ -7,18 +7,33 @@
 {%- assign s_id = section.id -%}
 <div class="liujo-split-banners-section liujo-split-banners--{{ s_id }}" data-section-id="{{ s_id }}" data-section-type="liujo-split-banners">
   <style>
+    .liujo-split-banners--{{ s_id }} {
+      width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
     .liujo-split-banners--{{ s_id }} .liujo-split-grid {
+      display: grid;
       grid-template-columns: repeat({{ section.settings.columns_desktop | default: 2 }}, minmax(0, 1fr));
-      gap: {{ section.settings.gap_desktop | default: 16 }}px;
+      gap: {{ section.settings.gap_desktop | default: 0 }}px;
+      width: 100%;
+      margin: 0 auto;
       {% if section.settings.full_width %}
         max-width: 100%;
-        padding: 0 {{ section.settings.padding_x | default: 16 }}px;
+        padding: 0 !important;
+      {% else %}
+        max-width: var(--liujo-container-max, 1440px);
+        padding: 0 20px;
       {% endif %}
+      box-sizing: border-box;
     }
     @media (max-width: 767px) {
       .liujo-split-banners--{{ s_id }} .liujo-split-grid {
         grid-template-columns: repeat({{ section.settings.columns_mobile | default: 1 }}, minmax(0, 1fr));
-        gap: {{ section.settings.gap_mobile | default: 12 }}px;
+        gap: {{ section.settings.gap_mobile | default: 0 }}px;
+        {% if section.settings.full_width %}
+          padding: 0 !important;
+        {% endif %}
       }
     }
   </style>
@@ -29,15 +44,21 @@
       <div class="liujo-split-block-wrapper liujo-split-block--{{ b_id }}" {{ block.shopify_attributes }}>
         <style>
           .liujo-split-block--{{ b_id }} .liujo-split-block {
-            aspect-ratio: {{ block.settings.aspect_ratio | default: section.settings.aspect_ratio | default: '1 / 1' }};
+            aspect-ratio: {{ block.settings.aspect_ratio | default: section.settings.aspect_ratio | default: '3 / 4' }};
+            display: block;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__overlay {
             background-color: {{ block.settings.overlay_color | default: '#000000' }};
-            opacity: {{ block.settings.overlay_opacity | default: 20 | divided_by: 100.0 }};
+            opacity: {{ block.settings.overlay_opacity | default: 15 | divided_by: 100.0 }};
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__content {
-            align-items: {{ block.settings.content_position | default: 'flex-end' }};
-            justify-content: {{ block.settings.content_alignment | default: 'center' }};
+            display: flex;
+            flex-direction: column;
+            justify-content: {{ block.settings.content_position | default: 'center' }};
+            align-items: {{ block.settings.content_alignment | default: 'center' }};
             text-align: {{ block.settings.content_alignment | default: 'center' }};
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__subheading {
@@ -49,20 +70,20 @@
             margin-bottom: 8px;
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__title {
-            font-size: {{ block.settings.title_size_desktop | default: 30 }}px;
+            font-size: {{ block.settings.title_size_desktop | default: 38 }}px;
             color: {{ block.settings.title_color | default: '#ffffff' }};
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 700;
             margin: 0 0 {% if block.settings.button_label != blank %}16px{% else %}0{% endif %};
-            line-height: 1.2;
+            line-height: 1.15;
           }
           @media (max-width: 767px) {
             .liujo-split-block--{{ b_id }} .liujo-split-block__subheading {
               font-size: {{ block.settings.subheading_size_mobile | default: 10 }}px;
             }
             .liujo-split-block--{{ b_id }} .liujo-split-block__title {
-              font-size: {{ block.settings.title_size_mobile | default: 22 }}px;
+              font-size: {{ block.settings.title_size_mobile | default: 26 }}px;
             }
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__btn {
