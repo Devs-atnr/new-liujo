@@ -85,6 +85,30 @@
     background-color: #000000;
   }
 
+  /* Disabled Tab Button State */
+  .liujo-tab-button.is-disabled,
+  .liujo-tab-button:disabled,
+  .liujo-tab-button[aria-disabled="true"] {
+    opacity: 0.3 !important;
+    cursor: not-allowed !important;
+    color: #888888 !important;
+    pointer-events: auto !important;
+  }
+
+  .liujo-tab-button.is-disabled:hover,
+  .liujo-tab-button:disabled:hover,
+  .liujo-tab-button[aria-disabled="true"]:hover {
+    color: #888888 !important;
+    font-weight: 500 !important;
+    cursor: not-allowed !important;
+  }
+
+  .liujo-tab-button.is-disabled::after,
+  .liujo-tab-button:disabled::after,
+  .liujo-tab-button[aria-disabled="true"]::after {
+    display: none !important;
+  }
+
   .liujo-tab-panel {
     display: none;
     width: 100%;
@@ -115,9 +139,10 @@
     padding: 0;
     list-style: none;
     width: 100%;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
+    cursor: grab !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    touch-action: pan-y pinch-zoom;
     gap: 0 !important;
   }
 
@@ -130,6 +155,26 @@
   .liujo-tabs-track.is-dragging {
     cursor: grabbing !important;
     scroll-behavior: auto !important;
+  }
+
+  .liujo-tabs-track,
+  .liujo-tab-card,
+  .liujo-tab-card a,
+  .liujo-tab-card img {
+    -webkit-user-drag: none !important;
+    -khtml-user-drag: none !important;
+    -moz-user-drag: none !important;
+    -o-user-drag: none !important;
+    user-drag: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+
+  .liujo-tabs-track.is-dragging,
+  .liujo-tabs-track.is-dragging * {
+    cursor: grabbing !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
   }
 
   /* 4 cards visible edge-to-edge, no gap */
@@ -386,20 +431,21 @@
           aria-controls="panel-recommendations-{{ section.id }}"
           id="tab-btn-recommendations-{{ section.id }}"
           data-target="panel-recommendations-{{ section.id }}"
-          onclick="window.switchLiuJoTab(this, 'panel-recommendations-{{ section.id }}')"
         >
           {{ section.settings.tab_1_title | default: 'YOU MIGHT LIKE' }}
         </button>
 
         <button
           type="button"
-          class="liujo-tab-button"
+          class="liujo-tab-button is-disabled"
           role="tab"
           aria-selected="false"
           aria-controls="panel-recently-viewed-{{ section.id }}"
           id="tab-btn-recently-viewed-{{ section.id }}"
           data-target="panel-recently-viewed-{{ section.id }}"
-          onclick="window.switchLiuJoTab(this, 'panel-recently-viewed-{{ section.id }}')"
+          disabled="disabled"
+          aria-disabled="true"
+          title="No recently viewed products yet"
         >
           {{ section.settings.tab_2_title | default: 'RECENTLY VIEWED' }}
         </button>
@@ -702,6 +748,9 @@
     // 1. Global Tab Switcher Function
     window.switchLiuJoTab = function(btn, targetId) {
       if (!btn || !targetId) return;
+      if (btn.disabled || btn.classList.contains('is-disabled') || btn.getAttribute('aria-disabled') === 'true') {
+        return;
+      }
       var section = btn.closest('.liujo-tabs-section');
       if (!section) return;
 
@@ -761,13 +810,48 @@
       }
     {%- endif -%}
 
-    // 3. Update Recently Viewed Track with Stored Viewed Products
+    // 3. Tab Button State Management (Disabled when empty, Enabled when products viewed)
+    window.updateTabButtonStates = function(section) {
+      if (!section) return;
+      var currentProdId = section.getAttribute('data-product-id') || '';
+      var rvBtn = section.querySelector('[id^="tab-btn-recently-viewed-"]') || section.querySelector('[data-target*="recently-viewed"]');
+      if (!rvBtn) return;
+
+      var viewed = [];
+      try {
+        viewed = JSON.parse(localStorage.getItem('liujo_recently_viewed') || '[]');
+      } catch(e) {
+        viewed = [];
+      }
+      if (!Array.isArray(viewed)) viewed = [];
+
+      var validViewed = viewed.filter(function(p) {
+        if (!p || !p.url) return false;
+        if (currentProdId && String(p.id) === String(currentProdId)) return false;
+        return true;
+      });
+
+      if (validViewed.length === 0) {
+        rvBtn.classList.add('is-disabled');
+        rvBtn.setAttribute('disabled', 'disabled');
+        rvBtn.setAttribute('aria-disabled', 'true');
+        rvBtn.setAttribute('title', 'No recently viewed products yet');
+      } else {
+        rvBtn.classList.remove('is-disabled');
+        rvBtn.removeAttribute('disabled');
+        rvBtn.setAttribute('aria-disabled', 'false');
+        rvBtn.removeAttribute('title');
+      }
+    };
+
+    // 4. Update Recently Viewed Track with Stored Viewed Products + Padding for Full Slider
     var showPrice = {{ section.settings.show_price | json }};
 
     window.updateRecentlyViewedGrid = function(section) {
       if (!section) return;
       var currentProdId = section.getAttribute('data-product-id') || '';
       var grid = section.querySelector('.liujo-recently-viewed-track');
+      var rvPanel = section.querySelector('[id^="panel-recently-viewed-"]');
       var emptyEl = section.querySelector('.liujo-recently-viewed-empty');
       if (!grid) return;
 
@@ -778,14 +862,15 @@
         if (!Array.isArray(viewed)) viewed = [];
 
         var validViewed = viewed.filter(function(p) {
-          return p && p.url && String(p.id) !== String(currentProdId);
+          if (!p || !p.url) return false;
+          if (currentProdId && String(p.id) === String(currentProdId)) return false;
+          return true;
         });
 
         if (validViewed.length === 0) {
           grid.innerHTML = '';
           grid.style.display = 'none';
           if (emptyEl) emptyEl.style.display = 'block';
-          // Hide arrows for empty state
           var arrows = grid.closest('.liujo-tabs-slider-wrap');
           if (arrows) {
             arrows.querySelectorAll('.liujo-tabs-arrow').forEach(function(a) { a.style.display = 'none'; });
@@ -793,7 +878,7 @@
           return;
         }
 
-        // Has products — show grid, hide empty
+        // Has products — show grid, hide empty, show arrows
         grid.style.display = '';
         if (emptyEl) emptyEl.style.display = 'none';
         var sliderWrap = grid.closest('.liujo-tabs-slider-wrap');
@@ -802,7 +887,10 @@
         }
 
         var cards = [];
+        var viewedUrls = {};
+
         validViewed.forEach(function(prod) {
+          viewedUrls[prod.url] = true;
           var priceHtml = '';
           if (showPrice && prod.price) {
             priceHtml = '<div class="liujo-tab-price"><span>' + prod.price + '</span>' +
@@ -812,20 +900,42 @@
           cards.push(
             '<li class="liujo-tab-card" data-product-url="' + prod.url + '">' +
               '<div class="liujo-tab-card-media">' +
-                '<a href="' + prod.url + '" class="liujo-tab-card-link">' +
-                  '<img src="' + prod.image + '" alt="' + (prod.title || 'Product').replace(/"/g, '&quot;') + '" class="img-primary ' + (prod.secondary_image ? 'has-secondary' : '') + '" loading="lazy">' +
-                  (prod.secondary_image ? '<img src="' + prod.secondary_image + '" alt="' + (prod.title || 'Product').replace(/"/g, '&quot;') + '" class="img-secondary" loading="lazy">' : '') +
+                '<a href="' + prod.url + '" class="liujo-tab-card-link" draggable="false">' +
+                  '<img src="' + prod.image + '" alt="' + (prod.title || 'Product').replace(/"/g, '&quot;') + '" class="img-primary ' + (prod.secondary_image ? 'has-secondary' : '') + '" loading="lazy" draggable="false">' +
+                  (prod.secondary_image ? '<img src="' + prod.secondary_image + '" alt="' + (prod.title || 'Product').replace(/"/g, '&quot;') + '" class="img-secondary" loading="lazy" draggable="false">' : '') +
                 '</a>' +
               '</div>' +
               '<div class="liujo-tab-info">' +
-                '<a href="' + prod.url + '" class="liujo-tab-title">' + (prod.title || '') + '</a>' +
+                '<a href="' + prod.url + '" class="liujo-tab-title" draggable="false">' + (prod.title || '') + '</a>' +
                 priceHtml +
               '</div>' +
             '</li>'
           );
         });
 
+        // Pad with Tab 1 items up to at least 8 cards so Recently Viewed always has overflow to slide
+        if (cards.length < 8) {
+          var recCards = section.querySelectorAll('.liujo-recommendations-track .liujo-tab-card');
+          if (recCards && recCards.length > 0) {
+            for (var i = 0; i < recCards.length && cards.length < 8; i++) {
+              var recUrl = recCards[i].getAttribute('data-product-url');
+              if (!recUrl || !viewedUrls[recUrl]) {
+                cards.push(recCards[i].outerHTML);
+              }
+            }
+            var padIdx = 0;
+            while (cards.length < 8 && recCards.length > 0) {
+              cards.push(recCards[padIdx % recCards.length].outerHTML);
+              padIdx++;
+            }
+          }
+        }
+
         grid.innerHTML = cards.join('');
+
+        if (rvPanel && typeof window.setupTabCarousel === 'function') {
+          window.setupTabCarousel(rvPanel);
+        }
 
         if (window.syncLiuJoWishlistButtons) {
           window.syncLiuJoWishlistButtons();
@@ -835,8 +945,7 @@
       }
     };
 
-    // 4. Carousel Interactions: Smooth Drag, Wheel Scroll, Touch Swipe & Arrows for Both Tracks
-    // Matches the Home Page product carousel behavior from assets/liujo-custom.js
+    // 5. Carousel Interactions: Smooth Drag, Wheel Scroll, Touch Swipe & Arrows for Both Tracks
     window.setupTabCarousel = function(panel) {
       if (!panel) return;
       var track = panel.querySelector('[data-tabs-track]');
@@ -857,6 +966,7 @@
         prevBtn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
+          track.style.scrollBehavior = 'smooth';
           track.scrollBy({ left: -getStep(), behavior: 'smooth' });
         });
       }
@@ -866,14 +976,24 @@
         nextBtn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
+          track.style.scrollBehavior = 'smooth';
           track.scrollBy({ left: getStep(), behavior: 'smooth' });
         });
       }
 
+      // Block ghost drag on all child links & images
+      track.querySelectorAll('a, img').forEach(function(el) {
+        el.setAttribute('draggable', 'false');
+        el.ondragstart = function() { return false; };
+      });
+
       if (track._hasLiuJoCarousel) return;
       track._hasLiuJoCarousel = true;
 
-      track.ondragstart = function(e) { e.preventDefault(); };
+      track.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
 
       // Mouse Wheel Horizontal Scroll
       track.addEventListener('wheel', function(e) {
@@ -883,59 +1003,117 @@
           var canScrollLeft = delta < 0 && track.scrollLeft > 2;
           if (canScrollRight || canScrollLeft) {
             e.preventDefault();
+            track.style.scrollBehavior = 'auto';
             track.scrollLeft += delta;
           }
         }
       }, { passive: false });
 
-      // Touch & Mouse Drag to Scroll (identical to home carousel in assets/liujo-custom.js)
-      var isDown = false;
+      // Robust Pointer Drag (Mouse & Touch) with Momentum
+      var isPointerDown = false;
       var startX = 0;
-      var scrollLeft = 0;
+      var scrollLeftStart = 0;
+      var velX = 0;
+      var lastX = 0;
+      var lastTime = 0;
       var hasMoved = false;
+      var activePointerId = null;
+      var momentumId = null;
 
-      track.addEventListener('mousedown', function(e) {
-        if (e.button !== 0) return;
+      function stopMomentum() {
+        if (momentumId) {
+          cancelAnimationFrame(momentumId);
+          momentumId = null;
+        }
+      }
+
+      function applyMomentum() {
+        if (Math.abs(velX) < 0.5) {
+          momentumId = null;
+          track.style.scrollBehavior = 'smooth';
+          return;
+        }
+        track.scrollLeft += velX;
+        velX *= 0.92;
+        momentumId = requestAnimationFrame(applyMomentum);
+      }
+
+      track.addEventListener('pointerdown', function(e) {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
         if (e.target.closest('button, [data-liujo-wishlist]')) return;
-        isDown = true;
+
+        stopMomentum();
+        isPointerDown = true;
         hasMoved = false;
+        startX = e.clientX;
+        scrollLeftStart = track.scrollLeft;
+        lastX = e.clientX;
+        lastTime = Date.now();
+        velX = 0;
+        activePointerId = e.pointerId;
+
         track.classList.add('is-dragging');
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
+        track.style.scrollBehavior = 'auto';
+
+        try {
+          track.setPointerCapture(e.pointerId);
+        } catch (err) {}
       });
 
-      track.addEventListener('mouseleave', function() {
-        if (!isDown) return;
-        isDown = false;
-        track.classList.remove('is-dragging');
-      });
+      track.addEventListener('pointermove', function(e) {
+        if (!isPointerDown || e.pointerId !== activePointerId) return;
 
-      track.addEventListener('mouseup', function() {
-        if (!isDown) return;
-        isDown = false;
-        track.classList.remove('is-dragging');
-        setTimeout(function() {
-          hasMoved = false;
-        }, 50);
-      });
-
-      track.addEventListener('mousemove', function(e) {
-        if (!isDown) return;
-        e.preventDefault();
-        var x = e.pageX - track.offsetLeft;
-        var walk = (x - startX) * 1.5;
-        if (Math.abs(walk) > 4) {
+        var x = e.clientX;
+        var diff = x - startX;
+        if (Math.abs(diff) > 4) {
           hasMoved = true;
         }
-        track.scrollLeft = scrollLeft - walk;
+        track.scrollLeft = scrollLeftStart - diff;
+
+        var now = Date.now();
+        var dt = now - lastTime;
+        if (dt > 0) {
+          velX = (lastX - x) * (16 / dt);
+        }
+        lastX = x;
+        lastTime = now;
       });
 
-      // Card Click: prevent navigation only if dragging occurred
+      function endPointerDrag(e) {
+        if (!isPointerDown) return;
+        if (e && activePointerId !== null && e.pointerId !== activePointerId) return;
+
+        isPointerDown = false;
+        track.classList.remove('is-dragging');
+
+        if (activePointerId !== null) {
+          try {
+            track.releasePointerCapture(activePointerId);
+          } catch (err) {}
+          activePointerId = null;
+        }
+
+        if (hasMoved) {
+          applyMomentum();
+        } else {
+          track.style.scrollBehavior = 'smooth';
+        }
+
+        setTimeout(function() {
+          hasMoved = false;
+        }, 100);
+      }
+
+      track.addEventListener('pointerup', endPointerDrag);
+      track.addEventListener('pointercancel', endPointerDrag);
+
+      // Capture phase click listener: swallows clicks after dragging
       track.addEventListener('click', function(e) {
         if (hasMoved) {
           e.preventDefault();
           e.stopPropagation();
-          return;
+          e.stopImmediatePropagation();
+          return false;
         }
         if (e.target.closest('[data-liujo-wishlist]')) return;
         var card = e.target.closest('.liujo-tab-card');
@@ -945,22 +1123,32 @@
             window.location.href = link.href;
           }
         }
-      });
+      }, true);
     };
 
-    // 5. Initialize All Tab Sections
+    // 6. Initialize All Tab Sections
     function initAllSections() {
       var sections = document.querySelectorAll('.liujo-tabs-section');
       sections.forEach(function(sec) {
-        window.updateRecentlyViewedGrid(sec);
+        if (typeof window.updateTabButtonStates === 'function') {
+          window.updateTabButtonStates(sec);
+        }
+        if (typeof window.updateRecentlyViewedGrid === 'function') {
+          window.updateRecentlyViewedGrid(sec);
+        }
         sec.querySelectorAll('.liujo-tab-panel').forEach(function(panel) {
           window.setupTabCarousel(panel);
         });
 
         var tabButtons = sec.querySelectorAll('.liujo-tab-button');
         tabButtons.forEach(function(btn) {
+          if (btn._hasClickBound) return;
+          btn._hasClickBound = true;
           btn.addEventListener('click', function(e) {
             e.preventDefault();
+            if (btn.disabled || btn.classList.contains('is-disabled') || btn.getAttribute('aria-disabled') === 'true') {
+              return;
+            }
             var targetId = btn.getAttribute('data-target');
             if (targetId) {
               window.switchLiuJoTab(btn, targetId);
@@ -975,6 +1163,13 @@
     } else {
       initAllSections();
     }
+
+    window.addEventListener('pageshow', initAllSections);
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'liujo_recently_viewed') {
+        initAllSections();
+      }
+    });
   })();
 </script>
 
