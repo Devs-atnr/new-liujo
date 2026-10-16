@@ -1,59 +1,27 @@
-{%- assign is_cc_page = false -%}
-{%- case page.handle -%}
-  {%- when 'orders-and-shipments' -%}
-    {%- assign is_cc_page = true -%}
-    {%- assign cc_tab = 'orders' -%}
-  {%- when 'payments' -%}
-    {%- assign is_cc_page = true -%}
-    {%- assign cc_tab = 'payments' -%}
-  {%- when 'refunds-and-returns', 'returns' -%}
-    {%- assign is_cc_page = true -%}
-    {%- assign cc_tab = 'returns' -%}
-  {%- when 'make-a-return' -%}
-    {%- assign is_cc_page = true -%}
-    {%- assign cc_tab = 'make_return' -%}
-  {%- when 'size-guide' -%}
-    {%- assign is_cc_page = true -%}
-    {%- assign cc_tab = 'size_guide' -%}
-  {%- when 'how-to-take-care', 'care' -%}
-    {%- assign is_cc_page = true -%}
-    {%- assign cc_tab = 'care' -%}
-  {%- when 'faq', 'faqs' -%}
-    {%- assign is_cc_page = true -%}
-    {%- assign cc_tab = 'faq' -%}
-  {%- when 'customer-care' -%}
-    {%- assign is_cc_page = true -%}
-    {%- assign cc_tab = 'orders' -%}
-{%- endcase -%}
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
 
-{%- if is_cc_page -%}
-  {%- render 'liujo-customer-care', active_tab: cc_tab -%}
-{%- else -%}
-  {{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
 
-  {%- style -%}
+  @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+  }
+{%- endstyle -%}
 
-    @media screen and (min-width: 750px) {
-      .section-{{ section.id }}-padding {
-        padding-top: {{ section.settings.padding_top }}px;
-        padding-bottom: {{ section.settings.padding_bottom }}px;
-      }
-    }
-  {%- endstyle -%}
-
-  <div class="page-width page-width--narrow section-{{ section.id }}-padding">
-    <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {{ page.title | escape }}
-    </h1>
-    <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      {{ page.content }}
-    </div>
+<div class="page-width page-width--narrow section-{{ section.id }}-padding">
+  <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    {{ page.title | escape }}
+  </h1>
+  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {{ page.content }}
   </div>
-{%- endif -%}
+</div>
 
 {% schema %}
 {
