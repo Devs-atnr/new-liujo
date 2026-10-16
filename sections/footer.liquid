@@ -125,10 +125,10 @@
           {%- else -%}
             <li class="liujo-footer-link-item"><a href="/pages/orders-and-shipments" class="liujo-footer-link">Orders & Shipping Services</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/payments" class="liujo-footer-link">Payments</a></li>
-            <li class="liujo-footer-link-item"><a href="/pages/refunds-and-returns" class="liujo-footer-link">Return and Exchange Policy</a></li>
-            <li class="liujo-footer-link-item"><a href="https://www.liujo.com/returns/search" target="_blank" rel="noopener noreferrer" class="liujo-footer-link">Make a Return</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/returns" class="liujo-footer-link">Return and Exchange Policy</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/returns" class="liujo-footer-link">Make a Return</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/size-guide" class="liujo-footer-link">Size Guide</a></li>
-            <li class="liujo-footer-link-item"><a href="/pages/how-to-take-care" class="liujo-footer-link">How to take care</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/care" class="liujo-footer-link">How to take care</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/faq" class="liujo-footer-link">FAQ</a></li>
           {%- endif -%}
         </ul>
@@ -140,13 +140,13 @@
         <ul class="liujo-footer-links">
           {%- if section.settings.col_2_menu != blank and linklists[section.settings.col_2_menu].links.size > 0 -%}
             {%- for link in linklists[section.settings.col_2_menu].links -%}
-              <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link{% if link.title == 'Stories' %} liujo-footer-link--stories{% endif %}">{% if link.title == 'Stories' %}<span style="color:#ff6699;">Stories</span>{% else %}{{ link.title }}{% endif %}</a></li>
+              <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link{% if link.title == 'Stories' %} liujo-footer-link--stories{% endif %}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li class="liujo-footer-link-item"><a href="/pages/stories" class="liujo-footer-link liujo-footer-link--stories"><span style="color:#ff6699;">Stories</span></a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/stories" class="liujo-footer-link liujo-footer-link--stories">Stories</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/about" class="liujo-footer-link">About Liu Jo</a></li>
-            <li class="liujo-footer-link-item"><a href="https://bettertogether.liujo.com/en?&utm_medium=banner&utm_source=google&utm_campaign=20210622_EN_en_BetterTogether_footer" target="_blank" rel="noopener noreferrer" class="liujo-footer-link">Better Together</a></li>
-            <li class="liujo-footer-link-item"><a href="/pages/collections" class="liujo-footer-link">Collections</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/sustainability" class="liujo-footer-link">Better Together</a></li>
+            <li class="liujo-footer-link-item"><a href="/collections/all" class="liujo-footer-link">Collections</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/retail-experience" class="liujo-footer-link">Retail Experience</a></li>
           {%- endif -%}
         </ul>
@@ -176,14 +176,14 @@
               <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li class="liujo-footer-link-item"><a href="https://exelitegroup.com/people/work-with-us/" target="_blank" rel="noopener noreferrer" class="liujo-footer-link">Careers</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/careers" class="liujo-footer-link">Careers</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/privacy-policy" class="liujo-footer-link">Privacy Policy</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/cookie-policy" class="liujo-footer-link">Cookie Policy</a></li>
-            <li class="liujo-footer-link-item"><button type="button" class="liujo-footer-link" id="btn-modify-cookies" onclick="alert('Cookie preferences: All necessary and analytics cookies are active. You can manage profiling options here.');">Cookies Preferences</button></li>
-            <li class="liujo-footer-link-item"><a href="/pages/terms-and-conditions" class="liujo-footer-link">Terms and condition</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/cookies-preferences" class="liujo-footer-link">Cookies Preferences</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/terms" class="liujo-footer-link">Terms and condition</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/terms-of-sale" class="liujo-footer-link">Terms of sale</a></li>
-            <li class="liujo-footer-link-item"><a href="/pages/accessibility-statement" class="liujo-footer-link">Accessibility Statement</a></li>
-            <li class="liujo-footer-link-item"><a href="https://s3liujo-pdf.s3.eu-central-1.amazonaws.com/MOG+WB_ING.pdf" target="_blank" rel="noopener noreferrer" class="liujo-footer-link">Organisation model</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/accessibility" class="liujo-footer-link">Accessibility Statement</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/organisation-model" class="liujo-footer-link">Organisation model</a></li>
           {%- endif -%}
         </ul>
       </div>
