@@ -411,10 +411,8 @@
 
     {%- render 'liujo-cart-modal' -%}
     {%- render 'liujo-share-modal' -%}
-    {%- if settings.show_wishlist != false -%}
-      {%- render 'liujo-wishlist-drawer' -%}
-      {%- render 'liujo-wishlist-toast' -%}
-    {%- endif -%}
+    {%- render 'liujo-wishlist-drawer' -%}
+    {%- render 'liujo-wishlist-toast' -%}
 
     <script src="{{ 'liujo-custom.js' | asset_url }}?v={{ 'now' | date: '%s' }}" defer="defer"></script>
   </body>
