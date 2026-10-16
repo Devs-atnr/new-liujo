@@ -685,7 +685,7 @@
     top: var(--liujo-header-h-mob, 60px) !important;
   }
 
-  /* Hide Sort By on mobile — only FILTER button shown */
+  /* Hide desktop sort controls on mobile — toolbar handles sorting */
   #FacetSortDrawerForm,
   .facets-vertical-sort,
   #FacetSortForm,
@@ -1213,7 +1213,7 @@
 /* Product Heading (Title) */
 .card__heading {
   font-family: var(--liujo-font-main) !important;
-  font-size: 12.5px !important;
+  font-size: 11px !important;
   font-weight: 500 !important;
   letter-spacing: 0.02em !important;
   text-transform: capitalize !important;
@@ -1252,8 +1252,8 @@
 
 .liujo-card-price-wrapper .price {
   font-family: var(--liujo-font-main) !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
   letter-spacing: 0.02em !important;
   color: #111 !important;
   margin: 0 !important;
@@ -1265,14 +1265,14 @@
 }
 
 .liujo-card-price-wrapper .price--on-sale .price-item--regular {
-  font-size: 12px !important;
+  font-size: 10px !important;
   font-weight: 400 !important;
   color: #888 !important;
   text-decoration: line-through !important;
   margin-left: 6px !important;
 }
 
-/* Hide clutter */
+/* Hide duplicate price inside card-information (shown via liujo-card-price-wrapper instead) */
 .card-information > .price {
   display: none !important;
 }

@@ -59,9 +59,15 @@
     </button>
   </div>
 
-  <!-- Liu Jo Mobile Filter Toolbar (Full Width) -->
+  <!-- Liu Jo Mobile Split Toolbar (Sort By | Filter) -->
   <div class="liujo-plp-split-toolbar large-up-hide medium-hide">
-    <button type="button" class="liujo-split-btn liujo-split-btn--filter" id="LiuJoMobileFilterTrigger" aria-expanded="false" style="width: 100%; justify-content: center;">
+    <button type="button" class="liujo-split-btn liujo-split-btn--sort" id="LiuJoMobileSortTrigger" aria-expanded="false">
+      <span>SORT BY</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 4v16M7 20l-3-3m3 3l3-3M17 20V4m0 0l-3 3m3-3l3 3"/>
+      </svg>
+    </button>
+    <button type="button" class="liujo-split-btn liujo-split-btn--filter" id="LiuJoMobileFilterTrigger" aria-expanded="false">
       <span>FILTER</span>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M4 6h16M4 12h12M4 18h8"/>
@@ -72,7 +78,18 @@
     </button>
   </div>
 
-  {% comment %} Mobile Sort Dropdown removed {% endcomment %}
+  <!-- Liu Jo Mobile Sort Dropdown -->
+  <ul class="liujo-mobile-sort-dropdown large-up-hide medium-hide" id="LiuJoMobileSortDropdown" style="display: none;">
+    {%- assign sort_options = results.sort_options | default: collection.sort_options -%}
+    {%- for option in sort_options -%}
+      <li
+        class="liujo-sort-option{% if option.value == sort_by %} is-selected{% endif %}"
+        data-sort-value="{{ option.value }}"
+      >
+        {{ option.name }}
+      </li>
+    {%- endfor -%}
+  </ul>
 
   {%- if filter_type == 'vertical' or filter_type == 'horizontal' -%}
     <facet-filters-form class="facets small-hide">
