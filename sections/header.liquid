@@ -287,6 +287,8 @@
                       <svg class="liujo-chevron{% if is_outlet %} is-outlet{% endif %}" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{% if is_outlet %}{{ section.settings.outlet_color | default: '#e6006e' }}{% else %}currentColor{% endif %}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </button>
                     <ul class="liujo-mob-sublist">
+                      <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+                      <li class="liujo-mob-subpanel__see-all"><a href="{{ child_link.url }}">See all {{ child_link.title }}</a></li>
                       {%- for grandchild_link in child_link.links -%}
                         <li>
                           <a href="{{ grandchild_link.url }}"{% if is_outlet %} class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};"{% endif %}>
@@ -338,6 +340,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all New arrivals</a></li>
               <li><a href="/collections/all">The Gigi Hadid Edit <sup class="liujo-megamenu__badge">NEW</sup></a></li>
               <li><a href="/collections/all">Spring Summer 2026</a></li>
               <li><a href="/collections/all">Iconic Denim</a></li>
@@ -350,6 +354,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Clothing</a></li>
               <li><a href="/collections/all">Jackets & Blazers</a></li>
               <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
               <li><a href="/collections/all">Shirts & Blouses</a></li>
@@ -363,6 +369,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Jeans</a></li>
               <li><a href="/collections/all">Bottom Up Denim</a></li>
               <li><a href="/collections/all">Flare & Bootcut</a></li>
               <li><a href="/collections/all">Straight & Wide Leg</a></li>
@@ -375,6 +383,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Bags</a></li>
               <li><a href="/collections/all">Crossbody Bags</a></li>
               <li><a href="/collections/all">Shoulder Bags</a></li>
               <li><a href="/collections/all">Tote Bags</a></li>
@@ -386,6 +396,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Shoes</a></li>
               <li><a href="/collections/all">Sneakers</a></li>
               <li><a href="/collections/all">Ankle Boots</a></li>
               <li><a href="/collections/all">Pumps & Heels</a></li>
@@ -397,6 +409,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Accessories</a></li>
               <li><a href="/collections/all">Belts</a></li>
               <li><a href="/collections/all">Scarves & Foulards</a></li>
             </ul>
@@ -407,6 +421,8 @@
               <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Outlet</a></li>
               <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Dresses & Clothing</a></li>
               <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Bags & Accessories</a></li>
               <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Shoes</a></li>
@@ -429,6 +445,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all New arrivals</a></li>
               <li><a href="/collections/all">Spring Summer 2026</a></li>
               <li><a href="/collections/all">Liu Jo Uomo Icons</a></li>
             </ul>
@@ -439,6 +457,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Clothing</a></li>
               <li><a href="/collections/all">Jackets & Coats</a></li>
               <li><a href="/collections/all">Shirts & Polos</a></li>
               <li><a href="/collections/all">Trousers & Chinos</a></li>
@@ -450,6 +470,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Jeans</a></li>
               <li><a href="/collections/all">Regular Fit</a></li>
               <li><a href="/collections/all">Slim Fit</a></li>
             </ul>
@@ -460,6 +482,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Shoes</a></li>
               <li><a href="/collections/all">Sneakers</a></li>
               <li><a href="/collections/all">Boots</a></li>
             </ul>
@@ -470,6 +494,8 @@
               <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Outlet</a></li>
               <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">Men's Outlet</a></li>
             </ul>
           </li>
@@ -485,6 +511,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Baby</a></li>
               <li><a href="/collections/all">Dresses & sets</a></li>
               <li><a href="/collections/all">Bottom</a></li>
               <li><a href="/collections/all">Outerwear</a></li>
@@ -498,6 +526,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Kids</a></li>
               <li><a href="/collections/all">Outerwear</a></li>
               <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
               <li><a href="/collections/all">Topwear</a></li>
@@ -512,6 +542,8 @@
               <svg class="liujo-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Girls</a></li>
               <li><a href="/collections/all">Outerwear</a></li>
               <li><a href="/collections/all">Dresses & Jumpsuits</a></li>
               <li><a href="/collections/all">Topwear</a></li>
@@ -526,6 +558,8 @@
               <svg class="liujo-chevron is-outlet" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ section.settings.outlet_color | default: '#e6006e' }}" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <ul class="liujo-mob-sublist">
+              <li class="liujo-mob-subpanel__back"><button type="button" data-subpanel-back><span class="liujo-back-chevron">‹</span> Back</button></li>
+              <li class="liujo-mob-subpanel__see-all"><a href="/collections/all">See all Outlet</a></li>
               <li><a href="/collections/all" class="is-outlet" style="color: {{ section.settings.outlet_color | default: '#e6006e' }};">8-16 years</a></li>
             </ul>
           </li>

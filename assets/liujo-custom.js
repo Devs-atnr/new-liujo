@@ -221,24 +221,36 @@ function initLiuJoMobileDrawer() {
     });
   });
 
-  // Collapsible Accordions inside Mobile Drawer
+  // Sliding Sub-Panel Navigation (liujo.com style)
   accordionTriggers.forEach(trigger => {
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
       const parentItem = trigger.closest('.liujo-mob-nav-item');
       if (!parentItem) return;
 
-      const isOpen = parentItem.classList.contains('is-open');
-      // Optional: close other accordions in the same panel
+      // Close any other open panels in the same list
       const siblingItems = parentItem.parentElement.querySelectorAll('.liujo-mob-nav-item');
       siblingItems.forEach(item => {
         if (item !== parentItem) item.classList.remove('is-open');
       });
 
-      if (isOpen) {
+      // Slide in this sub-panel
+      parentItem.classList.add('is-open');
+
+      // Scroll drawer body to top when sub-panel opens
+      var body = parentItem.closest('.liujo-mob-drawer__body');
+      if (body) body.scrollTop = 0;
+    });
+  });
+
+  // Back button inside sub-panels
+  var backBtns = document.querySelectorAll('[data-subpanel-back]');
+  backBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var parentItem = btn.closest('.liujo-mob-nav-item');
+      if (parentItem) {
         parentItem.classList.remove('is-open');
-      } else {
-        parentItem.classList.add('is-open');
       }
     });
   });

@@ -756,7 +756,9 @@ body.has-search-open .liujo-megamenu {
 .liujo-mob-drawer__body {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 12px 0 24px;
+  position: relative;
 }
 
 .liujo-mob-nav-list {
@@ -819,46 +821,92 @@ body.has-search-open .liujo-megamenu {
   color: #e6006e !important;
 }
 
-/* Collapsible Sublist */
+/* Sliding Sub-Panel (liujo.com style) */
 .liujo-mob-sublist {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  background-color: #ffffff;
   list-style: none;
-  padding: 6px 24px 14px 32px;
+  padding: 0;
   margin: 0;
-  background-color: #fafafa;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 2;
 }
 
 .liujo-mob-nav-item.is-open .liujo-mob-sublist {
+  transform: translateX(0);
+}
+
+.liujo-mob-subpanel__back {
+  padding: 14px 24px;
+}
+
+.liujo-mob-subpanel__back button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: #111;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.liujo-back-chevron {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.liujo-mob-subpanel__see-all {
+  padding: 0 24px;
+  margin-bottom: 8px;
+}
+
+.liujo-mob-subpanel__see-all a {
   display: block;
+  font-size: 15px;
+  font-weight: 400;
+  color: #111;
+  text-decoration: none;
+  padding: 14px 0;
 }
 
 .liujo-mob-sublist li {
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .liujo-mob-sublist a {
   display: block;
-  font-size: 13px;
-  color: #555555;
+  font-size: 14px;
+  color: #111111;
   text-decoration: none;
-  padding: 4px 0;
+  padding: 14px 24px;
 }
 
 .liujo-mob-sublist a:hover {
   color: #000000;
+  background-color: #fafafa;
 }
 
-/* Drawer Bottom: Divider + Wishlist & Account (Screenshot 3) */
+/* Drawer Bottom: Divider + Wishlist & Account */
 .liujo-mob-drawer__bottom {
   padding: 0 24px 28px;
   background-color: #ffffff;
+  margin-top: auto;
 }
 
 .liujo-mob-drawer__divider {
-  width: 100%;
+  width: 60%;
   height: 1px;
-  background-color: #111111;
-  margin-bottom: 22px;
+  background-color: #d0d0d0;
+  margin: 0 auto 22px;
 }
 
 .liujo-mob-drawer__links {
@@ -1678,10 +1726,12 @@ body.has-search-open .liujo-megamenu {
   .liujo-help-block {
     padding: 32px 0;
     border-bottom: 1px solid #e9e9e9 !important;
+    text-align: center;
   }
   .liujo-newsletter-block {
     padding: 32px 0 40px 0;
     border-top: none !important;
+    text-align: center;
   }
   .liujo-back-to-top__container {
     width: 100%;
@@ -1893,8 +1943,11 @@ body.has-search-open .liujo-megamenu {
   }
   .liujo-nl-actions-row {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 18px;
+  }
+  .liujo-nl-label {
+    text-align: left;
   }
   .liujo-nl-submit-wrap {
     width: 100%;
