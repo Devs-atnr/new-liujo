@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "customer_care": {
+      "type": "liujo-customer-care",
+      "settings": {
+        "active_tab": "size_guide",
+        "hero_tagline": "LIU JO CLIENT SERVICES"
+      }
+    }
+  },
+  "order": [
+    "customer_care"
+  ]
+}
