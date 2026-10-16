@@ -342,7 +342,12 @@
   .mobile-facets__wrapper {
     left: 0 !important;
     right: auto !important;
+    top: 0 !important;
     justify-content: flex-start !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 10000 !important;
   }
 
   .mobile-facets__inner {
@@ -350,11 +355,21 @@
     margin-right: auto !important;
     width: 100vw !important;
     max-width: none !important;
+    height: 100vh !important;
+    height: 100dvh !important;
     transform: translateX(-105%) !important;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
     border-right: none !important;
     border-left: none !important;
     background: #ffffff !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 10001 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .menu-opening .mobile-facets__inner,
@@ -388,7 +403,7 @@
   .mobile-facets__heading {
     text-align: left !important;
     font-family: var(--liujo-font-main) !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
     letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
@@ -396,10 +411,11 @@
     margin: 0 !important;
   }
 
-  .liujo-mobile-drawer-close {
+  .liujo-mobile-drawer-close,
+  .mobile-facets__close-button {
     background: transparent !important;
     border: none !important;
-    font-size: 18px !important;
+    font-size: 20px !important;
     font-weight: 300 !important;
     line-height: 1 !important;
     color: #111111 !important;
@@ -1137,8 +1153,8 @@
 
   #product-grid.product-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    padding: 0 2px 48px 2px !important;
-    gap: 16px 4px !important;
+    padding: 0 6px 48px 6px !important;
+    gap: 20px 6px !important;
     margin: 0 !important;
   }
 
@@ -1174,9 +1190,30 @@
   transform: scale(1.02) !important;
 }
 
-/* Carousel Dash Indicators Removed per user request */
+/* Carousel Dash Indicators */
 .liujo-card-indicators {
-  display: none !important;
+  position: absolute !important;
+  bottom: 10px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  gap: 6px !important;
+  z-index: 3 !important;
+}
+
+.liujo-card-indicators .liujo-indicator-dot {
+  width: 20px !important;
+  height: 3px !important;
+  border-radius: 0 !important;
+  background-color: rgba(0, 0, 0, 0.25) !important;
+  transition: background-color 0.2s ease !important;
+  cursor: pointer !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.liujo-card-indicators .liujo-indicator-dot.is-active {
+  background-color: rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Wishlist Heart Trigger */
@@ -1214,13 +1251,13 @@
 .card__heading {
   font-family: var(--liujo-font-main) !important;
   font-size: 11px !important;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
   letter-spacing: 0.02em !important;
   text-transform: capitalize !important;
   color: #111 !important;
-  line-height: 1.35 !important;
-  margin: 8px 0 2px 0 !important;
-  padding: 0 !important;
+  line-height: 1.4 !important;
+  margin: 10px 0 2px 0 !important;
+  padding: 0 4px !important;
 }
 
 .card__heading a {
