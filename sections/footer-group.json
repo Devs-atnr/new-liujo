@@ -13,7 +13,28 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "settings": {}
+      "custom_css": [
+        ".liujo-main-footer {padding-top: 15px;}"
+      ],
+      "settings": {
+        "show_back_to_top": true,
+        "back_to_top_text": "GO BACK TO",
+        "help_title": "May we help you?",
+        "help_phone": "+44 330 8087718",
+        "help_hours": "Monday to Friday, 9.00 to 18.00",
+        "help_link": "",
+        "newsletter_title": "Sign up for updates",
+        "show_gender_pills": false,
+        "col_1_title": "Customer Care",
+        "col_1_menu": "",
+        "col_2_title": "Liu Jo World",
+        "col_2_menu": "",
+        "col_3_title": "Liu Jo for you",
+        "col_3_menu": "",
+        "col_4_title": "Corporate",
+        "col_4_menu": "",
+        "copyright_text": "© 2026 Digital Boite s.r.l. All Rights Reserved. P.IVA and C.F. 03796760365. Liu Jo Official Store."
+      }
     }
   },
   "order": [
