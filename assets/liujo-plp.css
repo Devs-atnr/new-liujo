@@ -1174,11 +1174,12 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   .product-grid-container {
     margin-top: 0 !important;
     padding-top: 0 !important;
+    overflow-x: hidden !important;
   }
 
   #product-grid.product-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    padding: 0 6px 48px 6px !important;
+    padding: 16px 6px 48px 6px !important;
     gap: 20px 6px !important;
     margin: 0 !important;
   }
@@ -1186,7 +1187,7 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   #product-grid.product-grid.grid--mobile-compact {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
-    padding: 0 4px 48px 4px !important;
+    padding: 16px 4px 48px 4px !important;
   }
 }
 
