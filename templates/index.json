@@ -11,6 +11,7 @@
   "sections": {
     "hero_video": {
       "type": "liujo-hero-video",
+      "custom_css": [],
       "settings": {
         "video_url": "https://media.liujo.com/PUBLIC/VIDEO/Liu_Jo_camp_15s_16х9.mp4",
         "video_url_mobile": "",
@@ -40,14 +41,14 @@
         "mob_content_bg": "#ffffff",
         "mob_tagline_color": "#888888",
         "mob_heading_color": "#000000",
-        "mob_heading_size": 32,
+        "mob_heading_size": 44,
         "mob_button_style": "underline",
         "mob_button_color": "#000000",
         "mob_button_bg": "#000000",
         "mob_button_border_color": "#000000",
         "mob_button_font_size": 11,
         "mob_content_padding_top": 28,
-        "mob_content_padding_bottom": 24
+        "mob_content_padding_bottom": 20
       }
     },
     "hero_slider": {
