@@ -413,6 +413,37 @@
   }
 </style>
 
+<script>
+  window.switchLiuJoTab = function(btn, targetId) {
+    if (!btn || !targetId) return;
+    var sec = btn.closest('.liujo-tabs-section');
+    if (!sec) return;
+    var btns = sec.querySelectorAll('.liujo-tab-button');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.remove('is-active');
+      btns[i].setAttribute('aria-selected', 'false');
+    }
+    btn.classList.add('is-active');
+    btn.setAttribute('aria-selected', 'true');
+    var panels = sec.querySelectorAll('.liujo-tab-panel');
+    for (var j = 0; j < panels.length; j++) {
+      panels[j].classList.remove('is-active');
+      panels[j].style.setProperty('display', 'none', 'important');
+    }
+    var ap = document.getElementById(targetId);
+    if (ap) {
+      ap.classList.add('is-active');
+      ap.style.setProperty('display', 'block', 'important');
+      if (typeof window.updateRecentlyViewedGrid === 'function') {
+        window.updateRecentlyViewedGrid(sec);
+      }
+      if (typeof window.setupTabCarousel === 'function') {
+        window.setupTabCarousel(ap);
+      }
+    }
+  };
+</script>
+
 <div class="liujo-tabs-section liujo-tabs-section-{{ section.id }}" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}">
   <div class="liujo-tabs-container">
     <!-- Tabs Navigation Header -->
@@ -723,120 +754,123 @@
 
         <ul class="liujo-tabs-track liujo-recently-viewed-track" data-tabs-track id="liujo-recently-viewed-grid-{{ section.id }}">
           {%- assign fallback_url = '/collections/all' -%}
+          <!-- 1. Monogram Jacquard Hobo Bag -->
           <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
             <div class="liujo-tab-card-media">
               <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwad3a193a/images/E-4B7001PX002S1815-7-N.jpeg?sw=594&sh=826" alt="Monogram Platform Sandals" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw398aeb5d/images/E-4B7001PX002S1815-6-N.jpeg?sw=594&sh=826" alt="Monogram Platform Sandals" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw10d79bf2/images/E-AA4003E002700093-1-N.jpeg?sw=594&sh=826" alt="Monogram Jacquard Hobo Bag" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw7e49177a/images/E-AA4003E002700093-2-N.jpeg?sw=594&sh=826" alt="Monogram Jacquard Hobo Bag" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="{{ fallback_url }}" class="liujo-tab-title">Monogram Platform Sandals</a>
+              <a href="{{ fallback_url }}" class="liujo-tab-title">Monogram Jacquard Hobo Bag</a>
               <div class="liujo-tab-price">
-                <span>€ 233.00</span>
-                <span class="liujo-tab-price-compare">€ 775.00</span>
+                <span>€ 159.00</span>
               </div>
             </div>
           </li>
+          <!-- 2. Leather Biker Boots with Buckles -->
           <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
             <div class="liujo-tab-card-media">
               <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0fc7c95b/images/E-ZB7301T055B79215-4-N.jpeg?sw=594&sh=826" alt="Sneakers with All-Over Rhinestones" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb9dbf93d/images/E-ZB7301T055B79215-3-N.jpeg?sw=594&sh=826" alt="Sneakers with All-Over Rhinestones" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw5f190e2f/images/E-SF4112EX01400093-1-N.jpeg?sw=594&sh=826" alt="Leather Biker Boots with Buckles" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwf90a9e7f/images/E-SF4112EX01400093-2-N.jpeg?sw=594&sh=826" alt="Leather Biker Boots with Buckles" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="{{ fallback_url }}" class="liujo-tab-title">Sneakers with All-Over Rhinestones</a>
+              <a href="{{ fallback_url }}" class="liujo-tab-title">Leather Biker Boots with Buckles</a>
               <div class="liujo-tab-price">
-                <span>€ 188.00</span>
-                <span class="liujo-tab-price-compare">€ 625.00</span>
+                <span>€ 229.00</span>
               </div>
             </div>
           </li>
+          <!-- 3. Quilted Crossbody Bag with Chain -->
           <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
             <div class="liujo-tab-card-media">
               <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4f25c2d3/images/E-WF6299T498002069-1-N.jpeg?sw=594&sh=826" alt="Silk-Blend Blouse" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw0f1110e5/images/E-WF6299T498002069-2-N.jpeg?sw=594&sh=826" alt="Silk-Blend Blouse" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4f13459c/images/E-AA4110E008622222-1-N.jpeg?sw=594&sh=826" alt="Quilted Crossbody Bag with Chain" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw18c7c943/images/E-AA4110E008622222-2-N.jpeg?sw=594&sh=826" alt="Quilted Crossbody Bag with Chain" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="{{ fallback_url }}" class="liujo-tab-title">Silk-Blend Blouse</a>
+              <a href="{{ fallback_url }}" class="liujo-tab-title">Quilted Crossbody Bag with Chain</a>
               <div class="liujo-tab-price">
-                <span>€ 315.00</span>
-                <span class="liujo-tab-price-compare">€ 1,050.00</span>
+                <span>€ 139.00</span>
               </div>
             </div>
           </li>
+          <!-- 4. Padded Long Coat with Belt -->
           <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
             <div class="liujo-tab-card-media">
               <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4143de39/images/E-WF6309T743A02069-3-N.jpeg?sw=594&sh=826" alt="Silk-Blend Trousers" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw1fd02bed/images/E-WF6309T743A02069-4-N.jpeg?sw=594&sh=826" alt="Silk-Blend Trousers" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw8325a77f/images/E-TF4001T495104107-1-N.jpeg?sw=594&sh=826" alt="Padded Long Coat with Belt" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwbe8a8bfa/images/E-TF4001T495104107-2-N.jpeg?sw=594&sh=826" alt="Padded Long Coat with Belt" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="{{ fallback_url }}" class="liujo-tab-title">Silk-Blend Trousers</a>
+              <a href="{{ fallback_url }}" class="liujo-tab-title">Padded Long Coat with Belt</a>
               <div class="liujo-tab-price">
-                <span>€ 315.00</span>
-                <span class="liujo-tab-price-compare">€ 1,050.00</span>
+                <span>€ 349.00</span>
               </div>
             </div>
           </li>
+          <!-- 5. Aviator Sunglasses with Jewels -->
           <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
             <div class="liujo-tab-card-media">
-              <span class="liujo-tab-badge">THE GIGI HADID EDIT</span>
               <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw38804d25/images/E-ZB7305D041679212-3-N.jpeg?sw=594&sh=826" alt="Flare jeans with belt jewel" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw7e7b58ae/images/E-ZB7305D041679212-4-N.jpeg?sw=594&sh=826" alt="Flare jeans with belt jewel" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw9e14a2bf/images/E-LJ760S714-1-N.jpeg?sw=594&sh=826" alt="Aviator Sunglasses with Jewels" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw8e8bf92b/images/E-LJ760S714-2-N.jpeg?sw=594&sh=826" alt="Aviator Sunglasses with Jewels" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="{{ fallback_url }}" class="liujo-tab-title">Flare jeans with belt jewel</a>
+              <a href="{{ fallback_url }}" class="liujo-tab-title">Aviator Sunglasses with Jewels</a>
               <div class="liujo-tab-price">
-                <span>€ 239.00</span>
+                <span>€ 145.00</span>
               </div>
             </div>
           </li>
+          <!-- 6. Suede Chelsea Boots -->
           <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
             <div class="liujo-tab-card-media">
               <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw1bbca6b9/images/E-WF6256T743AX0797-1-N.jpeg?sw=594&sh=826" alt="Blazer in flannel" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw6fa71391/images/E-WF6256T743AX0797-2-N.jpeg?sw=594&sh=826" alt="Blazer in flannel" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw7831c8eb/images/E-SF4115P0102S1815-1-N.jpeg?sw=594&sh=826" alt="Suede Chelsea Boots" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw15fc0f1b/images/E-SF4115P0102S1815-2-N.jpeg?sw=594&sh=826" alt="Suede Chelsea Boots" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="{{ fallback_url }}" class="liujo-tab-title">Blazer in flannel</a>
+              <a href="{{ fallback_url }}" class="liujo-tab-title">Suede Chelsea Boots</a>
               <div class="liujo-tab-price">
-                <span>€ 299.00</span>
+                <span>€ 199.00</span>
               </div>
             </div>
           </li>
+          <!-- 7. Reversible Leather Belt with Logo -->
           <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
             <div class="liujo-tab-card-media">
               <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw283c7518/images/E-WF6294T716AL9168-1-N.jpeg?sw=855&sh=1189" alt="Mini skirt in tweed" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwbe55b9d2/images/E-WF6294T716AL9168-2-N.jpeg?sw=855&sh=1189" alt="Mini skirt in tweed" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw61efb054/images/E-AA4150E000300093-1-N.jpeg?sw=594&sh=826" alt="Reversible Leather Belt with Logo" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw4f25b2d8/images/E-AA4150E000300093-2-N.jpeg?sw=594&sh=826" alt="Reversible Leather Belt with Logo" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="{{ fallback_url }}" class="liujo-tab-title">Mini skirt in tweed</a>
+              <a href="{{ fallback_url }}" class="liujo-tab-title">Reversible Leather Belt with Logo</a>
               <div class="liujo-tab-price">
-                <span>€ 179.00</span>
+                <span>€ 79.00</span>
               </div>
             </div>
           </li>
+          <!-- 8. Monogram Wool Scarf -->
           <li class="liujo-tab-card" data-product-url="{{ fallback_url }}">
             <div class="liujo-tab-card-media">
               <a href="{{ fallback_url }}" class="liujo-tab-card-link">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-4-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-primary has-secondary" loading="lazy">
-                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dwb6498c1f/images/E-TF6252JS923L9265-3-N.jpeg?sw=594&sh=826" alt="T-shirt with print" class="img-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw32512a10/images/E-3F4002T030000093-1-N.jpeg?sw=594&sh=826" alt="Monogram Wool Scarf" class="img-primary has-secondary" loading="lazy">
+                <img src="https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Sites-liujo-master-catalog/default/dw6425197f/images/E-3F4002T030000093-2-N.jpeg?sw=594&sh=826" alt="Monogram Wool Scarf" class="img-secondary" loading="lazy">
               </a>
             </div>
             <div class="liujo-tab-info">
-              <a href="{{ fallback_url }}" class="liujo-tab-title">T-shirt with print</a>
+              <a href="{{ fallback_url }}" class="liujo-tab-title">Monogram Wool Scarf</a>
               <div class="liujo-tab-price">
-                <span>€ 119.00</span>
+                <span>€ 89.00</span>
               </div>
             </div>
           </li>
@@ -854,10 +888,22 @@
   </div>
 </div>
 
+{%- if product != blank -%}
+  <script type="application/json" id="liujo-pdp-data-{{ section.id }}">
+    {
+      "id": {{ product.id | json }},
+      "title": {{ product.title | json }},
+      "url": {{ product.url | json }},
+      "image": {{ product.featured_media | image_url: width: 600 | json }},
+      "price": {{ product.price | money | json }}
+    }
+  </script>
+{%- endif -%}
+
 <script>
-  (function() {
-    // 1. Global Tab Switcher Function
-    window.switchLiuJoTab = function(btn, targetId) {
+  // 1. Global Tab Switcher Function
+  window.switchLiuJoTab = function(btn, targetId) {
+    try {
       if (!btn || !targetId) return;
       var section = btn.closest('.liujo-tabs-section');
       if (!section) return;
@@ -888,38 +934,51 @@
           window.setupTabCarousel(activePanel);
         }
       }
-    };
+    } catch(err) {
+      console.warn('switchLiuJoTab error:', err);
+    }
+  };
 
-    // 2. Record Current Product into localStorage
-    {%- if product != blank -%}
-      try {
-        var curProd = {
-          id: {{ product.id | json }},
-          title: {{ product.title | json }},
-          url: {{ product.url | json }},
-          image: {{ product.featured_media | image_url: width: 600 | json }},
-          secondary_image: {% if product.media.size > 1 %}{{ product.media[1] | image_url: width: 600 | json }}{% else %}null{% endif %},
-          price: {{ product.price | money | json }},
-          compare_at_price: {% if product.compare_at_price > product.price %}{{ product.compare_at_price | money | json }}{% else %}null{% endif %}
-        };
+  // Delegated document click listener so tab switches unconditionally
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.liujo-tab-button');
+    if (btn) {
+      var targetId = btn.getAttribute('data-target');
+      if (targetId && typeof window.switchLiuJoTab === 'function') {
+        window.switchLiuJoTab(btn, targetId);
+      }
+    }
+  });
 
-        var stored = [];
-        try {
-          stored = JSON.parse(localStorage.getItem('liujo_recently_viewed') || '[]');
-        } catch(e) {
-          stored = [];
-        }
-
-        if (curProd.id && curProd.url) {
+  (function() {
+    // 2. Record Current Product into localStorage via safe JSON tag
+    try {
+      var dataEl = document.getElementById('liujo-pdp-data-{{ section.id }}');
+      if (dataEl && dataEl.textContent) {
+        var curProd = JSON.parse(dataEl.textContent);
+        if (curProd && curProd.id && curProd.url) {
+          var stored = [];
+          try {
+            stored = JSON.parse(localStorage.getItem('liujo_recently_viewed') || '[]');
+          } catch(e) {
+            stored = [];
+          }
+          if (!Array.isArray(stored)) stored = [];
           var updated = stored.filter(function(p) { return p && String(p.id) !== String(curProd.id); });
           updated.unshift(curProd);
           if (updated.length > 20) updated = updated.slice(0, 20);
           localStorage.setItem('liujo_recently_viewed', JSON.stringify(updated));
         }
-      } catch (err) {
-        console.warn('Recently viewed storage error:', err);
       }
-    {%- endif -%}
+    } catch(err) {
+      console.warn('Recently viewed storage error:', err);
+    }
+
+    // Cache initial Tab 2 fallback cards
+    var initialRVTrack = document.getElementById('liujo-recently-viewed-grid-{{ section.id }}');
+    if (initialRVTrack && !window._liuJoDefaultRVHtml) {
+      window._liuJoDefaultRVHtml = initialRVTrack.innerHTML;
+    }
 
     // 3. Tab Visibility & Recently Viewed Grid Population
     var showPrice = {{ section.settings.show_price | json }};
@@ -943,6 +1002,7 @@
         return p && p.url && p.image;
       });
 
+      // If user has viewed items in localStorage, populate them into Tab 2
       if (validViewed.length > 0) {
         var otherViewed = validViewed.filter(function(p) {
           return String(p.id) !== String(currentProdId);
@@ -959,40 +1019,34 @@
           viewedUrls[prod.url] = true;
           var priceHtml = '';
           if (showPrice && prod.price) {
-            priceHtml = '<div class="liujo-tab-price"><span>' + prod.price + '</span>' +
-              (prod.compare_at_price ? '<span class="liujo-tab-price-compare">' + prod.compare_at_price + '</span>' : '') +
-              '</div>';
+            priceHtml = '<div class="liujo-tab-price"><span>' + prod.price + '</span></div>';
           }
           cards.push(
             '<li class="liujo-tab-card" data-product-url="' + prod.url + '">' +
               '<div class="liujo-tab-card-media">' +
-                '<a href="' + prod.url + '" class="liujo-tab-card-link" draggable="false">' +
-                  '<img src="' + prod.image + '" alt="' + (prod.title || 'Product').replace(/"/g, '&quot;') + '" class="img-primary ' + (prod.secondary_image ? 'has-secondary' : '') + '" loading="lazy" draggable="false">' +
-                  (prod.secondary_image ? '<img src="' + prod.secondary_image + '" alt="' + (prod.title || 'Product').replace(/"/g, '&quot;') + '" class="img-secondary" loading="lazy" draggable="false">' : '') +
+                '<a href="' + prod.url + '" class="liujo-tab-card-link">' +
+                  '<img src="' + prod.image + '" alt="' + (prod.title || 'Product').replace(/"/g, '&quot;') + '" class="img-primary ' + (prod.secondary_image ? 'has-secondary' : '') + '" loading="lazy">' +
+                  (prod.secondary_image ? '<img src="' + prod.secondary_image + '" alt="' + (prod.title || 'Product').replace(/"/g, '&quot;') + '" class="img-secondary" loading="lazy">' : '') +
                 '</a>' +
               '</div>' +
               '<div class="liujo-tab-info">' +
-                '<a href="' + prod.url + '" class="liujo-tab-title" draggable="false">' + (prod.title || '') + '</a>' +
+                '<a href="' + prod.url + '" class="liujo-tab-title">' + (prod.title || '') + '</a>' +
                 priceHtml +
               '</div>' +
             '</li>'
           );
         });
 
-        // Pad with Tab 1 items up to at least 8 cards so Recently Viewed always has overflow to slide
-        if (cards.length < 8) {
-          var recCards = section.querySelectorAll('.liujo-recommendations-track .liujo-tab-card');
-          if (recCards && recCards.length > 0) {
-            for (var i = 0; i < recCards.length && cards.length < 8; i++) {
-              var recUrl = recCards[i].getAttribute('data-product-url');
-              if (!recUrl || !viewedUrls[recUrl]) {
-                cards.push(recCards[i].outerHTML);
-              }
-            }
-            var padIdx = 0;
-            while (cards.length < 8 && recCards.length > 0) {
-              cards.push(recCards[padIdx % recCards.length].outerHTML);
-              padIdx++;
+        // Pad remaining items with Tab 2 default distinct items (so it NEVER duplicates Tab 1)
+        if (cards.length < 8 && window._liuJoDefaultRVHtml) {
+          var padWrap = document.createElement('div');
+          padWrap.innerHTML = window._liuJoDefaultRVHtml;
+          var padCards = padWrap.querySelectorAll('.liujo-tab-card');
+          for (var pIdx = 0; pIdx < padCards.length && cards.length < 8; pIdx++) {
+            var defUrl = padCards[pIdx].getAttribute('data-product-url');
+            if (!defUrl || !viewedUrls[defUrl]) {
+              cards.push(padCards[pIdx].outerHTML);
+              if (defUrl) viewedUrls[defUrl] = true;
             }
           }
         }
@@ -1003,76 +1057,28 @@
       if (rvPanel) {
         window.setupTabCarousel(rvPanel);
       }
-
-      if (window.syncLiuJoWishlistButtons) {
-        window.syncLiuJoWishlistButtons();
-      }
     };
 
     window.updateTabVisibilityAndGrid = window.updateRecentlyViewedGrid;
 
-    // 4. Carousel Interactions: Smooth Drag, Wheel Scroll, Touch Swipe & Arrows for Both Tracks
+    // 4. Carousel Interactions: Smooth Drag, Wheel Scroll & Momentum (Matching Home Page)
     window.setupTabCarousel = function(panel) {
       if (!panel) return;
       var track = panel.querySelector('[data-tabs-track]');
       if (!track) return;
 
-      var prevBtn = panel.querySelector('[data-tabs-prev]');
-      var nextBtn = panel.querySelector('[data-tabs-next]');
-
-      function getStep() {
-        var card = track.querySelector('.liujo-tab-card');
-        var cardW = card ? card.getBoundingClientRect().width : 280;
-        var count = window.innerWidth <= 767 ? 1 : 2;
-        return cardW * count;
-      }
-
-      if (prevBtn && !prevBtn._hasBound) {
-        prevBtn._hasBound = true;
-        prevBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          track.scrollBy({ left: -getStep(), behavior: 'smooth' });
-        });
-      }
-
-      if (nextBtn && !nextBtn._hasBound) {
-        nextBtn._hasBound = true;
-        nextBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          track.scrollBy({ left: getStep(), behavior: 'smooth' });
-        });
-      }
-
-      // Block native browser ghost dragging on cards
-      track.querySelectorAll('a, img').forEach(function(el) {
-        el.setAttribute('draggable', 'false');
-        el.ondragstart = function() { return false; };
-      });
-
       if (track._hasLiuJoCarousel) return;
       track._hasLiuJoCarousel = true;
-
-      track.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
-      });
 
       // Mouse Wheel Horizontal Scroll
       track.addEventListener('wheel', function(e) {
         var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
         if (Math.abs(delta) > 0) {
-          var canScrollRight = delta > 0 && (track.scrollLeft + track.clientWidth < track.scrollWidth - 2);
-          var canScrollLeft = delta < 0 && track.scrollLeft > 2;
-          if (canScrollRight || canScrollLeft) {
-            e.preventDefault();
-            track.scrollLeft += delta;
-          }
+          track.scrollLeft += delta;
         }
-      }, { passive: false });
+      }, { passive: true });
 
-      // Smooth Mouse Drag to Scroll with Momentum
+      // Smooth Mouse Drag to Scroll with Momentum (Home Page standard from assets/liujo-custom.js)
       var isDown = false;
       var startX = 0;
       var scrollLeftStart = 0;
@@ -1081,7 +1087,6 @@
       var lastTime = 0;
       var hasMoved = false;
       var momentumId = null;
-      var clickedLink = null;
 
       function stopMomentum() {
         if (momentumId) {
@@ -1107,26 +1112,46 @@
         stopMomentum();
         isDown = true;
         hasMoved = false;
-        startX = e.pageX;
+        track.classList.add('is-dragging');
+        startX = e.pageX - track.offsetLeft;
         scrollLeftStart = track.scrollLeft;
         lastX = e.pageX;
         lastTime = Date.now();
         velX = 0;
-
-        clickedLink = e.target.closest('a');
-
-        track.classList.add('is-dragging');
-        // Prevent default browser HTML5 ghost drag
-        e.preventDefault();
       });
 
-      window.addEventListener('mousemove', function(e) {
+      track.addEventListener('mouseleave', function() {
+        if (isDown) {
+          isDown = false;
+          track.classList.remove('is-dragging');
+          if (hasMoved) {
+            applyMomentum();
+          }
+        }
+      });
+
+      track.addEventListener('mouseup', function() {
+        if (isDown) {
+          isDown = false;
+          track.classList.remove('is-dragging');
+          if (hasMoved) {
+            applyMomentum();
+          }
+          setTimeout(function() {
+            hasMoved = false;
+          }, 120);
+        }
+      });
+
+      track.addEventListener('mousemove', function(e) {
         if (!isDown) return;
-        var diff = (e.pageX - startX) * 1.5;
-        if (Math.abs(e.pageX - startX) > 4) {
+        e.preventDefault();
+        var x = e.pageX - track.offsetLeft;
+        var walk = (x - startX) * 1.5;
+        if (Math.abs(walk) > 4) {
           hasMoved = true;
         }
-        track.scrollLeft = scrollLeftStart - diff;
+        track.scrollLeft = scrollLeftStart - walk;
 
         var now = Date.now();
         var dt = now - lastTime;
@@ -1135,28 +1160,9 @@
         }
         lastX = e.pageX;
         lastTime = now;
-      }, { passive: false });
-
-      window.addEventListener('mouseup', function(e) {
-        if (!isDown) return;
-        isDown = false;
-        track.classList.remove('is-dragging');
-
-        if (hasMoved) {
-          applyMomentum();
-          setTimeout(function() {
-            hasMoved = false;
-          }, 150);
-        } else {
-          // If not moved, it was a normal click - navigate if link clicked
-          if (clickedLink && clickedLink.href) {
-            window.location.href = clickedLink.href;
-          }
-        }
-        clickedLink = null;
       });
 
-      // Capture phase click listener on track
+      // Capture phase click listener: swallows clicks after dragging
       track.addEventListener('click', function(e) {
         if (hasMoved) {
           e.preventDefault();
@@ -1184,7 +1190,7 @@
           btn.addEventListener('click', function(e) {
             e.preventDefault();
             var targetId = btn.getAttribute('data-target');
-            if (targetId) {
+            if (targetId && typeof window.switchLiuJoTab === 'function') {
               window.switchLiuJoTab(btn, targetId);
             }
           });
