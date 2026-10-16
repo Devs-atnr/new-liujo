@@ -117,6 +117,9 @@
     border: none !important;
     grid-template-columns: none !important;
     grid-template-rows: none !important;
+    /* Prevent scroll-trigger animation from creating a containing block that traps fixed-position filter panel */
+    contain: none !important;
+    filter: none !important;
   }
 
   .facets-wrapper {
@@ -377,6 +380,7 @@
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     pointer-events: auto !important;
+    filter: none !important;
   }
 
   .menu-opening .mobile-facets__inner,
@@ -693,6 +697,12 @@
   top: calc(-1 * var(--liujo-announcement-h, 0px)) !important;
   z-index: 95 !important;
   background: #ffffff !important;
+}
+
+/* Lower header z-index when mobile filter drawer is open so panel appears ABOVE header */
+body.overflow-hidden-mobile .shopify-section-group-header-group,
+body.overflow-hidden-mobile .liujo-header-wrapper {
+  z-index: 1 !important;
 }
 
 .facets-wrapper {
