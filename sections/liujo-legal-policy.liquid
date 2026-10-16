@@ -1,0 +1,386 @@
+{% comment %}
+  LIU JO CORPORATE LEGAL & POLICY SECTION
+  Supports Privacy Policy, Cookie Policy, Terms & Conditions, Terms of Sale, and Accessibility Statement.
+{% endcomment %}
+
+<div class="liujo-legal-page" data-section-id="{{ section.id }}">
+  <!-- Hero Banner -->
+  <div class="liujo-legal-hero">
+    <div class="liujo-legal-hero__inner">
+      <span class="liujo-legal-hero__tag">CORPORATE &amp; LEGAL</span>
+      <h1 class="liujo-legal-hero__title">
+        {% case section.settings.active_policy %}
+          {% when 'privacy' %}Privacy Policy &amp; Personal Data
+          {% when 'cookie' %}Cookie Policy
+          {% when 'terms' %}Terms and Conditions
+          {% when 'terms_sale' %}General Terms of Sale
+          {% when 'accessibility' %}Accessibility Statement
+          {% else %}{{ page.title | default: 'Legal Notice' }}
+        {% endcase %}
+      </h1>
+      <p class="liujo-legal-hero__date">Last updated: September 2025 | Digital Boîte s.r.l. &amp; Liu Jo S.p.A.</p>
+    </div>
+  </div>
+
+  <div class="liujo-legal-container">
+    <!-- Legal Policy Sub-Navigation -->
+    <nav class="liujo-legal-nav">
+      <a href="/pages/privacy-policy" class="legal-nav-link{% if section.settings.active_policy == 'privacy' %} is-active{% endif %}">Privacy Policy</a>
+      <a href="/pages/cookie-policy" class="legal-nav-link{% if section.settings.active_policy == 'cookie' %} is-active{% endif %}">Cookie Policy</a>
+      <a href="/pages/terms-and-conditions" class="legal-nav-link{% if section.settings.active_policy == 'terms' %} is-active{% endif %}">Terms &amp; Conditions</a>
+      <a href="/pages/terms-of-sale" class="legal-nav-link{% if section.settings.active_policy == 'terms_sale' %} is-active{% endif %}">Terms of Sale</a>
+      <a href="/pages/accessibility-statement" class="legal-nav-link{% if section.settings.active_policy == 'accessibility' %} is-active{% endif %}">Accessibility Statement</a>
+    </nav>
+
+    <!-- Main Content Body -->
+    <div class="liujo-legal-body">
+      {% case section.settings.active_policy %}
+        {% when 'privacy' %}
+          <!-- PRIVACY POLICY CONTENT -->
+          <div class="legal-article">
+            <h2>PRIVACY NOTICE REGARDING THE PROCESSING OF PERSONAL DATA</h2>
+            <p><strong>Liu Jo S.p.A.</strong> (with registered office in Viale J.A. Fleming 17, 41012 Carpi MO, Italy) and <strong>Digital Boîte s.r.l.</strong> (with registered office in Via Cusani 5, 20121 Milan, Italy), hereinafter jointly referred to as the "Data Controllers", provide you with the following information regarding the processing of your personal data pursuant to Regulation (EU) 2016/679 (GDPR).</p>
+
+            <h3>1. Data Controllers and Scope</h3>
+            <ul>
+              <li><strong>Liu Jo S.p.A.:</strong> Acts as independent Data Controller for customer profiling, loyalty club management (The New Glam Lounge), and marketing communications.</li>
+              <li><strong>Digital Boîte s.r.l.:</strong> Acts as independent Data Controller for online sales, invoicing, payments, order logistics, and product deliveries.</li>
+              <li><strong>Joint Data Controllers:</strong> Liu Jo and Digital Boîte act jointly for customer care ticketing, omnichannel boutique services, and digital platform security.</li>
+            </ul>
+
+            <h3>2. Categories of Personal Data Collected</h3>
+            <p>We process the following categories of personal data:</p>
+            <ul>
+              <li><strong>Identification and Contact Details:</strong> Name, surname, date of birth, delivery address, billing address, email address, telephone number.</li>
+              <li><strong>Purchase and Browsing Data:</strong> Purchase history, items added to wishlist or shopping bag, sizes purchased, browsing preferences, device IP address.</li>
+              <li><strong>Customer Support Records:</strong> Inquiries sent to boutique client service via email, phone, or live chat.</li>
+            </ul>
+
+            <h3>3. Purposes and Legal Basis of Processing</h3>
+            <div class="liujo-table-wrap">
+              <table class="liujo-legal-table">
+                <thead>
+                  <tr>
+                    <th>PURPOSE</th>
+                    <th>LEGAL BASIS</th>
+                    <th>RETENTION PERIOD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Execution of online purchase contract and delivery</td>
+                    <td>Contractual performance (Art. 6.1.b GDPR)</td>
+                    <td>10 years (statutory tax and accounting limits)</td>
+                  </tr>
+                  <tr>
+                    <td>Customer Care assistance and inquiries</td>
+                    <td>Contractual performance &amp; legitimate interest</td>
+                    <td>Duration necessary to resolve ticket + 12 months</td>
+                  </tr>
+                  <tr>
+                    <td>Newsletter, marketing, and promotional updates</td>
+                    <td>Freely given consent (Art. 6.1.a GDPR)</td>
+                    <td>Until consent is withdrawn or 24 months</td>
+                  </tr>
+                  <tr>
+                    <td>Tailored recommendations and personalized profiling</td>
+                    <td>Explicit consent (Art. 6.1.a GDPR)</td>
+                    <td>12 months from last customer interaction</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>4. Rights of the Data Subject</h3>
+            <p>Under Articles 15 to 22 of the GDPR, you have the right to access, rectify, or erase your personal data, restrict or object to its processing, and exercise your right to data portability. You can contact our Data Protection Officer anytime at <a href="mailto:dpo@liujo.com">dpo@liujo.com</a> or write to Digital Boîte s.r.l. at <a href="mailto:privacy@digitalboite.com">privacy@digitalboite.com</a>.</p>
+          </div>
+
+        {% when 'cookie' %}
+          <!-- COOKIE POLICY CONTENT -->
+          <div class="legal-article">
+            <h2>COOKIE POLICY &amp; TRACKING TECHNOLOGIES</h2>
+            <p>This Cookie Policy explains how Liu Jo S.p.A. and Digital Boîte s.r.l. use cookies and similar technologies on the website www.liujo.com to enhance your browsing experience.</p>
+
+            <h3>1. What are Cookies?</h3>
+            <p>Cookies are small text files that websites send to your terminal (computer, smartphone, tablet), where they are stored and transmitted back on your next visit. Cookies enable the website to remember your actions and preferences (such as login details, preferred language, items in the cart) over a given period.</p>
+
+            <h3>2. Categories of Cookies Used</h3>
+            <ul>
+              <li><strong>Strictly Necessary Technical Cookies:</strong> Essential for browsing and using core site functions (e.g. session identifiers, shopping bag state, currency and country preferences). These cookies do not require prior consent.</li>
+              <li><strong>Performance and Analytics Cookies:</strong> Used in aggregated, anonymized form to monitor website traffic, track user journeys, and improve interface performance.</li>
+              <li><strong>Profiling and Marketing Cookies:</strong> Subject to your consent, these cookies track your navigation profile to display advertising aligned with the preferences you express while browsing.</li>
+            </ul>
+
+            <div class="cookie-manage-box">
+              <h3>MANAGE YOUR COOKIE PREFERENCES</h3>
+              <p>You can customize or withdraw your consent for individual categories of cookies at any time.</p>
+              <button type="button" class="cookie-btn" onclick="alert('Cookie preferences: All necessary and analytics cookies are active. You can toggle marketing preferences anytime.');">
+                OPEN COOKIES PREFERENCES MODAL
+              </button>
+            </div>
+          </div>
+
+        {% when 'terms' %}
+          <!-- TERMS AND CONDITIONS OF USE -->
+          <div class="legal-article">
+            <h2>TERMS AND CONDITIONS OF WEBSITE USE</h2>
+            <p>Welcome to www.liujo.com. Access to and use of this website are governed by these Terms and Conditions of Use. By accessing and using this site, you accept and agree to be bound by these conditions.</p>
+
+            <h3>1. Intellectual Property &amp; Trademarks</h3>
+            <p>All content included on this website—such as photographs, styling images, videos, audio clips, text, logos, trademarks, and button icons—is the exclusive property of Liu Jo S.p.A. and is protected by national and international copyright, trademark, and intellectual property laws.</p>
+            <p>Reproduction, modification, distribution, or commercial exploitation of any material on this website without prior express written authorization from Liu Jo S.p.A. is strictly prohibited.</p>
+
+            <h3>2. User Accounts &amp; Security</h3>
+            <p>When you create an account on this store, you are responsible for maintaining the confidentiality of your login credentials and password. You agree to immediately notify Customer Care in the event of any unauthorized use of your account.</p>
+
+            <h3>3. Disclaimers and Limitation of Liability</h3>
+            <p>Liu Jo S.p.A. and Digital Boîte s.r.l. make every reasonable effort to provide accurate product information, stock availability, and color depictions. However, screen calibration and technical factors may cause minor visual discrepancies. The website is provided on an "as is" and "as available" basis.</p>
+          </div>
+
+        {% when 'terms_sale' %}
+          <!-- GENERAL TERMS OF SALE -->
+          <div class="legal-article">
+            <h2>GENERAL CONDITIONS OF SALE</h2>
+            <p>The sale of Liu Jo products through the website www.liujo.com is carried out directly by <strong>Digital Boîte S.r.l.</strong>, with registered office in Italy, Via Cusani n. 5 – 20121 Milan, Tax Code and VAT 03796760365, Share Capital € 100,000.00 (hereinafter referred to as the "Company").</p>
+
+            <h3>1. Scope and Eligibility</h3>
+            <p>These General Conditions of Sale govern the offering, placement, and acceptance of purchase orders on www.liujo.com. Products are offered exclusively to natural persons acting for personal purposes outside any trade, business, or professional activity ("Consumers").</p>
+
+            <h3>2. Order Conclusion and Acceptance</h3>
+            <p>By submitting an electronic order form, the Customer unconditionally accepts these Conditions of Sale. The purchase contract is considered concluded when the Company sends an official Order Confirmation email detailing the product description, total price including VAT, delivery costs, and chosen payment method.</p>
+
+            <h3>3. Prices and Payment Methods</h3>
+            <p>All prices listed on the website are inclusive of applicable VAT and custom duties where applicable. Delivery costs are clearly indicated prior to final purchase confirmation. Accepted payment methods include credit cards (Visa, MasterCard, American Express), PayPal, Apple Pay, and Klarna.</p>
+
+            <h3>4. Right of Withdrawal (Returns)</h3>
+            <p>Under Directive 2011/83/EU and national consumer protection laws, the Customer has the right to withdraw from the contract within <strong>30 calendar days</strong> from the receipt of the products without penalty. For complete details, see our <a href="/pages/refunds-and-returns">Return Policy</a>.</p>
+
+            <h3>5. Legal Warranty of Conformity</h3>
+            <p>All Liu Jo products sold by Digital Boîte s.r.l. benefit from the legal warranty of 24 months for conformity defects in accordance with European consumer law.</p>
+          </div>
+
+        {% when 'accessibility' %}
+          <!-- ACCESSIBILITY STATEMENT -->
+          <div class="legal-article">
+            <h2>ACCESSIBILITY STATEMENT</h2>
+            <p>Liu Jo S.p.A. and Digital Boîte s.r.l. are firmly dedicated to ensuring digital accessibility for all users, including individuals with disabilities. We continuously optimize the user experience and apply relevant accessibility standards.</p>
+
+            <h3>1. Compliance Standard</h3>
+            <p>We target conformance with the <strong>Web Content Accessibility Guidelines (WCAG) 2.1 Level AA</strong>. These guidelines specify how to make digital web content accessible to a broader range of individuals with sensory, cognitive, and mobility disabilities.</p>
+
+            <h3>2. Accessibility Measures Implemented</h3>
+            <ul>
+              <li>High-contrast text and semantic hierarchy for screen reader compatibility.</li>
+              <li>Full keyboard navigation across product sliders, interactive carousels, and menus.</li>
+              <li>Descriptive ALT attributes for product photography and campaign imagery.</li>
+              <li>Form label associations and ARIA accessibility roles for interactive controls.</li>
+              <li>Dedicated accessibility menu control in the website footer.</li>
+            </ul>
+
+            <h3>3. Feedback &amp; Assistance</h3>
+            <p>If you encounter any accessibility barriers while browsing or purchasing on www.liujo.com, please contact our accessibility team at <a href="mailto:accessibility@liujo.com">accessibility@liujo.com</a>. We appreciate your feedback and will provide prompt alternative assistance.</p>
+          </div>
+
+        {% else %}
+          <div class="legal-article">
+            <div class="rte">
+              {{ page.content }}
+            </div>
+          </div>
+      {% endcase %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .liujo-legal-page {
+    background: #fff;
+    color: #111;
+    font-family: inherit;
+    padding-bottom: 90px;
+  }
+  .liujo-legal-hero {
+    background: #000;
+    color: #fff;
+    padding: 70px 24px;
+    text-align: center;
+    border-bottom: 1px solid #222;
+  }
+  .liujo-legal-hero__inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .liujo-legal-hero__tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #bbb;
+    display: block;
+    margin-bottom: 14px;
+  }
+  .liujo-legal-hero__title {
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 14px 0;
+    color: #fff;
+  }
+  .liujo-legal-hero__date {
+    font-size: 12px;
+    color: #777;
+    margin: 0;
+  }
+  .liujo-legal-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .liujo-legal-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 24px 0 36px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 40px;
+  }
+  .legal-nav-link {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #666;
+    padding: 8px 14px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .legal-nav-link:hover {
+    color: #000;
+  }
+  .legal-nav-link.is-active {
+    color: #000;
+    border-bottom-color: #000;
+  }
+  .legal-article {
+    line-height: 1.85;
+    font-size: 14px;
+    color: #444;
+  }
+  .legal-article h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #000;
+    margin: 0 0 24px 0;
+    line-height: 1.4;
+  }
+  .legal-article h3 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #000;
+    margin: 36px 0 14px 0;
+  }
+  .legal-article p {
+    margin: 0 0 16px 0;
+  }
+  .legal-article ul {
+    padding-left: 20px;
+    margin: 0 0 20px 0;
+  }
+  .legal-article li {
+    margin-bottom: 10px;
+  }
+  .legal-article a {
+    color: #000;
+    text-decoration: underline;
+  }
+  .liujo-legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 24px 0;
+  }
+  .liujo-legal-table th {
+    background: #f7f7f7;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+  }
+  .liujo-legal-table td {
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+  }
+  .cookie-manage-box {
+    background: #f8f8f8;
+    border: 1px solid #e5e5e5;
+    padding: 30px;
+    margin-top: 36px;
+    text-align: center;
+  }
+  .cookie-manage-box h3 {
+    margin-top: 0;
+  }
+  .cookie-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 14px;
+    transition: background 0.2s;
+  }
+  .cookie-btn:hover {
+    background: #333;
+  }
+  @media screen and (max-width: 768px) {
+    .liujo-legal-hero__title {
+      font-size: 24px;
+    }
+    .liujo-legal-nav {
+      justify-content: flex-start;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Liu Jo Legal Policy",
+  "settings": [
+    {
+      "type": "select",
+      "id": "active_policy",
+      "label": "Active Policy Content",
+      "options": [
+        { "value": "privacy", "label": "Privacy Policy" },
+        { "value": "cookie", "label": "Cookie Policy" },
+        { "value": "terms", "label": "Terms and Conditions" },
+        { "value": "terms_sale", "label": "General Terms of Sale" },
+        { "value": "accessibility", "label": "Accessibility Statement" },
+        { "value": "custom", "label": "Default Page Content" }
+      ],
+      "default": "privacy"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liu Jo Legal Policy"
+    }
+  ]
+}
+{% endschema %}

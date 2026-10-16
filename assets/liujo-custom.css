@@ -2126,6 +2126,11 @@ input[type="email"]:active {
   transition: opacity 0.2s ease;
   display: inline-block;
   letter-spacing: 0.01em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
 }
 
 .liujo-footer-link:hover {
@@ -2135,7 +2140,7 @@ input[type="email"]:active {
 
 /* Stories highlighted in pink (Image Parity) */
 .liujo-footer-link--stories {
-  color: #f04975 !important;
+  color: #ff6699 !important;
 }
 
 .liujo-footer-link--stories:hover {

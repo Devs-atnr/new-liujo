@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main_policy": {
+      "type": "liujo-legal-policy",
+      "settings": {
+        "active_policy": "terms_sale"
+      }
+    }
+  },
+  "order": [
+    "main_policy"
+  ]
+}
