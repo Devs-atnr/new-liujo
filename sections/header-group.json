@@ -26,7 +26,7 @@
         "menu": "main-menu-copy-for-menu",
         "use_liujo_default_fallback": true,
         "outlet_color": "#e6006e",
-        "logo_width": 170,
+        "logo_width": 190,
         "show_store_locator": true,
         "store_locator_label": "Locate Stores",
         "store_locator_link": "",
