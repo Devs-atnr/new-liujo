@@ -713,18 +713,38 @@
     font-size: 13px;
     color: #444;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     border-left: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .liujo-cc-nav-link::after {
+    content: '›';
+    font-size: 16px;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #000;
   }
   .liujo-cc-nav-link:hover {
+    padding-left: 28px;
     background: #f8f8f8;
     color: #000;
+  }
+  .liujo-cc-nav-link:hover::after {
+    opacity: 0.6;
+    transform: translateX(0);
   }
   .liujo-cc-nav-link.is-active {
     background: #f4f4f4;
     color: #000;
     font-weight: 600;
     border-left-color: #000;
+  }
+  .liujo-cc-nav-link.is-active::after {
+    opacity: 1;
+    transform: translateX(0);
   }
   .liujo-cc-concierge {
     background: #111;
@@ -748,6 +768,10 @@
   .liujo-cc-concierge__line a {
     color: #fff;
     text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .liujo-cc-concierge__line a:hover {
+    opacity: 0.8;
   }
   .liujo-cc-concierge__hours {
     font-size: 11px;
@@ -763,24 +787,28 @@
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    padding: 12px;
+    padding: 13px;
     text-decoration: none;
-    transition: background 0.2s;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .liujo-cc-concierge__btn:hover {
-    background: #e0e0e0;
+    background: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   }
   .liujo-cc-content {
     background: #fff;
     border: 1px solid #e5e5e5;
     padding: 40px;
     min-height: 600px;
+    animation: liujoFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .liujo-cc-panel {
     display: none;
   }
   .liujo-cc-panel.is-active {
     display: block;
+    animation: liujoFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .liujo-cc-panel__header {
     border-bottom: 1px solid #eee;
@@ -800,39 +828,90 @@
     margin: 0;
   }
   .liujo-accordion__item {
-    border-bottom: 1px solid #e5e5e5;
-    padding: 18px 0;
+    border-bottom: 1px solid #eaeaea;
+    transition: background-color 0.25s ease;
   }
   .liujo-accordion__item:first-child {
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #eaeaea;
   }
   .liujo-accordion__title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     cursor: pointer;
     list-style: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 4px;
+    user-select: none;
+    transition: color 0.25s ease;
   }
   .liujo-accordion__title::-webkit-details-marker {
     display: none;
   }
-  .liujo-accordion__title .icon-toggle::before {
-    content: '+';
-    font-size: 18px;
-    font-weight: 400;
+  .liujo-accordion__title:hover {
+    color: #000;
   }
-  .liujo-accordion__item[open] .liujo-accordion__title .icon-toggle::before {
-    content: '−';
+  .liujo-accordion__title .icon-toggle {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .liujo-accordion__title .icon-toggle::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 1.5px;
+    background-color: currentColor;
+    transition: transform 0.3s ease;
+  }
+  .liujo-accordion__title .icon-toggle::after {
+    content: '';
+    position: absolute;
+    width: 1.5px;
+    height: 12px;
+    background-color: currentColor;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+  .liujo-accordion__item[open] .liujo-accordion__title .icon-toggle::after {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+  .liujo-accordion__item[open] .liujo-accordion__title .icon-toggle {
+    transform: rotate(180deg);
   }
   .liujo-accordion__content {
-    padding-top: 16px;
+    padding: 0 4px 22px 4px;
     font-size: 14px;
-    line-height: 1.8;
+    line-height: 1.85;
     color: #444;
+    animation: liujoAccordionFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes liujoAccordionFade {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes liujoFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   .liujo-accordion__content p {
     margin: 0 0 14px 0;
