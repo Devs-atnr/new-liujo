@@ -705,6 +705,14 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   z-index: 1 !important;
 }
 
+/* Hide active filters pills bar (Size: XS x, Remove all) on mobile & desktop */
+.active-facets,
+.active-facets-desktop,
+.active-facets-mobile,
+.active-facets-vertical-filter {
+  display: none !important;
+}
+
 .facets-wrapper {
   position: -webkit-sticky !important;
   position: sticky !important;
@@ -1119,7 +1127,7 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   display: grid !important;
   width: 100% !important;
   max-width: 100% !important;
-  padding: 16px 24px 60px 24px !important;
+  padding: 10px 24px 60px 24px !important;
   margin: 0 !important;
   gap: 28px 12px !important;
 }
