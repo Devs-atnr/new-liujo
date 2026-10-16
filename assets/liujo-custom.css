@@ -687,18 +687,18 @@ body.has-search-open .liujo-megamenu {
 .liujo-mob-drawer {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   width: 88%;
   max-width: 400px;
   height: 100%;
   background-color: #ffffff;
   z-index: 10000;
-  transform: translateX(-100%);
+  transform: translateX(100%);
   transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 15px 0 40px rgba(0, 0, 0, 0.12);
+  box-shadow: -15px 0 40px rgba(0, 0, 0, 0.12);
 }
 
 .liujo-mob-drawer.is-open {
