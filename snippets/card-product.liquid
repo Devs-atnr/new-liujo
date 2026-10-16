@@ -111,7 +111,13 @@
             </div>
           {%- endif -%}
 
-          {%- comment -%} Removed collection card scroll dash indicators per user request {%- endcomment -%}
+          {%- comment -%} Liu Jo Carousel Dash Indicators (2 dots for primary + secondary image) {%- endcomment -%}
+          {%- if card_product.media[1] != null and show_secondary_image -%}
+            <div class="liujo-card-indicators">
+              <span class="liujo-indicator-dot is-active"></span>
+              <span class="liujo-indicator-dot"></span>
+            </div>
+          {%- endif -%}
 
           <!-- Liu Jo Wishlist Heart Trigger -->
           {%- if settings.show_wishlist != false and show_wishlist != false -%}
