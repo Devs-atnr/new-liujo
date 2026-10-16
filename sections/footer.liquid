@@ -116,7 +116,7 @@
     <div class="liujo-footer-grid">
       <!-- Col 1: Customer Care -->
       <div class="liujo-footer-col">
-        <h4 class="liujo-footer-heading">{{ section.settings.col_1_title | default: 'Customer Care' }}</h4>
+        <h4 class="liujo-footer-heading">{{ section.settings.col_1_title | default: 'CUSTOMER CARE' }}</h4>
         <ul class="liujo-footer-links">
           {%- if section.settings.col_1_menu != blank and linklists[section.settings.col_1_menu].links.size > 0 -%}
             {%- for link in linklists[section.settings.col_1_menu].links -%}
@@ -128,6 +128,7 @@
             <li class="liujo-footer-link-item"><a href="/pages/returns" class="liujo-footer-link">Return and Exchange Policy</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/returns" class="liujo-footer-link">Make a Return</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/size-guide" class="liujo-footer-link">Size Guide</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/care" class="liujo-footer-link">How to take care</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/faq" class="liujo-footer-link">FAQ</a></li>
           {%- endif -%}
         </ul>
@@ -135,14 +136,14 @@
 
       <!-- Col 2: Liu Jo World -->
       <div class="liujo-footer-col">
-        <h4 class="liujo-footer-heading">{{ section.settings.col_2_title | default: 'Liu Jo World' }}</h4>
+        <h4 class="liujo-footer-heading">{{ section.settings.col_2_title | default: 'LIU JO WORLD' }}</h4>
         <ul class="liujo-footer-links">
           {%- if section.settings.col_2_menu != blank and linklists[section.settings.col_2_menu].links.size > 0 -%}
             {%- for link in linklists[section.settings.col_2_menu].links -%}
-              <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link">{{ link.title }}</a></li>
+              <li class="liujo-footer-link-item"><a href="{{ link.url }}" class="liujo-footer-link{% if link.title == 'Stories' %} liujo-footer-link--stories{% endif %}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <li class="liujo-footer-link-item"><a href="/pages/stories" class="liujo-footer-link" style="color: var(--liujo-accent-pink);">Stories</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/stories" class="liujo-footer-link liujo-footer-link--stories">Stories</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/about" class="liujo-footer-link">About Liu Jo</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/sustainability" class="liujo-footer-link">Better Together</a></li>
             <li class="liujo-footer-link-item"><a href="/collections/all" class="liujo-footer-link">Collections</a></li>
@@ -153,7 +154,7 @@
 
       <!-- Col 3: Liu Jo for you -->
       <div class="liujo-footer-col">
-        <h4 class="liujo-footer-heading">{{ section.settings.col_3_title | default: 'Liu Jo for you' }}</h4>
+        <h4 class="liujo-footer-heading">{{ section.settings.col_3_title | default: 'LIU JO FOR YOU' }}</h4>
         <ul class="liujo-footer-links">
           {%- if section.settings.col_3_menu != blank and linklists[section.settings.col_3_menu].links.size > 0 -%}
             {%- for link in linklists[section.settings.col_3_menu].links -%}
@@ -162,15 +163,13 @@
           {%- else -%}
             <li class="liujo-footer-link-item"><a href="/pages/easy-shopping" class="liujo-footer-link">Easy Shopping</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/stores" class="liujo-footer-link">Store locator</a></li>
-            <li class="liujo-footer-link-item"><a href="/pages/contact" class="liujo-footer-link">Personal Shopper</a></li>
-            <li class="liujo-footer-link-item"><a href="/pages/gift-cards" class="liujo-footer-link">Store Cards</a></li>
           {%- endif -%}
         </ul>
       </div>
 
       <!-- Col 4: Corporate -->
       <div class="liujo-footer-col">
-        <h4 class="liujo-footer-heading">{{ section.settings.col_4_title | default: 'Corporate' }}</h4>
+        <h4 class="liujo-footer-heading">{{ section.settings.col_4_title | default: 'CORPORATE' }}</h4>
         <ul class="liujo-footer-links">
           {%- if section.settings.col_4_menu != blank and linklists[section.settings.col_4_menu].links.size > 0 -%}
             {%- for link in linklists[section.settings.col_4_menu].links -%}
@@ -180,9 +179,11 @@
             <li class="liujo-footer-link-item"><a href="/pages/careers" class="liujo-footer-link">Careers</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/privacy-policy" class="liujo-footer-link">Privacy Policy</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/cookie-policy" class="liujo-footer-link">Cookie Policy</a></li>
-            <li class="liujo-footer-link-item"><a href="/pages/terms" class="liujo-footer-link">Terms and Conditions</a></li>
-            <li class="liujo-footer-link-item"><a href="/pages/terms-of-sale" class="liujo-footer-link">Terms of Sale</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/cookies-preferences" class="liujo-footer-link">Cookies Preferences</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/terms" class="liujo-footer-link">Terms and condition</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/terms-of-sale" class="liujo-footer-link">Terms of sale</a></li>
             <li class="liujo-footer-link-item"><a href="/pages/accessibility" class="liujo-footer-link">Accessibility Statement</a></li>
+            <li class="liujo-footer-link-item"><a href="/pages/organisation-model" class="liujo-footer-link">Organisation model</a></li>
           {%- endif -%}
         </ul>
       </div>
@@ -192,31 +193,39 @@
   <!-- Post-Footer -->
   <div class="liujo-postfooter">
     <div class="liujo-postfooter__container">
-      <div class="liujo-lang-selector">
-        <a href="/pages/change-country" class="liujo-footer-link" style="font-weight: 600; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">
-          Language: <span style="font-weight: 400; color: #fff;">English</span>
-        </a>
-      </div>
+      <div class="liujo-postfooter__row">
+        <div class="liujo-postfooter__left">
+          <button type="button" class="liujo-accessibility-btn" aria-label="Accessibility options">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <circle cx="12" cy="4.5" r="2.5"></circle>
+              <path d="M12 8c-3.5 0-6.5.7-9 1.7l.6 2.3c2-.8 4.4-1.3 6.9-1.5v4.5l-3.2 5.5 2.1 1.2 3.6-6.2 3.6 6.2 2.1-1.2-3.2-5.5V10.5c2.5.2 4.9.7 6.9 1.5l.6-2.3c-2.5-1-5.5-1.7-9-1.7z"></path>
+            </svg>
+          </button>
+          <a href="/pages/change-country" class="liujo-lang-link">
+            LANGUAGE: <span>English</span>
+          </a>
+        </div>
 
-      <!-- Social Icons -->
-      <div class="liujo-social-icons">
-        <a href="{{ settings.social_instagram_link | default: 'https://www.instagram.com/liujo/' }}" class="liujo-social-icon" target="_blank" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="17.5" cy="6.5" r="1.5"></circle></svg>
-        </a>
-        <a href="{{ settings.social_facebook_link | default: 'https://www.facebook.com/liujoglobal' }}" class="liujo-social-icon" target="_blank" aria-label="Facebook">
-          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-        </a>
-        <a href="{{ settings.social_youtube_link | default: 'https://www.youtube.com/liujofficial' }}" class="liujo-social-icon" target="_blank" aria-label="YouTube">
-          <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#fff"></polygon></svg>
-        </a>
-        <a href="{{ settings.social_tiktok_link | default: 'https://www.tiktok.com/@liujo' }}" class="liujo-social-icon" target="_blank" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
-        </a>
+        <!-- Social Icons -->
+        <div class="liujo-social-icons">
+          <a href="{{ settings.social_instagram_link | default: 'https://www.instagram.com/liujo/' }}" class="liujo-social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle></svg>
+          </a>
+          <a href="{{ settings.social_facebook_link | default: 'https://www.facebook.com/liujoglobal' }}" class="liujo-social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+          <a href="{{ settings.social_youtube_link | default: 'https://www.youtube.com/liujofficial' }}" class="liujo-social-icon" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#000"></polygon></svg>
+          </a>
+          <a href="{{ settings.social_tiktok_link | default: 'https://www.tiktok.com/@liujo' }}" class="liujo-social-icon" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.35 22a6.34 6.34 0 0 0 6.34-6.33V9.2a8.16 8.16 0 0 0 4.9 1.62V7.37a4.85 4.85 0 0 1-1-.68z"></path></svg>
+          </a>
+        </div>
       </div>
 
       <!-- Copyright Notice -->
       <div class="liujo-copyright">
-        {{ section.settings.copyright_text | default: '© 2026 Digital Boite s.r.l. All Rights Reserved. P.IVA and C.F. 03796760365. Liu Jo Official Store.' }}
+        {{ section.settings.copyright_text | default: '© 2025 Digital Boite s.r.l. All Rights Reserved. REA and C.F. 03796760365, REA MI-2608722.' }}
       </div>
     </div>
   </div>

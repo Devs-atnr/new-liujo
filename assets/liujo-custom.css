@@ -2002,19 +2002,29 @@ input[type="email"]:active {
   text-decoration: underline;
 }
 
-/* Main Footer Accordion / Columns */
+/* Main Footer Columns (Image Parity with Liu Jo Desktop Footer) */
 .liujo-main-footer {
-  padding: 60px 0 40px;
-  border-bottom: 1px solid #1f1f1f;
+  padding: 64px 0 50px;
+  background-color: #000000;
+  border-bottom: none;
 }
 
 .liujo-footer-grid {
-  max-width: var(--liujo-container-max);
+  width: 80%;
+  max-width: var(--liujo-container-max, 1360px);
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
+  gap: 36px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .liujo-footer-grid {
+    width: 90%;
+    gap: 28px;
+  }
 }
 
 @media (max-width: 991px) {
@@ -2023,6 +2033,7 @@ input[type="email"]:active {
     border-bottom: none;
   }
   .liujo-footer-grid {
+    width: 100%;
     grid-template-columns: 1fr;
     gap: 0;
     padding: 0;
@@ -2041,12 +2052,13 @@ input[type="email"]:active {
 }
 
 .liujo-footer-heading {
+  font-family: inherit;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--liujo-white);
-  margin-bottom: 20px;
+  color: #ffffff;
+  margin-bottom: 22px;
 }
 
 @media (max-width: 991px) {
@@ -2095,40 +2107,135 @@ input[type="email"]:active {
   }
 
   .liujo-footer-links.is-open {
-    max-height: 400px;
+    max-height: 450px;
     padding-bottom: 16px;
   }
 }
 
 .liujo-footer-link-item {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 .liujo-footer-link {
-  font-size: 13px;
-  color: #a0a0a0;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  color: #ffffff;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: opacity 0.2s ease;
+  display: inline-block;
+  letter-spacing: 0.01em;
 }
 
 .liujo-footer-link:hover {
-  color: var(--liujo-white);
+  opacity: 0.7;
+  color: #ffffff;
 }
 
-/* Post-footer Social, Copyright & Payment */
+/* Stories highlighted in pink (Image Parity) */
+.liujo-footer-link--stories {
+  color: #f04975 !important;
+}
+
+.liujo-footer-link--stories:hover {
+  opacity: 0.85;
+}
+
+/* Post-footer Social, Language & Copyright */
 .liujo-postfooter {
-  padding: 30px 0;
+  padding: 30px 0 24px;
+  background-color: #000000;
 }
 
 .liujo-postfooter__container {
-  max-width: var(--liujo-container-max);
+  width: 80%;
+  max-width: var(--liujo-container-max, 1360px);
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .liujo-postfooter__container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 991px) {
+  .liujo-postfooter__container {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+.liujo-postfooter__row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
+  width: 100%;
+}
+
+.liujo-postfooter__left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.liujo-accessibility-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #242424;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.liujo-accessibility-btn:hover {
+  background-color: #383838;
+  transform: scale(1.05);
+}
+
+.liujo-accessibility-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: #ffffff;
+}
+
+.liujo-lang-link {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.liujo-lang-link span {
+  font-weight: 400;
+  text-transform: capitalize;
+  margin-left: 6px;
+  color: #ffffff;
+}
+
+.liujo-lang-link:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 991px) {
+  .liujo-postfooter {
+    padding: 20px 0;
+  }
 }
 
 @media (max-width: 767px) {
@@ -2139,46 +2246,51 @@ input[type="email"]:active {
   }
 }
 
-@media (max-width: 991px) {
-  .liujo-postfooter {
-    padding: 20px 0;
-  }
-}
-
 .liujo-social-icons {
   display: flex;
-  gap: 16px;
+  align-items: center;
+  gap: 26px;
 }
 
 .liujo-social-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: #1a1a1a;
-  display: flex;
+  color: #ffffff !important;
+  background: transparent !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  color: var(--liujo-white);
-  transition: all 0.2s ease;
   text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  line-height: 1;
 }
 
 .liujo-social-icon:hover {
-  background-color: var(--liujo-white);
-  color: var(--liujo-black);
-  transform: translateY(-2px);
-}
-
-.liujo-social-icon svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
+  opacity: 0.65;
+  background: transparent !important;
+  transform: translateY(-1px);
 }
 
 .liujo-copyright {
-  font-size: 11px;
-  color: #777;
-  letter-spacing: 0.04em;
+  text-align: center;
+  width: 100%;
+  font-family: inherit;
+  font-size: 10.5px;
+  color: #767676;
+  letter-spacing: 0.02em;
+  margin-top: 36px;
+  padding-bottom: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+  .liujo-postfooter__row {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+  }
 }
 
 /* Animations */
