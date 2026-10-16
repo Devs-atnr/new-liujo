@@ -270,8 +270,7 @@
     font-size: 12px;
     font-weight: 400;
     color: #000000;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    text-decoration: none;
     line-height: 1.4;
     white-space: nowrap;
     overflow: hidden;
@@ -283,7 +282,7 @@
 
   .liujo-tab-title:hover {
     text-decoration: underline;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   .liujo-tab-price {
@@ -304,42 +303,9 @@
     font-size: 11px;
   }
 
-  /* Circular Carousel Control Arrows */
+  /* Carousel Control Arrows Hidden */
   .liujo-tabs-arrow {
-    position: absolute;
-    top: 42%;
-    transform: translateY(-50%);
-    width: 38px;
-    height: 38px;
-    background-color: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 50%;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-    transition: all 0.25s ease;
-    color: #111111;
-    padding: 0;
-    outline: none;
-  }
-
-  .liujo-tabs-arrow:hover {
-    background-color: #000000;
-    color: #ffffff;
-    border-color: #000000;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
-    transform: translateY(-50%) scale(1.05);
-  }
-
-  .liujo-tabs-arrow.arrow-prev {
-    left: 8px;
-  }
-
-  .liujo-tabs-arrow.arrow-next {
-    right: 8px;
+    display: none !important;
   }
 
   @media (max-width: 1024px) {
@@ -354,42 +320,95 @@
   }
 
   @media (max-width: 767px) {
-    .liujo-tabs-arrow {
-      width: 32px;
-      height: 32px;
-    }
-    .liujo-tabs-arrow svg {
-      width: 13px;
-      height: 13px;
-    }
-    .liujo-tabs-arrow.arrow-prev {
-      left: 4px;
-    }
-    .liujo-tabs-arrow.arrow-next {
-      right: 4px;
-    }
-    .liujo-tabs-track {
-      gap: 0 !important;
-    }
-    .liujo-tab-card {
-      flex: 0 0 33.333% !important;
-      width: 33.333% !important;
-      min-width: 0 !important;
+    .liujo-tabs-section {
+      padding-top: {{ section.settings.padding_top | times: 0.6 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | round: 0 }}px !important;
     }
     .liujo-tabs-container {
-      padding: 0;
+      padding: 0 !important;
     }
     .liujo-tabs-nav-wrapper {
-      margin-bottom: 24px;
-      padding: 0 16px;
+      padding: 0 !important;
+      margin-bottom: 24px !important;
+      border-bottom: 1px solid #d2d2d2 !important;
+      width: 100% !important;
     }
     .liujo-tabs-nav {
-      gap: 24px;
+      width: 100% !important;
+      display: flex !important;
+      gap: 0 !important;
+      justify-content: stretch !important;
     }
     .liujo-tab-button {
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      padding: 10px 4px 12px 4px;
+      flex: 1 1 50% !important;
+      width: 50% !important;
+      padding: 10px 4px 14px 4px !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.06em !important;
+      text-transform: uppercase !important;
+      color: #949494 !important;
+      text-align: center !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
+      line-height: 1.35 !important;
+    }
+    .liujo-tab-button.is-active {
+      color: #000000 !important;
+      font-weight: 600 !important;
+    }
+    .liujo-tab-button.is-active::after {
+      height: 2px !important;
+      background-color: #000000 !important;
+      bottom: -1px !important;
+      left: 0 !important;
+      width: 100% !important;
+    }
+    .liujo-tab-btn-text {
+      display: inline-block !important;
+      max-width: 100px !important;
+      text-align: center !important;
+      line-height: 1.35 !important;
+    }
+    .liujo-tabs-track {
+      gap: 10px !important;
+      padding: 0 16px !important;
+      scroll-padding: 0 16px !important;
+    }
+    .liujo-tab-card {
+      flex: 0 0 43% !important;
+      width: 43% !important;
+      min-width: 0 !important;
+    }
+    .liujo-tab-card-media {
+      aspect-ratio: 3 / 4 !important;
+    }
+    .liujo-tab-wishlist {
+      display: none !important;
+    }
+    .liujo-tab-badge {
+      display: none !important;
+    }
+    .liujo-tab-info {
+      padding: 8px 0 12px 0 !important;
+    }
+    .liujo-tab-title {
+      font-size: 12px !important;
+      font-weight: 400 !important;
+      color: #000000 !important;
+      text-decoration: none !important;
+      line-height: 1.35 !important;
+      white-space: normal !important;
+      letter-spacing: 0.02em !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .liujo-tab-price {
+      font-size: 11px !important;
+      margin-top: 3px !important;
     }
   }
 </style>
@@ -409,7 +428,7 @@
           data-target="panel-recommendations-{{ section.id }}"
           onclick="window.switchLiuJoTab(this, 'panel-recommendations-{{ section.id }}')"
         >
-          {{ section.settings.tab_1_title | default: 'YOU MIGHT LIKE' }}
+          <span class="liujo-tab-btn-text">{{ section.settings.tab_1_title | default: 'YOU MIGHT LIKE' }}</span>
         </button>
 
         <button
@@ -422,7 +441,7 @@
           data-target="panel-recently-viewed-{{ section.id }}"
           onclick="window.switchLiuJoTab(this, 'panel-recently-viewed-{{ section.id }}')"
         >
-          {{ section.settings.tab_2_title | default: 'RECENTLY VIEWED' }}
+          <span class="liujo-tab-btn-text">{{ section.settings.tab_2_title | default: 'RECENTLY VIEWED' }}</span>
         </button>
       </div>
     </div>
