@@ -348,11 +348,11 @@
   .mobile-facets__inner {
     margin-left: 0 !important;
     margin-right: auto !important;
-    width: 88vw !important;
-    max-width: 440px !important;
+    width: 100vw !important;
+    max-width: none !important;
     transform: translateX(-105%) !important;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    border-right: 1px solid #e5e5e5 !important;
+    border-right: none !important;
     border-left: none !important;
     background: #ffffff !important;
   }
@@ -683,6 +683,14 @@
 @media (max-width: 989px) {
   .facets-wrapper {
     top: var(--liujo-header-h-mob, 60px) !important;
+  }
+
+  /* Hide Sort By on mobile — only FILTER button shown */
+  #FacetSortDrawerForm,
+  .facets-vertical-sort,
+  #FacetSortForm,
+  .facet-filters.sorting {
+    display: none !important;
   }
 }
 

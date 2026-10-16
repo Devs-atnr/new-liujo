@@ -59,15 +59,9 @@
     </button>
   </div>
 
-  <!-- Liu Jo Mobile 50/50 Split Toolbar: SORT BY | FILTER -->
+  <!-- Liu Jo Mobile Filter Toolbar (Full Width) -->
   <div class="liujo-plp-split-toolbar large-up-hide medium-hide">
-    <button type="button" class="liujo-split-btn liujo-split-btn--sort{% if results.sort_by != blank %} is-selected{% endif %}" id="LiuJoMobileSortTrigger" aria-expanded="false">
-      <span>SORT BY</span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M7 3v18m0-18l4 4M7 3L3 7m14 18V7m0 14l4-4m-4 4l-4-4"/>
-      </svg>
-    </button>
-    <button type="button" class="liujo-split-btn liujo-split-btn--filter" id="LiuJoMobileFilterTrigger" aria-expanded="false">
+    <button type="button" class="liujo-split-btn liujo-split-btn--filter" id="LiuJoMobileFilterTrigger" aria-expanded="false" style="width: 100%; justify-content: center;">
       <span>FILTER</span>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M4 6h16M4 12h12M4 18h8"/>
@@ -78,31 +72,7 @@
     </button>
   </div>
 
-  <!-- Liu Jo Mobile Sort Dropdown Menu -->
-  <div class="liujo-mobile-sort-dropdown large-up-hide medium-hide" id="LiuJoMobileSortDropdown" style="display: none;">
-    <ul class="liujo-sort-options-list">
-      <li data-sort-value="manual" class="{% if sort_by == 'manual' or sort_by == '' %}is-selected{% endif %}">
-        <span>OUR FAVOURITES</span>
-        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-      </li>
-      <li data-sort-value="price-ascending" class="{% if sort_by == 'price-ascending' %}is-selected{% endif %}">
-        <span>LOW TO HIGH</span>
-        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-      </li>
-      <li data-sort-value="price-descending" class="{% if sort_by == 'price-descending' %}is-selected{% endif %}">
-        <span>HIGH TO LOW</span>
-        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-      </li>
-      <li data-sort-value="created-descending" class="{% if sort_by == 'created-descending' %}is-selected{% endif %}">
-        <span>NEW IN</span>
-        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-      </li>
-      <li data-sort-value="best-selling" class="{% if sort_by == 'best-selling' %}is-selected{% endif %}">
-        <span>BEST SELLERS</span>
-        <svg class="liujo-sort-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-      </li>
-    </ul>
-  </div>
+  {% comment %} Mobile Sort Dropdown removed {% endcomment %}
 
   {%- if filter_type == 'vertical' or filter_type == 'horizontal' -%}
     <facet-filters-form class="facets small-hide">
@@ -857,41 +827,7 @@
                 {%- endfor -%}
               {%- endif -%}
 
-              {%- if enable_sorting -%}
-                <div
-                  id="Details-Mobile-SortBy-{{ section.id }}"
-                  class="mobile-facets__details js-filter{% if filter_type == 'drawer' %} medium-hide large-up-hide{% endif %}"
-                  data-index="mobile-"
-                >
-                  <div class="mobile-facets__summary">
-                    <div class="mobile-facets__sort">
-                      <label for="SortBy-mobile">{{ 'products.facets.sort_by_label' | t }}</label>
-                      <div class="select">
-                        <select
-                          name="sort_by"
-                          class="select__select"
-                          id="SortBy-mobile"
-                          aria-describedby="a11y-refresh-page-message"
-                        >
-                          {%- for option in results.sort_options -%}
-                            <option
-                              value="{{ option.value | escape }}"
-                              {% if option.value == sort_by %}
-                                selected="selected"
-                              {% endif %}
-                            >
-                              {{ option.name | escape }}
-                            </option>
-                          {%- endfor -%}
-                        </select>
-                        <span class="svg-wrapper">
-                          {{- 'icon-caret.svg' | inline_asset_content -}}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {%- endif -%}
+              {% comment %} Sort By removed from mobile filter drawer — handled by toolbar {% endcomment %}
 
               <div class="mobile-facets__footer">
                 <facet-remove class="mobile-facets__clear-wrapper">
