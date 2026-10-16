@@ -110,7 +110,6 @@
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
@@ -121,7 +120,6 @@
     cursor: grab !important;
     user-select: none !important;
     -webkit-user-select: none !important;
-    touch-action: pan-y pinch-zoom;
     gap: 0 !important;
   }
 
@@ -133,7 +131,6 @@
 
   .liujo-tabs-track.is-dragging {
     cursor: grabbing !important;
-    scroll-behavior: auto !important;
   }
 
   .liujo-tabs-track,
@@ -422,7 +419,6 @@
           aria-controls="panel-recently-viewed-{{ section.id }}"
           id="tab-btn-recently-viewed-{{ section.id }}"
           data-target="panel-recently-viewed-{{ section.id }}"
-          style="display: none;"
         >
           {{ section.settings.tab_2_title | default: 'RECENTLY VIEWED' }}
         </button>
@@ -887,6 +883,7 @@
     };
 
     // 4. Carousel Interactions: Smooth Drag, Wheel Scroll, Touch Swipe & Arrows for Both Tracks
+    // Exactly matches the Home Page product carousel behavior from assets/liujo-custom.js
     window.setupTabCarousel = function(panel) {
       if (!panel) return;
       var track = panel.querySelector('[data-tabs-track]');
@@ -907,7 +904,6 @@
         prevBtn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
-          track.style.scrollBehavior = 'smooth';
           track.scrollBy({ left: -getStep(), behavior: 'smooth' });
         });
       }
@@ -917,12 +913,11 @@
         nextBtn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
-          track.style.scrollBehavior = 'smooth';
           track.scrollBy({ left: getStep(), behavior: 'smooth' });
         });
       }
 
-      // Block ghost drag on all child links & images
+      // Block native browser ghost dragging on cards
       track.querySelectorAll('a, img').forEach(function(el) {
         el.setAttribute('draggable', 'false');
         el.ondragstart = function() { return false; };
@@ -944,13 +939,12 @@
           var canScrollLeft = delta < 0 && track.scrollLeft > 2;
           if (canScrollRight || canScrollLeft) {
             e.preventDefault();
-            track.style.scrollBehavior = 'auto';
             track.scrollLeft += delta;
           }
         }
       }, { passive: false });
 
-      // Smooth Mouse Drag to Scroll with Momentum (Home Page standard)
+      // Smooth Mouse Drag to Scroll with Momentum (Home Page standard from assets/liujo-custom.js)
       var isDown = false;
       var startX = 0;
       var scrollLeftStart = 0;
@@ -970,7 +964,6 @@
       function applyMomentum() {
         if (Math.abs(velX) < 0.5) {
           momentumId = null;
-          track.style.scrollBehavior = 'smooth';
           return;
         }
         track.scrollLeft += velX;
@@ -992,17 +985,38 @@
         velX = 0;
 
         track.classList.add('is-dragging');
-        track.style.scrollBehavior = 'auto';
       });
 
-      window.addEventListener('mousemove', function(e) {
-        if (!isDown) return;
+      track.addEventListener('mouseleave', function() {
+        if (isDown) {
+          isDown = false;
+          track.classList.remove('is-dragging');
+          if (hasMoved) {
+            applyMomentum();
+          }
+        }
+      });
 
+      track.addEventListener('mouseup', function() {
+        if (isDown) {
+          isDown = false;
+          track.classList.remove('is-dragging');
+          if (hasMoved) {
+            applyMomentum();
+          }
+          setTimeout(function() {
+            hasMoved = false;
+          }, 120);
+        }
+      });
+
+      track.addEventListener('mousemove', function(e) {
+        if (!isDown) return;
+        e.preventDefault();
         var x = e.pageX - track.offsetLeft;
         var walk = (x - startX) * 1.5;
         if (Math.abs(walk) > 4) {
           hasMoved = true;
-          e.preventDefault();
         }
         track.scrollLeft = scrollLeftStart - walk;
 
@@ -1015,28 +1029,11 @@
         lastTime = now;
       });
 
-      window.addEventListener('mouseup', function(e) {
-        if (!isDown) return;
-        isDown = false;
-        track.classList.remove('is-dragging');
-
-        if (hasMoved) {
-          applyMomentum();
-        } else {
-          track.style.scrollBehavior = 'smooth';
-        }
-
-        setTimeout(function() {
-          hasMoved = false;
-        }, 120);
-      });
-
       // Capture phase click listener: swallows clicks after dragging
       track.addEventListener('click', function(e) {
         if (hasMoved) {
           e.preventDefault();
           e.stopPropagation();
-          e.stopImmediatePropagation();
           return false;
         }
         if (e.target.closest('[data-liujo-wishlist]')) return;
@@ -1047,7 +1044,7 @@
             window.location.href = link.href;
           }
         }
-      }, true);
+      });
     };
 
     // 5. Initialize All Tab Sections
