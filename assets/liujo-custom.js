@@ -191,6 +191,10 @@ function initLiuJoMobileDrawer() {
     if (drawer) drawer.classList.remove('is-open');
     if (overlay) overlay.classList.remove('is-open');
     document.body.style.overflow = '';
+    // Close any open sub-panels
+    document.querySelectorAll('.liujo-mob-nav-item.is-open').forEach(function(item) {
+      item.classList.remove('is-open');
+    });
   }
 
   if (openBtn) openBtn.addEventListener('click', openDrawer);
