@@ -1339,6 +1339,11 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   display: none !important;
 }
 
+/* Hide duplicate price wrapper inside card__inner (keep only the one in outer card__content) */
+.card__inner .card__content .liujo-card-price-wrapper {
+  display: none !important;
+}
+
 .card-information .caption-with-letter-spacing {
   display: none !important;
 }
