@@ -2,24 +2,38 @@
   "sections": {
     "customer_care": {
       "type": "liujo-customer-care",
+      "blocks": {
+        "return_window": {
+          "type": "accordion",
+          "settings": {
+            "title": "30-Day Return Window & Conditions",
+            "content": "<p>You can return any unworn, unwashed item purchased on the Liu Jo boutique within <strong>30 calendar days</strong> from delivery.</p><ul><li>Products must not have been worn, altered, or washed.</li><li>Original tags and packaging must be attached.</li><li>Footwear must be returned in the original shoe box.</li></ul>",
+            "open_by_default": true
+          }
+        },
+        "refund_process": {
+          "type": "accordion",
+          "settings": {
+            "title": "Refund Timing & Method",
+            "content": "<p>Refunds are initiated once the warehouse has inspected the returned goods (up to 7-10 business days). Funds reflect on your card or account within 3 to 5 business days.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "return_window",
+        "refund_process"
+      ],
       "settings": {
         "active_tab": "returns",
-        "hero_tagline": "LIU JO CLIENT SERVICES"
+        "hero_tagline": "LIU JO CLIENT SERVICES",
+        "hero_title": "Return and Exchange Policy",
+        "panel_heading": "Return and Exchange Policy",
+        "panel_subheading": "We want you to love your Liu Jo purchase. If you need to make a return, our process is fast and complimentary."
       }
-    },
-    "boutique_services": {
-      "type": "liujo-services-bar",
-      "blocks": {
-        "s1": { "type": "service", "settings": { "icon": "shipping", "title": "Orders & Shipments", "description": "Complimentary delivery on orders over €150" } },
-        "s2": { "type": "service", "settings": { "icon": "support", "title": "Boutique Assistance", "description": "Monday to Friday, 9:00 to 18:00 CET" } },
-        "s3": { "type": "service", "settings": { "icon": "returns", "title": "Easy Returns", "description": "30 days for complimentary returns & exchanges" } }
-      },
-      "block_order": ["s1", "s2", "s3"],
-      "settings": {}
     }
   },
   "order": [
-    "customer_care",
-    "boutique_services"
+    "customer_care"
   ]
 }

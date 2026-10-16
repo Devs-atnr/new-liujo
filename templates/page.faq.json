@@ -2,24 +2,65 @@
   "sections": {
     "customer_care": {
       "type": "liujo-customer-care",
+      "blocks": {
+        "faq_security": {
+          "type": "accordion",
+          "settings": {
+            "title": "Is online shopping on Liu Jo secure?",
+            "content": "<p>Every purchase on www.liujo.com is extremely secure because advanced technological encryption systems (SSL 256-bit) and VeriSign certificates are used. You will always be asked for CVV and 3D Secure confirmation to protect against unauthorized usage.</p>",
+            "open_by_default": true
+          }
+        },
+        "faq_tracking": {
+          "type": "accordion",
+          "settings": {
+            "title": "How can I track my shipment?",
+            "content": "<p>As soon as your parcel is dispatched from our warehouse, you will receive an email containing the direct carrier tracking link. You can also view shipping status inside your account under the 'My Orders' section.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_refund": {
+          "type": "accordion",
+          "settings": {
+            "title": "How long does it take to receive a return refund?",
+            "content": "<p>Refunds are initiated once the warehouse has inspected the returned goods (up to 7-10 business days after delivery). Funds appear on your card or PayPal within 3 to 5 business days.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_giftcard": {
+          "type": "accordion",
+          "settings": {
+            "title": "What is the Liu Jo Digital Gift Card?",
+            "content": "<p>The Liu Jo Gift Card is an elegant digital voucher issued to bearer, usable both online and in participating boutiques. Available in denominations between €25 and €1,999, it is delivered instantly via email with no activation fees.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_loyalty": {
+          "type": "accordion",
+          "settings": {
+            "title": "How do I join The New Glam Lounge Loyalty Program?",
+            "content": "<p>You can join The New Glam Lounge loyalty program online through your account profile or inside any Liu Jo boutique. Membership is complimentary and unlocks exclusive preview access to sales, anniversary gifts, and boutique styling sessions.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_security",
+        "faq_tracking",
+        "faq_refund",
+        "faq_giftcard",
+        "faq_loyalty"
+      ],
       "settings": {
         "active_tab": "faq",
-        "hero_tagline": "LIU JO CLIENT SERVICES"
+        "hero_tagline": "LIU JO CLIENT SERVICES",
+        "hero_title": "Frequently Asked Questions",
+        "panel_heading": "Frequently Asked Questions (FAQ)",
+        "panel_subheading": "Find immediate answers to our most common customer inquiries."
       }
-    },
-    "boutique_services": {
-      "type": "liujo-services-bar",
-      "blocks": {
-        "s1": { "type": "service", "settings": { "icon": "shipping", "title": "Orders & Shipments", "description": "Complimentary delivery on orders over €150" } },
-        "s2": { "type": "service", "settings": { "icon": "support", "title": "Boutique Assistance", "description": "Monday to Friday, 9:00 to 18:00 CET" } },
-        "s3": { "type": "service", "settings": { "icon": "returns", "title": "Easy Returns", "description": "30 days for complimentary returns & exchanges" } }
-      },
-      "block_order": ["s1", "s2", "s3"],
-      "settings": {}
     }
   },
   "order": [
-    "customer_care",
-    "boutique_services"
+    "customer_care"
   ]
 }

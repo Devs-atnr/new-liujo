@@ -2,24 +2,30 @@
   "sections": {
     "customer_care": {
       "type": "liujo-customer-care",
+      "blocks": {
+        "portal_block": {
+          "type": "return_portal",
+          "settings": {
+            "title": "LOOK UP YOUR ORDER",
+            "subtext": "Enter your Order Number and Email Address to start your return or download your courier label.",
+            "button_label": "FIND MY ORDER & START RETURN ↗",
+            "portal_url": "https://www.liujo.com/returns/search"
+          }
+        }
+      },
+      "block_order": [
+        "portal_block"
+      ],
       "settings": {
         "active_tab": "make_return",
-        "hero_tagline": "LIU JO CLIENT SERVICES"
+        "hero_tagline": "LIU JO CLIENT SERVICES",
+        "hero_title": "Make a Return",
+        "panel_heading": "Make a Return Portal",
+        "panel_subheading": "Access our self-service returns portal to generate your prepaid courier shipping return label."
       }
-    },
-    "boutique_services": {
-      "type": "liujo-services-bar",
-      "blocks": {
-        "s1": { "type": "service", "settings": { "icon": "shipping", "title": "Orders & Shipments", "description": "Complimentary delivery on orders over €150" } },
-        "s2": { "type": "service", "settings": { "icon": "support", "title": "Boutique Assistance", "description": "Monday to Friday, 9:00 to 18:00 CET" } },
-        "s3": { "type": "service", "settings": { "icon": "returns", "title": "Easy Returns", "description": "30 days for complimentary returns & exchanges" } }
-      },
-      "block_order": ["s1", "s2", "s3"],
-      "settings": {}
     }
   },
   "order": [
-    "customer_care",
-    "boutique_services"
+    "customer_care"
   ]
 }

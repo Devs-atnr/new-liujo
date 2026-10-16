@@ -1,21 +1,709 @@
 {% comment %}
-  LIU JO CUSTOMER CARE SECTION
+  LIU JO CUSTOMER CARE SECTION (DYNAMIC & FULLY CUSTOMIZABLE VIA SHOPIFY THEME EDITOR)
+  Supports dynamic accordion blocks, shipping tables, return portals, size conversion charts,
+  and customizable sidebar contact details.
 {% endcomment %}
 
-{% render 'liujo-customer-care',
-  active_tab: section.settings.active_tab,
-  hero_tagline: section.settings.hero_tagline,
-  hero_title: section.settings.hero_title
-%}
+{%- assign current_tab = section.settings.active_tab | default: 'orders' -%}
+
+<div class="liujo-cc-page" data-section-id="{{ section.id }}">
+  <!-- Customer Care Editorial Hero Banner -->
+  <div class="liujo-cc-hero">
+    <div class="liujo-cc-hero__inner">
+      <span class="liujo-cc-hero__tag">{{ section.settings.hero_tagline | default: 'LIU JO CLIENT SERVICES' }}</span>
+      <h1 class="liujo-cc-hero__title" id="liujo-cc-page-title">
+        {%- if section.settings.hero_title != blank -%}
+          {{ section.settings.hero_title }}
+        {%- else -%}
+          {% case current_tab %}
+            {% when 'orders' %}Orders &amp; Shipping Services
+            {% when 'payments' %}Payments &amp; Security
+            {% when 'returns' %}Return and Exchange Policy
+            {% when 'make_return' %}Make a Return
+            {% when 'size_guide' %}Size &amp; Fit Guide
+            {% when 'care' %}How to Take Care
+            {% when 'faq' %}Frequently Asked Questions
+            {% else %}{{ page.title | default: 'Customer Care' }}
+          {% endcase %}
+        {%- endif -%}
+      </h1>
+      <p class="liujo-cc-hero__desc">
+        {{ section.settings.hero_desc | default: 'Dedicated boutique assistance and complete guides for your Liu Jo shopping experience.' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="liujo-cc-container">
+    <!-- Breadcrumbs -->
+    <nav class="liujo-cc-breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="sep">/</span>
+      <a href="/pages/orders-and-shipments">Customer Care</a>
+      <span class="sep">/</span>
+      <span class="current">
+        {%- if section.settings.hero_title != blank -%}
+          {{ section.settings.hero_title }}
+        {%- else -%}
+          {% case current_tab %}
+            {% when 'orders' %}Orders &amp; Shipping
+            {% when 'payments' %}Payments
+            {% when 'returns' %}Return Policy
+            {% when 'make_return' %}Make a Return
+            {% when 'size_guide' %}Size Guide
+            {% when 'care' %}Garment Care
+            {% when 'faq' %}FAQ
+            {% else %}{{ page.title | default: 'General' }}
+          {% endcase %}
+        {%- endif -%}
+      </span>
+    </nav>
+
+    <!-- Main Grid: Left Sidebar & Right Content -->
+    <div class="liujo-cc-grid">
+      <!-- Left Sticky Sidebar -->
+      <aside class="liujo-cc-sidebar">
+        <div class="liujo-cc-sidebar__card">
+          <h3 class="liujo-cc-sidebar__heading">CUSTOMER CARE</h3>
+          <ul class="liujo-cc-nav-list" id="liujo-cc-tabs-nav">
+            <li>
+              <a href="/pages/orders-and-shipments" class="liujo-cc-nav-link{% if current_tab == 'orders' %} is-active{% endif %}" data-target-tab="orders">
+                Orders &amp; Shipping Services
+              </a>
+            </li>
+            <li>
+              <a href="/pages/payments" class="liujo-cc-nav-link{% if current_tab == 'payments' %} is-active{% endif %}" data-target-tab="payments">
+                Payments
+              </a>
+            </li>
+            <li>
+              <a href="/pages/refunds-and-returns" class="liujo-cc-nav-link{% if current_tab == 'returns' %} is-active{% endif %}" data-target-tab="returns">
+                Return and Exchange Policy
+              </a>
+            </li>
+            <li>
+              <a href="/pages/make-a-return" class="liujo-cc-nav-link{% if current_tab == 'make_return' %} is-active{% endif %}" data-target-tab="make_return">
+                Make a Return
+              </a>
+            </li>
+            <li>
+              <a href="/pages/size-guide" class="liujo-cc-nav-link{% if current_tab == 'size_guide' %} is-active{% endif %}" data-target-tab="size_guide">
+                Size Guide
+              </a>
+            </li>
+            <li>
+              <a href="/pages/how-to-take-care" class="liujo-cc-nav-link{% if current_tab == 'care' %} is-active{% endif %}" data-target-tab="care">
+                How to take care
+              </a>
+            </li>
+            <li>
+              <a href="/pages/faq" class="liujo-cc-nav-link{% if current_tab == 'faq' %} is-active{% endif %}" data-target-tab="faq">
+                FAQ
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Boutique Concierge Help Desk -->
+        <div class="liujo-cc-concierge">
+          <h4 class="liujo-cc-concierge__title">MAY WE HELP YOU?</h4>
+          <p class="liujo-cc-concierge__line">
+            Telephone:<br>
+            <strong><a href="tel:{{ section.settings.help_phone | remove: ' ' | default: '+443308087718' }}">{{ section.settings.help_phone | default: '+44 330 8087718' }}</a></strong>
+          </p>
+          <p class="liujo-cc-concierge__hours">
+            {{ section.settings.help_hours | default: 'Monday to Friday, 9.00 to 18.00 CET' }}
+          </p>
+          <a href="{{ section.settings.help_link | default: '/pages/contact' }}" class="liujo-cc-concierge__btn">EMAIL US</a>
+        </div>
+      </aside>
+
+      <!-- Right Main Content Area -->
+      <main class="liujo-cc-content">
+        <div class="liujo-cc-panel is-active">
+          <div class="liujo-cc-panel__header">
+            <h2>
+              {%- if section.settings.panel_heading != blank -%}
+                {{ section.settings.panel_heading }}
+              {%- else -%}
+                {% case current_tab %}
+                  {% when 'orders' %}Orders &amp; Shipping Services
+                  {% when 'payments' %}Payments &amp; Security
+                  {% when 'returns' %}Return and Exchange Policy
+                  {% when 'make_return' %}Make a Return
+                  {% when 'size_guide' %}Size &amp; Fit Guide
+                  {% when 'care' %}How to Take Care
+                  {% when 'faq' %}Frequently Asked Questions
+                  {% else %}{{ page.title }}
+                {% endcase %}
+              {%- endif -%}
+            </h2>
+            <p>
+              {%- if section.settings.panel_subheading != blank -%}
+                {{ section.settings.panel_subheading }}
+              {%- else -%}
+                {% case current_tab %}
+                  {% when 'orders' %}Everything you need to know regarding placing orders, dispatch timelines, and worldwide shipping.
+                  {% when 'payments' %}Every transaction on Liu Jo is processed through advanced technological systems and certified 256-bit SSL encryption.
+                  {% when 'returns' %}We want you to love your Liu Jo purchase. If you need to make a return, our process is fast and complimentary.
+                  {% when 'make_return' %}Access our self-service returns portal to generate your prepaid courier shipping return label.
+                  {% when 'size_guide' %}Liu Jo garments are crafted to Italian tailoring standards. Use this conversion chart to find your perfect fit.
+                  {% when 'care' %}Protect the luxury quality, texture, and longevity of your Liu Jo garments with our specialist care guide.
+                  {% when 'faq' %}Find immediate answers to our most common customer inquiries.
+                {% endcase %}
+              {%- endif -%}
+            </p>
+          </div>
+
+          <!-- DYNAMIC BLOCKS (Managed via Theme Customizer) -->
+          {%- if section.blocks.size > 0 -%}
+            <div class="liujo-accordion">
+              {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                  {%- when 'accordion' -%}
+                    <details class="liujo-accordion__item" {{ block.shopify_attributes }}{% if block.settings.open_by_default %} open{% endif %}>
+                      <summary class="liujo-accordion__title">
+                        <span>{{ block.settings.title }}</span>
+                        <span class="icon-toggle"></span>
+                      </summary>
+                      <div class="liujo-accordion__content">
+                        {{ block.settings.content }}
+                      </div>
+                    </details>
+
+                  {%- when 'shipping_table' -%}
+                    <div class="liujo-block-shipping-table" {{ block.shopify_attributes }}>
+                      {%- if block.settings.title != blank -%}
+                        <h3 class="table-title">{{ block.settings.title }}</h3>
+                      {%- endif -%}
+                      {%- if block.settings.desc != blank -%}
+                        <div class="table-desc">{{ block.settings.desc }}</div>
+                      {%- endif -%}
+                      <div class="liujo-table-wrap">
+                        <table class="liujo-shipping-table">
+                          <thead>
+                            <tr>
+                              <th>SHIPPING METHOD</th>
+                              <th>ESTIMATED DELIVERY</th>
+                              <th>COST</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><strong>{{ block.settings.method_1_name | default: 'STANDARD DELIVERY' }}</strong></td>
+                              <td>{{ block.settings.method_1_time | default: '3 – 5 Business Days' }}</td>
+                              <td>{{ block.settings.method_1_cost | default: '€ 14,50 (Complimentary over € 150)' }}</td>
+                            </tr>
+                            <tr>
+                              <td><strong>{{ block.settings.method_2_name | default: 'EXPRESS DELIVERY' }}</strong></td>
+                              <td>{{ block.settings.method_2_time | default: '1 – 3 Business Days' }}</td>
+                              <td>{{ block.settings.method_2_cost | default: '€ 30,00' }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      {%- if block.settings.footer_note != blank -%}
+                        <p class="table-note">{{ block.settings.footer_note }}</p>
+                      {%- endif -%}
+                    </div>
+
+                  {%- when 'return_portal' -%}
+                    <div class="liujo-return-portal-box" {{ block.shopify_attributes }}>
+                      <h3 class="portal-heading">{{ block.settings.title | default: 'LOOK UP YOUR ORDER' }}</h3>
+                      <p class="portal-sub">{{ block.settings.subtext | default: 'Enter your Order Number and Email Address to start your return or download your courier label.' }}</p>
+
+                      <form class="liujo-portal-form" onsubmit="event.preventDefault(); window.open('{{ block.settings.portal_url | default: 'https://www.liujo.com/returns/search' }}?order=' + encodeURIComponent(document.getElementById('portal-order-num').value) + '&email=' + encodeURIComponent(document.getElementById('portal-email').value), '_blank');">
+                        <div class="form-group">
+                          <label for="portal-order-num">ORDER NUMBER *</label>
+                          <input type="text" id="portal-order-num" placeholder="e.g. LJ-10894520" required class="portal-input">
+                        </div>
+                        <div class="form-group">
+                          <label for="portal-email">EMAIL ADDRESS *</label>
+                          <input type="email" id="portal-email" placeholder="e.g. yourname@domain.com" required class="portal-input">
+                        </div>
+                        <button type="submit" class="portal-submit-btn">{{ block.settings.button_label | default: 'FIND MY ORDER & START RETURN ↗' }}</button>
+                      </form>
+
+                      <div class="portal-external-banner">
+                        <p>You can also access the <a href="{{ block.settings.portal_url | default: 'https://www.liujo.com/returns/search' }}" target="_blank" rel="noopener noreferrer">official Liu Jo Global returns portal directly ↗</a>.</p>
+                      </div>
+                    </div>
+
+                  {%- when 'size_table' -%}
+                    <div class="liujo-block-size-table" {{ block.shopify_attributes }}>
+                      <h4 class="table-title">{{ block.settings.title }}</h4>
+                      {%- case block.settings.table_type -%}
+                        {%- when 'women_apparel' -%}
+                          <div class="liujo-table-wrap">
+                            <table class="liujo-size-table">
+                              <thead>
+                                <tr><th>IT (LIU JO)</th><th>EU / FR</th><th>US</th><th>UK</th><th>BUST (CM)</th><th>WAIST (CM)</th><th>HIPS (CM)</th></tr>
+                              </thead>
+                              <tbody>
+                                <tr><td>38</td><td>34</td><td>2</td><td>6</td><td>80 – 83</td><td>61 – 64</td><td>87 – 90</td></tr>
+                                <tr><td>40</td><td>36</td><td>4</td><td>8</td><td>84 – 87</td><td>65 – 68</td><td>91 – 94</td></tr>
+                                <tr><td>42</td><td>38</td><td>6</td><td>10</td><td>88 – 91</td><td>69 – 72</td><td>95 – 98</td></tr>
+                                <tr><td>44</td><td>40</td><td>8</td><td>12</td><td>92 – 95</td><td>73 – 76</td><td>99 – 102</td></tr>
+                                <tr><td>46</td><td>42</td><td>10</td><td>14</td><td>96 – 100</td><td>77 – 81</td><td>103 – 107</td></tr>
+                                <tr><td>48</td><td>44</td><td>12</td><td>16</td><td>101 – 105</td><td>82 – 86</td><td>108 – 112</td></tr>
+                                <tr><td>50</td><td>46</td><td>14</td><td>18</td><td>106 – 110</td><td>87 – 91</td><td>113 – 117</td></tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        {%- when 'women_denim' -%}
+                          <div class="liujo-table-wrap">
+                            <table class="liujo-size-table">
+                              <thead>
+                                <tr><th>DENIM INCHES</th><th>ITALIAN SIZE</th><th>EU / FR</th><th>WAIST (CM)</th><th>HIPS (CM)</th></tr>
+                              </thead>
+                              <tbody>
+                                <tr><td>25</td><td>38</td><td>34</td><td>61 – 63</td><td>87 – 89</td></tr>
+                                <tr><td>26</td><td>39 / 40</td><td>35 / 36</td><td>64 – 66</td><td>90 – 92</td></tr>
+                                <tr><td>27</td><td>40 / 41</td><td>36 / 37</td><td>67 – 69</td><td>93 – 95</td></tr>
+                                <tr><td>28</td><td>42</td><td>38</td><td>70 – 72</td><td>96 – 98</td></tr>
+                                <tr><td>29</td><td>43</td><td>39</td><td>73 – 75</td><td>99 – 101</td></tr>
+                                <tr><td>30</td><td>44</td><td>40</td><td>76 – 78</td><td>102 – 104</td></tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        {%- when 'footwear' -%}
+                          <div class="liujo-table-wrap">
+                            <table class="liujo-size-table">
+                              <thead>
+                                <tr><th>EU / IT</th><th>UK</th><th>US</th><th>FOOT LENGTH (CM)</th></tr>
+                              </thead>
+                              <tbody>
+                                <tr><td>35</td><td>2.5</td><td>5</td><td>22.5</td></tr>
+                                <tr><td>36</td><td>3.5</td><td>6</td><td>23.2</td></tr>
+                                <tr><td>37</td><td>4.5</td><td>7</td><td>23.8</td></tr>
+                                <tr><td>38</td><td>5.5</td><td>8</td><td>24.5</td></tr>
+                                <tr><td>39</td><td>6.5</td><td>9</td><td>25.2</td></tr>
+                                <tr><td>40</td><td>7.5</td><td>10</td><td>25.8</td></tr>
+                                <tr><td>41</td><td>8.5</td><td>11</td><td>26.5</td></tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        {%- when 'belts' -%}
+                          <div class="liujo-table-wrap">
+                            <table class="liujo-size-table">
+                              <thead>
+                                <tr><th>LIU JO BELT SIZE</th><th>TOTAL LENGTH (CM)</th><th>WAIST (CM)</th><th>CORRESPONDING IT</th></tr>
+                              </thead>
+                              <tbody>
+                                <tr><td>S</td><td>85 cm</td><td>70 – 75 cm</td><td>38 – 40</td></tr>
+                                <tr><td>M</td><td>95 cm</td><td>80 – 85 cm</td><td>42 – 44</td></tr>
+                                <tr><td>L</td><td>105 cm</td><td>90 – 95 cm</td><td>46 – 48</td></tr>
+                                <tr><td>XL</td><td>115 cm</td><td>100 – 105 cm</td><td>50</td></tr>
+                              </tbody>
+                            </table>
+                          </div>
+                      {%- endcase -%}
+                    </div>
+                {%- endcase -%}
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <!-- Fallback to pre-built content if no custom blocks added yet -->
+            {% render 'liujo-customer-care', active_tab: current_tab %}
+          {%- endif -%}
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<style>
+  .liujo-cc-page {
+    background-color: #fafafa;
+    color: #111;
+    font-family: inherit;
+    padding-bottom: 80px;
+  }
+  .liujo-cc-hero {
+    background: #000;
+    color: #fff;
+    padding: 70px 24px;
+    text-align: center;
+    border-bottom: 1px solid #222;
+  }
+  .liujo-cc-hero__inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .liujo-cc-hero__tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #bbb;
+    display: block;
+    margin-bottom: 14px;
+  }
+  .liujo-cc-hero__title {
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 14px 0;
+    color: #fff;
+  }
+  .liujo-cc-hero__desc {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .liujo-cc-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .liujo-cc-breadcrumbs {
+    padding: 24px 0 32px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #777;
+  }
+  .liujo-cc-breadcrumbs a {
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .liujo-cc-breadcrumbs a:hover {
+    color: #000;
+  }
+  .liujo-cc-breadcrumbs .sep {
+    margin: 0 8px;
+    color: #bbb;
+  }
+  .liujo-cc-breadcrumbs .current {
+    color: #000;
+    font-weight: 600;
+  }
+  .liujo-cc-grid {
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .liujo-cc-sidebar {
+    position: sticky;
+    top: 90px;
+  }
+  .liujo-cc-sidebar__card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    padding: 24px 0;
+    margin-bottom: 24px;
+  }
+  .liujo-cc-sidebar__heading {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0 24px 16px;
+    margin: 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #000;
+  }
+  .liujo-cc-nav-list {
+    list-style: none;
+    padding: 12px 0 0;
+    margin: 0;
+  }
+  .liujo-cc-nav-link {
+    display: block;
+    padding: 12px 24px;
+    font-size: 13px;
+    color: #444;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+  }
+  .liujo-cc-nav-link:hover {
+    background: #f8f8f8;
+    color: #000;
+  }
+  .liujo-cc-nav-link.is-active {
+    background: #f4f4f4;
+    color: #000;
+    font-weight: 600;
+    border-left-color: #000;
+  }
+  .liujo-cc-concierge {
+    background: #111;
+    color: #fff;
+    padding: 24px;
+  }
+  .liujo-cc-concierge__title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 14px 0;
+  }
+  .liujo-cc-concierge__line {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.6;
+    margin: 0 0 10px 0;
+  }
+  .liujo-cc-concierge__line a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .liujo-cc-concierge__hours {
+    font-size: 11px;
+    color: #777;
+    margin: 0 0 20px 0;
+  }
+  .liujo-cc-concierge__btn {
+    display: block;
+    text-align: center;
+    background: #fff;
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .liujo-cc-concierge__btn:hover {
+    background: #e0e0e0;
+  }
+  .liujo-cc-content {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    padding: 40px;
+    min-height: 600px;
+  }
+  .liujo-cc-panel__header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+  .liujo-cc-panel__header h2 {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0 0 8px 0;
+  }
+  .liujo-cc-panel__header p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  .liujo-accordion__item {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 18px 0;
+  }
+  .liujo-accordion__item:first-child {
+    border-top: 1px solid #e5e5e5;
+  }
+  .liujo-accordion__title {
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .liujo-accordion__title::-webkit-details-marker {
+    display: none;
+  }
+  .liujo-accordion__title .icon-toggle::before {
+    content: '+';
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .liujo-accordion__item[open] .liujo-accordion__title .icon-toggle::before {
+    content: '−';
+  }
+  .liujo-accordion__content {
+    padding-top: 16px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #444;
+  }
+  .liujo-table-wrap {
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+  .liujo-shipping-table, .liujo-size-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+  }
+  .liujo-shipping-table th, .liujo-size-table th {
+    background: #f7f7f7;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  .liujo-shipping-table td, .liujo-size-table td {
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+  }
+  .table-title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 20px 0 10px 0;
+  }
+  .table-desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .table-note {
+    font-size: 12px;
+    color: #777;
+    font-style: italic;
+  }
+  .liujo-return-portal-box {
+    background: #fcfcfc;
+    border: 1px solid #eaeaea;
+    padding: 36px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .portal-heading {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 8px 0;
+    text-align: center;
+  }
+  .portal-sub {
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    margin: 0 0 24px 0;
+  }
+  .liujo-portal-form .form-group {
+    margin-bottom: 18px;
+  }
+  .liujo-portal-form label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+  }
+  .portal-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: #fff;
+  }
+  .portal-submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #000;
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+  }
+  .portal-submit-btn:hover {
+    background: #333;
+  }
+  .portal-external-banner {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+  }
+  .portal-external-banner a {
+    color: #000;
+    text-decoration: underline;
+  }
+  @media screen and (max-width: 900px) {
+    .liujo-cc-grid {
+      grid-template-columns: 1fr;
+    }
+    .liujo-cc-sidebar {
+      position: static;
+    }
+    .liujo-cc-content {
+      padding: 24px 16px;
+    }
+    .liujo-cc-hero {
+      padding: 40px 16px;
+    }
+    .liujo-cc-hero__title {
+      font-size: 24px;
+    }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Liu Jo Customer Care",
   "settings": [
     {
+      "type": "header",
+      "content": "Page Header"
+    },
+    {
+      "type": "text",
+      "id": "hero_tagline",
+      "label": "Hero Tagline",
+      "default": "LIU JO CLIENT SERVICES"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "info": "Leave blank to auto-use page title"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_desc",
+      "label": "Hero Subtitle Description",
+      "default": "Dedicated boutique assistance and complete guides for your Liu Jo shopping experience."
+    },
+    {
+      "type": "header",
+      "content": "Main Panel"
+    },
+    {
+      "type": "text",
+      "id": "panel_heading",
+      "label": "Panel Main Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "panel_subheading",
+      "label": "Panel Subheading"
+    },
+    {
       "type": "select",
       "id": "active_tab",
-      "label": "Active Topic Tab",
+      "label": "Active Sidebar Tab",
       "options": [
         { "value": "orders", "label": "Orders & Shipping Services" },
         { "value": "payments", "label": "Payments & Security" },
@@ -28,20 +716,179 @@
       "default": "orders"
     },
     {
-      "type": "text",
-      "id": "hero_tagline",
-      "label": "Hero Tagline",
-      "default": "LIU JO CLIENT SERVICES"
+      "type": "header",
+      "content": "Boutique Concierge Card"
     },
     {
       "type": "text",
-      "id": "hero_title",
-      "label": "Hero Title Override"
+      "id": "help_phone",
+      "label": "Help Phone Number",
+      "default": "+44 330 8087718"
+    },
+    {
+      "type": "text",
+      "id": "help_hours",
+      "label": "Support Hours",
+      "default": "Monday to Friday, 9.00 to 18.00 CET"
+    },
+    {
+      "type": "url",
+      "id": "help_link",
+      "label": "Email Us Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion / FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question / Title",
+          "default": "Accordion Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content Text",
+          "default": "<p>Write your detailed answer or information here.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by Default",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "shipping_table",
+      "name": "Shipping Rates Table",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Table Title",
+          "default": "Shipping Costs and Times"
+        },
+        {
+          "type": "richtext",
+          "id": "desc",
+          "label": "Description above table",
+          "default": "<p>Orders with Express shipping placed before 2:00 PM CET will be dispatched same day.</p>"
+        },
+        {
+          "type": "text",
+          "id": "method_1_name",
+          "label": "Method 1 Name",
+          "default": "STANDARD DELIVERY"
+        },
+        {
+          "type": "text",
+          "id": "method_1_time",
+          "label": "Method 1 Time",
+          "default": "3 – 5 Business Days"
+        },
+        {
+          "type": "text",
+          "id": "method_1_cost",
+          "label": "Method 1 Cost",
+          "default": "€ 14,50 (Complimentary over € 150)"
+        },
+        {
+          "type": "text",
+          "id": "method_2_name",
+          "label": "Method 2 Name",
+          "default": "EXPRESS DELIVERY"
+        },
+        {
+          "type": "text",
+          "id": "method_2_time",
+          "label": "Method 2 Time",
+          "default": "1 – 3 Business Days"
+        },
+        {
+          "type": "text",
+          "id": "method_2_cost",
+          "label": "Method 2 Cost",
+          "default": "€ 30,00"
+        },
+        {
+          "type": "text",
+          "id": "footer_note",
+          "label": "Table Footer Note",
+          "default": "* Delivery timings may slightly change during festive holiday seasons."
+        }
+      ]
+    },
+    {
+      "type": "return_portal",
+      "name": "Return Portal Form",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Portal Title",
+          "default": "LOOK UP YOUR ORDER"
+        },
+        {
+          "type": "textarea",
+          "id": "subtext",
+          "label": "Portal Subtitle",
+          "default": "Enter your Order Number and Email Address to start your return."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "FIND MY ORDER & START RETURN ↗"
+        },
+        {
+          "type": "url",
+          "id": "portal_url",
+          "label": "Direct Portal URL"
+        }
+      ]
+    },
+    {
+      "type": "size_table",
+      "name": "Size Chart Table",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "Size Conversion Table"
+        },
+        {
+          "type": "select",
+          "id": "table_type",
+          "label": "Table Type",
+          "options": [
+            { "value": "women_apparel", "label": "Women Ready-to-Wear" },
+            { "value": "women_denim", "label": "Bottom Up Denim (Inches)" },
+            { "value": "footwear", "label": "Footwear & Shoes" },
+            { "value": "belts", "label": "Belts & Waist" }
+          ],
+          "default": "women_apparel"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Liu Jo Customer Care"
+      "name": "Liu Jo Customer Care",
+      "blocks": [
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Delivery Guide & Package Inspection",
+            "content": "<p>Upon delivery, verify package count, seal integrity, and sign courier document.</p>",
+            "open_by_default": true
+          }
+        }
+      ]
     }
   ]
 }

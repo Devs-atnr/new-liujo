@@ -2,24 +2,52 @@
   "sections": {
     "customer_care": {
       "type": "liujo-customer-care",
+      "blocks": {
+        "women_apparel": {
+          "type": "size_table",
+          "settings": {
+            "title": "Women's Ready-to-Wear (Dresses, Tops, Jackets, Trousers)",
+            "table_type": "women_apparel"
+          }
+        },
+        "denim_chart": {
+          "type": "size_table",
+          "settings": {
+            "title": "Liu Jo Bottom Up Denim (Waist Inches)",
+            "table_type": "women_denim"
+          }
+        },
+        "shoes_chart": {
+          "type": "size_table",
+          "settings": {
+            "title": "Footwear & Shoes Size Conversion",
+            "table_type": "footwear"
+          }
+        },
+        "belts_chart": {
+          "type": "size_table",
+          "settings": {
+            "title": "Belts & Waist Measurements",
+            "table_type": "belts"
+          }
+        }
+      },
+      "block_order": [
+        "women_apparel",
+        "denim_chart",
+        "shoes_chart",
+        "belts_chart"
+      ],
       "settings": {
         "active_tab": "size_guide",
-        "hero_tagline": "LIU JO CLIENT SERVICES"
+        "hero_tagline": "LIU JO CLIENT SERVICES",
+        "hero_title": "Size & Fit Guide",
+        "panel_heading": "Size & Fit Guide",
+        "panel_subheading": "Liu Jo garments are crafted to Italian tailoring standards. Use this conversion chart to find your perfect fit."
       }
-    },
-    "boutique_services": {
-      "type": "liujo-services-bar",
-      "blocks": {
-        "s1": { "type": "service", "settings": { "icon": "shipping", "title": "Orders & Shipments", "description": "Complimentary delivery on orders over €150" } },
-        "s2": { "type": "service", "settings": { "icon": "support", "title": "Boutique Assistance", "description": "Monday to Friday, 9:00 to 18:00 CET" } },
-        "s3": { "type": "service", "settings": { "icon": "returns", "title": "Easy Returns", "description": "30 days for complimentary returns & exchanges" } }
-      },
-      "block_order": ["s1", "s2", "s3"],
-      "settings": {}
     }
   },
   "order": [
-    "customer_care",
-    "boutique_services"
+    "customer_care"
   ]
 }
