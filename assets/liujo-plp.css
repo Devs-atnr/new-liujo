@@ -807,8 +807,8 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   }
 
   .facets__summary-label {
-    font-size: 12px !important;
-    font-weight: 600 !important;
+    font-size: 11px !important;
+    font-weight: 400 !important;
     letter-spacing: 0.04em !important;
     text-transform: capitalize !important;
     color: #111 !important;
