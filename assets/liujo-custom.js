@@ -1413,6 +1413,15 @@ function initLiuJoToolbar() {
 
   // Delegated click listener across whole document
   document.addEventListener('click', (e) => {
+    // 0. Desktop Facet Summary Toggle (Ensure only 1 filter popup is open at a time)
+    const facetSummary = e.target.closest('.facets__disclosure summary');
+    if (facetSummary) {
+      const currentDetails = facetSummary.closest('details');
+      document.querySelectorAll('.facets__disclosure[open]').forEach(d => {
+        if (d !== currentDetails) d.removeAttribute('open');
+      });
+    }
+
     // 1. Desktop Sort Trigger
     const deskSortTrigger = e.target.closest('#LiuJoDesktopSortTrigger');
     if (deskSortTrigger) {

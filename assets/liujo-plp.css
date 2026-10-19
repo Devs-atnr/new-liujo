@@ -833,20 +833,22 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     display: none !important;
   }
 
-  /* Desktop Filter Popup Modal (Exact Liu Jo Parity) */
+  /* Desktop Filter Popup Modal (Exact Liu Jo Parity - Images 1 & 3) */
   .facets__display {
     position: absolute !important;
-    top: calc(100% + 10px) !important;
+    top: calc(100% + 12px) !important;
     left: 0 !important;
-    width: 580px !important;
+    width: 540px !important;
     max-width: calc(100vw - 48px) !important;
     background: #fff !important;
-    border: 1px solid #e0e0e0 !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
-    padding: 24px 28px 20px 28px !important;
+    border: 1px solid #ebebeb !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    padding: 30px 32px 24px 32px !important;
     z-index: 100 !important;
     border-radius: 0 !important;
     box-sizing: border-box !important;
+    height: auto !important;
+    min-height: auto !important;
   }
 
   .liujo-facet-popup-close {
@@ -872,30 +874,22 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     display: none !important;
   }
 
+  /* Max 3 rows per column, auto-adjust height for 1 or 2 rows */
   .facets__list {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    column-gap: 24px !important;
+    grid-auto-flow: column !important;
+    grid-template-rows: repeat(3, auto) !important;
+    grid-auto-columns: minmax(130px, 170px) !important;
+    column-gap: 32px !important;
     row-gap: 16px !important;
-    padding: 10px 4px 18px 0 !important;
+    padding: 6px 4px 24px 0 !important;
     margin: 0 !important;
-    max-height: 270px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    scrollbar-width: thin !important;
-    scrollbar-color: #000 #f1f1f1 !important;
-  }
-
-  .facets__list::-webkit-scrollbar {
-    width: 4px !important;
-  }
-
-  .facets__list::-webkit-scrollbar-track {
-    background: #f1f1f1 !important;
-  }
-
-  .facets__list::-webkit-scrollbar-thumb {
-    background: #111111 !important;
+    height: auto !important;
+    max-height: none !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
   }
 
   .facets__item {
@@ -907,12 +901,12 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   .facet-checkbox {
     display: flex !important;
     align-items: center !important;
-    gap: 10px !important;
+    gap: 12px !important;
     cursor: pointer !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
     letter-spacing: 0.02em !important;
-    color: #222 !important;
+    color: #111 !important;
     text-transform: capitalize !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -935,7 +929,7 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     height: 17px !important;
     min-width: 17px !important;
     min-height: 17px !important;
-    border: 1px solid #767676 !important;
+    border: 1px solid #999999 !important;
     border-radius: 0 !important;
     background-color: #ffffff !important;
     cursor: pointer !important;
@@ -945,6 +939,7 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     vertical-align: middle !important;
     flex-shrink: 0 !important;
     box-sizing: border-box !important;
+    transition: border-color 0.15s ease;
   }
 
   .facet-checkbox input:checked + .liujo-custom-checkbox,
@@ -974,16 +969,16 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
 
   .facet-checkbox__text-label {
     font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    color: #222 !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #111 !important;
   }
 
   .liujo-facet-popup-footer {
     display: flex !important;
     gap: 0 !important;
     padding-top: 0 !important;
-    margin-top: 18px !important;
+    margin-top: 8px !important;
     border-top: none !important;
     width: 100% !important;
   }
@@ -993,13 +988,13 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   }
 
   .liujo-facet-btn {
-    height: 44px !important;
+    height: 48px !important;
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 11.5px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
@@ -1028,87 +1023,126 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   }
 
   .liujo-facet-btn--apply:hover {
-    opacity: 0.85;
+    background: #222 !important;
   }
 
-  /* Desktop Right Controls (Screenshot 1 & 4) */
+  /* Desktop Right Controls (Matching Screenshot 4) */
   .liujo-desktop-toolbar-right {
     display: flex !important;
-    align-items: center !important;
-    gap: 24px !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 12px !important;
     position: relative !important;
+    margin-left: auto !important;
   }
 
   .liujo-desktop-sort-wrapper {
     position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 10px !important;
   }
 
+  /* Grid Toggler directly above Sort By */
+  .liujo-desktop-sort-wrapper .liujo-grid-toggler {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .liujo-desktop-sort-wrapper .liujo-grid-toggle-btn {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    color: #b5b5b5 !important;
+    transition: color 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .liujo-desktop-sort-wrapper .liujo-grid-toggle-btn.is-active,
+  .liujo-desktop-sort-wrapper .liujo-grid-toggle-btn:hover {
+    color: #111 !important;
+  }
+
+  /* Sort By trigger */
   .liujo-desktop-sort-trigger {
     background: transparent !important;
     border: none !important;
     display: flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    font-family: var(--liujo-font-main) !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.04em !important;
-    text-transform: uppercase !important;
+    gap: 8px !important;
+    font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: capitalize !important;
     color: #111 !important;
     cursor: pointer !important;
-    padding: 6px 0 !important;
+    padding: 0 !important;
   }
 
+  .liujo-desktop-sort-trigger svg {
+    width: 14px !important;
+    height: 14px !important;
+    color: #111 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Sort By Dropdown (Screenshot 4) */
   .liujo-desktop-sort-dropdown {
     position: absolute !important;
-    top: calc(100% + 10px) !important;
+    top: calc(100% + 14px) !important;
     right: 0 !important;
     background: #fff !important;
-    border: 1px solid #e0e0e0 !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
-    min-width: 220px !important;
+    border: 1px solid #ebebeb !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    min-width: 240px !important;
     z-index: 100 !important;
-    padding: 8px 0 !important;
+    padding: 26px 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  .liujo-sort-options-list {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
   }
 
   .liujo-sort-options-list li {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 13px 22px !important;
-    font-family: var(--liujo-font-main) !important;
-    font-size: 11.5px !important;
+    display: block !important;
+    padding: 0 !important;
+    font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
     color: #111 !important;
     cursor: pointer !important;
-    transition: background 0.15s ease !important;
-    border-bottom: 1px solid #f5f5f5 !important;
+    transition: color 0.15s ease !important;
+    border-bottom: none !important;
+    background: transparent !important;
   }
 
-  .liujo-sort-options-list li:last-child {
-    border-bottom: none !important;
+  .liujo-sort-options-list li:hover {
+    color: #777 !important;
+    background: transparent !important;
+  }
+
+  .liujo-sort-options-list li.is-selected {
+    color: #000 !important;
+    font-weight: 700 !important;
+    background: transparent !important;
   }
 
   .liujo-sort-options-list li .liujo-sort-check {
     display: none !important;
-    stroke: #000 !important;
-    margin-left: 16px !important;
-    flex-shrink: 0 !important;
-  }
-
-  .liujo-sort-options-list li.is-selected .liujo-sort-check {
-    display: block !important;
-  }
-
-  .liujo-sort-options-list li:hover {
-    background: #f7f7f7 !important;
-  }
-
-  .liujo-sort-options-list li.is-selected {
-    background: #f7f7f7 !important;
-    font-weight: 800 !important;
   }
 }
 
@@ -1308,54 +1342,63 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   opacity: 0.75 !important;
 }
 
-/* Product Price DIRECTLY Below Heading */
+/* Product Price at Bottom of Card (Liu Jo Luxury Style) */
 .liujo-card-price-wrapper {
+  display: none !important;
+}
+
+.card-information > .price {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  margin-top: 3px !important;
-  padding: 0 !important;
+  margin-top: 6px !important;
+  margin-bottom: 0 !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
-.liujo-card-price-wrapper .price,
-.liujo-card-price-wrapper .price__container,
-.liujo-card-price-wrapper .price__regular,
-.liujo-card-price-wrapper .price-item {
-  display: inline-block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+.card-information > .price .price__container {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
 }
 
-.liujo-card-price-wrapper .price {
-  font-family: var(--liujo-font-main) !important;
-  font-size: 11px !important;
+/* Hide price__regular when on sale so duplicate struck-out price never shows */
+.card-information > .price.price--on-sale .price__regular {
+  display: none !important;
+}
+
+.card-information > .price.price--on-sale .price__sale {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+/* Regular / On-sale price item */
+.card-information > .price .price-item--regular {
+  font-size: 13px !important;
   font-weight: 600 !important;
-  letter-spacing: 0.02em !important;
   color: #111 !important;
-  margin: 0 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.3 !important;
 }
 
-.liujo-card-price-wrapper .price--on-sale .price-item--sale {
+/* Sale price: Bold price */
+.card-information > .price .price-item--sale {
+  font-size: 13px !important;
   font-weight: 700 !important;
   color: #111 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.3 !important;
 }
 
-.liujo-card-price-wrapper .price--on-sale .price-item--regular {
-  font-size: 10px !important;
+/* Compare-at struck-through price */
+.card-information > .price.price--on-sale s.price-item--regular {
+  font-size: 12px !important;
   font-weight: 400 !important;
   color: #888 !important;
   text-decoration: line-through !important;
-  margin-left: 6px !important;
-}
-
-/* Hide duplicate price inside card-information (shown via liujo-card-price-wrapper instead) */
-.card-information > .price {
-  display: none !important;
-}
-
-/* Hide duplicate price wrapper inside card__inner (keep only the one in outer card__content) */
-.card__inner .card__content .liujo-card-price-wrapper {
-  display: none !important;
 }
 
 .card-information .caption-with-letter-spacing {

@@ -392,8 +392,9 @@ product-component .page-width,
 }
 
 /* 5. PRICE & RED/WHITE BADGE TAG (Image 1 Parity) */
-.price,
-[id^="price-"] {
+.product__info-container .price,
+.product__info-container [id^="price-"],
+.quick-add-modal .price {
   display: flex !important;
   align-items: center !important;
   flex-wrap: wrap !important;
@@ -401,12 +402,15 @@ product-component .page-width,
   margin: 4px 0 16px 0 !important;
 }
 
-.price .price__container {
+.product__info-container .price .price__container,
+.quick-add-modal .price .price__container {
   margin: 0 !important;
 }
 
-.price .price-item--regular,
-.price .price-item--sale {
+.product__info-container .price .price-item--regular,
+.product__info-container .price .price-item--sale,
+.quick-add-modal .price .price-item--regular,
+.quick-add-modal .price .price-item--sale {
   font-size: 19px !important;
   font-weight: 700 !important;
   color: #111 !important;
