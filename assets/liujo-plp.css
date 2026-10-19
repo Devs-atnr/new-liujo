@@ -54,7 +54,7 @@
 /* 2. COLLECTION BANNER (DESKTOP) */
 .collection-hero {
   text-align: left !important;
-  padding: 6px 24px 12px 24px !important;
+  padding: 6px 24px 0px 24px !important;
   background-color: #fff !important;
   border-bottom: none !important;
   margin-bottom: 0 !important;
