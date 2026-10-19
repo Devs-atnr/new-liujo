@@ -12,7 +12,8 @@
     "banner": {
       "type": "main-collection-banner",
       "custom_css": [
-        "li.liujo-bc-current {font-size: 10px !important;}"
+        "li.liujo-bc-current {font-size: 10px !important;}",
+        "@media screen and (min-width: 750px) {.section-template--27275642601719__product-grid-paddingSpecificity: (0,1,0) {padding-top: 0px; padding-bottom: 36px; }}"
       ],
       "settings": {
         "show_collection_description": true,
