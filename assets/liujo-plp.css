@@ -75,6 +75,10 @@
   padding: 0 !important;
 }
 
+.liujo-plp-header-top-row .liujo-grid-toggler {
+  display: none !important;
+}
+
 .liujo-plp-header-left {
   display: flex !important;
   flex-direction: column !important;
