@@ -833,12 +833,12 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     display: none !important;
   }
 
-  /* Desktop Filter Popup Modal (Exact Liu Jo Parity - Images 2, 3, 4) */
+  /* Desktop Filter Popup Modal (Exact Liu Jo Parity - 670px width) */
   .facets__display {
     position: absolute !important;
     top: calc(100% + 10px) !important;
     left: 0 !important;
-    width: 580px !important;
+    width: 670px !important;
     max-width: calc(100vw - 48px) !important;
     height: 330px !important;
     min-height: 330px !important;
@@ -846,10 +846,10 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    background: #fff !important;
+    background: #ffffff !important;
     border: 1px solid #ebebeb !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-    padding: 30px 32px 24px 32px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    padding: 34px 40px 28px 40px !important;
     z-index: 100 !important;
     border-radius: 0 !important;
     box-sizing: border-box !important;
@@ -857,14 +857,14 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
 
   .liujo-facet-popup-close {
     position: absolute !important;
-    top: 14px !important;
-    right: 18px !important;
+    top: 18px !important;
+    right: 22px !important;
     background: transparent !important;
     border: none !important;
     font-size: 16px !important;
     line-height: 1 !important;
     cursor: pointer !important;
-    color: #111 !important;
+    color: #111111 !important;
     padding: 6px !important;
     z-index: 5 !important;
     font-family: inherit !important;
@@ -896,9 +896,9 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     grid-auto-flow: column !important;
     grid-template-rows: repeat(var(--liujo-facet-rows, 5), 34px) !important;
     grid-template-columns: repeat(var(--liujo-facet-cols, 3), minmax(0, 1fr)) !important;
-    column-gap: 32px !important;
+    column-gap: 36px !important;
     row-gap: 5px !important;
-    padding: 2px 10px 2px 0 !important;
+    padding: 2px 14px 2px 0 !important;
     margin: 0 !important;
     height: 100% !important;
     max-height: 100% !important;
@@ -908,15 +908,15 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     overflow-x: hidden !important;
     box-sizing: border-box !important;
     scrollbar-width: thin !important;
-    scrollbar-color: #000000 #f1f1f1 !important;
+    scrollbar-color: #000000 #f0f0f0 !important;
   }
 
   .facets__list::-webkit-scrollbar {
-    width: 4px !important;
+    width: 3px !important;
   }
 
   .facets__list::-webkit-scrollbar-track {
-    background: #f1f1f1 !important;
+    background: #f0f0f0 !important;
   }
 
   .facets__list::-webkit-scrollbar-thumb {
@@ -941,8 +941,8 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     cursor: pointer !important;
     font-size: 13px !important;
     font-weight: 400 !important;
-    letter-spacing: 0.02em !important;
-    color: #111 !important;
+    letter-spacing: 0.01em !important;
+    color: #111111 !important;
     text-transform: capitalize !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -951,6 +951,7 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    user-select: none !important;
   }
 
   .facet-checkbox .desktop-facets__checkbox,
@@ -965,11 +966,11 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   }
 
   .facet-checkbox .liujo-custom-checkbox {
-    width: 17px !important;
-    height: 17px !important;
-    min-width: 17px !important;
-    min-height: 17px !important;
-    border: 1px solid #999999 !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    border: 1px solid #b5b5b5 !important;
     border-radius: 0 !important;
     background-color: #ffffff !important;
     cursor: pointer !important;
@@ -980,6 +981,10 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     flex-shrink: 0 !important;
     box-sizing: border-box !important;
     transition: border-color 0.15s ease;
+  }
+
+  .facet-checkbox:hover .liujo-custom-checkbox {
+    border-color: #111111 !important;
   }
 
   .facet-checkbox input:checked + .liujo-custom-checkbox,

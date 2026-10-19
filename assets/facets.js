@@ -4,11 +4,21 @@ class FacetFiltersForm extends HTMLElement {
     this.onActiveFilterClick = this.onActiveFilterClick.bind(this);
 
     this.debouncedOnSubmit = debounce((event) => {
+      // Do not auto-submit on desktop horizontal filter popup changes!
+      // On desktop, user clicks the "FILTER" button to apply.
+      const isDesktopPopup = event.target && typeof event.target.closest === 'function' && event.target.closest('#FacetFiltersForm .facets__display');
+      if (isDesktopPopup) {
+        return;
+      }
       this.onSubmitHandler(event);
     }, 800);
 
     const facetForm = this.querySelector('form');
     facetForm.addEventListener('input', this.debouncedOnSubmit.bind(this));
+    facetForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.onSubmitHandler(event);
+    });
 
     const facetWrapper = this.querySelector('#FacetsWrapperDesktop');
     if (facetWrapper) facetWrapper.addEventListener('keyup', onKeyUpEscape);
@@ -337,14 +347,16 @@ class FacetFiltersForm extends HTMLElement {
   }
 
   onSubmitHandler(event) {
-    event.preventDefault();
+    if (event && typeof event.preventDefault === 'function') {
+      event.preventDefault();
+    }
     const sortFilterForms = document.querySelectorAll('facet-filters-form form');
-    if (event.srcElement.className == 'mobile-facets__checkbox') {
+    if (event && event.srcElement && event.srcElement.className == 'mobile-facets__checkbox') {
       const searchParams = this.createSearchParams(event.target.closest('form'));
       this.onSubmitForm(searchParams, event);
     } else {
       const forms = [];
-      const isMobile = event.target.closest('form').id === 'FacetFiltersFormMobile';
+      const isMobile = event && event.target && typeof event.target.closest === 'function' ? event.target.closest('form')?.id === 'FacetFiltersFormMobile' : false;
 
       sortFilterForms.forEach((form) => {
         if (!isMobile) {

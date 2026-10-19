@@ -377,10 +377,8 @@
                       </fieldset>
                       {%- if filter_type == 'horizontal' -%}
                         <div class="liujo-facet-popup-footer small-hide">
-                          <facet-remove>
-                            <a href="{{ filter.url_to_remove }}" class="liujo-facet-btn liujo-facet-btn--reset">RESET</a>
-                          </facet-remove>
-                          <button type="button" class="liujo-facet-btn liujo-facet-btn--apply" onclick="this.closest('details').removeAttribute('open')">FILTER</button>
+                          <button type="button" class="liujo-facet-btn liujo-facet-btn--reset" data-filter-reset>RESET</button>
+                          <button type="button" class="liujo-facet-btn liujo-facet-btn--apply" data-filter-apply>FILTER</button>
                         </div>
                       {%- endif -%}
                       {%- if filter.values.size > show_more_number and filter_type == 'vertical' -%}
@@ -448,10 +446,8 @@
                       </price-range>
                       {%- if filter_type == 'horizontal' -%}
                         <div class="liujo-facet-popup-footer small-hide">
-                          <facet-remove>
-                            <a href="{{ filter.url_to_remove }}" class="liujo-facet-btn liujo-facet-btn--reset">RESET</a>
-                          </facet-remove>
-                          <button type="button" class="liujo-facet-btn liujo-facet-btn--apply" onclick="this.closest('details').removeAttribute('open')">FILTER</button>
+                          <button type="button" class="liujo-facet-btn liujo-facet-btn--reset" data-filter-reset>RESET</button>
+                          <button type="button" class="liujo-facet-btn liujo-facet-btn--apply" data-filter-apply>FILTER</button>
                         </div>
                       {%- endif -%}
                     </div>

@@ -1549,6 +1549,53 @@ function initLiuJoToolbar() {
       return;
     }
 
+    // 6.5 Desktop Filter Apply Button (FILTER)
+    const filterApplyBtn = e.target.closest('[data-filter-apply], .liujo-facet-btn--apply');
+    if (filterApplyBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const details = filterApplyBtn.closest('details');
+      if (details) details.removeAttribute('open');
+
+      const facetsFormElem = document.querySelector('facet-filters-form');
+      if (facetsFormElem && typeof facetsFormElem.onSubmitHandler === 'function') {
+        facetsFormElem.onSubmitHandler(new Event('submit', { bubbles: true, cancelable: true }));
+      } else {
+        const form = document.getElementById('FacetFiltersForm');
+        if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+      return;
+    }
+
+    // 6.6 Desktop Filter Reset Button (RESET)
+    const filterResetBtn = e.target.closest('[data-filter-reset], .liujo-facet-btn--reset');
+    if (filterResetBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const details = filterResetBtn.closest('details');
+      if (details) {
+        // Uncheck all checkboxes in this specific filter popup
+        details.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.checked = false;
+        });
+        // Clear any price inputs if price filter
+        details.querySelectorAll('price-range input').forEach(inp => {
+          inp.value = '';
+        });
+        details.removeAttribute('open');
+      }
+
+      // Submit form with the cleared filter values so product grid updates immediately
+      const facetsFormElem = document.querySelector('facet-filters-form');
+      if (facetsFormElem && typeof facetsFormElem.onSubmitHandler === 'function') {
+        facetsFormElem.onSubmitHandler(new Event('submit', { bubbles: true, cancelable: true }));
+      } else {
+        const form = document.getElementById('FacetFiltersForm');
+        if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+      return;
+    }
+
     // 7. Desktop Filter Close ✕ Button
     const filterCloseBtn = e.target.closest('.liujo-facet-popup-close');
     if (filterCloseBtn) {
