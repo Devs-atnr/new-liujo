@@ -259,11 +259,37 @@
                             assign inactive_filter_values = filter.values | where: 'active', false
                             assign sorted_values = active_filter_values | concat: inactive_filter_values
                           endif
+
+                          assign unique_count = 0
+                          assign seen_temp = ''
+                          for val in sorted_values
+                            assign l_clean = val.label | strip | downcase
+                            assign l_delim = '###' | append: l_clean | append: '###'
+                            unless seen_temp contains l_delim
+                              assign seen_temp = seen_temp | append: l_delim
+                              assign unique_count = unique_count | plus: 1
+                            endunless
+                          endfor
+
+                          if unique_count <= 5
+                            assign num_cols = 1
+                            assign num_rows = 5
+                          elsif unique_count <= 10
+                            assign num_cols = 2
+                            assign num_rows = 5
+                          elsif unique_count <= 15
+                            assign num_cols = 3
+                            assign num_rows = 5
+                          else
+                            assign num_cols = 3
+                            assign num_rows = unique_count | plus: 2 | divided_by: 3
+                          endif
                         -%}
                         {%- assign seen_labels_desktop = '' -%}
                         <ul
                           class="{{ visual_layout_class }}{% if filter_type == 'vertical' %} facets__list--vertical{% else %} facets__list{% endif %} list-unstyled"
                           role="list"
+                          style="--liujo-facet-cols: {{ num_cols }}; --liujo-facet-rows: {{ num_rows }};"
                         >
                           {%- for value in sorted_values -%}
                             {%- liquid
