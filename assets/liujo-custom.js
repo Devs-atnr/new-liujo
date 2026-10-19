@@ -1559,7 +1559,7 @@ function initLiuJoToolbar() {
 
       const facetsFormElem = document.querySelector('facet-filters-form');
       if (facetsFormElem && typeof facetsFormElem.onSubmitHandler === 'function') {
-        facetsFormElem.onSubmitHandler(new Event('submit', { bubbles: true, cancelable: true }));
+        facetsFormElem.onSubmitHandler(null);
       } else {
         const form = document.getElementById('FacetFiltersForm');
         if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
@@ -1588,7 +1588,7 @@ function initLiuJoToolbar() {
       // Submit form with the cleared filter values so product grid updates immediately
       const facetsFormElem = document.querySelector('facet-filters-form');
       if (facetsFormElem && typeof facetsFormElem.onSubmitHandler === 'function') {
-        facetsFormElem.onSubmitHandler(new Event('submit', { bubbles: true, cancelable: true }));
+        facetsFormElem.onSubmitHandler(null);
       } else {
         const form = document.getElementById('FacetFiltersForm');
         if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));

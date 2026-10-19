@@ -198,7 +198,7 @@ class FacetFiltersForm extends HTMLElement {
     });
 
     const matchesId = (element) => {
-      const jsFilter = event ? event.target.closest('.js-filter') : undefined;
+      const jsFilter = event && event.target && typeof event.target.closest === 'function' ? event.target.closest('.js-filter') : undefined;
       return jsFilter ? element.id === jsFilter.id : false;
     };
 
@@ -229,8 +229,9 @@ class FacetFiltersForm extends HTMLElement {
     FacetFiltersForm.renderActiveFacets(parsedHTML);
     FacetFiltersForm.renderAdditionalElements(parsedHTML);
 
-    if (countsToRender) {
-      const closestJSFilterID = event.target.closest('.js-filter').id;
+    if (countsToRender && event && event.target && typeof event.target.closest === 'function') {
+      const closestFilterEl = event.target.closest('.js-filter');
+      const closestJSFilterID = closestFilterEl ? closestFilterEl.id : null;
 
       if (closestJSFilterID) {
         FacetFiltersForm.renderCounts(countsToRender, event.target.closest('.js-filter'));
@@ -367,7 +368,8 @@ class FacetFiltersForm extends HTMLElement {
           forms.push(this.createSearchParams(form));
         }
       });
-      this.onSubmitForm(forms.join('&'), event);
+      const safeEvent = event && event.target && typeof event.target.closest === 'function' ? event : null;
+      this.onSubmitForm(forms.join('&'), safeEvent);
     }
   }
 
