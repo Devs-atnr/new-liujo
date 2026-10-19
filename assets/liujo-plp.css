@@ -22,32 +22,33 @@
 
 .liujo-breadcrumbs-list a,
 .liujo-breadcrumbs-list span {
-  font-family: var(--liujo-font-main);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: #666;
-  text-decoration: none;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  color: #111111 !important;
+  text-decoration: none !important;
   transition: color 0.2s ease;
 }
 
 .liujo-breadcrumbs-list a:hover {
-  color: #000;
+  text-decoration: underline !important;
 }
 
 .liujo-bc-sep {
-  font-size: 9px;
-  color: #888;
+  font-size: 9px !important;
+  color: #111111 !important;
+  padding: 0 2px !important;
 }
 
 .liujo-bc-current {
-  color: #111 !important;
-  font-weight: 600;
+  color: #111111 !important;
+  font-weight: 500 !important;
 }
 
 .liujo-item-count {
-  color: #777;
-  margin-left: 2px;
+  color: #111111 !important;
+  margin-left: 2px !important;
 }
 
 /* 2. COLLECTION BANNER (DESKTOP) */
@@ -85,12 +86,12 @@
 }
 
 .collection-hero__title {
-  font-family: var(--liujo-font-main) !important;
-  font-size: 20px !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.08em !important;
+  letter-spacing: 0.05em !important;
   text-transform: uppercase !important;
-  color: #111 !important;
+  color: #111111 !important;
   margin: 4px 0 6px 0 !important;
   text-align: left !important;
 }
@@ -1165,14 +1166,16 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   }
 
   .liujo-sort-options-list li {
-    display: block !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     padding: 0 !important;
     font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     font-size: 13px !important;
     font-weight: 700 !important;
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
-    color: #111 !important;
+    color: #111111 !important;
     cursor: pointer !important;
     transition: color 0.15s ease !important;
     border-bottom: none !important;
@@ -1180,39 +1183,57 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   }
 
   .liujo-sort-options-list li:hover {
-    color: #777 !important;
+    color: #666666 !important;
     background: transparent !important;
   }
 
   .liujo-sort-options-list li.is-selected {
-    color: #000 !important;
+    color: #000000 !important;
     font-weight: 700 !important;
     background: transparent !important;
   }
 
   .liujo-sort-options-list li .liujo-sort-check {
     display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #000000 !important;
+  }
+
+  .liujo-sort-options-list li.is-selected .liujo-sort-check {
+    display: inline-flex !important;
   }
 }
 
-/* 5. PRODUCT GRID & CONTAINER FLUID (LIUJO.COM PARITY) */
+/* 5. PRODUCT GRID & CONTAINER FLUID (LIUJO.COM PARITY - IMAGE 1) */
 .collection-hero__inner.page-width,
 .facets-wrapper.page-width,
-.collection.page-width,
-.template-search__results.page-width,
 .template-search__header.page-width {
   max-width: 100% !important;
   padding-left: 24px !important;
   padding-right: 24px !important;
 }
 
+.collection.page-width,
+.product-grid-container,
+.product-grid-container .collection,
+.template-search__results.page-width {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 #product-grid.product-grid {
   display: grid !important;
   width: 100% !important;
   max-width: 100% !important;
-  padding: 32px 24px 60px 24px !important;
+  padding: 0 0 60px 0 !important;
   margin: 0 !important;
-  gap: 28px 12px !important;
+  column-gap: 0 !important;
+  row-gap: 24px !important;
 }
 
 #product-grid.product-grid > .grid__item {
@@ -1225,11 +1246,14 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
 @media (min-width: 990px) {
   #product-grid.product-grid {
     grid-template-columns: repeat(4, 1fr) !important;
+    column-gap: 0 !important;
+    row-gap: 24px !important;
   }
 
   #product-grid.product-grid.grid--compact {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 36px 16px !important;
+    column-gap: 0 !important;
+    row-gap: 36px !important;
   }
 }
 
@@ -1369,17 +1393,18 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   fill: currentColor !important;
 }
 
-/* Product Heading (Title) */
+/* Product Heading (Title - Exact Image 1 Parity) */
 .card__heading {
-  font-family: var(--liujo-font-main) !important;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-size: 11px !important;
   font-weight: 400 !important;
   letter-spacing: 0.02em !important;
   text-transform: capitalize !important;
-  color: #111 !important;
-  line-height: 1.4 !important;
-  margin: 10px 0 2px 0 !important;
-  padding: 0 4px !important;
+  color: #111111 !important;
+  line-height: 1.35 !important;
+  margin: 8px 0 0 0 !important;
+  padding: 0 10px !important;
+  text-align: left !important;
 }
 
 .card__heading a {
@@ -1391,63 +1416,21 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   opacity: 0.75 !important;
 }
 
-/* Product Price at Bottom of Card (Liu Jo Luxury Style) */
+.card-information {
+  padding: 0 0 12px 0 !important;
+  text-align: left !important;
+}
+
+/* Hide Price Completely on Collection Cards (Image 1 Parity) */
+.product-grid .price,
+.product-grid-container .price,
+#product-grid .price,
+.collection .price,
+.card-information > .price,
+.card-information .price,
 .liujo-card-price-wrapper {
   display: none !important;
-}
-
-.card-information > .price {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  margin-top: 6px !important;
-  margin-bottom: 0 !important;
-  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-}
-
-.card-information > .price .price__container {
-  display: flex !important;
-  align-items: baseline !important;
-  gap: 8px !important;
-  flex-wrap: wrap !important;
-}
-
-/* Hide price__regular when on sale so duplicate struck-out price never shows */
-.card-information > .price.price--on-sale .price__regular {
-  display: none !important;
-}
-
-.card-information > .price.price--on-sale .price__sale {
-  display: flex !important;
-  align-items: baseline !important;
-  gap: 8px !important;
-  flex-wrap: wrap !important;
-}
-
-/* Regular / On-sale price item */
-.card-information > .price .price-item--regular {
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  color: #111 !important;
-  letter-spacing: 0.02em !important;
-  line-height: 1.3 !important;
-}
-
-/* Sale price: Bold price */
-.card-information > .price .price-item--sale {
-  font-size: 13px !important;
-  font-weight: 700 !important;
-  color: #111 !important;
-  letter-spacing: 0.02em !important;
-  line-height: 1.3 !important;
-}
-
-/* Compare-at struck-through price */
-.card-information > .price.price--on-sale s.price-item--regular {
-  font-size: 12px !important;
-  font-weight: 400 !important;
-  color: #888 !important;
-  text-decoration: line-through !important;
+  visibility: hidden !important;
 }
 
 .card-information .caption-with-letter-spacing {

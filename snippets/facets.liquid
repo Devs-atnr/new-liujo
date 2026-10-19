@@ -537,12 +537,27 @@
                   <ul class="liujo-sort-options-list">
                     <li data-sort-value="manual" class="{% if sort_by == 'manual' or sort_by == '' %}is-selected{% endif %}">
                       <span>OUR FAVOURITES</span>
+                      <span class="liujo-sort-check" aria-hidden="true">
+                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="1.5 5.5 4.5 8.5 10.5 1.5"></polyline>
+                        </svg>
+                      </span>
                     </li>
                     <li data-sort-value="price-ascending" class="{% if sort_by == 'price-ascending' %}is-selected{% endif %}">
                       <span>LOW TO HIGH</span>
+                      <span class="liujo-sort-check" aria-hidden="true">
+                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="1.5 5.5 4.5 8.5 10.5 1.5"></polyline>
+                        </svg>
+                      </span>
                     </li>
                     <li data-sort-value="price-descending" class="{% if sort_by == 'price-descending' %}is-selected{% endif %}">
                       <span>HIGH TO LOW</span>
+                      <span class="liujo-sort-check" aria-hidden="true">
+                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="1.5 5.5 4.5 8.5 10.5 1.5"></polyline>
+                        </svg>
+                      </span>
                     </li>
                   </ul>
                 </div>
