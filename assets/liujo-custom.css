@@ -2145,8 +2145,16 @@ input[type="email"]:active {
 
 @media (max-width: 991px) {
   .liujo-footer-col {
-    background-color: #1a1a1a;
-    border-bottom: 1px solid #333;
+    background-color: #000000;
+    border-bottom: 1px solid #262626;
+  }
+  .liujo-footer-heading {
+    background-color: #000000;
+    color: #ffffff !important;
+  }
+  .liujo-footer-link,
+  .liujo-footer-links a {
+    color: #ffffff !important;
   }
 }
 
@@ -2364,13 +2372,21 @@ input[type="email"]:active {
 @media (max-width: 767px) {
   .liujo-postfooter__row {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
+    align-items: stretch;
+    gap: 20px;
     text-align: left;
   }
   .liujo-postfooter__left {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #262626;
+    padding-bottom: 20px;
+  }
+  .liujo-social-icons {
+    width: 100%;
+    justify-content: center;
+    gap: 36px;
   }
   .liujo-copyright {
     text-align: left;
