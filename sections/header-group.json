@@ -14,6 +14,7 @@
     "header": {
       "type": "header",
       "custom_css": [
+        "@media (min-width: 1024px) {.liujo-header {padding-top: 50px; padding-bottom: 50px; }}",
         "span.liujo-badge-count {display: none !important;}"
       ],
       "settings": {
