@@ -1204,10 +1204,31 @@ body.has-search-open .liujo-megamenu {
   display: flex;
   gap: 0;
   overflow-x: auto;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: none;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
   scrollbar-width: none;
   padding-bottom: 0;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-x pan-y;
+}
+
+.liujo-carousel-track.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto !important;
+}
+
+.liujo-carousel-track img,
+.liujo-carousel-track a {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+}
+
+.liujo-carousel-track.is-dragging a {
+  pointer-events: none;
 }
 
 .liujo-carousel-track.is-dragging {

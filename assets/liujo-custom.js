@@ -100,8 +100,9 @@ function initLiuJoCarousels() {
       });
     }
 
-    // Smooth Mouse Drag to Scroll with momentum
+    // Smooth Mouse Drag to Scroll with momentum (liujo.com-style)
     let isDown = false;
+    let hasMoved = false;
     let startX;
     let scrollLeft;
     let velX = 0;
@@ -114,60 +115,80 @@ function initLiuJoCarousels() {
         cancelAnimationFrame(momentumId);
         momentumId = null;
       }
+      track.classList.remove('is-dragging');
     }
 
     function applyMomentum() {
-      if (Math.abs(velX) < 0.5) {
+      if (Math.abs(velX) < 0.3) {
         momentumId = null;
+        track.classList.remove('is-dragging');
         return;
       }
       track.scrollLeft += velX;
-      velX *= 0.92;
+      velX *= 0.94;
       momentumId = requestAnimationFrame(applyMomentum);
     }
 
+    // Prevent native image drag which breaks the gesture
+    track.querySelectorAll('img, a').forEach(el => {
+      el.addEventListener('dragstart', e => e.preventDefault());
+    });
+
     track.addEventListener('mousedown', (e) => {
+      // Only left button
+      if (e.button !== 0) return;
       stopMomentum();
       isDown = true;
+      hasMoved = false;
       track.classList.add('is-dragging');
-      startX = e.pageX - track.offsetLeft;
+      startX = e.pageX;
       scrollLeft = track.scrollLeft;
       lastX = e.pageX;
-      lastTime = Date.now();
+      lastTime = performance.now();
       velX = 0;
     });
 
-    track.addEventListener('mouseleave', () => {
-      if (isDown) {
-        isDown = false;
-        track.classList.remove('is-dragging');
+    function endDrag() {
+      if (!isDown) return;
+      isDown = false;
+      // Keep is-dragging during momentum so scroll-snap doesn't jar
+      if (Math.abs(velX) > 0.3) {
         applyMomentum();
+      } else {
+        track.classList.remove('is-dragging');
       }
-    });
+    }
 
-    track.addEventListener('mouseup', () => {
-      if (isDown) {
-        isDown = false;
-        track.classList.remove('is-dragging');
-        applyMomentum();
-      }
-    });
+    track.addEventListener('mouseleave', endDrag);
+    track.addEventListener('mouseup', endDrag);
+    // Also catch mouseup outside the track
+    document.addEventListener('mouseup', endDrag);
 
     track.addEventListener('mousemove', (e) => {
       if (!isDown) return;
       e.preventDefault();
-      const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      track.scrollLeft = scrollLeft - walk;
+      const dx = e.pageX - startX;
+      if (Math.abs(dx) > 3) hasMoved = true;
+      track.scrollLeft = scrollLeft - dx;
 
-      const now = Date.now();
+      const now = performance.now();
       const dt = now - lastTime;
       if (dt > 0) {
+        // Weighted velocity: last movement / frame time
         velX = (lastX - e.pageX) * (16 / dt);
       }
       lastX = e.pageX;
       lastTime = now;
     });
+
+    // Suppress click on links if a drag just happened
+    track.addEventListener('click', (e) => {
+      if (hasMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+        hasMoved = false;
+      }
+    }, true);
   });
 }
 
