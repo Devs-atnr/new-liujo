@@ -1340,13 +1340,45 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   transform: scale(1.02) !important;
 }
 
-/* Hide Carousel Dash Indicators completely per user request */
-.liujo-card-indicators,
+/* Carousel Dash Indicators — visible, white, dynamic */
 .liujo-card-indicators .liujo-indicator-dot {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
+  width: 20px !important;
+  height: 3px !important;
+  border-radius: 0 !important;
+  background-color: rgba(255, 255, 255, 0.45) !important;
+  transition: background-color 0.2s ease !important;
+  cursor: pointer !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.liujo-card-indicators .liujo-indicator-dot.is-active {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Desktop hover: toggle dots when secondary image is shown */
+@media (min-width: 990px) {
+  .card-wrapper:hover .liujo-card-indicators .liujo-indicator-dot:first-child {
+    background-color: rgba(255, 255, 255, 0.45) !important;
+  }
+  .card-wrapper:hover .liujo-card-indicators .liujo-indicator-dot:last-child {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+  }
+}
+
+/* Mobile: when swiped to show image 2, fade image 1 and show image 2 */
+@media (max-width: 989px) {
+  .card-wrapper.liujo-show-secondary .media.media--hover-effect > img:first-child:not(:only-child) {
+    opacity: 0 !important;
+    transition: opacity 0.35s ease !important;
+  }
+  .card-wrapper.liujo-show-secondary .media.media--hover-effect > img + img {
+    opacity: 1 !important;
+    transition: opacity 0.35s ease !important;
+  }
+  .card-wrapper .media.media--hover-effect > img + img {
+    transition: opacity 0.35s ease !important;
+  }
 }
 
 /* Wishlist Heart Trigger */
@@ -1408,16 +1440,61 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   text-align: left !important;
 }
 
-/* Hide Price Completely on Collection Cards (Image 1 Parity) */
-.product-grid .price,
-.product-grid-container .price,
-#product-grid .price,
-.collection .price,
-.card-information > .price,
-.card-information .price,
+/* Show price on collection cards — only the final price (hide strikethrough compares) */
 .liujo-card-price-wrapper {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 3px !important;
+  padding: 0 10px !important;
+}
+
+.liujo-card-price-wrapper .price,
+.liujo-card-price-wrapper .price__container,
+.liujo-card-price-wrapper .price-item {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.liujo-card-price-wrapper .price {
+  font-family: var(--liujo-font-main) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  color: #111 !important;
+  margin: 0 !important;
+}
+
+/* Hide compare-at / strikethrough / regular price — keep only final price */
+.liujo-card-price-wrapper .price__regular,
+.liujo-card-price-wrapper .price-item--regular,
+.liujo-card-price-wrapper s,
+.liujo-card-price-wrapper .price--on-sale .price-item--regular,
+.liujo-card-price-wrapper .price__sale > span:not(.price-item--sale):not(.price-item--last) {
   display: none !important;
-  visibility: hidden !important;
+}
+
+.liujo-card-price-wrapper .price__sale {
+  display: block !important;
+}
+
+.liujo-card-price-wrapper .price-item--sale,
+.liujo-card-price-wrapper .price-item--last {
+  display: inline-block !important;
+  font-weight: 700 !important;
+  color: #111 !important;
+  font-size: 12px !important;
+}
+
+/* Hide duplicate price inside card-information (shown via liujo-card-price-wrapper instead) */
+.card-information > .price {
+  display: none !important;
+}
+
+/* Hide duplicate price wrapper inside card__inner (keep only the one in outer card__content) */
+.card__inner .card__content .liujo-card-price-wrapper {
+  display: none !important;
 }
 
 .card-information .caption-with-letter-spacing {

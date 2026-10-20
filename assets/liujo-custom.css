@@ -275,9 +275,16 @@ input, textarea, select, button,
 }
 
 .liujo-logo-image {
-  max-height: 34px;
+  max-height: 56px;
+  height: auto;
   width: auto;
   display: block;
+}
+
+@media (max-width: 991px) {
+  .liujo-logo-image {
+    max-height: 38px;
+  }
 }
 
 @media (max-width: 991px) {
@@ -336,16 +343,17 @@ input, textarea, select, button,
 .liujo-header__nav-link::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 18px;
   left: 0;
   width: 0%;
-  height: 2px;
-  background-color: #000000;
-  transition: width 0.2s ease;
+  height: 1px;
+  background-color: #111111;
+  transition: width 0.25s ease;
 }
 
 .liujo-header__nav-item:hover > .liujo-header__nav-link::after,
-.liujo-header__nav-link.is-active::after {
+.liujo-header__nav-link.is-active::after,
+.liujo-header__nav-item:focus-within > .liujo-header__nav-link::after {
   width: 100%;
 }
 
