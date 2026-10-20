@@ -4,12 +4,16 @@
 {% endcomment %}
 
 <div class="liujo-product-carousel-section" data-section-id="{{ section.id }}" data-section-type="liujo-product-carousel" data-liujo-carousel>
-  <div class="liujo-section-header">
-    <h2 class="liujo-title-display">{{ section.settings.title | default: 'Explore the Looks' }}</h2>
-    {%- if section.settings.subtitle != blank -%}
-      <div class="liujo-subtitle" style="margin-top: 8px;">{{ section.settings.subtitle }}</div>
-    {%- endif -%}
-  </div>
+  {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+    <div class="liujo-section-header">
+      {%- if section.settings.title != blank -%}
+        <h2 class="liujo-title-display">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <div class="liujo-subtitle" style="margin-top: 8px;">{{ section.settings.subtitle }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 
   <div class="liujo-carousel-track-wrapper">
     <!-- Prev Arrow Button -->
@@ -106,7 +110,8 @@
       "type": "text",
       "id": "title",
       "label": "Heading",
-      "default": "Explore the Looks"
+      "info": "Leave blank to hide the heading entirely.",
+      "default": ""
     },
     {
       "type": "text",
