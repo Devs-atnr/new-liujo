@@ -65,6 +65,18 @@ input, textarea, select, button,
   display: none !important;
 }
 
+/* Visibility helpers */
+@media (max-width: 767px) {
+  .liujo-hide-mobile {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .liujo-hide-desktop {
+    display: none !important;
+  }
+}
+
 /* Liu Jo Typography Classes */
 .liujo-title-display {
   font-size: clamp(2rem, 4vw, 3.2rem);
@@ -1185,12 +1197,27 @@ body.has-search-open .liujo-megamenu {
 }
 
 .liujo-section-header .liujo-title-display {
+  font-family: "Red Hat Display", var(--liujo-font-main, "Helvetica Neue"), Helvetica, Arial, sans-serif !important;
   font-size: clamp(1.4rem, 2vw, 1.75rem) !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.08em !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
   text-transform: uppercase !important;
-  color: #111 !important;
+  color: #000 !important;
+  line-height: 1.1 !important;
   margin: 0 !important;
+}
+
+@media (max-width: 767px) {
+  .liujo-section-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 16px;
+  }
+  .liujo-section-header .liujo-title-display {
+    font-size: 34px !important;
+    line-height: 1.05 !important;
+    /* Big title will naturally wrap to 2 lines on mobile widths */
+  }
 }
 
 .liujo-carousel-track-wrapper {

@@ -167,7 +167,7 @@
         {%- endif -%}
 
         {%- if section.settings.button_label != blank -%}
-          <div style="margin-top: 10px;">
+          <div style="margin-top: 10px;" class="liujo-hero-video__btn-wrap{% if section.settings.hide_button_mobile %} liujo-hide-mobile{% endif %}">
             <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="liujo-hero-video__btn">
               <span>{{ section.settings.button_label }}</span>
             </a>
@@ -369,6 +369,12 @@
       "id": "button_label",
       "label": "Button Name / Label",
       "default": "Discover"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_button_mobile",
+      "label": "Hide button on mobile",
+      "default": true
     },
     {
       "type": "url",

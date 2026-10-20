@@ -90,7 +90,7 @@
   </div>
 
   {%- if section.settings.show_view_all and section.settings.collection != blank -%}
-    <div style="text-align: center; margin-top: 40px;">
+    <div class="liujo-carousel-view-all{% if section.settings.hide_button_mobile %} liujo-hide-mobile{% endif %}" style="text-align: center; margin-top: 40px;">
       <a href="{{ collections[section.settings.collection].url }}" class="btn-editorial-outline">
         {{ section.settings.view_all_label | default: 'View all products' }}
       </a>
@@ -132,6 +132,12 @@
       "type": "checkbox",
       "id": "show_view_all",
       "label": "Show 'View all' button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_button_mobile",
+      "label": "Hide 'View all' button on mobile",
       "default": true
     },
     {
