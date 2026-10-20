@@ -58,6 +58,9 @@
           }
           @media (max-width: 767px) {
             .liujo-split-block--{{ b_id }} .liujo-split-block__content {
+              align-items: {{ block.settings.content_alignment_mobile | default: block.settings.content_alignment | default: 'flex-start' }};
+              justify-content: {{ block.settings.content_position_mobile | default: block.settings.content_position | default: 'flex-end' }};
+              text-align: {{ block.settings.content_text_align_mobile | default: block.settings.content_text_align | default: 'left' }};
               padding-top: {{ block.settings.content_padding_top_mobile | default: 20 }}px;
               padding-right: {{ block.settings.content_padding_right_mobile | default: 20 }}px;
               padding-bottom: {{ block.settings.content_padding_bottom_mobile | default: 20 }}px;
@@ -69,7 +72,7 @@
             color: {{ block.settings.subheading_color | default: '#ffffff' }};
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: {{ block.settings.subheading_weight_desktop | default: 600 }};
             margin-bottom: 8px;
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__title {
@@ -77,16 +80,21 @@
             color: {{ block.settings.title_color | default: '#ffffff' }};
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            font-weight: 700;
+            font-weight: {{ block.settings.title_weight_desktop | default: 700 }};
             margin: 0 0 {% if block.settings.button_label != blank %}16px{% else %}0{% endif %};
             line-height: 1.2;
           }
           @media (max-width: 767px) {
             .liujo-split-block--{{ b_id }} .liujo-split-block__subheading {
               font-size: {{ block.settings.subheading_size_mobile | default: 10 }}px;
+              font-weight: {{ block.settings.subheading_weight_mobile | default: block.settings.subheading_weight_desktop | default: 600 }};
             }
             .liujo-split-block--{{ b_id }} .liujo-split-block__title {
               font-size: {{ block.settings.title_size_mobile | default: 22 }}px;
+              font-weight: {{ block.settings.title_weight_mobile | default: block.settings.title_weight_desktop | default: 700 }};
+            }
+            .liujo-split-block--{{ b_id }} .liujo-split-block__btn {
+              font-weight: {{ block.settings.button_weight_mobile | default: block.settings.button_weight_desktop | default: 600 }} !important;
             }
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__btn {
@@ -98,7 +106,7 @@
             align-items: center;
             justify-content: center;
             padding: 10px 28px;
-            font-weight: 600;
+            font-weight: {{ block.settings.button_weight_desktop | default: 600 }};
             letter-spacing: 0.2em;
             text-transform: uppercase;
             text-decoration: none;
@@ -421,6 +429,43 @@
         },
         {
           "type": "header",
+          "content": "Mobile Content Alignment"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_mobile",
+          "label": "Mobile Horizontal Alignment",
+          "options": [
+            { "value": "flex-start", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Right" }
+          ],
+          "default": "flex-start"
+        },
+        {
+          "type": "select",
+          "id": "content_position_mobile",
+          "label": "Mobile Vertical Position",
+          "options": [
+            { "value": "flex-start", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Bottom" }
+          ],
+          "default": "flex-end"
+        },
+        {
+          "type": "select",
+          "id": "content_text_align_mobile",
+          "label": "Mobile Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "header",
           "content": "Content Padding (Desktop)"
         },
         {
@@ -543,6 +588,36 @@
           "default": "#ffffff"
         },
         {
+          "type": "select",
+          "id": "subheading_weight_desktop",
+          "label": "Desktop Subheading Weight",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra Bold (800)" },
+            { "value": "900", "label": "Black (900)" }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "subheading_weight_mobile",
+          "label": "Mobile Subheading Weight",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra Bold (800)" },
+            { "value": "900", "label": "Black (900)" }
+          ],
+          "default": "600"
+        },
+        {
           "type": "header",
           "content": "Title Typography & Color"
         },
@@ -579,6 +654,36 @@
           "default": "#ffffff"
         },
         {
+          "type": "select",
+          "id": "title_weight_desktop",
+          "label": "Desktop Title Weight",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra Bold (800)" },
+            { "value": "900", "label": "Black (900)" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "select",
+          "id": "title_weight_mobile",
+          "label": "Mobile Title Weight",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra Bold (800)" },
+            { "value": "900", "label": "Black (900)" }
+          ],
+          "default": "700"
+        },
+        {
           "type": "header",
           "content": "Button & Link Settings"
         },
@@ -601,6 +706,32 @@
           "unit": "px",
           "label": "Button Font Size",
           "default": 11
+        },
+        {
+          "type": "select",
+          "id": "button_weight_desktop",
+          "label": "Desktop Button Weight",
+          "options": [
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra Bold (800)" }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "button_weight_mobile",
+          "label": "Mobile Button Weight",
+          "options": [
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra Bold (800)" }
+          ],
+          "default": "600"
         },
         {
           "type": "color",
