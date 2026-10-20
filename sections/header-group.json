@@ -23,7 +23,7 @@
         "announcement_text_content": "THIS IS JUST A PRESENTATION WEBSITE",
         "announcement_link_label": "Discover",
         "announcement_link": "",
-        "header_height_desktop": 100,
+        "header_height_desktop": 72,
         "header_height_mobile": 76,
         "header_padding_horizontal": 40,
         "menu": "main-menu-copy-for-menu",
