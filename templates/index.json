@@ -93,10 +93,10 @@
     "product_carousel": {
       "type": "liujo-product-carousel",
       "settings": {
-        "title": "",
+        "title": "fdf",
         "subtitle": "",
         "collection": "all",
-        "products_to_show": 8,
+        "products_to_show": 10,
         "show_view_all": false,
         "view_all_label": "See all Clothing"
       }
