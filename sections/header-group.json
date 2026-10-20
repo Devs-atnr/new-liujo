@@ -15,7 +15,7 @@
       "type": "header",
       "custom_css": [
         "span.liujo-badge-count {display: none !important;}",
-        ".liujo-logo-image {max-height: 50px;}"
+        "@media (min-width: 600px) {.liujo-logo-image {max-height: 50px; } }"
       ],
       "settings": {
         "show_announcement": true,
