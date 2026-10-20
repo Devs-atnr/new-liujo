@@ -14,8 +14,7 @@
     "header": {
       "type": "header",
       "custom_css": [
-        "span.liujo-badge-count {display: none !important;}",
-        "@media (min-width: 1024px) {.liujo-header {padding: 45px 42px !important; } .liujo-logo-image {max-height: 50px; }}"
+        "span.liujo-badge-count {display: none !important;}"
       ],
       "settings": {
         "show_announcement": true,
@@ -30,7 +29,7 @@
         "menu": "main-menu-copy-for-menu",
         "use_liujo_default_fallback": true,
         "outlet_color": "#e6006e",
-        "logo_width": 210,
+        "logo_width": 190,
         "show_store_locator": true,
         "store_locator_label": "Locate Stores",
         "store_locator_link": "",
