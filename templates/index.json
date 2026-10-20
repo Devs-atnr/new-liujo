@@ -93,11 +93,11 @@
     "product_carousel": {
       "type": "liujo-product-carousel",
       "settings": {
-        "title": "Explore the Looks",
-        "subtitle": "The latest styles handpicked for this season",
+        "title": "",
+        "subtitle": "",
         "collection": "all",
         "products_to_show": 8,
-        "show_view_all": true,
+        "show_view_all": false,
         "view_all_label": "See all Clothing"
       }
     },
