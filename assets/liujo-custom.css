@@ -1410,7 +1410,7 @@ body.has-search-open .liujo-megamenu {
 .liujo-split-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 0;
   max-width: none;
   margin: 0;
   padding: 0;
@@ -1419,7 +1419,7 @@ body.has-search-open .liujo-megamenu {
 @media (max-width: 767px) {
   .liujo-split-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 0;
     padding: 0;
   }
 }

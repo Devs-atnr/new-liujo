@@ -9,7 +9,7 @@
   <style>
     .liujo-split-banners--{{ s_id }} .liujo-split-grid {
       grid-template-columns: repeat({{ section.settings.columns_desktop | default: 2 }}, minmax(0, 1fr));
-      gap: {{ section.settings.gap_desktop | default: 16 }}px;
+      gap: {{ section.settings.gap_desktop | default: 0 }}px;
       {% if section.settings.full_width %}
         max-width: 100%;
         padding: 0 {{ section.settings.padding_x | default: 16 }}px;
@@ -18,7 +18,7 @@
     @media (max-width: 767px) {
       .liujo-split-banners--{{ s_id }} .liujo-split-grid {
         grid-template-columns: repeat({{ section.settings.columns_mobile | default: 1 }}, minmax(0, 1fr));
-        gap: {{ section.settings.gap_mobile | default: 12 }}px;
+        gap: {{ section.settings.gap_mobile | default: 0 }}px;
       }
     }
   </style>
