@@ -3,7 +3,28 @@
   Matches the "Explore the Looks" draggable product list carousel on https://www.liujo.com
 {% endcomment %}
 
-<div class="liujo-product-carousel-section" data-section-id="{{ section.id }}" data-section-type="liujo-product-carousel" data-liujo-carousel>
+{%- assign ps_id = section.id -%}
+<style>
+  .liujo-product-carousel--{{ ps_id }} .liujo-section-header .liujo-title-display {
+    font-weight: {{ section.settings.heading_weight_desktop | default: 700 }} !important;
+    font-size: {{ section.settings.heading_size_desktop | default: 28 }}px !important;
+    text-align: {{ section.settings.heading_align_desktop | default: 'left' }} !important;
+  }
+  .liujo-product-carousel--{{ ps_id }} .liujo-section-header {
+    text-align: {{ section.settings.heading_align_desktop | default: 'left' }} !important;
+  }
+  @media (max-width: 767px) {
+    .liujo-product-carousel--{{ ps_id }} .liujo-section-header .liujo-title-display {
+      font-weight: {{ section.settings.heading_weight_mobile | default: section.settings.heading_weight_desktop | default: 700 }} !important;
+      font-size: {{ section.settings.heading_size_mobile | default: 32 }}px !important;
+      text-align: {{ section.settings.heading_align_mobile | default: 'center' }} !important;
+    }
+    .liujo-product-carousel--{{ ps_id }} .liujo-section-header {
+      text-align: {{ section.settings.heading_align_mobile | default: 'center' }} !important;
+    }
+  }
+</style>
+<div class="liujo-product-carousel-section liujo-product-carousel--{{ ps_id }}" data-section-id="{{ section.id }}" data-section-type="liujo-product-carousel" data-liujo-carousel>
   <div class="liujo-section-header">
     <h2 class="liujo-title-display">{{ section.settings.title | default: '' }}</h2>
     {%- if section.settings.subtitle != blank -%}
@@ -106,7 +127,79 @@
       "type": "text",
       "id": "title",
       "label": "Heading",
-      "default": "Explore the Looks"
+      "default": ""
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 14,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Heading Size",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 14,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Heading Size",
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "heading_weight_desktop",
+      "label": "Desktop Heading Weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra Bold (800)" },
+        { "value": "900", "label": "Black (900)" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight_mobile",
+      "label": "Mobile Heading Weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra Bold (800)" },
+        { "value": "900", "label": "Black (900)" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "heading_align_desktop",
+      "label": "Desktop Heading Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mobile",
+      "label": "Mobile Heading Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
     },
     {
       "type": "text",

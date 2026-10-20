@@ -23,8 +23,14 @@
       background-color: {{ section.settings.overlay_color | default: '#000000' }};
       opacity: {{ section.settings.overlay_opacity | default: 25 | divided_by: 100.0 }};
     }
+    {%- assign ca_desk = section.settings.content_alignment | default: 'center' -%}
+    {%- if ca_desk == 'left' -%}{%- assign ca_desk = 'flex-start' -%}{%- endif -%}
+    {%- if ca_desk == 'right' -%}{%- assign ca_desk = 'flex-end' -%}{%- endif -%}
+    {%- assign ca_mob = section.settings.content_alignment_mobile | default: ca_desk -%}
+    {%- if ca_mob == 'left' -%}{%- assign ca_mob = 'flex-start' -%}{%- endif -%}
+    {%- if ca_mob == 'right' -%}{%- assign ca_mob = 'flex-end' -%}{%- endif -%}
     .liujo-hero-video--{{ s_id }} .liujo-hero-video__content-wrap {
-      justify-content: {{ section.settings.content_alignment | default: 'center' }};
+      justify-content: {{ ca_desk }};
       align-items: {{ section.settings.content_position | default: 'flex-end' }};
       text-align: {{ section.settings.content_text_align | default: 'center' }};
     }
@@ -47,7 +53,7 @@
     }
     @media (max-width: 767px) {
       .liujo-hero-video--{{ s_id }} .liujo-hero-video__content-wrap {
-        justify-content: {{ section.settings.content_alignment_mobile | default: section.settings.content_alignment | default: 'center' }};
+        justify-content: {{ ca_mob }};
         align-items: {{ section.settings.content_position_mobile | default: section.settings.content_position | default: 'flex-end' }};
         text-align: {{ section.settings.content_text_align_mobile | default: section.settings.content_text_align | default: 'center' }};
       }
