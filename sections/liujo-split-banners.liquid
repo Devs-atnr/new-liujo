@@ -58,9 +58,9 @@
           }
           @media (max-width: 767px) {
             .liujo-split-block--{{ b_id }} .liujo-split-block__content {
-              align-items: {{ block.settings.content_alignment_mobile | default: block.settings.content_alignment | default: 'flex-start' }};
-              justify-content: {{ block.settings.content_position_mobile | default: block.settings.content_position | default: 'flex-end' }};
-              text-align: {{ block.settings.content_text_align_mobile | default: block.settings.content_text_align | default: 'left' }};
+              align-items: {{ block.settings.content_alignment_mobile | default: 'center' }};
+              justify-content: {{ block.settings.content_position_mobile | default: 'center' }};
+              text-align: {{ block.settings.content_text_align_mobile | default: 'center' }};
               padding-top: {{ block.settings.content_padding_top_mobile | default: 20 }}px;
               padding-right: {{ block.settings.content_padding_right_mobile | default: 20 }}px;
               padding-bottom: {{ block.settings.content_padding_bottom_mobile | default: 20 }}px;
@@ -440,7 +440,7 @@
             { "value": "center", "label": "Center" },
             { "value": "flex-end", "label": "Right" }
           ],
-          "default": "flex-start"
+          "default": "center"
         },
         {
           "type": "select",
@@ -451,7 +451,7 @@
             { "value": "center", "label": "Center" },
             { "value": "flex-end", "label": "Bottom" }
           ],
-          "default": "flex-end"
+          "default": "center"
         },
         {
           "type": "select",
@@ -462,7 +462,7 @@
             { "value": "center", "label": "Center" },
             { "value": "right", "label": "Right" }
           ],
-          "default": "left"
+          "default": "center"
         },
         {
           "type": "header",
