@@ -248,9 +248,9 @@ input, textarea, select, button,
 
 .liujo-logo__main {
   font-family: inherit;
-  font-size: 26px;
+  font-size: 38px;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #000000;
   display: inline-flex;
@@ -259,18 +259,20 @@ input, textarea, select, button,
 }
 
 .liujo-logo__dot {
-  font-size: 16px;
-  margin: 0 2px;
+  font-size: 24px;
+  margin: 0 3px;
   vertical-align: middle;
+  position: relative;
+  top: -2px;
 }
 
 .liujo-logo__sub {
   font-family: inherit;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.35em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.42em;
   text-transform: uppercase;
-  color: #333333;
+  color: #111111;
   margin-top: 4px;
 }
 
@@ -297,12 +299,15 @@ input, textarea, select, button,
     align-items: flex-start;
   }
   .liujo-logo__main {
-    font-size: 21px;
+    font-size: 26px;
     letter-spacing: 0.2em;
   }
+  .liujo-logo__dot {
+    font-size: 16px;
+  }
   .liujo-logo__sub {
-    font-size: 7px;
-    letter-spacing: 0.3em;
+    font-size: 8px;
+    letter-spacing: 0.35em;
     margin-top: 2px;
   }
 }
@@ -627,11 +632,13 @@ body.has-search-open .liujo-megamenu {
 }
 
 .liujo-megamenu__link {
-  font-size: 13px;
+  font-family: var(--liujo-font-main), "Red Hat Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
   font-weight: 400;
-  color: #444444;
+  color: #000000;
   text-decoration: none;
-  line-height: 1.5;
+  line-height: 20px;
+  letter-spacing: 0.5px;
   transition: color 0.15s ease, text-decoration 0.15s ease;
   display: inline-block;
 }
