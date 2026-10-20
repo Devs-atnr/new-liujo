@@ -14,7 +14,8 @@
     "header": {
       "type": "header",
       "custom_css": [
-        "span.liujo-badge-count {display: none !important;}"
+        "span.liujo-badge-count {display: none !important;}",
+        ".liujo-logo-image {max-height: 50px;}"
       ],
       "settings": {
         "show_announcement": true,
@@ -29,7 +30,7 @@
         "menu": "main-menu-copy-for-menu",
         "use_liujo_default_fallback": true,
         "outlet_color": "#e6006e",
-        "logo_width": 190,
+        "logo_width": 210,
         "show_store_locator": true,
         "store_locator_label": "Locate Stores",
         "store_locator_link": "",
