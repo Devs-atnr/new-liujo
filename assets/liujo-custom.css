@@ -1448,19 +1448,7 @@ body.has-search-open .liujo-megamenu {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, transparent 55%);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0 0 0 var(--liujo-header-pad-x, 40px);
-  text-align: left;
-}
-
-@media (max-width: 767px) {
-  .liujo-split-block__overlay {
-    padding: 0 0 0 20px;
-    align-items: flex-end;
-    padding-bottom: 32px;
-  }
+  pointer-events: none;
 }
 
 .liujo-split-block__title {

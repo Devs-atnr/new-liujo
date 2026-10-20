@@ -7,18 +7,30 @@
 {%- assign s_id = section.id -%}
 <div class="liujo-split-banners-section liujo-split-banners--{{ s_id }}" data-section-id="{{ s_id }}" data-section-type="liujo-split-banners">
   <style>
+    .liujo-split-banners--{{ s_id }} {
+      padding-top: {{ section.settings.section_padding_top | default: 20 }}px;
+      padding-bottom: {{ section.settings.section_padding_bottom | default: 20 }}px;
+      background-color: {{ section.settings.section_bg_color | default: 'transparent' }};
+    }
     .liujo-split-banners--{{ s_id }} .liujo-split-grid {
       grid-template-columns: repeat({{ section.settings.columns_desktop | default: 2 }}, minmax(0, 1fr));
       gap: {{ section.settings.gap_desktop | default: 0 }}px;
+      padding-left: {{ section.settings.section_padding_left | default: 0 }}px;
+      padding-right: {{ section.settings.section_padding_right | default: 0 }}px;
       {% if section.settings.full_width %}
         max-width: 100%;
-        padding: 0 {{ section.settings.padding_x | default: 16 }}px;
       {% endif %}
     }
     @media (max-width: 767px) {
+      .liujo-split-banners--{{ s_id }} {
+        padding-top: {{ section.settings.section_padding_top_mobile | default: 12 }}px;
+        padding-bottom: {{ section.settings.section_padding_bottom_mobile | default: 12 }}px;
+      }
       .liujo-split-banners--{{ s_id }} .liujo-split-grid {
         grid-template-columns: repeat({{ section.settings.columns_mobile | default: 1 }}, minmax(0, 1fr));
         gap: {{ section.settings.gap_mobile | default: 0 }}px;
+        padding-left: {{ section.settings.section_padding_left_mobile | default: 0 }}px;
+        padding-right: {{ section.settings.section_padding_right_mobile | default: 0 }}px;
       }
     }
   </style>
@@ -39,14 +51,17 @@
             align-items: {{ block.settings.content_alignment | default: 'flex-start' }};
             justify-content: {{ block.settings.content_position | default: 'center' }};
             text-align: {{ block.settings.content_text_align | default: 'left' }};
-            padding-left: var(--liujo-header-pad-x, 40px);
-            padding-right: 20px;
+            padding-top: {{ block.settings.content_padding_top | default: 24 }}px;
+            padding-right: {{ block.settings.content_padding_right | default: 24 }}px;
+            padding-bottom: {{ block.settings.content_padding_bottom | default: 24 }}px;
+            padding-left: {{ block.settings.content_padding_left | default: 40 }}px;
           }
           @media (max-width: 767px) {
             .liujo-split-block--{{ b_id }} .liujo-split-block__content {
-              padding-left: 20px;
-              justify-content: flex-end;
-              padding-bottom: 32px;
+              padding-top: {{ block.settings.content_padding_top_mobile | default: 20 }}px;
+              padding-right: {{ block.settings.content_padding_right_mobile | default: 20 }}px;
+              padding-bottom: {{ block.settings.content_padding_bottom_mobile | default: 20 }}px;
+              padding-left: {{ block.settings.content_padding_left_mobile | default: 20 }}px;
             }
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__subheading {
@@ -116,7 +131,7 @@
           <div class="liujo-split-block__overlay"></div>
 
           <!-- Content Elements -->
-          <div class="liujo-split-block__content" style="position: absolute; inset: 0; display: flex; padding: 28px 24px; z-index: 2;">
+          <div class="liujo-split-block__content" style="position: absolute; inset: 0; display: flex; z-index: 2;">
             <div style="width: 100%;">
               {%- if block.settings.subheading != blank -%}
                 <div class="liujo-split-block__subheading">
@@ -190,27 +205,125 @@
       "type": "range",
       "id": "gap_desktop",
       "min": 0,
-      "max": 32,
-      "step": 2,
+      "max": 60,
+      "step": 1,
       "unit": "px",
-      "label": "Desktop Grid Gap",
-      "default": 16
+      "label": "Desktop Gap Between Banners",
+      "default": 0
     },
     {
       "type": "range",
       "id": "gap_mobile",
       "min": 0,
-      "max": 24,
-      "step": 2,
+      "max": 40,
+      "step": 1,
       "unit": "px",
-      "label": "Mobile Grid Gap",
-      "default": 12
+      "label": "Mobile Gap Between Banners",
+      "default": 0
     },
     {
       "type": "checkbox",
       "id": "full_width",
       "label": "Full Width Grid",
-      "default": false
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_left",
+      "min": 0,
+      "max": 200,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_padding_right",
+      "min": 0,
+      "max": 200,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Right",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Padding (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "section_padding_left_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_padding_right_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Right",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Appearance"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background Color",
+      "default": "#ffffff"
     }
   ],
   "blocks": [
@@ -276,13 +389,13 @@
         {
           "type": "select",
           "id": "content_alignment",
-          "label": "Text Alignment",
+          "label": "Horizontal Alignment",
           "options": [
-            { "value": "left", "label": "Left" },
+            { "value": "flex-start", "label": "Left" },
             { "value": "center", "label": "Center" },
-            { "value": "right", "label": "Right" }
+            { "value": "flex-end", "label": "Right" }
           ],
-          "default": "center"
+          "default": "flex-start"
         },
         {
           "type": "select",
@@ -293,7 +406,106 @@
             { "value": "center", "label": "Center" },
             { "value": "flex-end", "label": "Bottom" }
           ],
-          "default": "flex-end"
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "content_text_align",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "header",
+          "content": "Content Padding (Desktop)"
+        },
+        {
+          "type": "range",
+          "id": "content_padding_top",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "content_padding_right",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Right",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "content_padding_bottom",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "content_padding_left",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Left",
+          "default": 40
+        },
+        {
+          "type": "header",
+          "content": "Content Padding (Mobile)"
+        },
+        {
+          "type": "range",
+          "id": "content_padding_top_mobile",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "content_padding_right_mobile",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Right",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "content_padding_bottom_mobile",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "content_padding_left_mobile",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Left",
+          "default": 20
         },
         {
           "type": "header",
