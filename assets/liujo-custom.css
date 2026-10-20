@@ -1179,26 +1179,35 @@ body.has-search-open .liujo-megamenu {
 }
 
 .liujo-section-header {
-  text-align: center;
-  margin-bottom: 40px;
-  padding: 0 20px;
+  text-align: left;
+  margin-bottom: 28px;
+  padding: 0 24px;
+}
+
+.liujo-section-header .liujo-title-display {
+  font-size: clamp(1.4rem, 2vw, 1.75rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #111 !important;
+  margin: 0 !important;
 }
 
 .liujo-carousel-track-wrapper {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 0 20px;
+  padding: 0;
 }
 
 .liujo-carousel-track {
   display: flex;
-  gap: 20px;
+  gap: 0;
   overflow-x: auto;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding-bottom: 16px;
+  padding-bottom: 0;
 }
 
 .liujo-carousel-track.is-dragging {
@@ -1211,21 +1220,18 @@ body.has-search-open .liujo-megamenu {
 }
 
 .liujo-product-card-wrap {
-  flex: 0 0 calc(25% - 15px);
+  flex: 0 0 25%;
   min-width: 260px;
   scroll-snap-align: start;
 }
 
 @media (max-width: 1199px) {
   .liujo-product-card-wrap {
-    flex: 0 0 calc(33.333% - 14px);
+    flex: 0 0 33.333%;
   }
 }
 
 @media (max-width: 767px) {
-  .liujo-carousel-track {
-    gap: 0;
-  }
   .liujo-product-card-wrap {
     flex: 0 0 50%;
     min-width: 150px;
@@ -1246,7 +1252,7 @@ body.has-search-open .liujo-megamenu {
   aspect-ratio: 3 / 4;
   overflow: hidden;
   background-color: var(--liujo-light-gray);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .liujo-card-media img {
