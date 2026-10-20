@@ -26,7 +26,7 @@
           }
           .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__overlay-wrap {
             justify-content: {{ block.settings.content_alignment | default: 'center' }};
-            align-items: {{ block.settings.content_position | default: 'flex-end' }};
+            align-items: {{ block.settings.content_position | default: 'center' }};
             text-align: {{ block.settings.content_text_align | default: 'center' }};
           }
           .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__subheading {
@@ -48,9 +48,9 @@
           }
           @media (max-width: 767px) {
             .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__overlay-wrap {
-              justify-content: {{ block.settings.content_alignment_mobile | default: block.settings.content_alignment | default: 'center' }};
-              align-items: {{ block.settings.content_position_mobile | default: block.settings.content_position | default: 'flex-end' }};
-              text-align: {{ block.settings.content_text_align_mobile | default: block.settings.content_text_align | default: 'center' }};
+              justify-content: {{ block.settings.content_alignment_mobile | default: 'center' }};
+              align-items: {{ block.settings.content_position_mobile | default: 'center' }};
+              text-align: {{ block.settings.content_text_align_mobile | default: 'center' }};
             }
             .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__subheading {
               font-size: {{ block.settings.subheading_size_mobile | default: 11 }}px;
@@ -109,7 +109,7 @@
         <div class="liujo-hero-slide__overlay"></div>
 
         <!-- Content Overlay Container -->
-        <div class="liujo-hero-slide__overlay-wrap" style="position: absolute; inset: 0; display: flex; padding: 0 24px 70px; z-index: 2;">
+        <div class="liujo-hero-slide__overlay-wrap" style="position: absolute; inset: 0; display: flex; padding: {{ block.settings.content_padding_top | default: 24 }}px {{ block.settings.content_padding_right | default: 24 }}px {{ block.settings.content_padding_bottom | default: 24 }}px {{ block.settings.content_padding_left | default: 24 }}px; z-index: 2;">
           <div class="liujo-hero-slide__content" style="max-width: 760px; width: 100%;">
             {%- if block.settings.subheading != blank -%}
               <div class="liujo-hero-slide__subheading">
@@ -244,7 +244,7 @@
             { "value": "center", "label": "Center" },
             { "value": "flex-end", "label": "Bottom" }
           ],
-          "default": "flex-end"
+          "default": "center"
         },
         {
           "type": "select",
@@ -289,6 +289,46 @@
             { "value": "right", "label": "Right" }
           ],
           "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "content_padding_top",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "label": "Content Padding Top",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "content_padding_right",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "label": "Content Padding Right",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "content_padding_bottom",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "label": "Content Padding Bottom",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "content_padding_left",
+          "min": 0,
+          "max": 200,
+          "step": 2,
+          "unit": "px",
+          "label": "Content Padding Left",
+          "default": 24
         },
         {
           "type": "header",
