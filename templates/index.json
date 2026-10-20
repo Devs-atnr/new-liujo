@@ -23,7 +23,7 @@
         "content_alignment": "center",
         "content_position": "center",
         "tagline": "Campaign 2026",
-        "tagline_size_desktop": 13,
+        "tagline_size_desktop": 15,
         "tagline_size_mobile": 11,
         "tagline_color": "#ffffff",
         "heading": "The Gigi Hadid Edit",
@@ -31,6 +31,7 @@
         "heading_size_mobile": 40,
         "heading_color": "#ffffff",
         "button_label": "Discover",
+        "hide_button_mobile": true,
         "button_link": "/collections/all",
         "button_font_size": 11,
         "button_text_color": "#ffffff",
@@ -68,10 +69,10 @@
             "subheading_size_mobile": 11,
             "subheading_color": "#ffffff",
             "heading": "Explore the Looks",
-            "heading_size_desktop": 48,
-            "heading_size_mobile": 28,
+            "heading_size_desktop": 52,
+            "heading_size_mobile": 40,
             "heading_color": "#ffffff",
-            "button_label": "Discover Collection",
+            "button_label": "",
             "button_link": "/collections/all",
             "button_font_size": 11,
             "button_text_color": "#ffffff",
@@ -98,6 +99,7 @@
         "collection": "all",
         "products_to_show": 10,
         "show_view_all": false,
+        "hide_button_mobile": true,
         "view_all_label": "See all Clothing"
       }
     },
@@ -227,7 +229,7 @@
         "columns_mobile": "1",
         "aspect_ratio": "3 / 4",
         "gap_desktop": 0,
-        "gap_mobile": 8,
+        "gap_mobile": 0,
         "full_width": false
       }
     },
@@ -298,7 +300,7 @@
         "columns_mobile": "1",
         "aspect_ratio": "3 / 4",
         "gap_desktop": 0,
-        "gap_mobile": 8,
+        "gap_mobile": 0,
         "full_width": false
       }
     },
