@@ -93,7 +93,7 @@
     "product_carousel": {
       "type": "liujo-product-carousel",
       "settings": {
-        "title": "fdf",
+        "title": "",
         "subtitle": "",
         "collection": "all",
         "products_to_show": 10,
