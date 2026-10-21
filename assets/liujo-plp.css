@@ -1567,3 +1567,145 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   100% { transform: rotate(360deg); }
 }
 
+
+/* ==========================================================================
+   10. DESKTOP FILTER PANEL + SORT BY — LIUJO.COM PARITY (OCT 2026)
+   - Filter panel anchors to the filter bar itself: starts at the far left
+     edge, directly under the bar, same box for every filter (only values change)
+   - RESET / FILTER: equal width, text centered
+   - Sort By dropdown flush with the right edge, directly under the bar
+   ========================================================================== */
+@media (min-width: 990px) {
+  /* Only the bar is the positioning context, so every popup shares one spot */
+  .facets-container { position: relative !important; }
+  .facets-container .facets__form,
+  .facets-container .facets__wrapper,
+  .facets-container .facets__disclosure,
+  .facets-container .liujo-desktop-toolbar-right,
+  .facets-container .liujo-desktop-sort-wrapper {
+    position: static !important;
+  }
+
+  .facets-container .facets__display {
+    top: 100% !important;
+    left: 0 !important;
+    right: auto !important;
+    width: 660px !important;
+    max-width: 100vw !important;
+    height: 336px !important;
+    min-height: 336px !important;
+    max-height: 336px !important;
+    padding: 52px 30px 42px 30px !important;
+    border: none !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+    margin: 0 !important;
+  }
+
+  .facets-container .liujo-facet-popup-close {
+    top: 10px !important;
+    right: 12px !important;
+    font-size: 18px !important;
+  }
+
+  .facets-container .facets__display fieldset.facets-wrap {
+    height: 160px !important;
+    max-height: 160px !important;
+  }
+
+  .facets-container .facets__list {
+    grid-template-rows: repeat(var(--liujo-facet-rows, 5), 31px) !important;
+    grid-template-columns: repeat(var(--liujo-facet-cols, 3), minmax(0, 271px)) !important;
+    column-gap: 30px !important;
+    row-gap: 0 !important;
+    justify-content: start !important;
+  }
+
+  .facets-container .facets__item { height: 31px !important; }
+
+  .facets-container .facet-checkbox,
+  .facets-container .facet-checkbox__text-label {
+    font-size: 12px !important;
+  }
+
+  .facets-container .facet-checkbox .liujo-custom-checkbox {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+  }
+
+  /* Equal buttons, centered labels */
+  .facets-container .liujo-facet-popup-footer {
+    width: 440px !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+  }
+
+  .facets-container .liujo-facet-popup-footer .liujo-facet-btn {
+    width: 100% !important;
+    height: 40px !important;
+    flex: none !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  /* Sort By: trigger at the right edge, dropdown flush right under the bar */
+  .facets-container .liujo-desktop-sort-dropdown {
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    width: 390px !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    padding: 30px 22px 30px 16px !important;
+    border: none !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+    margin: 0 !important;
+  }
+
+  .facets-container .liujo-sort-options-list { gap: 20px !important; }
+
+  .facets-container .liujo-sort-options-list li {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+  }
+}
+
+/* Mobile filter drawer: edge-to-edge equal RESET / FILTER bar at the bottom */
+@media (max-width: 989px) {
+  .mobile-facets__footer {
+    padding: 0 !important;
+    border-top: none !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .mobile-facets__footer > * {
+    width: 100% !important;
+  }
+
+  .mobile-facets__clear,
+  .mobile-facets__footer .button--primary {
+    height: 54px !important;
+    font-size: 13px !important;
+    letter-spacing: 0.06em !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .mobile-facets__header { border-bottom: none !important; }
+
+  .mobile-facets__details { border-bottom: 1px solid #ebebeb !important; }
+
+  .mobile-facets__summary > div {
+    font-weight: 400 !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .mobile-facets__list { row-gap: 22px !important; }
+}
