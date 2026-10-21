@@ -40,7 +40,7 @@
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": false,
-            "show_pickup_availability": true,
+            "show_pickup_availability": false,
             "show_wishlist": true
           }
         },
