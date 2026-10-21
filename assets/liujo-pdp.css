@@ -1537,3 +1537,12 @@ details[open] > .liujo-accordion-summary .liujo-accordion-chevron {
   .liujo-pdp-sku { font-size: 10px !important; color: #4c4c4c !important; letter-spacing: 0 !important; }
   .liujo-pdp-title { font-size: 16px !important; line-height: 21px !important; letter-spacing: 0 !important; margin: 0 0 16px 0 !important; }
 }
+
+/* PDP: hairline divider between title/price and the Colour row, tighter gaps */
+.product__info-container .liujo-pdp-title-row { margin-bottom: 0 !important; }
+.product__info-container [id^="price-"] { margin: 10px 0 0 0 !important; }
+.product__info-container variant-selects {
+  border-top: 1px solid #a0a0a0 !important;
+  margin-top: 28px !important;
+  padding-top: 28px !important;
+}
