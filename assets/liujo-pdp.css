@@ -1479,3 +1479,61 @@ details[open] > .liujo-accordion-summary .liujo-accordion-chevron {
 
 
 
+
+/* ==========================================================================
+   PDP HEADER — LIUJO.COM PARITY (breadcrumb / item no. / title)
+   Breadcrumb 14px/400 #000 with solid bullets, Item No. 10px/500 #4C4C4C,
+   Title 16px/700 lh 21px #000. Tamara/Tabby + Share removed.
+   ========================================================================== */
+.liujo-installments-banner,
+.liujo-pdp-share-btn { display: none !important; }
+
+.liujo-pdp-breadcrumbs {
+  gap: 8px !important;
+  margin: 0 0 40px 0 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 10px !important;
+  letter-spacing: 0 !important;
+  color: #000 !important;
+}
+.liujo-pdp-breadcrumbs a,
+.liujo-pdp-breadcrumbs .liujo-bc-current {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #000 !important;
+  letter-spacing: 0 !important;
+}
+.liujo-pdp-breadcrumbs .liujo-bc-bullet {
+  color: #000 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  line-height: 10px !important;
+}
+
+.liujo-pdp-sku {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  line-height: 13px !important;
+  color: #4c4c4c !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+  margin: 0 0 14px 0 !important;
+}
+
+.liujo-pdp-title-row { margin-bottom: 0 !important; }
+.liujo-pdp-title {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 21px !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+  color: #000 !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 989px) {
+  .liujo-pdp-sku { font-size: 10px !important; color: #4c4c4c !important; letter-spacing: 0 !important; }
+  .liujo-pdp-title { font-size: 16px !important; line-height: 21px !important; letter-spacing: 0 !important; margin: 0 0 16px 0 !important; }
+}
