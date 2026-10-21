@@ -2378,3 +2378,49 @@ document.addEventListener('DOMContentLoaded', () => {
     open(items, idx);
   }, true);
 })();
+
+// ==========================================================================
+// PLP CARDS (mobile): two-dash indicator + auto-change image every N seconds
+// (N = section setting "Mobile: auto-change product image every", 0 = off)
+// ==========================================================================
+(function () {
+  let timer = null;
+  const isMobile = () => window.matchMedia('(max-width: 989px)').matches;
+
+  function setSecondary(card, on) {
+    card.classList.toggle('liujo-show-secondary', on);
+    const dots = card.querySelectorAll('[data-liujo-card-dot]');
+    dots.forEach((d) => d.classList.toggle('is-active', (d.getAttribute('data-liujo-card-dot') === '1') === on));
+  }
+
+  function start() {
+    clearInterval(timer);
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+    const secs = parseInt(grid.getAttribute('data-liujo-card-autoplay') || '0', 10);
+    if (!secs || !isMobile()) return;
+    timer = setInterval(() => {
+      grid.querySelectorAll('.card-wrapper').forEach((card) => {
+        if (!card.querySelector('.liujo-card-indicators')) return;
+        const r = card.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return; // only visible cards
+        setSecondary(card, !card.classList.contains('liujo-show-secondary'));
+      });
+    }, secs * 1000);
+  }
+
+  document.addEventListener('click', (e) => {
+    const dot = e.target.closest('[data-liujo-card-dot]');
+    if (!dot) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const card = dot.closest('.card-wrapper');
+    if (card) setSecondary(card, dot.getAttribute('data-liujo-card-dot') === '1');
+  }, true);
+
+  document.addEventListener('DOMContentLoaded', start);
+  window.addEventListener('resize', () => { clearTimeout(start._r); start._r = setTimeout(start, 300); });
+  // Product grid is re-rendered after filtering/sorting — restart on DOM swap
+  new MutationObserver(() => { clearTimeout(start._m); start._m = setTimeout(start, 200); })
+    .observe(document.documentElement, { childList: true, subtree: true });
+})();

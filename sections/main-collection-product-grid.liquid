@@ -154,6 +154,7 @@
               <div class="loading-overlay gradient"></div>
               <ul
                 id="product-grid"
+                data-liujo-card-autoplay="{{ section.settings.mobile_image_autoplay | default: 0 }}"
                 data-id="{{ section.id }}"
                 class="
                   grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
@@ -344,6 +345,17 @@
       "id": "show_secondary_image",
       "default": false,
       "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_autoplay",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Mobile: auto-change product image every",
+      "info": "0 = off. Needs 'Show second image on hover' on.",
+      "default": 3
     },
     {
       "type": "checkbox",

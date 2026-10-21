@@ -39,7 +39,7 @@
         "heading_weight_desktop": "600",
         "heading_weight_mobile": "700",
         "button_label": "Discover",
-        "hide_button_mobile": true,
+        "hide_button_mobile": false,
         "button_link": "/collections/all",
         "button_font_size": 11,
         "button_weight_desktop": "800",

@@ -1864,3 +1864,38 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   .facets-container .liujo-desktop-toolbar-right,
   .facets-container .liujo-desktop-sort-wrapper { justify-content: center !important; gap: 0 !important; align-self: stretch !important; }
 }
+
+/* Filter count badge: hidden when 0 / nothing selected, shown once something is picked */
+.liujo-filter-count-badge[style*="display: none"],
+.liujo-filter-count-badge[style*="display:none"],
+.liujo-filter-count-badge:empty { display: none !important; }
+
+/* Card two-dash indicator (bottom centre of image) */
+.liujo-card-indicators {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 3;
+  pointer-events: none;
+}
+.liujo-card-indicators .liujo-indicator-dot { width: 34px !important; height: 3px !important; pointer-events: auto; }
+@media (min-width: 990px) { .liujo-card-indicators { display: none; } }
+.card-wrapper.liujo-show-secondary .liujo-indicator-dot[data-liujo-card-dot="0"] { background-color: rgba(255,255,255,0.45) !important; }
+.card-wrapper.liujo-show-secondary .liujo-indicator-dot[data-liujo-card-dot="1"] { background-color: rgba(255,255,255,0.95) !important; }
+
+@media (max-width: 989px) {
+  /* Boxed SORT BY | FILTER bar like liujo.com */
+  .liujo-plp-split-toolbar {
+    border: 1px solid #111111 !important;
+    margin: 0 3px !important;
+    width: auto !important;
+  }
+  .liujo-split-btn { height: 40px !important; }
+  /* 2-col grid, ~4px gutter, title 13px */
+  #product-grid.product-grid { padding: 20px 3px 48px 3px !important; gap: 14px 4px !important; }
+  .card__heading { font-size: 13px !important; margin-top: 12px !important; }
+}

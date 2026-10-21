@@ -111,6 +111,11 @@
         font-weight: {{ section.settings.button_weight_mobile | default: section.settings.button_weight_desktop | default: 800 }} !important;
       }
     }
+    .liujo-hero-video--{{ s_id }} .liujo-hero-video__btn--mob { display: none !important; }
+    @media (max-width: 767px) {
+      .liujo-hero-video--{{ s_id }} .liujo-hero-video__btn--desk { display: none !important; }
+      .liujo-hero-video--{{ s_id }} .liujo-hero-video__btn--mob { display: inline-flex !important; }
+    }
     .liujo-hero-video--{{ s_id }} .liujo-hero-video__btn:hover {
       color: {{ section.settings.button_hover_text_color | default: '#000000' }} !important;
       background-color: {{ section.settings.button_hover_bg_color | default: '#ffffff' }} !important;
@@ -184,11 +189,18 @@
           </h1>
         {%- endif -%}
 
-        {%- if section.settings.button_label != blank -%}
+        {%- assign btn_desk = section.settings.button_label -%}
+        {%- assign btn_mob = section.settings.mob_button_label | default: btn_desk -%}
+        {%- if btn_desk != blank or btn_mob != blank -%}
           <div style="margin-top: 10px;" class="liujo-hero-video__btn-wrap{% if section.settings.hide_button_mobile %} liujo-hide-mobile{% endif %}">
-            <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="liujo-hero-video__btn">
-              <span>{{ section.settings.button_label }}</span>
+            <a href="{{ section.settings.mob_button_link | default: section.settings.button_link | default: '/collections/all' }}" class="liujo-hero-video__btn liujo-hero-video__btn--mob">
+              <span>{{ btn_mob }}</span>
             </a>
+            {%- if btn_desk != blank -%}
+              <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="liujo-hero-video__btn liujo-hero-video__btn--desk">
+                <span>{{ btn_desk }}</span>
+              </a>
+            {%- endif -%}
           </div>
         {%- endif -%}
       </div>
@@ -500,7 +512,19 @@
       "type": "checkbox",
       "id": "hide_button_mobile",
       "label": "Hide button on mobile",
-      "default": true
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "mob_button_label",
+      "label": "Mobile Button Label",
+      "info": "Leave empty to use the desktop label."
+    },
+    {
+      "type": "url",
+      "id": "mob_button_link",
+      "label": "Mobile Button Link",
+      "info": "Leave empty to use the desktop link."
     },
     {
       "type": "url",

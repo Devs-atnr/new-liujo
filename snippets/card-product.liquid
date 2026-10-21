@@ -109,9 +109,13 @@
                 {%- endif -%}
               </div>
             </div>
+            {%- if card_product.media[1] != null and show_secondary_image -%}
+              <div class="liujo-card-indicators" aria-hidden="true">
+                <span class="liujo-indicator-dot is-active" data-liujo-card-dot="0"></span>
+                <span class="liujo-indicator-dot" data-liujo-card-dot="1"></span>
+              </div>
+            {%- endif -%}
           {%- endif -%}
-
-
 
           <!-- Liu Jo Wishlist Heart Trigger -->
           {%- if settings.show_wishlist != false and show_wishlist != false -%}
