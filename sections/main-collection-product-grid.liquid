@@ -155,6 +155,8 @@
               <ul
                 id="product-grid"
                 data-liujo-card-autoplay="{{ section.settings.mobile_image_autoplay | default: 0 }}"
+                style="--liujo-dash-color: {{ section.settings.card_dash_color | default: '#000000' }};"
+                {% unless section.settings.show_card_dashes %}data-liujo-hide-dashes{% endunless %}
                 data-id="{{ section.id }}"
                 class="
                   grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
@@ -345,6 +347,18 @@
       "id": "show_secondary_image",
       "default": false,
       "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_dashes",
+      "label": "Mobile: show image lines on product cards",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "card_dash_color",
+      "label": "Mobile: image line colour",
+      "default": "#000000"
     },
     {
       "type": "range",

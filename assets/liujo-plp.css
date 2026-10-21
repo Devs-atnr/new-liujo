@@ -1899,3 +1899,15 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   #product-grid.product-grid { padding: 20px 3px 48px 3px !important; gap: 14px 4px !important; }
   .card__heading { font-size: 13px !important; margin-top: 12px !important; }
 }
+
+/* Card image lines: colour + show/hide from the collection section settings */
+#product-grid[data-liujo-hide-dashes] .liujo-card-indicators { display: none !important; }
+#product-grid .liujo-card-indicators .liujo-indicator-dot {
+  background-color: var(--liujo-dash-color, #000) !important;
+  opacity: 0.3 !important;
+}
+#product-grid .liujo-card-indicators .liujo-indicator-dot.is-active { opacity: 1 !important; }
+#product-grid .card-wrapper.liujo-show-secondary .liujo-indicator-dot[data-liujo-card-dot="0"],
+#product-grid .card-wrapper.liujo-show-secondary .liujo-indicator-dot[data-liujo-card-dot="1"] {
+  background-color: var(--liujo-dash-color, #000) !important;
+}
