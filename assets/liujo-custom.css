@@ -3015,3 +3015,30 @@ body.has-search-open .liujo-sticky-cart {
     margin-top: 0 !important;
   }
 }
+
+/* Footer typography — liujo.com parity: headings 14/700 uppercase, links 14/400 lh 19 */
+.liujo-footer .liujo-footer-heading {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 19px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  color: #fff !important;
+}
+.liujo-footer .liujo-footer-link {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 19px !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+.liujo-footer .liujo-footer-link--stories { color: #ff6699 !important; }
+@media (min-width: 990px) {
+  .liujo-footer .liujo-footer-heading { margin: 0 0 22px 0 !important; }
+  .liujo-footer .liujo-footer-links { margin: 0 !important; padding: 0 !important; }
+  .liujo-footer .liujo-footer-link-item { margin: 0 !important; padding: 0 0 10px 0 !important; line-height: 19px !important; }
+}
+.liujo-postfooter .liujo-postfooter__left,
+.liujo-postfooter .liujo-postfooter__left * { font-size: 14px !important; letter-spacing: 0 !important; }
+.liujo-postfooter .liujo-lang-link { font-weight: 400 !important; text-transform: capitalize !important; }
+.liujo-postfooter .liujo-copyright { font-size: 12px !important; font-weight: 400 !important; line-height: 19px !important; letter-spacing: 0 !important; }
