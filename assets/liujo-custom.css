@@ -3040,5 +3040,6 @@ body.has-search-open .liujo-sticky-cart {
 }
 .liujo-postfooter .liujo-postfooter__left,
 .liujo-postfooter .liujo-postfooter__left * { font-size: 14px !important; letter-spacing: 0 !important; }
-.liujo-postfooter .liujo-lang-link { font-weight: 400 !important; text-transform: capitalize !important; }
+.liujo-postfooter .liujo-lang-link { font-weight: 700 !important; }
+.liujo-postfooter .liujo-lang-link span { font-weight: 400 !important; margin-left: 6px !important; }
 .liujo-postfooter .liujo-copyright { font-size: 12px !important; font-weight: 400 !important; line-height: 19px !important; letter-spacing: 0 !important; }
