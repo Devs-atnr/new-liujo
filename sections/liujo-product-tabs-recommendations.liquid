@@ -88,6 +88,23 @@
     background-color: #000000;
   }
 
+  /* liujo.com parity: 16px/500, inactive #A3A2A2, 208px tabs, grey rule under the tabs only */
+  .liujo-tabs-section .liujo-tabs-nav-wrapper { border-bottom: none !important; margin-bottom: 40px; }
+  .liujo-tabs-section .liujo-tabs-nav { gap: 0 !important; border-bottom: 1px solid #a3a2a2; }
+  .liujo-tabs-section .liujo-tab-button {
+    width: 208px;
+    justify-content: center;
+    padding: 0 10px 12px 10px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0;
+    color: #a3a2a2;
+  }
+  .liujo-tabs-section .liujo-tab-button:hover,
+  .liujo-tabs-section .liujo-tab-button.is-active { color: #000000; font-weight: 500; }
+  .liujo-tabs-section .liujo-tab-button.is-active::after { height: 2px; bottom: -1px; }
+
   .liujo-tab-panel {
     display: none;
     width: 100%;
@@ -330,11 +347,12 @@
     .liujo-tabs-nav-wrapper {
       padding: 0 !important;
       margin-bottom: 24px !important;
-      border-bottom: 1px solid #d2d2d2 !important;
+      border-bottom: none !important;
       width: 100% !important;
     }
     .liujo-tabs-nav {
       width: 100% !important;
+      border-bottom: 1px solid #a3a2a2 !important;
       display: flex !important;
       gap: 0 !important;
       justify-content: stretch !important;
@@ -342,10 +360,11 @@
     .liujo-tab-button {
       flex: 1 1 50% !important;
       width: 50% !important;
-      padding: 10px 4px 14px 4px !important;
-      font-size: 13px !important;
+      padding: 10px 4px 12px 4px !important;
+      font-size: 14px !important;
       font-weight: 500 !important;
-      letter-spacing: 0.06em !important;
+      line-height: 21px !important;
+      letter-spacing: 0 !important;
       text-transform: uppercase !important;
       color: #949494 !important;
       text-align: center !important;
