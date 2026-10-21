@@ -1546,3 +1546,99 @@ details[open] > .liujo-accordion-summary .liujo-accordion-chevron {
   margin-top: 28px !important;
   padding-top: 28px !important;
 }
+
+/* ==========================================================================
+   PDP LIGHTBOX (liujo.com style) + zoom icon removed
+   ========================================================================== */
+.product__media-icon,
+.product__media-icon--lightbox { display: none !important; }
+[id^="Slider-Gallery-"] .product__modal-opener--image,
+[id^="Slider-Gallery-"] .product__media-toggle { cursor: pointer !important; }
+
+html.liujo-lightbox-open,
+html.liujo-lightbox-open body { overflow: hidden !important; }
+
+.liujo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: #fff;
+  display: none;
+  grid-template-columns: 189px minmax(0, 1043px) 1fr;
+}
+.liujo-lightbox.is-open { display: grid; }
+
+.liujo-lightbox__thumbs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 13px;
+  padding: 18px 13px 18px 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.liujo-lightbox__thumbs::-webkit-scrollbar { display: none; }
+
+.liujo-lightbox__thumb {
+  flex: 0 0 auto;
+  width: 91px;
+  aspect-ratio: 91 / 127;
+  padding: 0;
+  border: 1px solid transparent;
+  background: #efeef0;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.liujo-lightbox__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.liujo-lightbox__thumb.is-active,
+.liujo-lightbox__thumb:hover { border-color: #111; }
+
+.liujo-lightbox__stage {
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  background: #efeef0;
+  scrollbar-width: none;
+}
+.liujo-lightbox__stage::-webkit-scrollbar { display: none; }
+.liujo-lightbox__img { width: 100%; height: auto; display: block; }
+
+.liujo-lightbox__close {
+  justify-self: center;
+  align-self: start;
+  margin-top: 44px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 989px) {
+  .liujo-lightbox { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+  .liujo-lightbox__stage { height: auto; grid-row: 1; }
+  .liujo-lightbox__thumbs {
+    grid-row: 2;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .liujo-lightbox__thumb { width: 54px; }
+  .liujo-lightbox__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    margin: 0;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+  }
+}

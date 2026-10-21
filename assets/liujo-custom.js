@@ -2278,3 +2278,103 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+// ==========================================================================
+// PDP IMAGE LIGHTBOX (liujo.com style): vertical thumbnails left, large image,
+// close X right. Opens on image click; replaces Dawn's zoom modal.
+// ==========================================================================
+(function () {
+  function hiRes(src, w) {
+    if (!src) return '';
+    try {
+      const u = new URL(src, window.location.origin);
+      u.searchParams.set('width', w);
+      return u.toString();
+    } catch (e) { return src; }
+  }
+
+  function galleryImages(fromEl) {
+    const list = fromEl.closest('[id^="Slider-Gallery-"]') || document.querySelector('[id^="Slider-Gallery-"]');
+    if (!list) return [];
+    return [...list.querySelectorAll('li.product__media-item')]
+      .filter((li) => getComputedStyle(li).display !== 'none' && li.querySelector('.media-type-image img, .product__media img'))
+      .map((li) => {
+        const img = li.querySelector('.product__media img');
+        return { el: li, src: img.getAttribute('src'), alt: img.getAttribute('alt') || '' };
+      });
+  }
+
+  let box = null, state = { items: [], index: 0 };
+
+  function build() {
+    box = document.createElement('div');
+    box.className = 'liujo-lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Product images');
+    box.innerHTML =
+      '<div class="liujo-lightbox__thumbs" role="list"></div>' +
+      '<div class="liujo-lightbox__stage"><img class="liujo-lightbox__img" alt=""></div>' +
+      '<button type="button" class="liujo-lightbox__close" aria-label="Close">' +
+      '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 2l14 14M16 2L2 16"/></svg></button>';
+    document.body.appendChild(box);
+
+    box.querySelector('.liujo-lightbox__close').addEventListener('click', close);
+    box.querySelector('.liujo-lightbox__thumbs').addEventListener('click', (e) => {
+      const t = e.target.closest('[data-index]');
+      if (t) show(parseInt(t.getAttribute('data-index'), 10));
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!box.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') show(state.index + 1);
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') show(state.index - 1);
+    });
+  }
+
+  function show(i) {
+    const n = state.items.length;
+    if (!n) return;
+    state.index = (i + n) % n;
+    const it = state.items[state.index];
+    const img = box.querySelector('.liujo-lightbox__img');
+    img.src = hiRes(it.src, 2400);
+    img.alt = it.alt;
+    box.querySelector('.liujo-lightbox__stage').scrollTop = 0;
+    box.querySelectorAll('.liujo-lightbox__thumb').forEach((t, k) => {
+      t.classList.toggle('is-active', k === state.index);
+      if (k === state.index) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    });
+  }
+
+  function open(items, index) {
+    if (!box) build();
+    state.items = items;
+    box.querySelector('.liujo-lightbox__thumbs').innerHTML = items
+      .map((it, k) => '<button type="button" class="liujo-lightbox__thumb" role="listitem" data-index="' + k + '" aria-label="Image ' + (k + 1) + '"><img src="' + hiRes(it.src, 300) + '" alt=""></button>')
+      .join('');
+    box.classList.add('is-open');
+    document.documentElement.classList.add('liujo-lightbox-open');
+    show(index);
+    box.querySelector('.liujo-lightbox__close').focus();
+  }
+
+  function close() {
+    if (!box) return;
+    box.classList.remove('is-open');
+    document.documentElement.classList.remove('liujo-lightbox-open');
+  }
+
+  // Capture phase so Dawn's modal-opener never fires for product images
+  document.addEventListener('click', (e) => {
+    const opener = e.target.closest('[id^="Slider-Gallery-"] .product__modal-opener--image');
+    if (!opener) return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    const items = galleryImages(opener);
+    const li = opener.closest('li.product__media-item');
+    const idx = Math.max(0, items.findIndex((it) => it.el === li));
+    open(items, idx);
+  }, true);
+})();
