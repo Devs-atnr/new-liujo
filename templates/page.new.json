@@ -1,0 +1,248 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "liujo_info_tabs_nc8Ck6": {
+      "type": "liujo-info-tabs",
+      "blocks": {
+        "heading_azWUP9": {
+          "type": "heading",
+          "settings": {
+            "title": "Customer care",
+            "style": "dark"
+          }
+        },
+        "tab_YXQNLV": {
+          "type": "tab",
+          "settings": {
+            "title": "Orders and shipments",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_JDBWAN": {
+          "type": "tab",
+          "settings": {
+            "title": "Payments",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_L6XBC6": {
+          "type": "tab",
+          "settings": {
+            "title": "Refunds and returns",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_3wWAea": {
+          "type": "tab",
+          "settings": {
+            "title": "Size guide",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_xKwrcw": {
+          "type": "tab",
+          "settings": {
+            "title": "FAQ",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "heading_naALTr": {
+          "type": "heading",
+          "settings": {
+            "title": "Can we help you?",
+            "style": "plain"
+          }
+        },
+        "contact_VgAxz4": {
+          "type": "contact",
+          "settings": {
+            "icon": "phone",
+            "value": "+966 00 000 0000",
+            "label": "",
+            "note": "",
+            "link": ""
+          }
+        },
+        "contact_KceLVA": {
+          "type": "contact",
+          "settings": {
+            "icon": "email",
+            "value": "care@example.com",
+            "label": "Send us an e-mail",
+            "note": "",
+            "link": ""
+          }
+        },
+        "heading_JWVqP9": {
+          "type": "heading",
+          "settings": {
+            "title": "Privacy information",
+            "style": "plain"
+          }
+        },
+        "tab_nnbDrr": {
+          "type": "tab",
+          "settings": {
+            "title": "Cookie policy",
+            "handle": "",
+            "row_style": "plain",
+            "link": "/pages/cookie-policy",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_hhba4Q": {
+          "type": "tab",
+          "settings": {
+            "title": "Terms of sale",
+            "handle": "",
+            "row_style": "plain",
+            "link": "/pages/terms-of-sale",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_TbkArn": {
+          "type": "tab",
+          "settings": {
+            "title": "Terms and conditions",
+            "handle": "",
+            "row_style": "plain",
+            "link": "/pages/terms",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_wJBAbF": {
+          "type": "tab",
+          "settings": {
+            "title": "Privacy policy",
+            "handle": "",
+            "row_style": "plain",
+            "link": "/pages/privacy-policy",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_7ed3V4": {
+          "type": "tab",
+          "settings": {
+            "title": "Accessibility statement",
+            "handle": "",
+            "row_style": "plain",
+            "link": "/pages/accessibility",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_azWUP9",
+        "tab_YXQNLV",
+        "tab_JDBWAN",
+        "tab_L6XBC6",
+        "tab_3wWAea",
+        "tab_xKwrcw",
+        "heading_naALTr",
+        "contact_VgAxz4",
+        "contact_KceLVA",
+        "heading_JWVqP9",
+        "tab_nnbDrr",
+        "tab_hhba4Q",
+        "tab_TbkArn",
+        "tab_wJBAbF",
+        "tab_7ed3V4"
+      ],
+      "name": "Liu Jo Info Tabs",
+      "settings": {
+        "nav_label": "Customer care",
+        "accent_color": "#000000",
+        "accent_text_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 60,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 40
+      }
+    }
+  },
+  "order": [
+    "main",
+    "liujo_info_tabs_nc8Ck6"
+  ]
+}
