@@ -3004,3 +3004,14 @@ body.has-search-open .liujo-sticky-cart {
   pointer-events: none !important;
 }
 
+
+/* Mega menu open: keep a full-width hairline between the header bar and the menu */
+@media (min-width: 992px) {
+  .liujo-header-wrapper:has(.liujo-header__nav-item:hover) {
+    border-bottom-color: #e5e5e5 !important;
+  }
+  .liujo-megamenu {
+    border-top: 1px solid #e5e5e5 !important;
+    margin-top: 0 !important;
+  }
+}
