@@ -1642,3 +1642,10 @@ html.liujo-lightbox-open body { overflow: hidden !important; }
     border-radius: 50%;
   }
 }
+
+/* Lightbox: image column dead-centre on any screen width; thumbs hug its left,
+   close X sits the same distance off its right */
+@media (min-width: 990px) {
+  .liujo-lightbox { grid-template-columns: minmax(189px, 1fr) minmax(0, 1043px) minmax(189px, 1fr); }
+  .liujo-lightbox__close { justify-self: start; margin-left: 85px; }
+}
