@@ -10,6 +10,11 @@ class FacetFiltersForm extends HTMLElement {
       if (isDesktopPopup) {
         return;
       }
+      // Mobile drawer: apply only when "APPLY FILTER" is tapped
+      const isMobileDrawer = event.target && typeof event.target.closest === 'function' && event.target.closest('#FacetFiltersFormMobile');
+      if (isMobileDrawer) {
+        return;
+      }
       this.onSubmitHandler(event);
     }, 800);
 

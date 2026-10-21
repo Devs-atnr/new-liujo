@@ -892,19 +892,9 @@
 
               {% comment %} Sort By removed from mobile filter drawer — handled by toolbar {% endcomment %}
 
-              <div class="mobile-facets__footer">
-                <facet-remove class="mobile-facets__clear-wrapper">
-                  <a href="{{ results_url }}" class="mobile-facets__clear underlined-link">
-                    {{- 'products.facets.clear_all' | t -}}
-                  </a>
-                </facet-remove>
-                <button
-                  type="button"
-                  class="button button--primary"
-                  onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
-                >
-                  {{ 'products.facets.apply' | t }}
-                </button>
+              <div class="mobile-facets__footer liujo-mobile-filter-footer">
+                <button type="button" class="mobile-facets__clear" data-mobile-filter-reset>RESET</button>
+                <button type="button" class="button button--primary" data-mobile-filter-apply>APPLY FILTER</button>
               </div>
             </div>
 

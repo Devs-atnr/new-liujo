@@ -1570,6 +1570,32 @@ function initLiuJoToolbar() {
       return;
     }
 
+    // 6.4 Mobile drawer: APPLY FILTER / RESET (full reload for reliable results)
+    const mobApply = e.target.closest('[data-mobile-filter-apply]');
+    const mobReset = e.target.closest('[data-mobile-filter-reset]');
+    if (mobApply || mobReset) {
+      e.preventDefault();
+      e.stopPropagation();
+      const current = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams();
+      ['sort_by', 'q', 'type', 'options[prefix]'].forEach((k) => {
+        if (current.has(k)) current.getAll(k).forEach((v) => params.append(k, v));
+      });
+      if (mobApply) {
+        const form = document.getElementById('FacetFiltersFormMobile');
+        if (form) {
+          new FormData(form).forEach((value, key) => {
+            if (value === '' || value == null) return;
+            if (['sort_by', 'q', 'type', 'options[prefix]'].includes(key)) return;
+            params.append(key, value);
+          });
+        }
+      }
+      const qs = params.toString();
+      window.location.href = window.location.pathname + (qs ? '?' + qs : '');
+      return;
+    }
+
     // 6.5 Desktop Filter Apply Button (FILTER)
     const filterApplyBtn = e.target.closest('[data-filter-apply], .liujo-facet-btn--apply');
     if (filterApplyBtn) {
