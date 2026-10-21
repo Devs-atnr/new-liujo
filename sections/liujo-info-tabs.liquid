@@ -41,6 +41,12 @@
       endif
     endif
   endfor
+  # A tab that LINKS to the page being viewed shows its own content box here (liujo.com: one page per tab)
+  for block in section.blocks
+    if block.type == 'tab' and block.settings.link != blank and block.settings.link == request.path and page_tab_id == ''
+      assign page_tab_id = block.id
+    endif
+  endfor
   if page_tab_id != ''
     assign first_tab_id = page_tab_id
   endif
@@ -137,7 +143,7 @@
 
     <div class="liujo-it__panels">
       {%- for block in section.blocks -%}
-        {%- if block.type == 'tab' and block.settings.link == blank -%}
+        {%- if block.type == 'tab' and block.settings.link == blank or block.type == 'tab' and block.settings.link == request.path -%}
           <div class="liujo-it__panel{% if block.id == first_tab_id %} is-active{% endif %}"
                id="tab-{{ block.id }}"
                role="tabpanel"
@@ -520,7 +526,7 @@
           "type": "url",
           "id": "link",
           "label": "Link instead of content",
-          "info": "Set a page, collection or external URL to make this tab a link. Leave empty to show the content box below."
+          "info": "Page, collection or external URL. If it links to a page that also shows this section, that page opens with this tab's own content (one page per tab, like liujo.com). Leave empty to switch content on the same page."
         },
         {
           "type": "checkbox",
@@ -635,31 +641,36 @@
         {
           "type": "tab",
           "settings": {
-            "title": "Orders and shipments"
+            "title": "Orders and shipments",
+            "link": "/pages/orders-and-shipments"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "title": "Payments"
+            "title": "Payments",
+            "link": "/pages/payments"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "title": "Refunds and returns"
+            "title": "Refunds and returns",
+            "link": "/pages/returns"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "title": "Size guide"
+            "title": "Size guide",
+            "link": "/pages/size-guide"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "title": "FAQ"
+            "title": "FAQ",
+            "link": "/pages/faq"
           }
         },
         {
