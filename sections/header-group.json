@@ -33,7 +33,7 @@
         "logo_width": 160,
         "show_store_locator": true,
         "store_locator_label": "Locate Stores",
-        "store_locator_link": "",
+        "store_locator_link": "shopify://pages/new-store-locator",
         "show_search_desktop": true,
         "show_wishlist_desktop": false,
         "show_account_desktop": false,
