@@ -2313,6 +2313,13 @@ document.addEventListener('DOMContentLoaded', () => {
     box.setAttribute('aria-modal', 'true');
     box.setAttribute('aria-label', 'Product images');
     box.innerHTML =
+      '<div class="liujo-lightbox__bar">' +
+      '<span class="liujo-lightbox__count" aria-live="polite"></span>' +
+      '<div class="liujo-lightbox__arrows">' +
+      '<button type="button" class="liujo-lightbox__arrow" data-lb-prev aria-label="Previous image"><svg width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 8H2M8 1L1 8l7 7"/></svg></button>' +
+      '<span class="liujo-lightbox__sep"></span>' +
+      '<button type="button" class="liujo-lightbox__arrow" data-lb-next aria-label="Next image"><svg width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 8h21M16 1l7 7-7 7"/></svg></button>' +
+      '</div></div>' +
       '<div class="liujo-lightbox__thumbs" role="list"></div>' +
       '<div class="liujo-lightbox__stage"><img class="liujo-lightbox__img" alt=""></div>' +
       '<button type="button" class="liujo-lightbox__close" aria-label="Close">' +
@@ -2320,6 +2327,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(box);
 
     box.querySelector('.liujo-lightbox__close').addEventListener('click', close);
+    box.querySelector('[data-lb-prev]').addEventListener('click', () => show(state.index - 1));
+    box.querySelector('[data-lb-next]').addEventListener('click', () => show(state.index + 1));
+    // Swipe left/right on the image (mobile)
+    const stage = box.querySelector('.liujo-lightbox__stage');
+    let sx = 0, sy = 0;
+    stage.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(state.index + (dx < 0 ? 1 : -1));
+    }, { passive: true });
     box.querySelector('.liujo-lightbox__thumbs').addEventListener('click', (e) => {
       const t = e.target.closest('[data-index]');
       if (t) show(parseInt(t.getAttribute('data-index'), 10));
@@ -2341,6 +2358,7 @@ document.addEventListener('DOMContentLoaded', () => {
     img.src = hiRes(it.src, 2400);
     img.alt = it.alt;
     box.querySelector('.liujo-lightbox__stage').scrollTop = 0;
+    box.querySelector('.liujo-lightbox__count').textContent = (state.index + 1) + ' of ' + n;
     box.querySelectorAll('.liujo-lightbox__thumb').forEach((t, k) => {
       t.classList.toggle('is-active', k === state.index);
       if (k === state.index) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
