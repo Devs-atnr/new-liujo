@@ -125,7 +125,7 @@
           "type": "tab",
           "settings": {
             "title": "Monitor your order",
-            "link": "shopify://pages/track-your-order"
+            "link": "shopify://pages/new-track-your-order"
           }
         },
         "t_returns_acc": {
@@ -153,28 +153,34 @@
           "type": "tab",
           "settings": {
             "title": "Orders and shipments",
-            "link": "shopify://pages/orders-and-shipments"
+            "link": "shopify://pages/new-orders-shipping-services",
+            "page": "orders-and-shipments",
+            "auto_accordion": true
           }
         },
         "t_payments": {
           "type": "tab",
           "settings": {
             "title": "Payments",
-            "link": "shopify://pages/payments"
+            "link": "shopify://pages/new-payments",
+            "page": "payments",
+            "auto_accordion": true
           }
         },
         "t_refunds": {
           "type": "tab",
           "settings": {
             "title": "Refunds and returns",
-            "link": "shopify://pages/refunds-and-returns"
+            "link": "shopify://pages/new-refunds-and-returns",
+            "page": "refunds-and-returns",
+            "auto_accordion": true
           }
         },
         "t_size": {
           "type": "tab",
           "settings": {
             "title": "Size guide",
-            "link": "shopify://pages/size-guide"
+            "link": "shopify://pages/new-size-guide"
           }
         },
         "sg": {
@@ -185,21 +191,23 @@
           "type": "tab",
           "settings": {
             "title": "How to take care",
-            "link": "shopify://pages/how-to-take-care"
+            "link": "shopify://pages/new-how-to-take-care",
+            "page": "how-to-take-care",
+            "auto_accordion": false
           }
         },
         "t_faq": {
           "type": "tab",
           "settings": {
             "title": "FAQ",
-            "link": "shopify://pages/faq"
+            "link": "shopify://pages/new-faq"
           }
         },
         "faq_1": {
           "type": "accordion",
           "settings": {
             "title": "Shopping FAQ",
-            "content": "<p><strong>How can I get a confirmation of my order?</strong></p><p>After you have completed the order, you will receive a confirmation email containing your identification number. In case this does not go through, you will receive a second email where we will inform you that the order has not been confirmed and will not be shipped.</p><p><strong>Do I have to create an account to place an order?</strong></p><p>No, you don&#x27;t need to have a Liujo account for any purchase. However, having an account will serve you the following benefits: track all your orders/payments details easily through your account; review your purchase history, payments, wishlist, and in-cart items; receive emails about the latest collections, new items, promotions, and discounts; save shipping address and payment details for a faster checkout next time.</p><p><strong>How can I search for articles that I&#x27;m interested in?</strong></p><p>You can search for products from the main menu by clicking on the relevant category. You can activate various filters for a more refined selection or use the search box and enter keywords like article code, color, type of product, and more. Go to the top right of the screen and find the magnifying glass icon, then enter the keywords for the item you want to find.</p><p><strong>Where can I find product information?</strong></p><p>To access detailed product information, simply click on the product image. This will open a dedicated screen displaying information like product line, season, name, price, description, composition, measurements, available colors, washing instructions, and sizes.</p><p><strong>How can I change my contact details?</strong></p><p>You can change your contact details by accessing the &quot;account&quot; section.</p><p><strong>Are you able to tell me if a garment will become available again in stock?</strong></p><p>Yes, just enter your email address in the form at the bottom of the page and you will receive information about the latest news and promotions.</p><p><strong>Do you have a size guide?</strong></p><p>Of course. You can find all the information you need by clicking <a href=\"/pages/size-guide\">Size Guide</a>.</p><p><strong>I did not receive notifications related to my order, how come?</strong></p><p>You may have mistyped the email address during checkout. To receive notifications in this case, you must contact Customer Service who will provide you with all the information you need.</p><p><strong>What can I do through my account?</strong></p><p>By creating an account, you will be able to see a summary of your orders and returns, modify your personal information, and manage your addresses and wishlist.</p><p><strong>Can I modify my order?</strong></p><p>All orders are processed automatically, and therefore modification of the purchased items is not possible. You can ask to cancel your order if it has not already been shipped by contacting Customer Services.</p>",
+            "content": "<p><strong>How can I get a confirmation of my order?</strong></p><p>After you have completed the order, you will receive a confirmation email containing your identification number. In case this does not go through, you will receive a second email where we will inform you that the order has not been confirmed and will not be shipped.</p><p><strong>Do I have to create an account to place an order?</strong></p><p>No, you don&#x27;t need to have a Liujo account for any purchase. However, having an account will serve you the following benefits: track all your orders/payments details easily through your account; review your purchase history, payments, wishlist, and in-cart items; receive emails about the latest collections, new items, promotions, and discounts; save shipping address and payment details for a faster checkout next time.</p><p><strong>How can I search for articles that I&#x27;m interested in?</strong></p><p>You can search for products from the main menu by clicking on the relevant category. You can activate various filters for a more refined selection or use the search box and enter keywords like article code, color, type of product, and more. Go to the top right of the screen and find the magnifying glass icon, then enter the keywords for the item you want to find.</p><p><strong>Where can I find product information?</strong></p><p>To access detailed product information, simply click on the product image. This will open a dedicated screen displaying information like product line, season, name, price, description, composition, measurements, available colors, washing instructions, and sizes.</p><p><strong>How can I change my contact details?</strong></p><p>You can change your contact details by accessing the &quot;account&quot; section.</p><p><strong>Are you able to tell me if a garment will become available again in stock?</strong></p><p>Yes, just enter your email address in the form at the bottom of the page and you will receive information about the latest news and promotions.</p><p><strong>Do you have a size guide?</strong></p><p>Of course. You can find all the information you need by clicking <a href=\"/pages/new-size-guide\">Size Guide</a>.</p><p><strong>I did not receive notifications related to my order, how come?</strong></p><p>You may have mistyped the email address during checkout. To receive notifications in this case, you must contact Customer Service who will provide you with all the information you need.</p><p><strong>What can I do through my account?</strong></p><p>By creating an account, you will be able to see a summary of your orders and returns, modify your personal information, and manage your addresses and wishlist.</p><p><strong>Can I modify my order?</strong></p><p>All orders are processed automatically, and therefore modification of the purchased items is not possible. You can ask to cancel your order if it has not already been shipped by contacting Customer Services.</p>",
             "sub_questions": true
           }
         },
@@ -267,7 +275,9 @@
           "settings": {
             "title": "Privacy policy",
             "row_style": "plain",
-            "link": "shopify://pages/privacy-policy"
+            "link": "shopify://pages/new-privacy-policy",
+            "policy": "privacy",
+            "auto_accordion": true
           }
         },
         "p_cookies": {
@@ -275,7 +285,9 @@
           "settings": {
             "title": "Cookie policy",
             "row_style": "plain",
-            "link": "shopify://pages/cookies-policy"
+            "link": "shopify://pages/new-cookies-policy",
+            "page": "cookies-policy",
+            "auto_accordion": false
           }
         },
         "p_terms": {
@@ -283,7 +295,9 @@
           "settings": {
             "title": "Terms and conditions",
             "row_style": "plain",
-            "link": "shopify://pages/terms-and-conditions"
+            "link": "shopify://pages/new-terms-and-conditions",
+            "page": "terms-and-conditions",
+            "auto_accordion": true
           }
         },
         "p_sale": {
@@ -291,7 +305,9 @@
           "settings": {
             "title": "Terms of sale",
             "row_style": "plain",
-            "link": "shopify://pages/terms-of-sale"
+            "link": "shopify://pages/new-terms-of-sale",
+            "page": "terms-of-sale",
+            "auto_accordion": true
           }
         }
       },
@@ -325,7 +341,7 @@
         "p_sale"
       ],
       "settings": {
-        "only_on_pages": "track-your-order, orders-and-shipments, payments, refunds-and-returns, size-guide, how-to-take-care, faq, privacy-policy, cookies-policy, terms-and-conditions, terms-of-sale",
+        "only_on_pages": "new-track-your-order, new-orders-shipping-services, new-payments, new-refunds-and-returns, new-size-guide, new-how-to-take-care, new-faq, new-privacy-policy, new-cookies-policy, new-terms-and-conditions, new-terms-of-sale",
         "hide_page_section": true,
         "show_page_content": true,
         "nav_label": "Customer care",

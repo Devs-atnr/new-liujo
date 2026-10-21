@@ -168,11 +168,28 @@
             {%- if block.settings.image != blank -%}
               <div class="liujo-it__panel-image">{{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600' }}</div>
             {%- endif -%}
-            {%- if block.settings.content != blank or block.settings.page != blank -%}
-              <div class="liujo-it__panel-body rte">
-                {{ block.settings.content }}
-                {%- if block.settings.page != blank -%}{{ block.settings.page.content }}{%- endif -%}
-              </div>
+            {%- if block.settings.content != blank -%}
+              <div class="liujo-it__panel-body rte">{{ block.settings.content }}</div>
+            {%- endif -%}
+            {%- comment -%} Content taken from another Shopify page or store policy (turned into accordions) {%- endcomment -%}
+            {%- liquid
+              assign src_html = ''
+              if block.settings.page != blank
+                assign src_html = block.settings.page.content
+              endif
+              case block.settings.policy
+                when 'privacy'
+                  assign src_html = shop.privacy_policy.body
+                when 'refund'
+                  assign src_html = shop.refund_policy.body
+                when 'terms'
+                  assign src_html = shop.terms_of_service.body
+                when 'shipping'
+                  assign src_html = shop.shipping_policy.body
+              endcase
+            -%}
+            {%- if src_html != blank -%}
+              <div class="liujo-it__panel-body liujo-it__page-content rte"{% if block.settings.auto_accordion %} data-it-auto-acc{% endif %}>{{ src_html }}</div>
             {%- endif -%}
             {%- if section.settings.show_page_content and page and block.settings.link != blank and block.settings.link == request.path and page.content != blank -%}
               <div class="liujo-it__panel-body liujo-it__page-content rte" data-it-auto-acc>{{ page.content }}</div>
@@ -456,6 +473,13 @@
       const qs = [...el.querySelectorAll('li.question')];
       const wrap = document.createElement('div');
       wrap.className = 'liujo-it__acc';
+      if (qs.length === 1) {
+        // One wrapper item (e.g. "Terms and Conditions"): use the headings inside it instead
+        const ans = qs[0].querySelector('.answer') || qs[0];
+        const ul = qs[0].closest('ul');
+        ul.replaceWith(...ans.childNodes);
+        return headingsToAccordion(el, wrap);
+      }
       if (qs.length) {
         qs.forEach((li) => {
           const label = li.querySelector('.question-label, label, h2, h3, h4, strong');
@@ -474,7 +498,10 @@
         [...new Set(qs.map((q) => q.closest('ul')))].forEach((u) => u.remove());
         return;
       }
-      // Fallback: h2/h3/h4 headings become accordion titles
+      return headingsToAccordion(el, wrap);
+    }
+    function headingsToAccordion(el, wrap) {
+      // h2/h3/h4 headings become accordion titles
       const heads = [...el.querySelectorAll(':scope > h2, :scope > h3, :scope > h4')];
       if (!heads.length) return;
       heads.forEach((h) => {
@@ -785,8 +812,43 @@
         {
           "type": "page",
           "id": "page",
-          "label": "Or show a Shopify page's content",
-          "info": "Its text is added below the content above."
+          "label": "Content from a Shopify page",
+          "info": "Shows that page's text in this tab's box (e.g. pick the old 'FAQ' page). The page itself is not changed."
+        },
+        {
+          "type": "select",
+          "id": "policy",
+          "label": "Or content from a store policy",
+          "options": [
+            {
+              "value": "",
+              "label": "None"
+            },
+            {
+              "value": "privacy",
+              "label": "Privacy policy"
+            },
+            {
+              "value": "refund",
+              "label": "Refund policy"
+            },
+            {
+              "value": "terms",
+              "label": "Terms of service"
+            },
+            {
+              "value": "shipping",
+              "label": "Shipping policy"
+            }
+          ],
+          "default": "",
+          "info": "Settings > Policies in Shopify admin."
+        },
+        {
+          "type": "checkbox",
+          "id": "auto_accordion",
+          "label": "Turn its sections into accordions",
+          "default": true
         },
         {
           "type": "text",
