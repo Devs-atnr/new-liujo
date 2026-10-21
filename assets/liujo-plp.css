@@ -1709,3 +1709,27 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
 
   .mobile-facets__list { row-gap: 22px !important; }
 }
+
+/* Mobile PLP title bar — liujo.com parity (title left, view icon right, no rules) */
+@media (max-width: 989px) {
+  .liujo-plp-mobile-header-bar {
+    height: 44px !important;
+    padding: 0 20px !important;
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+  .liujo-plp-mobile-title {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: calc(100% - 40px) !important;
+  }
+  .liujo-mobile-grid-toggle-btn {
+    width: 24px !important;
+    height: 24px !important;
+    margin-right: -4px !important;
+  }
+}
