@@ -9,13 +9,50 @@
   Deep link: /pages/xyz#tab-<block-id> or ?tab=<tab handle> opens that tab.
 {% endcomment %}
 
-{%- assign s_id = section.id -%}
-{%- assign first_tab_id = '' -%}
-{%- for block in section.blocks -%}
-  {%- if block.type == 'tab' and block.settings.link == blank and first_tab_id == '' -%}
-    {%- assign first_tab_id = block.id -%}
-  {%- endif -%}
-{%- endfor -%}
+{%- liquid
+  assign s_id = section.id
+
+  # ---- Where to show: empty list = every page using this template
+  assign show_here = true
+  assign only_on = section.settings.only_on_pages | downcase | remove: ' ' | split: ','
+  if only_on.size > 0
+    assign show_here = false
+    for h in only_on
+      if h == page.handle or h == collection.handle or h == product.handle
+        assign show_here = true
+      endif
+    endfor
+  endif
+  if request.design_mode
+    assign show_here = true
+  endif
+
+  # ---- Which tab opens first: the tab whose handle matches this page, else the first content tab
+  assign first_tab_id = ''
+  assign page_tab_id = ''
+  for block in section.blocks
+    if block.type == 'tab' and block.settings.link == blank
+      if first_tab_id == ''
+        assign first_tab_id = block.id
+      endif
+      assign t_handle = block.settings.handle | default: block.settings.title | handleize
+      if page and t_handle == page.handle and page_tab_id == ''
+        assign page_tab_id = block.id
+      endif
+    endif
+  endfor
+  if page_tab_id != ''
+    assign first_tab_id = page_tab_id
+  endif
+-%}
+
+{%- if show_here -%}
+{%- if section.settings.hide_page_section and page -%}
+  <style>
+    /* Hide the template's default page title/content section when this section is used */
+    #MainContent > .shopify-section:has(> .page-width .main-page-title) { display: none !important; }
+  </style>
+{%- endif -%}
 
 <div class="liujo-it liujo-it--{{ s_id }}{% if first_tab_id == '' %} liujo-it--no-panels{% endif %}" data-liujo-info-tabs>
   <style>
@@ -45,7 +82,7 @@
           {%- when 'tab' -%}
             {%- assign tab_handle = block.settings.handle | default: block.settings.title | handleize -%}
             {%- if block.settings.link != blank -%}
-              <a class="liujo-it__tab{% if block.settings.row_style == 'plain' %} liujo-it__tab--plain{% endif %}"
+              <a class="liujo-it__tab{% if block.settings.row_style == 'plain' %} liujo-it__tab--plain{% endif %}{% if block.settings.link == request.path %} is-active{% endif %}"
                  href="{{ block.settings.link }}"
                  {% if block.settings.new_window %}target="_blank" rel="noopener"{% endif %}
                  {{ block.shopify_attributes }}>
@@ -125,6 +162,7 @@
     </div>
   </div>
 </div>
+{%- endif -%}
 
 {% stylesheet %}
   .liujo-it__container {
@@ -334,26 +372,109 @@
   "tag": "section",
   "class": "section",
   "settings": [
-    { "type": "text", "id": "nav_label", "label": "Menu name (accessibility)", "default": "Customer care" },
-    { "type": "color", "id": "accent_color", "label": "Hover / active fill colour", "default": "#000000" },
-    { "type": "color", "id": "accent_text_color", "label": "Hover / active text colour", "default": "#ffffff" },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Desktop padding top", "default": 40 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Desktop padding bottom", "default": 60 },
-    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Mobile padding top", "default": 24 },
-    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Mobile padding bottom", "default": 40 }
+    {
+      "type": "header",
+      "content": "Where to show"
+    },
+    {
+      "type": "text",
+      "id": "only_on_pages",
+      "label": "Only show on these pages (handles)",
+      "info": "Comma-separated page handles, e.g. orders-and-shipments, payments, faq. Leave empty to show on every page using this template. The tab whose handle matches the page opens automatically."
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_page_section",
+      "label": "Hide the default page title/content on these pages",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "nav_label",
+      "label": "Menu name (accessibility)",
+      "default": "Customer care"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Hover / active fill colour",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_text_color",
+      "label": "Hover / active text colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop padding bottom",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile padding bottom",
+      "default": 40
+    }
   ],
   "blocks": [
     {
       "type": "heading",
       "name": "Group heading",
       "settings": [
-        { "type": "text", "id": "title", "label": "Title", "default": "Can we help you?" },
         {
-          "type": "select", "id": "style", "label": "Style",
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Can we help you?"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
           "options": [
-            { "value": "plain", "label": "Plain (bold text + line)" },
-            { "value": "dark", "label": "Dark bar" }
+            {
+              "value": "plain",
+              "label": "Plain (bold text + line)"
+            },
+            {
+              "value": "dark",
+              "label": "Dark bar"
+            }
           ],
           "default": "plain"
         }
@@ -363,26 +484,87 @@
       "type": "tab",
       "name": "Tab",
       "settings": [
-        { "type": "text", "id": "title", "label": "Tab title", "default": "FAQ" },
-        { "type": "text", "id": "handle", "label": "Tab handle (for ?tab= links)", "info": "Optional. Defaults to the title, e.g. ?tab=faq" },
         {
-          "type": "select", "id": "row_style", "label": "Row style",
+          "type": "text",
+          "id": "title",
+          "label": "Tab title",
+          "default": "FAQ"
+        },
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Tab handle",
+          "info": "Opens this tab automatically on the page with the same handle (e.g. payments), and for ?tab=payments links. Defaults to the title."
+        },
+        {
+          "type": "select",
+          "id": "row_style",
+          "label": "Row style",
           "options": [
-            { "value": "box", "label": "Box with arrow" },
-            { "value": "plain", "label": "Plain line" }
+            {
+              "value": "box",
+              "label": "Box with arrow"
+            },
+            {
+              "value": "plain",
+              "label": "Plain line"
+            }
           ],
           "default": "box"
         },
-        { "type": "header", "content": "Redirect" },
-        { "type": "url", "id": "link", "label": "Link instead of content", "info": "Set a page, collection or external URL to make this tab a link. Leave empty to show the content box below." },
-        { "type": "checkbox", "id": "new_window", "label": "Open link in a new tab", "default": false },
-        { "type": "header", "content": "Content box" },
-        { "type": "checkbox", "id": "show_title", "label": "Show title banner", "default": true },
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Write the content for this tab here.</p>" },
-        { "type": "page", "id": "page", "label": "Or show a Shopify page's content", "info": "Its text is added below the content above." },
-        { "type": "text", "id": "button_label", "label": "Button label" },
-        { "type": "url", "id": "button_link", "label": "Button link" }
+        {
+          "type": "header",
+          "content": "Redirect"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link instead of content",
+          "info": "Set a page, collection or external URL to make this tab a link. Leave empty to show the content box below."
+        },
+        {
+          "type": "checkbox",
+          "id": "new_window",
+          "label": "Open link in a new tab",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Content box"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_title",
+          "label": "Show title banner",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Write the content for this tab here.</p>"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Or show a Shopify page's content",
+          "info": "Its text is added below the content above."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
       ]
     },
     {
@@ -390,19 +572,52 @@
       "name": "Contact row",
       "settings": [
         {
-          "type": "select", "id": "icon", "label": "Type",
+          "type": "select",
+          "id": "icon",
+          "label": "Type",
           "options": [
-            { "value": "phone", "label": "Phone" },
-            { "value": "email", "label": "E-mail" },
-            { "value": "chat", "label": "Chat / WhatsApp" },
-            { "value": "link", "label": "Link" }
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "email",
+              "label": "E-mail"
+            },
+            {
+              "value": "chat",
+              "label": "Chat / WhatsApp"
+            },
+            {
+              "value": "link",
+              "label": "Link"
+            }
           ],
           "default": "phone"
         },
-        { "type": "text", "id": "value", "label": "Phone number / e-mail", "info": "Used for tel: / mailto: links." },
-        { "type": "text", "id": "label", "label": "Label", "info": "e.g. SEND US AN E-MAIL. Empty = show the number/e-mail." },
-        { "type": "text", "id": "note", "label": "Small note", "info": "e.g. opening hours" },
-        { "type": "url", "id": "link", "label": "Link (Chat / Link types)" }
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Phone number / e-mail",
+          "info": "Used for tel: / mailto: links."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "e.g. SEND US AN E-MAIL. Empty = show the number/e-mail."
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Small note",
+          "info": "e.g. opening hours"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (Chat / Link types)"
+        }
       ]
     }
   ],
@@ -410,21 +625,110 @@
     {
       "name": "Liu Jo Info Tabs",
       "blocks": [
-        { "type": "heading", "settings": { "title": "Customer care", "style": "dark" } },
-        { "type": "tab", "settings": { "title": "Orders and shipments" } },
-        { "type": "tab", "settings": { "title": "Payments" } },
-        { "type": "tab", "settings": { "title": "Refunds and returns" } },
-        { "type": "tab", "settings": { "title": "Size guide" } },
-        { "type": "tab", "settings": { "title": "FAQ" } },
-        { "type": "heading", "settings": { "title": "Can we help you?" } },
-        { "type": "contact", "settings": { "icon": "phone", "value": "+966 00 000 0000" } },
-        { "type": "contact", "settings": { "icon": "email", "value": "care@example.com", "label": "Send us an e-mail" } },
-        { "type": "heading", "settings": { "title": "Privacy information" } },
-        { "type": "tab", "settings": { "title": "Cookie policy", "row_style": "plain", "link": "/pages/cookie-policy" } },
-        { "type": "tab", "settings": { "title": "Terms of sale", "row_style": "plain", "link": "/pages/terms-of-sale" } },
-        { "type": "tab", "settings": { "title": "Terms and conditions", "row_style": "plain", "link": "/pages/terms" } },
-        { "type": "tab", "settings": { "title": "Privacy policy", "row_style": "plain", "link": "/pages/privacy-policy" } },
-        { "type": "tab", "settings": { "title": "Accessibility statement", "row_style": "plain", "link": "/pages/accessibility" } }
+        {
+          "type": "heading",
+          "settings": {
+            "title": "Customer care",
+            "style": "dark"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Orders and shipments"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Payments"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Refunds and returns"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Size guide"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "FAQ"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "title": "Can we help you?"
+          }
+        },
+        {
+          "type": "contact",
+          "settings": {
+            "icon": "phone",
+            "value": "+966 00 000 0000"
+          }
+        },
+        {
+          "type": "contact",
+          "settings": {
+            "icon": "email",
+            "value": "care@example.com",
+            "label": "Send us an e-mail"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "title": "Privacy information"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Cookie policy",
+            "row_style": "plain",
+            "link": "/pages/cookie-policy"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Terms of sale",
+            "row_style": "plain",
+            "link": "/pages/terms-of-sale"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Terms and conditions",
+            "row_style": "plain",
+            "link": "/pages/terms"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Privacy policy",
+            "row_style": "plain",
+            "link": "/pages/privacy-policy"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Accessibility statement",
+            "row_style": "plain",
+            "link": "/pages/accessibility"
+          }
+        }
       ]
     }
   ]
