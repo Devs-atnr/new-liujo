@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "main": {
+      "type": "liujo-store-locator",
+      "blocks": {
+        "store_1": {
+          "type": "store",
+          "settings": {
+            "name": "LIU.JO | Red Sea Mall",
+            "city": "Jeddah",
+            "address": "Red Sea Mall, King Abdulaziz Road, First Floor, Jeddah, K.S.A.",
+            "postal_code": "22230",
+            "phone": "+966 59 301 8751",
+            "hours": "<p>Saturday to Thursday: 09:00 AM \u2013 11:00 PM</p><p>Friday: 3:00 PM \u2013 11:00 PM</p>",
+            "latitude": "21.6289161",
+            "longitude": "39.1120399",
+            "map_link": "https://www.google.com/maps/place/Red+Sea+Mall/@21.6289694,39.1101857,17.5z"
+          }
+        },
+        "store_2": {
+          "type": "store",
+          "settings": {
+            "name": "LIU.JO | Al Rashid Mall",
+            "city": "Madina",
+            "address": "Al Rashid Mall, King Abdullah Ring Road, Ground Floor, Madina, K.S.A.",
+            "postal_code": "26411",
+            "phone": "+966 59 301 8737",
+            "hours": "<p>Saturday to Thursday: 10:00 AM \u2013 11:00 PM</p><p>Friday: 3:00 PM \u2013 11:00 PM</p>",
+            "map_link": "https://www.google.com/maps/dir/?api=1&destination=6943+2781+King+Abdullah+Branch+Rd,+Shadhah,+Madinah+42361,+Saudi+Arabia"
+          }
+        },
+        "store_3": {
+          "type": "store",
+          "settings": {
+            "name": "LIU.JO | Solitaire Mall",
+            "city": "Riyadh",
+            "address": "Ground Floor, Imam Saud Bin Faisal Branch Road, As Sahafa, Riyadh",
+            "postal_code": "11564",
+            "phone": "+966 56 516 2563",
+            "hours": "<p>Sun \u2013 Wed: 10:00 AM \u2013 11:00 PM</p><p>Thu \u2013 Sat: 10:00 AM \u2013 12:00 AM</p><p>Fri: 3:00 PM \u2013 12:00 AM</p>",
+            "latitude": "24.8016597",
+            "longitude": "46.6510967",
+            "map_link": "https://www.google.com/maps/place/Solitaire/@24.8016597,46.6485164,17z"
+          }
+        }
+      },
+      "block_order": [
+        "store_1",
+        "store_2",
+        "store_3"
+      ],
+      "settings": {
+        "only_on_pages": "",
+        "hide_page_section": true,
+        "title": "Store Locator"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
