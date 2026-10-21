@@ -48,8 +48,8 @@
             opacity: {{ block.settings.overlay_opacity | default: 20 | divided_by: 100.0 }};
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__content {
-            align-items: {{ block.settings.content_alignment | default: 'flex-start' }};
-            justify-content: {{ block.settings.content_position | default: 'center' }};
+            justify-content: {{ block.settings.content_alignment | default: 'flex-start' }};
+            align-items: {{ block.settings.content_position | default: 'center' }};
             text-align: {{ block.settings.content_text_align | default: 'left' }};
             padding-top: {{ block.settings.content_padding_top | default: 24 }}px;
             padding-right: {{ block.settings.content_padding_right | default: 24 }}px;
@@ -58,8 +58,8 @@
           }
           @media (max-width: 767px) {
             .liujo-split-block--{{ b_id }} .liujo-split-block__content {
-              align-items: {{ block.settings.content_alignment_mobile | default: 'center' }};
-              justify-content: {{ block.settings.content_position_mobile | default: 'center' }};
+              justify-content: {{ block.settings.content_alignment_mobile | default: 'center' }};
+              align-items: {{ block.settings.content_position_mobile | default: 'center' }};
               text-align: {{ block.settings.content_text_align_mobile | default: 'center' }};
               padding-top: {{ block.settings.content_padding_top_mobile | default: 20 }}px;
               padding-right: {{ block.settings.content_padding_right_mobile | default: 20 }}px;
@@ -72,7 +72,7 @@
             color: {{ block.settings.subheading_color | default: '#ffffff' }};
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            font-weight: {{ block.settings.subheading_weight_desktop | default: 600 }};
+            font-weight: {{ block.settings.subheading_weight_desktop | default: 600 }} !important;
             margin-bottom: 8px;
           }
           .liujo-split-block--{{ b_id }} .liujo-split-block__title {
@@ -80,18 +80,18 @@
             color: {{ block.settings.title_color | default: '#ffffff' }};
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            font-weight: {{ block.settings.title_weight_desktop | default: 700 }};
+            font-weight: {{ block.settings.title_weight_desktop | default: 700 }} !important;
             margin: 0 0 {% if block.settings.button_label != blank %}16px{% else %}0{% endif %};
             line-height: 1.2;
           }
           @media (max-width: 767px) {
             .liujo-split-block--{{ b_id }} .liujo-split-block__subheading {
               font-size: {{ block.settings.subheading_size_mobile | default: 10 }}px;
-              font-weight: {{ block.settings.subheading_weight_mobile | default: block.settings.subheading_weight_desktop | default: 600 }};
+              font-weight: {{ block.settings.subheading_weight_mobile | default: block.settings.subheading_weight_desktop | default: 600 }} !important;
             }
             .liujo-split-block--{{ b_id }} .liujo-split-block__title {
               font-size: {{ block.settings.title_size_mobile | default: 22 }}px;
-              font-weight: {{ block.settings.title_weight_mobile | default: block.settings.title_weight_desktop | default: 700 }};
+              font-weight: {{ block.settings.title_weight_mobile | default: block.settings.title_weight_desktop | default: 700 }} !important;
             }
             .liujo-split-block--{{ b_id }} .liujo-split-block__btn {
               font-weight: {{ block.settings.button_weight_mobile | default: block.settings.button_weight_desktop | default: 600 }} !important;
@@ -106,7 +106,7 @@
             align-items: center;
             justify-content: center;
             padding: 10px 28px;
-            font-weight: {{ block.settings.button_weight_desktop | default: 600 }};
+            font-weight: {{ block.settings.button_weight_desktop | default: 600 }} !important;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             text-decoration: none;
@@ -140,7 +140,7 @@
 
           <!-- Content Elements -->
           <div class="liujo-split-block__content" style="position: absolute; inset: 0; display: flex; z-index: 2;">
-            <div style="width: 100%;">
+            <div style="max-width: 100%;">
               {%- if block.settings.subheading != blank -%}
                 <div class="liujo-split-block__subheading">
                   {{ block.settings.subheading }}
@@ -392,7 +392,7 @@
         },
         {
           "type": "header",
-          "content": "Content Alignment & Position"
+          "content": "Content Alignment (Desktop)"
         },
         {
           "type": "select",
@@ -429,12 +429,12 @@
         },
         {
           "type": "header",
-          "content": "Mobile Content Alignment"
+          "content": "Content Alignment (Mobile)"
         },
         {
           "type": "select",
           "id": "content_alignment_mobile",
-          "label": "Mobile Horizontal Alignment",
+          "label": "Horizontal Alignment",
           "options": [
             { "value": "flex-start", "label": "Left" },
             { "value": "center", "label": "Center" },
@@ -445,7 +445,7 @@
         {
           "type": "select",
           "id": "content_position_mobile",
-          "label": "Mobile Vertical Position",
+          "label": "Vertical Position",
           "options": [
             { "value": "flex-start", "label": "Top" },
             { "value": "center", "label": "Center" },
@@ -456,7 +456,7 @@
         {
           "type": "select",
           "id": "content_text_align_mobile",
-          "label": "Mobile Text Alignment",
+          "label": "Text Alignment",
           "options": [
             { "value": "left", "label": "Left" },
             { "value": "center", "label": "Center" },
@@ -554,12 +554,12 @@
         },
         {
           "type": "header",
-          "content": "Subheading / Tagline"
+          "content": "Tagline / Subtitle"
         },
         {
           "type": "text",
           "id": "subheading",
-          "label": "Subheading Text"
+          "label": "Tagline / Subtitle Text"
         },
         {
           "type": "range",
@@ -568,7 +568,7 @@
           "max": 24,
           "step": 1,
           "unit": "px",
-          "label": "Desktop Subheading Font Size",
+          "label": "Desktop Tagline Font Size",
           "default": 12
         },
         {
@@ -578,19 +578,19 @@
           "max": 18,
           "step": 1,
           "unit": "px",
-          "label": "Mobile Subheading Font Size",
+          "label": "Mobile Tagline Font Size",
           "default": 10
         },
         {
           "type": "color",
           "id": "subheading_color",
-          "label": "Subheading Color",
+          "label": "Tagline Color",
           "default": "#ffffff"
         },
         {
           "type": "select",
           "id": "subheading_weight_desktop",
-          "label": "Desktop Subheading Weight",
+          "label": "Desktop Tagline Font Weight",
           "options": [
             { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
@@ -605,7 +605,7 @@
         {
           "type": "select",
           "id": "subheading_weight_mobile",
-          "label": "Mobile Subheading Weight",
+          "label": "Mobile Tagline Font Weight",
           "options": [
             { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
@@ -656,7 +656,7 @@
         {
           "type": "select",
           "id": "title_weight_desktop",
-          "label": "Desktop Title Weight",
+          "label": "Desktop Title Font Weight",
           "options": [
             { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
@@ -671,7 +671,7 @@
         {
           "type": "select",
           "id": "title_weight_mobile",
-          "label": "Mobile Title Weight",
+          "label": "Mobile Title Font Weight",
           "options": [
             { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
@@ -710,26 +710,30 @@
         {
           "type": "select",
           "id": "button_weight_desktop",
-          "label": "Desktop Button Weight",
+          "label": "Desktop Button Font Weight",
           "options": [
+            { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
             { "value": "500", "label": "Medium (500)" },
             { "value": "600", "label": "Semibold (600)" },
             { "value": "700", "label": "Bold (700)" },
-            { "value": "800", "label": "Extra Bold (800)" }
+            { "value": "800", "label": "Extra Bold (800)" },
+            { "value": "900", "label": "Black (900)" }
           ],
           "default": "600"
         },
         {
           "type": "select",
           "id": "button_weight_mobile",
-          "label": "Mobile Button Weight",
+          "label": "Mobile Button Font Weight",
           "options": [
+            { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
             { "value": "500", "label": "Medium (500)" },
             { "value": "600", "label": "Semibold (600)" },
             { "value": "700", "label": "Bold (700)" },
-            { "value": "800", "label": "Extra Bold (800)" }
+            { "value": "800", "label": "Extra Bold (800)" },
+            { "value": "900", "label": "Black (900)" }
           ],
           "default": "600"
         },

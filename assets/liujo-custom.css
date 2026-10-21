@@ -1480,16 +1480,7 @@ body.has-search-open .liujo-megamenu {
   pointer-events: none;
 }
 
-/* Mobile: force split banner content to center regardless of saved alignment */
-@media (max-width: 767px) {
-  .liujo-split-banners-section .liujo-split-block-wrapper .liujo-split-block__content {
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-}
+/* Mobile split banner alignment is controlled per block (Content Alignment (Mobile)); defaults are centered. */
 
 .liujo-split-block__title {
   font-size: clamp(2rem, 4vw, 3.4rem);

@@ -35,7 +35,7 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
             margin-bottom: 12px;
-            font-weight: {{ block.settings.subheading_weight_desktop | default: 600 }};
+            font-weight: {{ block.settings.subheading_weight_desktop | default: 600 }} !important;
           }
           .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__heading {
             font-size: {{ block.settings.heading_size_desktop | default: 48 }}px;
@@ -44,7 +44,7 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-bottom: 22px;
-            font-weight: {{ block.settings.heading_weight_desktop | default: 600 }};
+            font-weight: {{ block.settings.heading_weight_desktop | default: 600 }} !important;
           }
           @media (max-width: 767px) {
             .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__overlay-wrap {
@@ -54,11 +54,11 @@
             }
             .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__subheading {
               font-size: {{ block.settings.subheading_size_mobile | default: 11 }}px;
-              font-weight: {{ block.settings.subheading_weight_mobile | default: block.settings.subheading_weight_desktop | default: 600 }};
+              font-weight: {{ block.settings.subheading_weight_mobile | default: block.settings.subheading_weight_desktop | default: 600 }} !important;
             }
             .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__heading {
               font-size: {{ block.settings.heading_size_mobile | default: 28 }}px;
-              font-weight: {{ block.settings.heading_weight_mobile | default: block.settings.heading_weight_desktop | default: 600 }};
+              font-weight: {{ block.settings.heading_weight_mobile | default: block.settings.heading_weight_desktop | default: 600 }} !important;
             }
             .liujo-hero-slide--{{ block_id }} .liujo-hero-slide__btn {
               font-weight: {{ block.settings.button_weight_mobile | default: block.settings.button_weight_desktop | default: 600 }} !important;
@@ -73,7 +73,7 @@
             align-items: center;
             justify-content: center;
             padding: 14px 38px;
-            font-weight: {{ block.settings.button_weight_desktop | default: 600 }};
+            font-weight: {{ block.settings.button_weight_desktop | default: 600 }} !important;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             text-decoration: none;
@@ -222,12 +222,12 @@
         },
         {
           "type": "header",
-          "content": "Content Alignment & Position"
+          "content": "Content Alignment (Desktop)"
         },
         {
           "type": "select",
           "id": "content_alignment",
-          "label": "Horizontal Alignment (Desktop)",
+          "label": "Horizontal Alignment",
           "options": [
             { "value": "flex-start", "label": "Left" },
             { "value": "center", "label": "Center" },
@@ -238,7 +238,7 @@
         {
           "type": "select",
           "id": "content_position",
-          "label": "Vertical Position (Desktop)",
+          "label": "Vertical Position",
           "options": [
             { "value": "flex-start", "label": "Top" },
             { "value": "center", "label": "Center" },
@@ -249,7 +249,7 @@
         {
           "type": "select",
           "id": "content_text_align",
-          "label": "Text Alignment (Desktop)",
+          "label": "Text Alignment",
           "options": [
             { "value": "left", "label": "Left" },
             { "value": "center", "label": "Center" },
@@ -258,9 +258,13 @@
           "default": "center"
         },
         {
+          "type": "header",
+          "content": "Content Alignment (Mobile)"
+        },
+        {
           "type": "select",
           "id": "content_alignment_mobile",
-          "label": "Horizontal Alignment (Mobile)",
+          "label": "Horizontal Alignment",
           "options": [
             { "value": "flex-start", "label": "Left" },
             { "value": "center", "label": "Center" },
@@ -271,7 +275,7 @@
         {
           "type": "select",
           "id": "content_position_mobile",
-          "label": "Vertical Position (Mobile)",
+          "label": "Vertical Position",
           "options": [
             { "value": "flex-start", "label": "Top" },
             { "value": "center", "label": "Center" },
@@ -282,13 +286,17 @@
         {
           "type": "select",
           "id": "content_text_align_mobile",
-          "label": "Text Alignment (Mobile)",
+          "label": "Text Alignment",
           "options": [
             { "value": "left", "label": "Left" },
             { "value": "center", "label": "Center" },
             { "value": "right", "label": "Right" }
           ],
           "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "Content Padding"
         },
         {
           "type": "range",
@@ -332,12 +340,12 @@
         },
         {
           "type": "header",
-          "content": "Tagline / Subheading"
+          "content": "Tagline / Subtitle"
         },
         {
           "type": "text",
           "id": "subheading",
-          "label": "Subheading Text"
+          "label": "Tagline / Subtitle Text"
         },
         {
           "type": "range",
@@ -346,7 +354,7 @@
           "max": 28,
           "step": 1,
           "unit": "px",
-          "label": "Desktop Subheading Size",
+          "label": "Desktop Tagline Font Size",
           "default": 13
         },
         {
@@ -356,19 +364,19 @@
           "max": 22,
           "step": 1,
           "unit": "px",
-          "label": "Mobile Subheading Size",
+          "label": "Mobile Tagline Font Size",
           "default": 11
         },
         {
           "type": "color",
           "id": "subheading_color",
-          "label": "Subheading Color",
+          "label": "Tagline Color",
           "default": "#ffffff"
         },
         {
           "type": "select",
           "id": "subheading_weight_desktop",
-          "label": "Desktop Subheading Weight",
+          "label": "Desktop Tagline Font Weight",
           "options": [
             { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
@@ -383,7 +391,7 @@
         {
           "type": "select",
           "id": "subheading_weight_mobile",
-          "label": "Mobile Subheading Weight",
+          "label": "Mobile Tagline Font Weight",
           "options": [
             { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
@@ -434,7 +442,7 @@
         {
           "type": "select",
           "id": "heading_weight_desktop",
-          "label": "Desktop Heading Weight",
+          "label": "Desktop Heading Font Weight",
           "options": [
             { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
@@ -449,7 +457,7 @@
         {
           "type": "select",
           "id": "heading_weight_mobile",
-          "label": "Mobile Heading Weight",
+          "label": "Mobile Heading Font Weight",
           "options": [
             { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
@@ -489,26 +497,30 @@
         {
           "type": "select",
           "id": "button_weight_desktop",
-          "label": "Desktop Button Weight",
+          "label": "Desktop Button Font Weight",
           "options": [
+            { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
             { "value": "500", "label": "Medium (500)" },
             { "value": "600", "label": "Semibold (600)" },
             { "value": "700", "label": "Bold (700)" },
-            { "value": "800", "label": "Extra Bold (800)" }
+            { "value": "800", "label": "Extra Bold (800)" },
+            { "value": "900", "label": "Black (900)" }
           ],
           "default": "600"
         },
         {
           "type": "select",
           "id": "button_weight_mobile",
-          "label": "Mobile Button Weight",
+          "label": "Mobile Button Font Weight",
           "options": [
+            { "value": "300", "label": "Light (300)" },
             { "value": "400", "label": "Regular (400)" },
             { "value": "500", "label": "Medium (500)" },
             { "value": "600", "label": "Semibold (600)" },
             { "value": "700", "label": "Bold (700)" },
-            { "value": "800", "label": "Extra Bold (800)" }
+            { "value": "800", "label": "Extra Bold (800)" },
+            { "value": "900", "label": "Black (900)" }
           ],
           "default": "600"
         },

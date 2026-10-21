@@ -40,7 +40,7 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       margin-bottom: 12px;
-      font-weight: {{ section.settings.tagline_weight_desktop | default: 600 }};
+      font-weight: {{ section.settings.tagline_weight_desktop | default: 600 }} !important;
     }
     .liujo-hero-video--{{ s_id }} .liujo-hero-video__title {
       font-size: {{ section.settings.heading_size_desktop | default: 52 }}px;
@@ -49,7 +49,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 22px;
-      font-weight: {{ section.settings.heading_weight_desktop | default: 600 }};
+      font-weight: {{ section.settings.heading_weight_desktop | default: 600 }} !important;
     }
     @media (max-width: 767px) {
       .liujo-hero-video--{{ s_id }} .liujo-hero-video__content-wrap {
@@ -59,12 +59,12 @@
       }
       .liujo-hero-video--{{ s_id }} .liujo-hero-video__tagline {
         font-size: {{ section.settings.tagline_size_mobile | default: 11 }}px;
-        font-weight: {{ section.settings.tagline_weight_mobile | default: section.settings.tagline_weight_desktop | default: 600 }};
+        font-weight: {{ section.settings.tagline_weight_mobile | default: section.settings.tagline_weight_desktop | default: 600 }} !important;
         color: {{ section.settings.mob_tagline_color | default: '#888888' }} !important;
       }
       .liujo-hero-video--{{ s_id }} .liujo-hero-video__title {
         font-size: {{ section.settings.mob_heading_size | default: 22 }}px;
-        font-weight: {{ section.settings.heading_weight_mobile | default: section.settings.heading_weight_desktop | default: 600 }};
+        font-weight: {{ section.settings.heading_weight_mobile | default: section.settings.heading_weight_desktop | default: 600 }} !important;
         color: {{ section.settings.mob_heading_color | default: '#000000' }} !important;
       }
       .liujo-hero-video--{{ s_id }} .liujo-hero-video__content-wrap {
@@ -100,7 +100,7 @@
       align-items: center;
       justify-content: center;
       padding: 14px 38px;
-      font-weight: {{ section.settings.button_weight_desktop | default: 800 }};
+      font-weight: {{ section.settings.button_weight_desktop | default: 800 }} !important;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       text-decoration: none;
@@ -522,6 +522,7 @@
       "id": "button_weight_desktop",
       "label": "Desktop Button Font Weight",
       "options": [
+        { "value": "300", "label": "Light (300)" },
         { "value": "400", "label": "Regular (400)" },
         { "value": "500", "label": "Medium (500)" },
         { "value": "600", "label": "Semibold (600)" },
@@ -536,6 +537,7 @@
       "id": "button_weight_mobile",
       "label": "Mobile Button Font Weight",
       "options": [
+        { "value": "300", "label": "Light (300)" },
         { "value": "400", "label": "Regular (400)" },
         { "value": "500", "label": "Medium (500)" },
         { "value": "600", "label": "Semibold (600)" },
