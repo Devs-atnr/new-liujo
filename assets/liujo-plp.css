@@ -1733,3 +1733,22 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
     margin-right: -4px !important;
   }
 }
+
+/* Desktop: filter bar wrapper edge-to-edge so the filter panel opens at 0px left
+   and the Sort By dropdown at 0px right (inner 24px spacing stays on .facets-container) */
+@media (min-width: 990px) {
+  .facets-wrapper,
+  .facets-wrapper.page-width {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .facets-wrapper .facets-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+}
