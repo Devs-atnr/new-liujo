@@ -215,6 +215,29 @@ if (!customElements.get('product-info')) {
           updateSourceFromDestination('Price-Per-Item', ({ classList }) => classList.contains('hidden'));
 
           this.updateQuantityRules(this.sectionId, html);
+
+          // Liu Jo: availability line + quantity cap follow the selected variant's Shopify stock
+          updateSourceFromDestination('LiuJoAvailability');
+          const qtySrc = html.getElementById(`Quantity-${this.sectionId}`);
+          const qtyDest = this.querySelector(`#Quantity-${this.dataset.section}`);
+          if (qtySrc && qtyDest) {
+            const srcMax = qtySrc.getAttribute('max');
+            if (srcMax) qtyDest.setAttribute('max', srcMax);
+            else qtyDest.removeAttribute('max');
+            qtyDest.dataset.inventoryQty = qtySrc.dataset.inventoryQty || '';
+            const min = parseInt(qtyDest.getAttribute('min')) || 1;
+            let val = parseInt(qtyDest.value) || min;
+            if (srcMax && val > parseInt(srcMax)) val = Math.max(min, parseInt(srcMax));
+            qtyDest.value = val;
+            const plus = qtyDest.closest('quantity-input')?.querySelector("[name='plus']");
+            if (plus) {
+              const atMax = !!srcMax && val >= parseInt(srcMax);
+              plus.disabled = atMax;
+              plus.classList.toggle('disabled', atMax);
+            }
+            const minus = qtyDest.closest('quantity-input')?.querySelector("[name='minus']");
+            if (minus) minus.classList.toggle('disabled', val <= min);
+          }
           this.querySelector(`#Quantity-Rules-${this.dataset.section}`)?.classList.remove('hidden');
           this.querySelector(`#Volume-Note-${this.dataset.section}`)?.classList.remove('hidden');
 
