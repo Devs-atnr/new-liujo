@@ -112,54 +112,13 @@
             {%- if block.settings.image != blank -%}
               <div class="liujo-it__panel-image">{{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600' }}</div>
             {%- endif -%}
-            {%- if block.settings.content != blank or block.settings.page != blank -%}
-              <div class="liujo-it__panel-body rte">
-                {{ block.settings.content }}
-                {%- if block.settings.page != blank -%}{{ block.settings.page.content }}{%- endif -%}
-              </div>
-            {%- endif -%}
+            <div class="liujo-it__panel-body rte">
+              {{ block.settings.content }}
+              {%- if block.settings.page != blank -%}{{ block.settings.page.content }}{%- endif -%}
+            </div>
             {%- if block.settings.button_label != blank -%}
               <a class="liujo-it__panel-btn" href="{{ block.settings.button_link | default: '#' }}">{{ block.settings.button_label | escape }}</a>
             {%- endif -%}
-
-            {%- comment -%} Accordion items / forms placed directly under this tab in the block list {%- endcomment -%}
-            {%- assign owner_id = '' -%}
-            {%- assign has_acc = false -%}
-            {%- for child in section.blocks -%}
-              {%- if child.type == 'tab' or child.type == 'heading' or child.type == 'contact' -%}
-                {%- assign owner_id = child.id -%}
-              {%- elsif owner_id == block.id -%}
-                {%- case child.type -%}
-                  {%- when 'accordion' -%}
-                    {%- unless has_acc -%}<div class="liujo-it__acc">{%- assign has_acc = true -%}{%- endunless -%}
-                    <details class="liujo-it__acc-item" {% if child.settings.open %}open{% endif %} {{ child.shopify_attributes }}>
-                      <summary class="liujo-it__acc-summary">
-                        <h3 class="liujo-it__acc-title">{{ child.settings.title | escape }}</h3>
-                        <span class="liujo-it__acc-icon" aria-hidden="true"></span>
-                      </summary>
-                      <div class="liujo-it__acc-body rte">{{ child.settings.content }}</div>
-                    </details>
-                  {%- when 'form' -%}
-                    {%- if has_acc -%}</div>{%- assign has_acc = false -%}{%- endif -%}
-                    <form class="liujo-it__form" action="{{ child.settings.action | default: routes.account_url }}" method="{{ child.settings.method }}" {% if child.settings.new_window %}target="_blank"{% endif %} {{ child.shopify_attributes }}>
-                      {%- if child.settings.heading != blank -%}<h3 class="liujo-it__form-heading">{{ child.settings.heading | escape }}</h3>{%- endif -%}
-                      {%- if child.settings.text != blank -%}<div class="liujo-it__form-text rte">{{ child.settings.text }}</div>{%- endif -%}
-                      <div class="liujo-it__form-fields">
-                        <label class="liujo-it__field">
-                          <span>{{ child.settings.field_1_label | escape }}</span>
-                          <input type="text" name="{{ child.settings.field_1_name | default: 'order_number' }}" required autocomplete="off">
-                        </label>
-                        <label class="liujo-it__field">
-                          <span>{{ child.settings.field_2_label | escape }}</span>
-                          <input type="email" name="{{ child.settings.field_2_name | default: 'email' }}" required autocomplete="email">
-                        </label>
-                      </div>
-                      <button type="submit" class="liujo-it__form-submit">{{ child.settings.submit_label | escape }}</button>
-                    </form>
-                {%- endcase -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if has_acc -%}</div>{%- endif -%}
           </div>
         {%- endif -%}
       {%- endfor -%}
@@ -300,44 +259,6 @@
     font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
   }
 
-  /* Accordion items inside a tab */
-  .liujo-it__acc { margin-top: 30px; }
-  .liujo-it__acc-item { border-top: 1px solid #e9e9e9; padding: 20px 0; }
-  .liujo-it__acc-item:last-child { border-bottom: 1px solid #e9e9e9; }
-  .liujo-it__acc-summary { list-style: none; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-  .liujo-it__acc-summary::-webkit-details-marker { display: none; }
-  .liujo-it__acc-title { margin: 0; font-size: 14px; font-weight: 700; line-height: 24px; letter-spacing: 0.5px; text-transform: uppercase; color: #000; }
-  .liujo-it__acc-icon { position: relative; width: 16px; height: 16px; flex: 0 0 16px; }
-  .liujo-it__acc-icon::before, .liujo-it__acc-icon::after {
-    content: ''; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; background: #000;
-    transition: transform 0.25s ease;
-  }
-  .liujo-it__acc-icon::after { transform: rotate(90deg); }
-  .liujo-it__acc-item[open] .liujo-it__acc-icon::after { transform: rotate(0deg); }
-  .liujo-it__acc-body { padding-top: 20px; font-size: 14px; line-height: 1.6; color: #000; }
-  .liujo-it__acc-body p { margin: 0 0 12px; }
-
-  /* Order lookup / return form inside a tab */
-  .liujo-it__form { margin-top: 36px; }
-  .liujo-it__form-heading { margin: 0 0 18px; font-size: 14px; font-weight: 700; text-transform: uppercase; color: #000; }
-  .liujo-it__form-text { font-size: 12px; line-height: 1.5; color: #000; margin-bottom: 28px; }
-  .liujo-it__form-text p { margin: 0; }
-  .liujo-it__form-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 1072px; }
-  .liujo-it__field { display: flex; flex-direction: column; gap: 8px; }
-  .liujo-it__field span { font-size: 11px; font-weight: 500; text-transform: uppercase; color: #000; }
-  .liujo-it__field input {
-    height: 50px; width: 100%; box-sizing: border-box; padding: 0 14px;
-    border: 1px solid #ccc; border-radius: 0; background: #fff; font: inherit; font-size: 14px; color: #000;
-    transition: border-color 0.2s ease;
-  }
-  .liujo-it__field input:focus { outline: none; border-color: #000; }
-  .liujo-it__form-submit {
-    margin-top: 30px; width: 220px; height: 52px; border: none; border-radius: 0; cursor: pointer;
-    background: #000; color: #fff; font: inherit; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
-    transition: background-color 0.2s ease;
-  }
-  .liujo-it__form-submit:hover { background: #333; }
-
   @media (max-width: 1200px) {
     .liujo-it__container { padding: 0 40px; grid-template-columns: 387px minmax(0, 1fr); }
     .liujo-it--no-panels .liujo-it__container { grid-template-columns: 387px; }
@@ -352,8 +273,6 @@
     .liujo-it__contact:hover { padding-left: 16px; }
     .liujo-it__panel-banner { padding: 44px 16px; }
     .liujo-it__panel-title { font-size: 20px; }
-    .liujo-it__form-fields { grid-template-columns: minmax(0, 1fr); }
-    .liujo-it__form-submit { width: 100%; }
   }
   @media (prefers-reduced-motion: reduce) {
     .liujo-it__tab, .liujo-it__tab::before, .liujo-it__tab svg, .liujo-it__contact { transition: none; }
@@ -415,93 +334,26 @@
   "tag": "section",
   "class": "section",
   "settings": [
-    {
-      "type": "text",
-      "id": "nav_label",
-      "label": "Menu name (accessibility)",
-      "default": "Customer care"
-    },
-    {
-      "type": "color",
-      "id": "accent_color",
-      "label": "Hover / active fill colour",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "accent_text_color",
-      "label": "Hover / active text colour",
-      "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "label": "Desktop padding top",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "label": "Desktop padding bottom",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_top_mobile",
-      "min": 0,
-      "max": 80,
-      "step": 4,
-      "unit": "px",
-      "label": "Mobile padding top",
-      "default": 24
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom_mobile",
-      "min": 0,
-      "max": 80,
-      "step": 4,
-      "unit": "px",
-      "label": "Mobile padding bottom",
-      "default": 40
-    }
+    { "type": "text", "id": "nav_label", "label": "Menu name (accessibility)", "default": "Customer care" },
+    { "type": "color", "id": "accent_color", "label": "Hover / active fill colour", "default": "#000000" },
+    { "type": "color", "id": "accent_text_color", "label": "Hover / active text colour", "default": "#ffffff" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Desktop padding top", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Desktop padding bottom", "default": 60 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Mobile padding top", "default": 24 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Mobile padding bottom", "default": 40 }
   ],
   "blocks": [
     {
       "type": "heading",
       "name": "Group heading",
       "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Can we help you?" },
         {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Can we help you?"
-        },
-        {
-          "type": "select",
-          "id": "style",
-          "label": "Style",
+          "type": "select", "id": "style", "label": "Style",
           "options": [
-            {
-              "value": "plain",
-              "label": "Plain (bold text + line)"
-            },
-            {
-              "value": "dark",
-              "label": "Dark bar"
-            }
+            { "value": "plain", "label": "Plain (bold text + line)" },
+            { "value": "dark", "label": "Dark bar" }
           ],
           "default": "plain"
         }
@@ -511,195 +363,26 @@
       "type": "tab",
       "name": "Tab",
       "settings": [
+        { "type": "text", "id": "title", "label": "Tab title", "default": "FAQ" },
+        { "type": "text", "id": "handle", "label": "Tab handle (for ?tab= links)", "info": "Optional. Defaults to the title, e.g. ?tab=faq" },
         {
-          "type": "text",
-          "id": "title",
-          "label": "Tab title",
-          "default": "FAQ"
-        },
-        {
-          "type": "text",
-          "id": "handle",
-          "label": "Tab handle (for ?tab= links)",
-          "info": "Optional. Defaults to the title, e.g. ?tab=faq"
-        },
-        {
-          "type": "select",
-          "id": "row_style",
-          "label": "Row style",
+          "type": "select", "id": "row_style", "label": "Row style",
           "options": [
-            {
-              "value": "box",
-              "label": "Box with arrow"
-            },
-            {
-              "value": "plain",
-              "label": "Plain line"
-            }
+            { "value": "box", "label": "Box with arrow" },
+            { "value": "plain", "label": "Plain line" }
           ],
           "default": "box"
         },
-        {
-          "type": "header",
-          "content": "Redirect"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link instead of content",
-          "info": "Set a page, collection or external URL to make this tab a link. Leave empty to show the content box below."
-        },
-        {
-          "type": "checkbox",
-          "id": "new_window",
-          "label": "Open link in a new tab",
-          "default": false
-        },
-        {
-          "type": "header",
-          "content": "Content box"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_title",
-          "label": "Show title banner",
-          "default": true
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "richtext",
-          "id": "content",
-          "label": "Content",
-          "default": "<p>Write the content for this tab here.</p>"
-        },
-        {
-          "type": "page",
-          "id": "page",
-          "label": "Or show a Shopify page's content",
-          "info": "Its text is added below the content above."
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button label"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link"
-        }
-      ]
-    },
-    {
-      "type": "accordion",
-      "name": "Accordion item (inside tab)",
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "Shows inside the tab placed directly above it in the block list."
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Topic"
-        },
-        {
-          "type": "richtext",
-          "id": "content",
-          "label": "Content",
-          "default": "<p>Write the details here.</p>"
-        },
-        {
-          "type": "checkbox",
-          "id": "open",
-          "label": "Open by default",
-          "default": false
-        }
-      ]
-    },
-    {
-      "type": "form",
-      "name": "Order form (inside tab)",
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "Order number + e-mail form. Shows inside the tab placed directly above it. The fields are sent to the action URL (e.g. your tracking or returns app)."
-        },
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Monitor your order"
-        },
-        {
-          "type": "richtext",
-          "id": "text",
-          "label": "Text",
-          "default": "<p>Enter the order number and the e-mail address you used to place it.</p>"
-        },
-        {
-          "type": "text",
-          "id": "field_1_label",
-          "label": "Field 1 label",
-          "default": "Order number"
-        },
-        {
-          "type": "text",
-          "id": "field_1_name",
-          "label": "Field 1 name",
-          "default": "order_number"
-        },
-        {
-          "type": "text",
-          "id": "field_2_label",
-          "label": "Field 2 label",
-          "default": "Order email"
-        },
-        {
-          "type": "text",
-          "id": "field_2_name",
-          "label": "Field 2 name",
-          "default": "email"
-        },
-        {
-          "type": "text",
-          "id": "submit_label",
-          "label": "Button label",
-          "default": "Submit"
-        },
-        {
-          "type": "text",
-          "id": "action",
-          "label": "Form action URL",
-          "info": "Where the form is sent (tracking / returns app page). Empty = customer account."
-        },
-        {
-          "type": "select",
-          "id": "method",
-          "label": "Method",
-          "options": [
-            {
-              "value": "get",
-              "label": "GET"
-            },
-            {
-              "value": "post",
-              "label": "POST"
-            }
-          ],
-          "default": "get"
-        },
-        {
-          "type": "checkbox",
-          "id": "new_window",
-          "label": "Open result in a new tab",
-          "default": false
-        }
+        { "type": "header", "content": "Redirect" },
+        { "type": "url", "id": "link", "label": "Link instead of content", "info": "Set a page, collection or external URL to make this tab a link. Leave empty to show the content box below." },
+        { "type": "checkbox", "id": "new_window", "label": "Open link in a new tab", "default": false },
+        { "type": "header", "content": "Content box" },
+        { "type": "checkbox", "id": "show_title", "label": "Show title banner", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Write the content for this tab here.</p>" },
+        { "type": "page", "id": "page", "label": "Or show a Shopify page's content", "info": "Its text is added below the content above." },
+        { "type": "text", "id": "button_label", "label": "Button label" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
       ]
     },
     {
@@ -707,52 +390,19 @@
       "name": "Contact row",
       "settings": [
         {
-          "type": "select",
-          "id": "icon",
-          "label": "Type",
+          "type": "select", "id": "icon", "label": "Type",
           "options": [
-            {
-              "value": "phone",
-              "label": "Phone"
-            },
-            {
-              "value": "email",
-              "label": "E-mail"
-            },
-            {
-              "value": "chat",
-              "label": "Chat / WhatsApp"
-            },
-            {
-              "value": "link",
-              "label": "Link"
-            }
+            { "value": "phone", "label": "Phone" },
+            { "value": "email", "label": "E-mail" },
+            { "value": "chat", "label": "Chat / WhatsApp" },
+            { "value": "link", "label": "Link" }
           ],
           "default": "phone"
         },
-        {
-          "type": "text",
-          "id": "value",
-          "label": "Phone number / e-mail",
-          "info": "Used for tel: / mailto: links."
-        },
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "info": "e.g. SEND US AN E-MAIL. Empty = show the number/e-mail."
-        },
-        {
-          "type": "text",
-          "id": "note",
-          "label": "Small note",
-          "info": "e.g. opening hours"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link (Chat / Link types)"
-        }
+        { "type": "text", "id": "value", "label": "Phone number / e-mail", "info": "Used for tel: / mailto: links." },
+        { "type": "text", "id": "label", "label": "Label", "info": "e.g. SEND US AN E-MAIL. Empty = show the number/e-mail." },
+        { "type": "text", "id": "note", "label": "Small note", "info": "e.g. opening hours" },
+        { "type": "url", "id": "link", "label": "Link (Chat / Link types)" }
       ]
     }
   ],
@@ -760,277 +410,21 @@
     {
       "name": "Liu Jo Info Tabs",
       "blocks": [
-        {
-          "type": "heading",
-          "settings": {
-            "title": "Your profile",
-            "style": "dark"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Log in",
-            "link": "/account/login"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Create account",
-            "link": "/account/register"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Monitor your order"
-          }
-        },
-        {
-          "type": "form",
-          "settings": {
-            "heading": "Monitor your order",
-            "text": "<p>Monitor your order even if you are not a registered user. Enter the order number and the email address you used to place it.</p>"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Online exchanges and returns"
-          }
-        },
-        {
-          "type": "form",
-          "settings": {
-            "heading": "Return an item or exchange for a different size",
-            "text": "<p>Enter the order number and the e-mail address you used to place it.</p>"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Wishlist",
-            "link": "/pages/wishlist"
-          }
-        },
-        {
-          "type": "heading",
-          "settings": {
-            "title": "Customer care",
-            "style": "dark"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Orders and shipments"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Delivery guide"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Orders & pre-orders"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Shipment monitoring"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Sending a gift"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Shipping costs and times"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Payments"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Accepted payments"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Payment safety"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Billing rules"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Refunds and returns"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Return and size exchange procedure"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Refunds"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Return monitoring"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Size guide"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Size guide: Woman"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Size guide: Man"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Size guide: Kids"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "FAQ"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Shopping FAQ"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Returns and refunds FAQ"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Shipment FAQ"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Payments FAQ"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "Gift card FAQ"
-          }
-        },
-        {
-          "type": "heading",
-          "settings": {
-            "title": "Can we help you?"
-          }
-        },
-        {
-          "type": "contact",
-          "settings": {
-            "icon": "phone",
-            "label": "Call us"
-          }
-        },
-        {
-          "type": "contact",
-          "settings": {
-            "icon": "email",
-            "label": "Send us an e-mail"
-          }
-        },
-        {
-          "type": "heading",
-          "settings": {
-            "title": "Privacy information"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Cookie policy",
-            "row_style": "plain",
-            "link": "/pages/cookie-policy"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Terms of sale",
-            "row_style": "plain",
-            "link": "/pages/terms-of-sale"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Terms and conditions",
-            "row_style": "plain",
-            "link": "/pages/terms"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Privacy policy",
-            "row_style": "plain",
-            "link": "/pages/privacy-policy"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Accessibility statement",
-            "row_style": "plain",
-            "link": "/pages/accessibility"
-          }
-        }
+        { "type": "heading", "settings": { "title": "Customer care", "style": "dark" } },
+        { "type": "tab", "settings": { "title": "Orders and shipments" } },
+        { "type": "tab", "settings": { "title": "Payments" } },
+        { "type": "tab", "settings": { "title": "Refunds and returns" } },
+        { "type": "tab", "settings": { "title": "Size guide" } },
+        { "type": "tab", "settings": { "title": "FAQ" } },
+        { "type": "heading", "settings": { "title": "Can we help you?" } },
+        { "type": "contact", "settings": { "icon": "phone", "value": "+966 00 000 0000" } },
+        { "type": "contact", "settings": { "icon": "email", "value": "care@example.com", "label": "Send us an e-mail" } },
+        { "type": "heading", "settings": { "title": "Privacy information" } },
+        { "type": "tab", "settings": { "title": "Cookie policy", "row_style": "plain", "link": "/pages/cookie-policy" } },
+        { "type": "tab", "settings": { "title": "Terms of sale", "row_style": "plain", "link": "/pages/terms-of-sale" } },
+        { "type": "tab", "settings": { "title": "Terms and conditions", "row_style": "plain", "link": "/pages/terms" } },
+        { "type": "tab", "settings": { "title": "Privacy policy", "row_style": "plain", "link": "/pages/privacy-policy" } },
+        { "type": "tab", "settings": { "title": "Accessibility statement", "row_style": "plain", "link": "/pages/accessibility" } }
       ]
     }
   ]
