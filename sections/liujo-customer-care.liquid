@@ -1,0 +1,298 @@
+{% comment %}
+  LIU JO CUSTOMER CARE PAGE
+  liujo.com parity: left sidebar (Your Profile / Customer Care / Can we help you?),
+  grey title banner, accordion topics. Everything editable in the theme editor.
+  Sidebar "Customer Care" links come from a menu (or a built-in default list) and the
+  current page is highlighted automatically.
+{% endcomment %}
+
+{%- assign s_id = section.id -%}
+<div class="liujo-cc liujo-cc--{{ s_id }}" data-section-id="{{ s_id }}">
+  <style>
+    .liujo-cc--{{ s_id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  </style>
+
+  <div class="liujo-cc__container">
+    {%- comment -%} ===== MAIN CONTENT ===== {%- endcomment -%}
+    <div class="liujo-cc__main">
+      <header class="liujo-cc__banner">
+        <h1 class="liujo-cc__title">{{ section.settings.title | default: page.title | escape }}</h1>
+      </header>
+
+      {%- if section.settings.show_page_content and page.content != blank -%}
+        <div class="liujo-cc__intro rte">{{ page.content }}</div>
+      {%- endif -%}
+
+      <div class="liujo-cc__accordion">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'topic' -%}
+              <details class="liujo-cc__item" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="liujo-cc__summary">
+                  <h3 class="liujo-cc__summary-title">{{ block.settings.title | escape }}</h3>
+                  <span class="liujo-cc__icon" aria-hidden="true"></span>
+                </summary>
+                <div class="liujo-cc__body rte">
+                  {{ block.settings.content }}
+                  {%- if block.settings.button_label != blank -%}
+                    <p><a class="liujo-cc__btn" href="{{ block.settings.button_link | default: '#' }}">{{ block.settings.button_label | escape }}</a></p>
+                  {%- endif -%}
+                </div>
+              </details>
+            {%- when 'text' -%}
+              <div class="liujo-cc__text rte" {{ block.shopify_attributes }}>
+                {%- if block.settings.heading != blank -%}<h2 class="liujo-cc__text-heading">{{ block.settings.heading | escape }}</h2>{%- endif -%}
+                {{ block.settings.content }}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} ===== SIDEBAR ===== {%- endcomment -%}
+    <aside class="liujo-cc__sidebar" aria-label="Customer care navigation">
+      {%- if section.settings.show_profile -%}
+        <ul class="liujo-cc__group" role="list">
+          <li class="liujo-cc__group-title">{{ section.settings.profile_title | escape }}</li>
+          {%- if customer -%}
+            <li><a class="liujo-cc__link" href="{{ routes.account_url }}"><span>My account</span>{% render 'liujo-cc-arrow' %}</a></li>
+            <li><a class="liujo-cc__link" href="{{ routes.account_logout_url }}"><span>Log out</span>{% render 'liujo-cc-arrow' %}</a></li>
+          {%- else -%}
+            <li><a class="liujo-cc__link" href="{{ routes.account_login_url }}"><span>Log in</span>{% render 'liujo-cc-arrow' %}</a></li>
+            <li><a class="liujo-cc__link" href="{{ routes.account_register_url }}"><span>Create account</span>{% render 'liujo-cc-arrow' %}</a></li>
+          {%- endif -%}
+          <li><a class="liujo-cc__link" href="{{ routes.account_url }}"><span>Monitor your order</span>{% render 'liujo-cc-arrow' %}</a></li>
+          <li><a class="liujo-cc__link{% if request.path == '/pages/returns' %} is-active{% endif %}" href="{{ section.settings.returns_link | default: '/pages/returns' }}"><span>Online exchanges and returns</span>{% render 'liujo-cc-arrow' %}</a></li>
+          <li><a class="liujo-cc__link{% if request.path == '/pages/wishlist' %} is-active{% endif %}" href="/pages/wishlist"><span>Wishlist</span>{% render 'liujo-cc-arrow' %}</a></li>
+        </ul>
+      {%- endif -%}
+
+      <ul class="liujo-cc__group" role="list">
+        <li class="liujo-cc__group-title">{{ section.settings.care_title | escape }}</li>
+        {%- assign cc_menu = linklists[section.settings.care_menu] -%}
+        {%- if cc_menu.links.size > 0 -%}
+          {%- for link in cc_menu.links -%}
+            <li><a class="liujo-cc__link{% if link.current or link.url == request.path %} is-active{% endif %}" href="{{ link.url }}"><span>{{ link.title | escape }}</span>{% render 'liujo-cc-arrow' %}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- liquid
+            assign cc_urls = '/pages/orders-and-shipments|/pages/payments|/pages/returns|/pages/size-guide|/pages/care|/pages/faq' | split: '|'
+            assign cc_titles = 'Orders and shipments|Payments|Refunds and returns|Size guide|How to take care|FAQ' | split: '|'
+          -%}
+          {%- for u in cc_urls -%}
+            <li><a class="liujo-cc__link{% if request.path == u %} is-active{% endif %}" href="{{ u }}"><span>{{ cc_titles[forloop.index0] }}</span>{% render 'liujo-cc-arrow' %}</a></li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+
+      {%- if section.settings.show_help -%}
+        <div class="liujo-cc__help">
+          <p class="liujo-cc__help-title">{{ section.settings.help_title | escape }}</p>
+          <ul class="liujo-cc__help-list" role="list">
+            {%- if section.settings.help_phone != blank -%}
+              <li>
+                <a href="tel:{{ section.settings.help_phone | remove: ' ' }}" class="liujo-cc__help-link">
+                  <strong>{{ section.settings.help_phone | escape }}</strong>
+                  {%- if section.settings.help_hours != blank -%}<span>{{ section.settings.help_hours | escape }}</span>{%- endif -%}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if section.settings.help_email != blank -%}
+              <li><a href="mailto:{{ section.settings.help_email }}" class="liujo-cc__help-link"><strong>Send us an e-mail</strong></a></li>
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </aside>
+  </div>
+</div>
+
+{% stylesheet %}
+  .liujo-cc__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 387px minmax(0, 1fr);
+    grid-template-areas: "side main";
+    column-gap: 46px;
+    align-items: start;
+    box-sizing: border-box;
+  }
+  .liujo-cc__main { grid-area: main; min-width: 0; }
+  .liujo-cc__sidebar { grid-area: side; }
+
+  .liujo-cc__banner {
+    background: #f8f9fa;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .liujo-cc__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 21px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #000;
+  }
+
+  .liujo-cc__intro { padding: 30px 0 10px; font-size: 14px; line-height: 1.6; color: #000; }
+
+  .liujo-cc__accordion { margin-top: 30px; }
+  .liujo-cc__item { border-top: 1px solid #e9e9e9; padding: 20px 0; }
+  .liujo-cc__item:last-child { border-bottom: 1px solid #e9e9e9; }
+  .liujo-cc__summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .liujo-cc__summary::-webkit-details-marker { display: none; }
+  .liujo-cc__summary-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #000;
+  }
+  .liujo-cc__icon { position: relative; width: 16px; height: 16px; flex: 0 0 16px; }
+  .liujo-cc__icon::before,
+  .liujo-cc__icon::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 7px;
+    width: 16px; height: 2px;
+    background: #000;
+    transition: transform 0.2s ease;
+  }
+  .liujo-cc__icon::after { transform: rotate(90deg); }
+  .liujo-cc__item[open] .liujo-cc__icon::after { transform: rotate(0deg); }
+
+  .liujo-cc__body { padding-top: 20px; font-size: 14px; line-height: 1.6; color: #000; }
+  .liujo-cc__body p { margin: 0 0 12px; }
+  .liujo-cc__body ul, .liujo-cc__body ol { margin: 0 0 12px; padding-left: 20px; }
+  .liujo-cc__body a { color: #000; text-decoration: underline; }
+  .liujo-cc__btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 44px; padding: 0 30px;
+    background: #000; color: #fff !important; text-decoration: none !important;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .liujo-cc__text { padding: 24px 0; font-size: 14px; line-height: 1.6; }
+  .liujo-cc__text-heading { font-size: 16px; font-weight: 700; text-transform: uppercase; margin: 0 0 12px; }
+
+  /* Sidebar */
+  .liujo-cc__group { list-style: none; margin: 0 0 31px; padding: 0; }
+  .liujo-cc__group li { margin: 0; padding: 0; }
+  .liujo-cc__group-title {
+    background: #4c4c4c;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 15px;
+    padding: 13px 20px 13px 40px !important;
+    text-transform: uppercase;
+  }
+  .liujo-cc__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    padding: 0 20px 0 40px;
+    background: #fff;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    box-sizing: border-box;
+  }
+  .liujo-cc__link svg { flex: 0 0 auto; }
+  .liujo-cc__link:hover { background: #f4f4f4; }
+  .liujo-cc__link.is-active { background: #000; color: #fff; }
+
+  .liujo-cc__help { margin-top: 40px; }
+  .liujo-cc__help-title { font-size: 14px; font-weight: 700; text-transform: uppercase; margin: 0 0 14px 40px; }
+  .liujo-cc__help-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid rgba(0, 0, 0, 0.125); }
+  .liujo-cc__help-list li { border-bottom: 2px solid rgba(0, 0, 0, 0.125); }
+  .liujo-cc__help-link {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 13px 10px 13px 40px;
+    font-size: 14px; color: #000; text-decoration: none; text-transform: uppercase;
+  }
+  .liujo-cc__help-link span { text-transform: none; font-size: 12px; color: #4c4c4c; }
+
+  @media (max-width: 989px) {
+    .liujo-cc__container {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "main" "side";
+      row-gap: 40px;
+      padding: 0 20px;
+    }
+    .liujo-cc__banner { padding: 50px 16px; }
+    .liujo-cc__title { font-size: 20px; line-height: 24px; }
+    .liujo-cc__group-title { padding-left: 12px !important; }
+    .liujo-cc__link { padding: 0 12px; border: 1px solid #ebebeb; border-top: none; }
+    .liujo-cc__help-title { margin-left: 0; }
+    .liujo-cc__help-link { padding-left: 12px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Liu Jo Customer Care",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "Page title" },
+    { "type": "text", "id": "title", "label": "Title", "info": "Leave empty to use the page title." },
+    { "type": "checkbox", "id": "show_page_content", "label": "Show the page's own content above the topics", "default": true },
+    { "type": "header", "content": "Sidebar" },
+    { "type": "checkbox", "id": "show_profile", "label": "Show 'Your profile' group", "default": true },
+    { "type": "text", "id": "profile_title", "label": "Profile group title", "default": "Your profile" },
+    { "type": "url", "id": "returns_link", "label": "Online exchanges and returns link" },
+    { "type": "text", "id": "care_title", "label": "Customer care group title", "default": "Customer care" },
+    { "type": "link_list", "id": "care_menu", "label": "Customer care menu", "info": "Optional. Without a menu the built-in list is used (Orders and shipments, Payments, Refunds and returns, Size guide, How to take care, FAQ)." },
+    { "type": "header", "content": "Can we help you?" },
+    { "type": "checkbox", "id": "show_help", "label": "Show help box", "default": true },
+    { "type": "text", "id": "help_title", "label": "Title", "default": "Can we help you?" },
+    { "type": "text", "id": "help_phone", "label": "Phone number" },
+    { "type": "text", "id": "help_hours", "label": "Opening hours", "placeholder": "Sun – Thu, 9:00 – 18:00" },
+    { "type": "text", "id": "help_email", "label": "E-mail address" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 60 }
+  ],
+  "blocks": [
+    {
+      "type": "topic",
+      "name": "Topic (accordion)",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Topic title" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Write the details for this topic here.</p>" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false },
+        { "type": "text", "id": "button_label", "label": "Button label (optional)" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Text</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Liu Jo Customer Care" }]
+}
+{% endschema %}
