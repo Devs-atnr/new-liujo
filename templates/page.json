@@ -125,7 +125,7 @@
           "type": "tab",
           "settings": {
             "title": "Monitor your order",
-            "link": "shopify://pages/new-track-your-order"
+            "link": "/pages/new-track-your-order"
           }
         },
         "t_returns_acc": {
@@ -139,7 +139,7 @@
           "type": "tab",
           "settings": {
             "title": "Wishlist",
-            "link": "shopify://pages/wishlist"
+            "link": "/pages/wishlist"
           }
         },
         "h_care": {
@@ -153,7 +153,7 @@
           "type": "tab",
           "settings": {
             "title": "Orders and shipments",
-            "link": "shopify://pages/new-orders-shipping-services",
+            "link": "/pages/new-orders-shipping-services",
             "page": "orders-and-shipments",
             "auto_accordion": true
           }
@@ -162,7 +162,7 @@
           "type": "tab",
           "settings": {
             "title": "Payments",
-            "link": "shopify://pages/new-payments",
+            "link": "/pages/new-payments",
             "page": "payments",
             "auto_accordion": true
           }
@@ -171,7 +171,7 @@
           "type": "tab",
           "settings": {
             "title": "Refunds and returns",
-            "link": "shopify://pages/new-refunds-and-returns",
+            "link": "/pages/new-refunds-and-returns",
             "page": "refunds-and-returns",
             "auto_accordion": true
           }
@@ -180,7 +180,7 @@
           "type": "tab",
           "settings": {
             "title": "Size guide",
-            "link": "shopify://pages/new-size-guide"
+            "link": "/pages/new-size-guide"
           }
         },
         "sg": {
@@ -191,7 +191,7 @@
           "type": "tab",
           "settings": {
             "title": "How to take care",
-            "link": "shopify://pages/new-how-to-take-care",
+            "link": "/pages/new-how-to-take-care",
             "page": "how-to-take-care",
             "auto_accordion": false
           }
@@ -200,7 +200,7 @@
           "type": "tab",
           "settings": {
             "title": "FAQ",
-            "link": "shopify://pages/new-faq"
+            "link": "/pages/new-faq"
           }
         },
         "faq_1": {
@@ -275,7 +275,7 @@
           "settings": {
             "title": "Privacy policy",
             "row_style": "plain",
-            "link": "shopify://pages/new-privacy-policy",
+            "link": "/pages/new-privacy-policy",
             "policy": "privacy",
             "auto_accordion": true
           }
@@ -285,7 +285,7 @@
           "settings": {
             "title": "Cookie policy",
             "row_style": "plain",
-            "link": "shopify://pages/new-cookies-policy",
+            "link": "/pages/new-cookies-policy",
             "page": "cookies-policy",
             "auto_accordion": false
           }
@@ -295,7 +295,7 @@
           "settings": {
             "title": "Terms and conditions",
             "row_style": "plain",
-            "link": "shopify://pages/new-terms-and-conditions",
+            "link": "/pages/new-terms-and-conditions",
             "page": "terms-and-conditions",
             "auto_accordion": true
           }
@@ -305,7 +305,7 @@
           "settings": {
             "title": "Terms of sale",
             "row_style": "plain",
-            "link": "shopify://pages/new-terms-of-sale",
+            "link": "/pages/new-terms-of-sale",
             "page": "terms-of-sale",
             "auto_accordion": true
           }
