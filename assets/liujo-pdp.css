@@ -1649,3 +1649,19 @@ html.liujo-lightbox-open body { overflow: hidden !important; }
   .liujo-lightbox { grid-template-columns: minmax(189px, 1fr) minmax(0, 1043px) minmax(189px, 1fr); }
   .liujo-lightbox__close { justify-self: start; margin-left: 85px; }
 }
+
+/* Mobile PDP gallery: long thin track with a white thumb that follows the swipe */
+@media (max-width: 989px) {
+  .liujo-mobile-scrollbar-wrap { bottom: 14px !important; }
+  .liujo-mobile-scrollbar-track {
+    width: 75% !important;
+    max-width: none !important;
+    height: 2px !important;
+    background-color: rgba(255, 255, 255, 0.45) !important;
+  }
+  .liujo-mobile-scrollbar-thumb {
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+    transition: none !important;
+  }
+}

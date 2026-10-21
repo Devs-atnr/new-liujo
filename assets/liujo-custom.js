@@ -2424,3 +2424,33 @@ document.addEventListener('DOMContentLoaded', () => {
   new MutationObserver(() => { clearTimeout(start._m); start._m = setTimeout(start, 200); })
     .observe(document.documentElement, { childList: true, subtree: true });
 })();
+
+// Mobile PDP gallery scrollbar: thumb follows the horizontal swipe position
+(function () {
+  function bind(root) {
+    root.querySelectorAll('[data-media-scrollbar-track]').forEach((track) => {
+      if (track.dataset.liujoBound) return;
+      const slider = track.closest('slider-component')?.querySelector('.product__media-list');
+      const thumb = track.querySelector('[data-media-scrollbar-thumb]');
+      if (!slider || !thumb) return;
+      track.dataset.liujoBound = '1';
+      const update = () => {
+        const max = slider.scrollWidth - slider.clientWidth;
+        const p = max > 0 ? Math.min(1, Math.max(0, slider.scrollLeft / max)) : 0;
+        const room = track.clientWidth - thumb.offsetWidth;
+        thumb.style.transform = 'translateX(' + Math.round(room * p) + 'px)';
+      };
+      slider.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+      window.addEventListener('resize', update);
+      track.addEventListener('click', (e) => {
+        const r = track.getBoundingClientRect();
+        const p = (e.clientX - r.left) / r.width;
+        slider.scrollTo({ left: p * (slider.scrollWidth - slider.clientWidth), behavior: 'smooth' });
+      });
+      update();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', () => bind(document));
+  // Variant changes re-render the gallery
+  new MutationObserver(() => bind(document)).observe(document.documentElement, { childList: true, subtree: true });
+})();
