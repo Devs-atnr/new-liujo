@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -7,11 +16,13 @@
           "type": "store",
           "settings": {
             "name": "LIU.JO | Red Sea Mall",
+            "type": "",
             "city": "Jeddah",
             "address": "Red Sea Mall, King Abdulaziz Road, First Floor, Jeddah, K.S.A.",
             "postal_code": "22230",
             "phone": "+966 59 301 8751",
-            "hours": "<p>Saturday to Thursday: 09:00 AM \u2013 11:00 PM</p><p>Friday: 3:00 PM \u2013 11:00 PM</p>",
+            "email": "",
+            "hours": "<p>Saturday to Thursday: 09:00 AM – 11:00 PM</p><p>Friday: 3:00 PM – 11:00 PM</p>",
             "latitude": "21.6289161",
             "longitude": "39.1120399",
             "map_link": "https://www.google.com/maps/place/Red+Sea+Mall/@21.6289694,39.1101857,17.5z"
@@ -21,11 +32,15 @@
           "type": "store",
           "settings": {
             "name": "LIU.JO | Al Rashid Mall",
+            "type": "",
             "city": "Madina",
             "address": "Al Rashid Mall, King Abdullah Ring Road, Ground Floor, Madina, K.S.A.",
             "postal_code": "26411",
             "phone": "+966 59 301 8737",
-            "hours": "<p>Saturday to Thursday: 10:00 AM \u2013 11:00 PM</p><p>Friday: 3:00 PM \u2013 11:00 PM</p>",
+            "email": "",
+            "hours": "<p>Saturday to Thursday: 10:00 AM – 11:00 PM</p><p>Friday: 3:00 PM – 11:00 PM</p>",
+            "latitude": "",
+            "longitude": "",
             "map_link": "https://www.google.com/maps/dir/?api=1&destination=6943+2781+King+Abdullah+Branch+Rd,+Shadhah,+Madinah+42361,+Saudi+Arabia"
           }
         },
@@ -33,11 +48,13 @@
           "type": "store",
           "settings": {
             "name": "LIU.JO | Solitaire Mall",
+            "type": "",
             "city": "Riyadh",
             "address": "Ground Floor, Imam Saud Bin Faisal Branch Road, As Sahafa, Riyadh",
             "postal_code": "11564",
             "phone": "+966 56 516 2563",
-            "hours": "<p>Sun \u2013 Wed: 10:00 AM \u2013 11:00 PM</p><p>Thu \u2013 Sat: 10:00 AM \u2013 12:00 AM</p><p>Fri: 3:00 PM \u2013 12:00 AM</p>",
+            "email": "",
+            "hours": "<p>Sun – Wed: 10:00 AM – 11:00 PM</p><p>Thu – Sat: 10:00 AM – 12:00 AM</p><p>Fri: 3:00 PM – 12:00 AM</p>",
             "latitude": "24.8016597",
             "longitude": "46.6510967",
             "map_link": "https://www.google.com/maps/place/Solitaire/@24.8016597,46.6485164,17z"
@@ -50,9 +67,27 @@
         "store_3"
       ],
       "settings": {
-        "only_on_pages": "",
+        "only_on_pages": "new-store-locator",
         "hide_page_section": true,
-        "title": "Store Locator"
+        "title": "Store Locator",
+        "subtitle": "",
+        "search_placeholder": "Search by store, street or city",
+        "near_label": "Near you",
+        "count_label": "stores found",
+        "city_label": "All cities",
+        "find_label": "Find stores",
+        "phone_label": "Mobile:",
+        "hours_label": "Opening hours",
+        "directions_label": "Show on Google Map",
+        "empty_label": "No stores match your search.",
+        "map_title": "Store map",
+        "show_radius": true,
+        "radius_label": "Radius",
+        "radius_1": 30,
+        "radius_2": 50,
+        "radius_3": 100,
+        "map_zoom": 15,
+        "padding_bottom": 60
       }
     }
   },
