@@ -96,10 +96,251 @@
         "map_zoom": 15,
         "padding_bottom": 60
       }
+    },
+    "customer_care": {
+      "type": "liujo-info-tabs",
+      "blocks": {
+        "h_profile": {
+          "type": "heading",
+          "settings": {
+            "title": "Your profile",
+            "style": "dark"
+          }
+        },
+        "t_login": {
+          "type": "tab",
+          "settings": {
+            "title": "Log in",
+            "special_link": "login"
+          }
+        },
+        "t_register": {
+          "type": "tab",
+          "settings": {
+            "title": "Create account",
+            "special_link": "register"
+          }
+        },
+        "t_track": {
+          "type": "tab",
+          "settings": {
+            "title": "Monitor your order",
+            "link": "shopify://pages/track-your-order"
+          }
+        },
+        "t_returns_acc": {
+          "type": "tab",
+          "settings": {
+            "title": "Online exchanges and returns",
+            "special_link": "account"
+          }
+        },
+        "t_wishlist": {
+          "type": "tab",
+          "settings": {
+            "title": "Wishlist",
+            "link": "shopify://pages/wishlist"
+          }
+        },
+        "h_care": {
+          "type": "heading",
+          "settings": {
+            "title": "Customer care",
+            "style": "dark"
+          }
+        },
+        "t_orders": {
+          "type": "tab",
+          "settings": {
+            "title": "Orders and shipments",
+            "link": "shopify://pages/orders-and-shipments"
+          }
+        },
+        "t_payments": {
+          "type": "tab",
+          "settings": {
+            "title": "Payments",
+            "link": "shopify://pages/payments"
+          }
+        },
+        "t_refunds": {
+          "type": "tab",
+          "settings": {
+            "title": "Refunds and returns",
+            "link": "shopify://pages/refunds-and-returns"
+          }
+        },
+        "t_size": {
+          "type": "tab",
+          "settings": {
+            "title": "Size guide",
+            "link": "shopify://pages/size-guide"
+          }
+        },
+        "sg": {
+          "type": "size_guide",
+          "settings": {}
+        },
+        "t_care": {
+          "type": "tab",
+          "settings": {
+            "title": "How to take care",
+            "link": "shopify://pages/how-to-take-care"
+          }
+        },
+        "t_faq": {
+          "type": "tab",
+          "settings": {
+            "title": "FAQ",
+            "link": "shopify://pages/faq"
+          }
+        },
+        "faq_1": {
+          "type": "accordion",
+          "settings": {
+            "title": "Shopping FAQ",
+            "content": "<p><strong>How can I get a confirmation of my order?</strong></p><p>After you have completed the order, you will receive a confirmation email containing your identification number. In case this does not go through, you will receive a second email where we will inform you that the order has not been confirmed and will not be shipped.</p><p><strong>Do I have to create an account to place an order?</strong></p><p>No, you don&#x27;t need to have a Liujo account for any purchase. However, having an account will serve you the following benefits: track all your orders/payments details easily through your account; review your purchase history, payments, wishlist, and in-cart items; receive emails about the latest collections, new items, promotions, and discounts; save shipping address and payment details for a faster checkout next time.</p><p><strong>How can I search for articles that I&#x27;m interested in?</strong></p><p>You can search for products from the main menu by clicking on the relevant category. You can activate various filters for a more refined selection or use the search box and enter keywords like article code, color, type of product, and more. Go to the top right of the screen and find the magnifying glass icon, then enter the keywords for the item you want to find.</p><p><strong>Where can I find product information?</strong></p><p>To access detailed product information, simply click on the product image. This will open a dedicated screen displaying information like product line, season, name, price, description, composition, measurements, available colors, washing instructions, and sizes.</p><p><strong>How can I change my contact details?</strong></p><p>You can change your contact details by accessing the &quot;account&quot; section.</p><p><strong>Are you able to tell me if a garment will become available again in stock?</strong></p><p>Yes, just enter your email address in the form at the bottom of the page and you will receive information about the latest news and promotions.</p><p><strong>Do you have a size guide?</strong></p><p>Of course. You can find all the information you need by clicking <a href=\"/pages/size-guide\">Size Guide</a>.</p><p><strong>I did not receive notifications related to my order, how come?</strong></p><p>You may have mistyped the email address during checkout. To receive notifications in this case, you must contact Customer Service who will provide you with all the information you need.</p><p><strong>What can I do through my account?</strong></p><p>By creating an account, you will be able to see a summary of your orders and returns, modify your personal information, and manage your addresses and wishlist.</p><p><strong>Can I modify my order?</strong></p><p>All orders are processed automatically, and therefore modification of the purchased items is not possible. You can ask to cancel your order if it has not already been shipped by contacting Customer Services.</p>",
+            "sub_questions": true
+          }
+        },
+        "faq_2": {
+          "type": "accordion",
+          "settings": {
+            "title": "Returns and refunds FAQ",
+            "content": "<p><strong>Which conditions do I have to meet in order to return the products?</strong></p><p>Liujo.sa allows a 1 Business Day Refund policy for items in original condition (unworn, undamaged and unused, with all tags attached and the original packaging, branded boxes and dust bags, if placed inside a protective outer box for shipping). Credit cards will be refunded on their account, COD will be transferred to your bank account, 50 SR will be deducted for return shipment charges, and any returns that do not meet our policy will not be accepted. Items sold during seasonal offers or on discount can be exchanged or returned within 1 day of purchase. Jewelry, swimwear and scarves cannot be exchanged or returned. You can contact customer care at <a href=\"mailto:customercare@liujo.sa\">customercare@liujo.sa</a> and request a return. We will arrange for the merchandise to be collected from the delivery address through courier, and returned to us. We shall process the return subject to receipt of the merchandise at our location in unused condition in its original packaging along with original tags and invoice, failing which return / refund may not be possible.</p><p><strong>How long will it take for me to receive my change of size?</strong></p><p>Ten days at the most from the time our warehouse receives your return are necessary for you to receive your change of size.</p><p><strong>Can I return a change of size?</strong></p><p>Exchange can only be made within 5 days from the date of delivery. Item should be in a good condition and not used, along with the original tag. It should also be in the same brand box you received. As soon as you create a size change request, subject to availability, we will reserve the item you want. Size change is subject to 50 SR plus shipping charges. If the price of the item you&#x27;re exchanging has gone up, you won&#x27;t have to pay extra to receive it.</p><p><strong>I have received the wrong garment in my order. What can I do?</strong></p><p>Prepare a small product description and attach 3-4 photos showing the entire article and a detailed view of the defect, then immediately contact our Customer Service at <a href=\"mailto:customercare@liujo.sa\">customercare@liujo.sa</a>.</p><p><strong>I have received a faulty product. What can I do?</strong></p><p>Prepare a small product description and attach 3-4 photos showing the entire article and a detailed view of the defect, then immediately contact our Customer Service.</p><p><strong>How can I request a change of size?</strong></p><p>You will in any case have to make a return request. After the warehouse has received and checked the return (up to 5 business days are necessary), we will ship it to the address indicated for the first order and will notify you with a confirmation e-mail.</p><p><strong>I want to return a gift. Who will be refunded?</strong></p><p>We will reimburse the person who made the order. For security reasons we are not authorised to credit refunds to a different account.</p><p><strong>The amount refunded is wrong. What should I do?</strong></p><p>If the amount refunded is incorrect, immediately contact our Customer Service at <a href=\"mailto:customercare@liujo.sa\">customercare@liujo.sa</a>.</p><p><strong>If the card with which I made the payment has expired, where do I get a refund?</strong></p><p>The refund will be made on the card you used for payment; your bank will reverse the amount to the correct one. You should contact your bank to retrieve the necessary information.</p><p><strong>Can I return a size exchange?</strong></p><p>You should book collection of the return with the courier or take the packet to your closest UPS Point.</p>",
+            "sub_questions": true
+          }
+        },
+        "faq_3": {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipment FAQ",
+            "content": "<p><strong>What is the standard package like?</strong></p><p>The standard parcel consists of a cardboard box on the outside with security seals, which will contain the purchased goods, wrapped in a personalized LiuJo tissue. The package will also contain instructions for returning goods and an order summary. If your package has been tampered with, you are entitled to not collect it.</p><p><strong>Can I enter a billing address different from the shipping address?</strong></p><p>You can enter a billing address different from the shipping address only if the destination country remains the same. Liujo does not issue invoices for trading, business or professional activities.</p><p><strong>I lost the tracking of my order. What do I do?</strong></p><p>You can recover the tracking information from the shipment confirmation e-mail you were sent, or by going to the orders section of your account. If you encounter problems, contact Customer Services immediately.</p><p><strong>What is the gift package like?</strong></p><p>The package comprises a cardboard box containing a pearl white box personalized with the Liu Jo logo and decorated with an organza ribbon that the recipient can use for putting purchases away. The garments inside will be wrapped in personalized Liu Jo tissue paper. A personalized gift card can still be added.</p><p><strong>Where do you ship from?</strong></p><p>Our warehouse is located in Riyadh.</p><p><strong>Which countries do you ship to?</strong></p><p>We are currently shipping to all cities of Saudi Arabia within 3-4 working days.</p><p><strong>Can I collect my order in-store?</strong></p><p>Yes, you can order through www.liujo.sa and select pick-up from your nearest store location.</p><p><strong>Will I receive my order in time for Christmas?</strong></p><p>Choose your latest gifts and place your order by 17/12: delivery is guaranteed and you can receive your parcels in time for Christmas.</p>",
+            "sub_questions": true
+          }
+        },
+        "faq_4": {
+          "type": "accordion",
+          "settings": {
+            "title": "Payments FAQ",
+            "content": "<p><strong>Is the transaction secure?</strong></p><p>We do not collect or receive your credit card information, and your money is collected directly on the bank payment gateway. If you think that your credit card has been compromised, immediately report it to your card issuing bank.</p><p><strong>When will the amount be charged to my card?</strong></p><p>If the card is authorized, payment will be debited immediately. If the card is not authorized, we will inform you via e-mail that payment was not successfully completed. In this case, no amount will be charged.</p><p><strong>Why has my payment not been accepted?</strong></p><p>After receiving the order we perform a standard pre-authorisation check. Payment may not be accepted for a number of reasons, such as insufficient funds on your card or entering incorrect data. If the problem persists, we recommend that you contact your bank and/or our Customer Service, providing as much information as possible (including any error messages) so you can be helped.</p><p><strong>Do the prices of the articles shown include VAT?</strong></p><p>Yes. All of our articles are inclusive of VAT.</p><p><strong>Can I use cash on delivery or pay with PayPal for the in-store collection service?</strong></p><p>No, the only method of payment accepted is credit card.</p>",
+            "sub_questions": true
+          }
+        },
+        "h_help": {
+          "type": "heading",
+          "settings": {
+            "title": "Can we help you?"
+          }
+        },
+        "c_phone": {
+          "type": "contact",
+          "settings": {
+            "icon": "phone",
+            "value": "+966 54 042 0226"
+          }
+        },
+        "c_whatsapp": {
+          "type": "contact",
+          "settings": {
+            "icon": "chat",
+            "label": "WhatsApp us",
+            "link": "https://wa.me/966540420226"
+          }
+        },
+        "c_email": {
+          "type": "contact",
+          "settings": {
+            "icon": "email",
+            "value": "customercare@liujo.sa",
+            "label": "Send us an e-mail"
+          }
+        },
+        "h_privacy": {
+          "type": "heading",
+          "settings": {
+            "title": "Privacy information"
+          }
+        },
+        "p_privacy": {
+          "type": "tab",
+          "settings": {
+            "title": "Privacy policy",
+            "row_style": "plain",
+            "link": "shopify://pages/privacy-policy"
+          }
+        },
+        "p_cookies": {
+          "type": "tab",
+          "settings": {
+            "title": "Cookie policy",
+            "row_style": "plain",
+            "link": "shopify://pages/cookies-policy"
+          }
+        },
+        "p_terms": {
+          "type": "tab",
+          "settings": {
+            "title": "Terms and conditions",
+            "row_style": "plain",
+            "link": "shopify://pages/terms-and-conditions"
+          }
+        },
+        "p_sale": {
+          "type": "tab",
+          "settings": {
+            "title": "Terms of sale",
+            "row_style": "plain",
+            "link": "shopify://pages/terms-of-sale"
+          }
+        }
+      },
+      "block_order": [
+        "h_profile",
+        "t_login",
+        "t_register",
+        "t_track",
+        "t_returns_acc",
+        "t_wishlist",
+        "h_care",
+        "t_orders",
+        "t_payments",
+        "t_refunds",
+        "t_size",
+        "sg",
+        "t_care",
+        "t_faq",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "h_help",
+        "c_phone",
+        "c_whatsapp",
+        "c_email",
+        "h_privacy",
+        "p_privacy",
+        "p_cookies",
+        "p_terms",
+        "p_sale"
+      ],
+      "settings": {
+        "only_on_pages": "track-your-order, orders-and-shipments, payments, refunds-and-returns, size-guide, how-to-take-care, faq, privacy-policy, cookies-policy, terms-and-conditions, terms-of-sale",
+        "hide_page_section": true,
+        "show_page_content": true,
+        "nav_label": "Customer care",
+        "accent_color": "#000000",
+        "accent_text_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 60,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
     "main",
+    "customer_care",
     "store_locator"
   ]
 }

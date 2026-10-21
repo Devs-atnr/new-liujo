@@ -31,7 +31,7 @@
   assign first_tab_id = ''
   assign page_tab_id = ''
   for block in section.blocks
-    if block.type == 'tab' and block.settings.link == blank
+    if block.type == 'tab' and block.settings.link == blank and block.settings.special_link == blank
       if first_tab_id == ''
         assign first_tab_id = block.id
       endif
@@ -86,10 +86,23 @@
             </p>
 
           {%- when 'tab' -%}
-            {%- assign tab_handle = block.settings.handle | default: block.settings.title | handleize -%}
-            {%- if block.settings.link != blank -%}
-              <a class="liujo-it__tab{% if block.settings.row_style == 'plain' %} liujo-it__tab--plain{% endif %}{% if block.settings.link == request.path %} is-active{% endif %}"
-                 href="{{ block.settings.link }}"
+            {%- liquid
+              assign tab_handle = block.settings.handle | default: block.settings.title | handleize
+              assign tab_href = block.settings.link
+              case block.settings.special_link
+                when 'login'
+                  assign tab_href = routes.account_login_url
+                when 'register'
+                  assign tab_href = routes.account_register_url
+                when 'account'
+                  assign tab_href = routes.account_url
+                when 'logout'
+                  assign tab_href = routes.account_logout_url
+              endcase
+            -%}
+            {%- if tab_href != blank -%}
+              <a class="liujo-it__tab{% if block.settings.row_style == 'plain' %} liujo-it__tab--plain{% endif %}{% if block.settings.link != blank and block.settings.link == request.path %} is-active{% endif %}"
+                 href="{{ tab_href }}"
                  {% if block.settings.new_window %}target="_blank" rel="noopener"{% endif %}
                  {{ block.shopify_attributes }}>
                 <span class="liujo-it__tab-label">{{ block.settings.title | escape }}</span>
@@ -143,7 +156,7 @@
 
     <div class="liujo-it__panels">
       {%- for block in section.blocks -%}
-        {%- if block.type == 'tab' and block.settings.link == blank or block.type == 'tab' and block.settings.link == request.path -%}
+        {%- if block.type == 'tab' and block.settings.link == blank and block.settings.special_link == blank or block.type == 'tab' and block.settings.link != blank and block.settings.link == request.path -%}
           <div class="liujo-it__panel{% if block.id == first_tab_id %} is-active{% endif %}"
                id="tab-{{ block.id }}"
                role="tabpanel"
@@ -155,13 +168,60 @@
             {%- if block.settings.image != blank -%}
               <div class="liujo-it__panel-image">{{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600' }}</div>
             {%- endif -%}
-            <div class="liujo-it__panel-body rte">
-              {{ block.settings.content }}
-              {%- if block.settings.page != blank -%}{{ block.settings.page.content }}{%- endif -%}
-            </div>
+            {%- if block.settings.content != blank or block.settings.page != blank -%}
+              <div class="liujo-it__panel-body rte">
+                {{ block.settings.content }}
+                {%- if block.settings.page != blank -%}{{ block.settings.page.content }}{%- endif -%}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.show_page_content and page and block.settings.link != blank and block.settings.link == request.path and page.content != blank -%}
+              <div class="liujo-it__panel-body liujo-it__page-content rte" data-it-auto-acc>{{ page.content }}</div>
+            {%- endif -%}
             {%- if block.settings.button_label != blank -%}
               <a class="liujo-it__panel-btn" href="{{ block.settings.button_link | default: '#' }}">{{ block.settings.button_label | escape }}</a>
             {%- endif -%}
+
+            {%- comment -%} Accordion items / forms placed directly under this tab in the block list {%- endcomment -%}
+            {%- assign owner_id = '' -%}
+            {%- assign has_acc = false -%}
+            {%- for child in section.blocks -%}
+              {%- if child.type == 'tab' or child.type == 'heading' or child.type == 'contact' -%}
+                {%- assign owner_id = child.id -%}
+              {%- elsif owner_id == block.id -%}
+                {%- case child.type -%}
+                  {%- when 'accordion' -%}
+                    {%- unless has_acc -%}<div class="liujo-it__acc">{%- assign has_acc = true -%}{%- endunless -%}
+                    <details class="liujo-it__acc-item" {% if child.settings.open %}open{% endif %} {{ child.shopify_attributes }}>
+                      <summary class="liujo-it__acc-summary">
+                        <h3 class="liujo-it__acc-title">{{ child.settings.title | escape }}</h3>
+                        <span class="liujo-it__acc-icon" aria-hidden="true"></span>
+                      </summary>
+                      <div class="liujo-it__acc-body rte"{% if child.settings.sub_questions %} data-it-sub-acc{% endif %}>{{ child.settings.content }}{{ child.settings.html }}</div>
+                    </details>
+                  {%- when 'size_guide' -%}
+                    {%- if has_acc -%}</div>{%- assign has_acc = false -%}{%- endif -%}
+                    <div class="liujo-it__acc liujo-it__sizeguide" {{ child.shopify_attributes }}>{% render 'liujo-size-guide-content' %}</div>
+                  {%- when 'form' -%}
+                    {%- if has_acc -%}</div>{%- assign has_acc = false -%}{%- endif -%}
+                    <form class="liujo-it__form" action="{{ child.settings.action | default: routes.account_url }}" method="{{ child.settings.method }}" {% if child.settings.new_window %}target="_blank"{% endif %} {{ child.shopify_attributes }}>
+                      {%- if child.settings.heading != blank -%}<h3 class="liujo-it__form-heading">{{ child.settings.heading | escape }}</h3>{%- endif -%}
+                      {%- if child.settings.text != blank -%}<div class="liujo-it__form-text rte">{{ child.settings.text }}</div>{%- endif -%}
+                      <div class="liujo-it__form-fields">
+                        <label class="liujo-it__field">
+                          <span>{{ child.settings.field_1_label | escape }}</span>
+                          <input type="text" name="{{ child.settings.field_1_name | default: 'order_number' }}" required autocomplete="off">
+                        </label>
+                        <label class="liujo-it__field">
+                          <span>{{ child.settings.field_2_label | escape }}</span>
+                          <input type="email" name="{{ child.settings.field_2_name | default: 'email' }}" required autocomplete="email">
+                        </label>
+                      </div>
+                      <button type="submit" class="liujo-it__form-submit">{{ child.settings.submit_label | escape }}</button>
+                    </form>
+                {%- endcase -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_acc -%}</div>{%- endif -%}
           </div>
         {%- endif -%}
       {%- endfor -%}
@@ -303,6 +363,65 @@
     font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
   }
 
+  /* Accordion items inside a tab */
+  .liujo-it__acc { margin-top: 30px; }
+  .liujo-it__acc-item { border-top: 1px solid #e9e9e9; padding: 20px 0; }
+  .liujo-it__acc-item:last-child { border-bottom: 1px solid #e9e9e9; }
+  .liujo-it__acc-summary { list-style: none; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+  .liujo-it__acc-summary::-webkit-details-marker { display: none; }
+  .liujo-it__acc-title { margin: 0; font-size: 14px; font-weight: 700; line-height: 24px; letter-spacing: 0.5px; text-transform: uppercase; color: #000; }
+  .liujo-it__acc-icon { position: relative; width: 16px; height: 16px; flex: 0 0 16px; }
+  .liujo-it__acc-icon::before, .liujo-it__acc-icon::after {
+    content: ''; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; background: #000;
+    transition: transform 0.25s ease;
+  }
+  .liujo-it__acc-icon::after { transform: rotate(90deg); }
+  .liujo-it__acc-item[open] .liujo-it__acc-icon::after { transform: rotate(0deg); }
+  .liujo-it__acc-body { padding-top: 20px; font-size: 14px; line-height: 1.6; color: #000; }
+  .liujo-it__acc-body p { margin: 0 0 12px; }
+
+  /* Nested questions (FAQ) */
+  .liujo-it__sub-item { border-bottom: 1px solid #f0f0f0; padding: 14px 0; }
+  .liujo-it__sub-item:first-child { border-top: 1px solid #f0f0f0; }
+  .liujo-it__sub-summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; font-size: 14px; font-weight: 500; color: #000; }
+  .liujo-it__sub-summary::-webkit-details-marker { display: none; }
+  .liujo-it__sub-summary .liujo-it__acc-icon { width: 12px; height: 12px; flex-basis: 12px; }
+  .liujo-it__sub-summary .liujo-it__acc-icon::before, .liujo-it__sub-summary .liujo-it__acc-icon::after { width: 12px; height: 1.5px; top: 5px; }
+  .liujo-it__sub-item[open] .liujo-it__acc-icon::after { transform: rotate(0deg); }
+  .liujo-it__sub-body { padding-top: 10px; font-size: 13px; line-height: 1.6; color: #333; }
+
+  /* Size tables */
+  .liujo-it__sizeguide .liujo-it__acc-item .liujo-it__acc { margin-top: 10px; }
+  .liujo-sg-table-wrap { overflow-x: auto; margin: 12px 0 18px; -webkit-overflow-scrolling: touch; }
+  .liujo-sg-table { width: 100%; min-width: 420px; border-collapse: collapse; font-size: 13px; }
+  .liujo-sg-table th, .liujo-sg-table td { border: 1px solid #e5e5e5; padding: 9px 10px; text-align: center; white-space: nowrap; }
+  .liujo-sg-table th { background: #f8f9fa; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .liujo-sg-table tbody tr:nth-child(even) td { background: #fcfcfc; }
+  .liujo-sg-note { font-size: 13px; line-height: 1.6; margin: 0 0 6px; }
+  .liujo-sg-note strong { text-transform: uppercase; font-size: 12px; }
+  .liujo-sg-h { font-size: 13px; font-weight: 700; text-transform: uppercase; margin: 20px 0 6px; }
+
+  /* Order lookup / return form inside a tab */
+  .liujo-it__form { margin-top: 36px; }
+  .liujo-it__form-heading { margin: 0 0 18px; font-size: 14px; font-weight: 700; text-transform: uppercase; color: #000; }
+  .liujo-it__form-text { font-size: 12px; line-height: 1.5; color: #000; margin-bottom: 28px; }
+  .liujo-it__form-text p { margin: 0; }
+  .liujo-it__form-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 1072px; }
+  .liujo-it__field { display: flex; flex-direction: column; gap: 8px; }
+  .liujo-it__field span { font-size: 11px; font-weight: 500; text-transform: uppercase; color: #000; }
+  .liujo-it__field input {
+    height: 50px; width: 100%; box-sizing: border-box; padding: 0 14px;
+    border: 1px solid #ccc; border-radius: 0; background: #fff; font: inherit; font-size: 14px; color: #000;
+    transition: border-color 0.2s ease;
+  }
+  .liujo-it__field input:focus { outline: none; border-color: #000; }
+  .liujo-it__form-submit {
+    margin-top: 30px; width: 220px; height: 52px; border: none; border-radius: 0; cursor: pointer;
+    background: #000; color: #fff; font: inherit; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+    transition: background-color 0.2s ease;
+  }
+  .liujo-it__form-submit:hover { background: #333; }
+
   @media (max-width: 1200px) {
     .liujo-it__container { padding: 0 40px; grid-template-columns: 387px minmax(0, 1fr); }
     .liujo-it--no-panels .liujo-it__container { grid-template-columns: 387px; }
@@ -317,6 +436,8 @@
     .liujo-it__contact:hover { padding-left: 16px; }
     .liujo-it__panel-banner { padding: 44px 16px; }
     .liujo-it__panel-title { font-size: 20px; }
+    .liujo-it__form-fields { grid-template-columns: minmax(0, 1fr); }
+    .liujo-it__form-submit { width: 100%; }
   }
   @media (prefers-reduced-motion: reduce) {
     .liujo-it__tab, .liujo-it__tab::before, .liujo-it__tab svg, .liujo-it__contact { transition: none; }
@@ -326,7 +447,77 @@
 
 {% javascript %}
   (function () {
+    const ICON = '<span class="liujo-it__acc-icon" aria-hidden="true"></span>';
+    // Page content from Shopify (ul > li.question > label + .answer, or headings) -> liujo accordions
+    function autoAccordion(el) {
+      if (el.dataset.itAccDone) return;
+      el.dataset.itAccDone = '1';
+      el.querySelectorAll('style').forEach((x) => x.remove());
+      const qs = [...el.querySelectorAll('li.question')];
+      const wrap = document.createElement('div');
+      wrap.className = 'liujo-it__acc';
+      if (qs.length) {
+        qs.forEach((li) => {
+          const label = li.querySelector('.question-label, label, h2, h3, h4, strong');
+          const ans = li.querySelector('.answer') || li;
+          const d = document.createElement('details');
+          d.className = 'liujo-it__acc-item';
+          const title = (label ? label.textContent : '').replace(/\s+/g, ' ').trim();
+          d.innerHTML = '<summary class="liujo-it__acc-summary"><h3 class="liujo-it__acc-title"></h3>' + ICON + '</summary><div class="liujo-it__acc-body rte"></div>';
+          d.querySelector('h3').textContent = title;
+          if (label && ans === li) label.remove();
+          d.querySelector('.liujo-it__acc-body').append(...ans.childNodes);
+          wrap.appendChild(d);
+        });
+        const first = qs[0].closest('ul');
+        first.parentNode.insertBefore(wrap, first);
+        [...new Set(qs.map((q) => q.closest('ul')))].forEach((u) => u.remove());
+        return;
+      }
+      // Fallback: h2/h3/h4 headings become accordion titles
+      const heads = [...el.querySelectorAll(':scope > h2, :scope > h3, :scope > h4')];
+      if (!heads.length) return;
+      heads.forEach((h) => {
+        const d = document.createElement('details');
+        d.className = 'liujo-it__acc-item';
+        d.innerHTML = '<summary class="liujo-it__acc-summary"><h3 class="liujo-it__acc-title"></h3>' + ICON + '</summary><div class="liujo-it__acc-body rte"></div>';
+        d.querySelector('h3').textContent = h.textContent.trim();
+        const body = d.querySelector('.liujo-it__acc-body');
+        let n = h.nextSibling;
+        while (n && !(n.nodeType === 1 && /^H[234]$/.test(n.tagName))) { const next = n.nextSibling; body.appendChild(n); n = next; }
+        wrap.appendChild(d);
+        h.replaceWith(d);
+      });
+      const firstD = el.querySelector(':scope > details');
+      if (firstD) { firstD.before(wrap); el.querySelectorAll(':scope > details').forEach((d) => wrap.appendChild(d)); }
+    }
+    // Inside an accordion: a paragraph that is only bold text starts a nested question
+    function subAccordion(el) {
+      if (el.dataset.itSubDone) return;
+      el.dataset.itSubDone = '1';
+      const isQ = (n) => n.nodeType === 1 && n.tagName === 'P' && n.children.length === 1 && /^(STRONG|B)$/.test(n.firstElementChild.tagName) && n.textContent.trim() === n.firstElementChild.textContent.trim();
+      const kids = [...el.childNodes];
+      if (!kids.some(isQ)) return;
+      const out = document.createDocumentFragment();
+      let cur = null;
+      kids.forEach((n) => {
+        if (isQ(n)) {
+          cur = document.createElement('details');
+          cur.className = 'liujo-it__sub-item';
+          cur.innerHTML = '<summary class="liujo-it__sub-summary"><span></span>' + ICON + '</summary><div class="liujo-it__sub-body"></div>';
+          cur.querySelector('span').textContent = n.textContent.trim();
+          out.appendChild(cur);
+        } else if (cur) cur.querySelector('.liujo-it__sub-body').appendChild(n);
+        else out.appendChild(n);
+      });
+      el.replaceChildren(out);
+    }
+    function enhance(root) {
+      root.querySelectorAll('[data-it-auto-acc]').forEach(autoAccordion);
+      root.querySelectorAll('[data-it-sub-acc]').forEach(subAccordion);
+    }
     function init(root) {
+      enhance(root);
       if (root.dataset.itReady) return;
       root.dataset.itReady = '1';
       const tabs = [...root.querySelectorAll('[data-it-tab]')];
@@ -386,12 +577,19 @@
       "type": "text",
       "id": "only_on_pages",
       "label": "Only show on these pages (handles)",
-      "info": "Comma-separated page handles, e.g. orders-and-shipments, payments, faq. Leave empty to show on every page using this template. The tab whose handle matches the page opens automatically."
+      "info": "Comma-separated page handles, e.g. orders-and-shipments, payments, faq. Leave empty to show on every page using this template."
     },
     {
       "type": "checkbox",
       "id": "hide_page_section",
       "label": "Hide the default page title/content on these pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_content",
+      "label": "Show the Shopify page's own content in its tab",
+      "info": "On a tab's linked page, the page content (Online Store > Pages) is shown in the content box. Its sections/headings become accordions.",
       "default": true
     },
     {
@@ -499,8 +697,8 @@
         {
           "type": "text",
           "id": "handle",
-          "label": "Tab handle",
-          "info": "Opens this tab automatically on the page with the same handle (e.g. payments), and for ?tab=payments links. Defaults to the title."
+          "label": "Tab handle (for ?tab= links)",
+          "info": "Optional. Defaults to the title, e.g. ?tab=faq"
         },
         {
           "type": "select",
@@ -523,10 +721,39 @@
           "content": "Redirect"
         },
         {
+          "type": "select",
+          "id": "special_link",
+          "label": "Account link",
+          "options": [
+            {
+              "value": "",
+              "label": "None"
+            },
+            {
+              "value": "login",
+              "label": "Log in"
+            },
+            {
+              "value": "register",
+              "label": "Create account"
+            },
+            {
+              "value": "account",
+              "label": "My account / orders"
+            },
+            {
+              "value": "logout",
+              "label": "Log out"
+            }
+          ],
+          "default": "",
+          "info": "Links to the Shopify customer account pages. Overrides the link below."
+        },
+        {
           "type": "url",
           "id": "link",
           "label": "Link instead of content",
-          "info": "Page, collection or external URL. If it links to a page that also shows this section, that page opens with this tab's own content (one page per tab, like liujo.com). Leave empty to switch content on the same page."
+          "info": "Page, collection or external URL. If it links to a page that also shows this section, that page opens with this tab highlighted and its own content. Leave empty to switch content on the same page."
         },
         {
           "type": "checkbox",
@@ -570,6 +797,138 @@
           "type": "url",
           "id": "button_link",
           "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion item (inside tab)",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows inside the tab placed directly above it in the block list."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Topic"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Write the details here.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default",
+          "default": false
+        },
+        {
+          "type": "html",
+          "id": "html",
+          "label": "Custom HTML (optional)",
+          "info": "For tables or anything the rich text editor can't do."
+        },
+        {
+          "type": "checkbox",
+          "id": "sub_questions",
+          "label": "Bold lines become questions",
+          "info": "Each paragraph that is only bold text becomes its own open/close question (FAQ style).",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "form",
+      "name": "Order form (inside tab)",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Order number + e-mail form. Shows inside the tab placed directly above it. The fields are sent to the action URL (e.g. your tracking or returns app)."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Monitor your order"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Enter the order number and the e-mail address you used to place it.</p>"
+        },
+        {
+          "type": "text",
+          "id": "field_1_label",
+          "label": "Field 1 label",
+          "default": "Order number"
+        },
+        {
+          "type": "text",
+          "id": "field_1_name",
+          "label": "Field 1 name",
+          "default": "order_number"
+        },
+        {
+          "type": "text",
+          "id": "field_2_label",
+          "label": "Field 2 label",
+          "default": "Order email"
+        },
+        {
+          "type": "text",
+          "id": "field_2_name",
+          "label": "Field 2 name",
+          "default": "email"
+        },
+        {
+          "type": "text",
+          "id": "submit_label",
+          "label": "Button label",
+          "default": "Submit"
+        },
+        {
+          "type": "text",
+          "id": "action",
+          "label": "Form action URL",
+          "info": "Where the form is sent (tracking / returns app page). Empty = customer account."
+        },
+        {
+          "type": "select",
+          "id": "method",
+          "label": "Method",
+          "options": [
+            {
+              "value": "get",
+              "label": "GET"
+            },
+            {
+              "value": "post",
+              "label": "POST"
+            }
+          ],
+          "default": "get"
+        },
+        {
+          "type": "checkbox",
+          "id": "new_window",
+          "label": "Open result in a new tab",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "size_guide",
+      "name": "Size guide tables (inside tab)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Women / Men / Kids size charts. Shows inside the tab placed directly above it. Edit the charts in snippets/liujo-size-guide-content.liquid."
         }
       ]
     },
@@ -634,6 +993,60 @@
         {
           "type": "heading",
           "settings": {
+            "title": "Your profile",
+            "style": "dark"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Log in",
+            "link": "/account/login"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Create account",
+            "link": "/account/register"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Monitor your order"
+          }
+        },
+        {
+          "type": "form",
+          "settings": {
+            "heading": "Monitor your order",
+            "text": "<p>Monitor your order even if you are not a registered user. Enter the order number and the email address you used to place it.</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Online exchanges and returns"
+          }
+        },
+        {
+          "type": "form",
+          "settings": {
+            "heading": "Return an item or exchange for a different size",
+            "text": "<p>Enter the order number and the e-mail address you used to place it.</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Wishlist",
+            "link": "/pages/wishlist"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
             "title": "Customer care",
             "style": "dark"
           }
@@ -641,36 +1054,145 @@
         {
           "type": "tab",
           "settings": {
-            "title": "Orders and shipments",
-            "link": "/pages/orders-and-shipments"
+            "title": "Orders and shipments"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Delivery guide"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Orders & pre-orders"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipment monitoring"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Sending a gift"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping costs and times"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "title": "Payments",
-            "link": "/pages/payments"
+            "title": "Payments"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Accepted payments"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Payment safety"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Billing rules"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "title": "Refunds and returns",
-            "link": "/pages/returns"
+            "title": "Refunds and returns"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Return and size exchange procedure"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Refunds"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Return monitoring"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "title": "Size guide",
-            "link": "/pages/size-guide"
+            "title": "Size guide"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Size guide: Woman"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Size guide: Man"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Size guide: Kids"
           }
         },
         {
           "type": "tab",
           "settings": {
-            "title": "FAQ",
-            "link": "/pages/faq"
+            "title": "FAQ"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Shopping FAQ"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Returns and refunds FAQ"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipment FAQ"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Payments FAQ"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Gift card FAQ"
           }
         },
         {
@@ -683,14 +1205,13 @@
           "type": "contact",
           "settings": {
             "icon": "phone",
-            "value": "+966 00 000 0000"
+            "label": "Call us"
           }
         },
         {
           "type": "contact",
           "settings": {
             "icon": "email",
-            "value": "care@example.com",
             "label": "Send us an e-mail"
           }
         },
