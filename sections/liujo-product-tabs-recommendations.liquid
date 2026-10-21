@@ -389,18 +389,44 @@
       text-align: center !important;
       line-height: 1.35 !important;
     }
+    .liujo-tabs-nav-wrapper {
+      margin-left: 19px !important;
+      margin-right: 19px !important;
+      width: auto !important;
+    }
     .liujo-tabs-track {
-      gap: 10px !important;
-      padding: 0 16px !important;
-      scroll-padding: 0 16px !important;
+      gap: 9px !important;
+      padding: 0 19px 0 31px !important;
+      scroll-padding: 0 31px !important;
     }
     .liujo-tab-card {
-      flex: 0 0 43% !important;
-      width: 43% !important;
+      flex: 0 0 36% !important;
+      width: 36% !important;
       min-width: 0 !important;
     }
     .liujo-tab-card-media {
-      aspect-ratio: 3 / 4 !important;
+      aspect-ratio: 316 / 441 !important;
+    }
+    .liujo-tab-title { font-size: 13px !important; }
+    /* Scroll indicator under the slider (thin grey track, black thumb) */
+    .liujo-tabs-scrollbar {
+      position: relative;
+      height: 3px;
+      margin: 18px 19px 0 31px;
+    }
+    .liujo-tabs-scrollbar::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 1px;
+      height: 1px;
+      background: #c8c8c8;
+    }
+    .liujo-tabs-scrollbar__thumb {
+      position: absolute;
+      top: 0; left: 0;
+      height: 3px;
+      background: #000;
+      will-change: transform;
     }
     .liujo-tab-wishlist {
       display: none !important;

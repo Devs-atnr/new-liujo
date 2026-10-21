@@ -2491,3 +2491,38 @@ document.addEventListener('click', (e) => {
   if (e.metaKey || e.ctrlKey) window.open(url, '_blank');
   else window.location.href = url;
 });
+
+// Mobile scroll indicator under PDP "You might like / Recently viewed" sliders
+(function () {
+  function bind() {
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
+    document.querySelectorAll('.liujo-tabs-track[data-tabs-track]').forEach((track) => {
+      if (track.dataset.liujoBar) return;
+      track.dataset.liujoBar = '1';
+      const bar = document.createElement('div');
+      bar.className = 'liujo-tabs-scrollbar';
+      bar.setAttribute('aria-hidden', 'true');
+      bar.innerHTML = '<div class="liujo-tabs-scrollbar__thumb"></div>';
+      (track.closest('.liujo-tabs-slider-wrap') || track).insertAdjacentElement('afterend', bar);
+      const thumb = bar.firstChild;
+      const update = () => {
+        const total = track.scrollWidth, view = track.clientWidth;
+        bar.style.display = total <= view + 2 ? 'none' : '';
+        const w = Math.max(30, bar.clientWidth * (view / total));
+        thumb.style.width = w + 'px';
+        const max = total - view;
+        const p = max > 0 ? track.scrollLeft / max : 0;
+        thumb.style.transform = 'translateX(' + Math.round((bar.clientWidth - w) * p) + 'px)';
+      };
+      track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+      window.addEventListener('resize', update);
+      setTimeout(update, 300);
+      update();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', bind);
+  new MutationObserver(() => { clearTimeout(bind._t); bind._t = setTimeout(() => {
+    bind();
+    document.querySelectorAll('.liujo-tabs-track[data-tabs-track]').forEach((t) => t.dispatchEvent(new Event('scroll')));
+  }, 200); }).observe(document.documentElement, { childList: true, subtree: true });
+})();
