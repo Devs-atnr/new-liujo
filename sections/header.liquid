@@ -128,7 +128,7 @@
       <!-- Right: Action Items (Flush Right) -->
       <div class="liujo-header__actions">
         {%- if section.settings.show_store_locator -%}
-          <a href="{{ section.settings.store_locator_link | default: '/pages/stores' }}" class="liujo-header__store-link">
+          <a href="{{ section.settings.store_locator_link | default: '/pages/store-locator' }}" class="liujo-header__store-link">
             {{ section.settings.store_locator_label | default: 'Locate Stores' }}
           </a>
           {%- if section.settings.show_search_desktop -%}
