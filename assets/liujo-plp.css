@@ -1813,3 +1813,54 @@ body.overflow-hidden-mobile .liujo-header-wrapper {
   .facets-wrapper.page-width,
   .collection-hero__inner.page-width { padding-left: 0 !important; padding-right: 0 !important; }
 }
+
+/* ==========================================================================
+   12. COLLECTION HEADER ALIGNMENT + GRID TOGGLE IN TITLE ROW
+   Breadcrumb, title and filters share one 40px left edge. The view toggle
+   sits in the title row (scrolls away); filter bar + Sort By stay sticky.
+   ========================================================================== */
+.liujo-breadcrumbs-list { gap: 6px !important; }
+.liujo-breadcrumbs-list li { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+.liujo-bc-sep { font-size: 10px !important; line-height: 1 !important; padding: 0 !important; }
+.liujo-item-count { margin-left: 3px !important; }
+
+@media (min-width: 990px) {
+  .collection-hero { padding: 0 40px !important; }
+  .collection-hero__inner,
+  .collection-hero__inner.page-width { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+  .liujo-plp-breadcrumbs,
+  .liujo-plp-header-top-row .liujo-plp-breadcrumbs { padding: 10px 0 0 0 !important; }
+  .collection-hero__title { margin: 18px 0 4px 0 !important; }
+
+  .liujo-plp-header-top-row { align-items: flex-end !important; }
+  .liujo-plp-header-top-row .liujo-grid-toggler.liujo-hero-grid-toggler {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding-bottom: 2px !important;
+  }
+  .liujo-hero-grid-toggler .liujo-grid-toggle-btn {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    color: #b5b5b5 !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: color 0.2s ease !important;
+  }
+  .liujo-hero-grid-toggler .liujo-grid-toggle-btn.is-active,
+  .liujo-hero-grid-toggler .liujo-grid-toggle-btn:hover { color: #111 !important; }
+
+  /* Hide the old toggle in the sticky bar wherever the title-row one exists */
+  body:has(.liujo-hero-grid-toggler) .liujo-desktop-sort-wrapper .liujo-grid-toggler { display: none !important; }
+
+  /* Filters start exactly on the same 40px edge; Sort By centred in the bar */
+  .facets-container { padding: 0 40px !important; }
+  .facets-container .facets__form,
+  .facets-container .facets__wrapper { margin: 0 !important; padding: 0 !important; }
+  .facets-container .facets__wrapper > :first-child,
+  .facets-container .facets__disclosure:first-child .facets__summary { margin-left: 0 !important; padding-left: 0 !important; }
+  .facets-container .liujo-desktop-toolbar-right,
+  .facets-container .liujo-desktop-sort-wrapper { justify-content: center !important; gap: 0 !important; align-self: stretch !important; }
+}
