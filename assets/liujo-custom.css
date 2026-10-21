@@ -3043,3 +3043,7 @@ body.has-search-open .liujo-sticky-cart {
 .liujo-postfooter .liujo-lang-link { font-weight: 700 !important; }
 .liujo-postfooter .liujo-lang-link span { font-weight: 400 !important; margin-left: 6px !important; }
 .liujo-postfooter .liujo-copyright { font-size: 12px !important; font-weight: 400 !important; line-height: 19px !important; letter-spacing: 0 !important; }
+
+/* Product cards are clickable as a whole */
+.liujo-product-card, .liujo-tab-card { cursor: pointer; }
+.liujo-carousel-track.is-dragging .liujo-product-card { cursor: grabbing; }

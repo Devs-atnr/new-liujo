@@ -168,7 +168,7 @@ function initLiuJoCarousels() {
       if (!isDown) return;
       e.preventDefault();
       const dx = e.pageX - startX;
-      if (Math.abs(dx) > 3) hasMoved = true;
+      if (Math.abs(dx) > 8) hasMoved = true;
       track.scrollLeft = scrollLeft - dx;
 
       const now = performance.now();
@@ -2472,3 +2472,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // Variant changes re-render the gallery
   new MutationObserver(() => bind(document)).observe(document.documentElement, { childList: true, subtree: true });
 })();
+
+
+// Whole product card clickable (home carousel, PDP "You might like" / "Recently viewed",
+// split/editorial cards): any click on the card — image, title, price, empty space —
+// opens the product, except the wishlist heart and real controls.
+document.addEventListener('click', (e) => {
+  if (e.defaultPrevented || e.button !== 0) return;
+  if (e.target.closest('button, input, select, label, [data-liujo-wishlist], .liujo-wishlist-trigger, .liujo-tab-wishlist')) return;
+  const card = e.target.closest('.liujo-product-card, .liujo-tab-card');
+  if (!card) return;
+  const direct = e.target.closest('a[href]');
+  if (direct && direct.getAttribute('href') && direct.getAttribute('href') !== '#') return; // native link handles it
+  const link = card.querySelector('a.liujo-card-img-link[href], a.liujo-card-title[href], a.liujo-tab-card-link[href], a.liujo-tab-title[href]');
+  const url = card.getAttribute('data-product-url') || (link && link.getAttribute('href'));
+  if (!url || url === '#') return;
+  e.preventDefault();
+  if (e.metaKey || e.ctrlKey) window.open(url, '_blank');
+  else window.location.href = url;
+});
