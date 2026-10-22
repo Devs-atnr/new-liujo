@@ -10,6 +10,22 @@
 {% endcomment %}
 
 {%- assign s_id = section.id -%}
+{%- assign ratio = '4 / 5' -%}
+{%- if section.settings.card_aspect_ratio == 'tall' -%}
+  {%- assign ratio = '3 / 4' -%}
+{%- elsif section.settings.card_aspect_ratio == 'square' -%}
+  {%- assign ratio = '1 / 1' -%}
+{%- elsif section.settings.card_aspect_ratio == 'landscape' -%}
+  {%- assign ratio = '16 / 9' -%}
+{%- endif -%}
+
+{%- assign cols_m = 1.25 -%}
+{%- if section.settings.cards_mobile == '1' -%}
+  {%- assign cols_m = 1 -%}
+{%- elsif section.settings.cards_mobile == '2' -%}
+  {%- assign cols_m = 2 -%}
+{%- endif -%}
+
 <section
   class="liujo-stories-section liujo-stories--{{ s_id }}"
   id="liujo-stories-{{ s_id }}"
@@ -118,7 +134,7 @@
     .liujo-stories--{{ s_id }} .liujo-story-media-wrap {
       position: relative;
       width: 100%;
-      aspect-ratio: {{ section.settings.card_aspect_ratio | default: '4/5' }};
+      aspect-ratio: {{ ratio }};
       background-color: #f5f5f5;
       overflow: hidden;
       display: block;
@@ -307,8 +323,6 @@
         padding-bottom: 12px;
       }
       .liujo-stories--{{ s_id }} .liujo-story-slide {
-        {%- assign cols_m = section.settings.cards_mobile | default: '1.25' -%}
-        {%- assign gap_m = section.settings.card_gap_mobile | default: 12 | plus: 0 -%}
         flex: 0 0 calc((100% - 20px) / {{ cols_m }});
         min-width: 200px;
       }
@@ -644,7 +658,7 @@
 
 {% schema %}
 {
-  "name": "Stories (Dynamic Section)",
+  "name": "Liu Jo Stories Carousel",
   "settings": [
     {
       "type": "header",
@@ -718,12 +732,12 @@
       "id": "card_aspect_ratio",
       "label": "Card Image Aspect Ratio",
       "options": [
-        { "value": "4/5", "label": "4:5 (Portrait - Default)" },
-        { "value": "3/4", "label": "3:4 (Editorial Tall)" },
-        { "value": "1/1", "label": "1:1 (Square)" },
-        { "value": "16/9", "label": "16:9 (Landscape)" }
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "tall", "label": "Tall (3:4)" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "landscape", "label": "Landscape (16:9)" }
       ],
-      "default": "4/5"
+      "default": "portrait"
     },
     {
       "type": "checkbox",
@@ -764,11 +778,10 @@
       "label": "Cards Visible on Mobile",
       "options": [
         { "value": "1", "label": "1 Card" },
-        { "value": "1.25", "label": "1.25 Cards (Peek Effect)" },
-        { "value": "1.5", "label": "1.5 Cards" },
+        { "value": "peek", "label": "1.25 Cards (Peek Effect)" },
         { "value": "2", "label": "2 Cards" }
       ],
-      "default": "1.25"
+      "default": "peek"
     },
     {
       "type": "range",
@@ -902,7 +915,7 @@
   ],
   "presets": [
     {
-      "name": "Stories (Dynamic Section)",
+      "name": "Liu Jo Stories Carousel",
       "blocks": [
         {
           "type": "story",
