@@ -71,7 +71,7 @@
         "heading_align": "left",
         "cards_desktop": "4",
         "cards_mobile": "1.25",
-        "card_aspect_ratio": "4 / 5",
+        "card_aspect_ratio": "4/5",
         "card_gap_desktop": 20,
         "card_gap_mobile": 12,
         "show_vertical_badge": true,

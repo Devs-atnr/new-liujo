@@ -118,7 +118,7 @@
     .liujo-stories--{{ s_id }} .liujo-story-media-wrap {
       position: relative;
       width: 100%;
-      aspect-ratio: {{ section.settings.card_aspect_ratio | default: '4 / 5' }};
+      aspect-ratio: {{ section.settings.card_aspect_ratio | default: '4/5' }};
       background-color: #f5f5f5;
       overflow: hidden;
       display: block;
@@ -718,12 +718,12 @@
       "id": "card_aspect_ratio",
       "label": "Card Image Aspect Ratio",
       "options": [
-        { "value": "4 / 5", "label": "4:5 (Portrait - Default)" },
-        { "value": "3 / 4", "label": "3:4 (Editorial Tall)" },
-        { "value": "1 / 1", "label": "1:1 (Square)" },
-        { "value": "16 / 9", "label": "16:9 (Landscape)" }
+        { "value": "4/5", "label": "4:5 (Portrait - Default)" },
+        { "value": "3/4", "label": "3:4 (Editorial Tall)" },
+        { "value": "1/1", "label": "1:1 (Square)" },
+        { "value": "16/9", "label": "16:9 (Landscape)" }
       ],
-      "default": "4 / 5"
+      "default": "4/5"
     },
     {
       "type": "checkbox",
@@ -878,7 +878,7 @@
           "type": "text",
           "id": "badge_text",
           "label": "Vertical Badge Text (Optional override)",
-          "placeholder": "STORIES"
+          "default": "STORIES"
         },
         {
           "type": "text",
