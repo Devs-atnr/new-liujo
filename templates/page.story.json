@@ -9,97 +9,83 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
-      }
-    },
-    "store_locator": {
-      "type": "liujo-store-locator",
+    "stories_carousel": {
+      "type": "liujo-stories-carousel",
       "blocks": {
-        "store_1": {
-          "type": "store",
+        "story_1": {
+          "type": "story",
           "settings": {
-            "name": "LIU.JO | Red Sea Mall",
-            "type": "",
-            "city": "Jeddah",
-            "address": "Red Sea Mall, King Abdulaziz Road, First Floor, Jeddah, K.S.A.",
-            "postal_code": "22230",
-            "phone": "+966 59 301 8751",
-            "email": "",
-            "hours": "<p>Saturday to Thursday: 09:00 AM – 11:00 PM</p><p>Friday: 3:00 PM – 11:00 PM</p>",
-            "latitude": "21.6289161",
-            "longitude": "39.1120399",
-            "map_link": "https://www.google.com/maps/place/Red+Sea+Mall/@21.6289694,39.1101857,17.5z"
+            "title": "ADV CAMPAIGN SS26",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg",
+            "badge_text": "STORIES",
+            "link": "/collections/all"
           }
         },
-        "store_2": {
-          "type": "store",
+        "story_2": {
+          "type": "story",
           "settings": {
-            "name": "LIU.JO | Al Rashid Mall",
-            "type": "",
-            "city": "Madina",
-            "address": "Al Rashid Mall, King Abdullah Ring Road, Ground Floor, Madina, K.S.A.",
-            "postal_code": "26411",
-            "phone": "+966 59 301 8737",
-            "email": "",
-            "hours": "<p>Saturday to Thursday: 10:00 AM – 11:00 PM</p><p>Friday: 3:00 PM – 11:00 PM</p>",
-            "latitude": "",
-            "longitude": "",
-            "map_link": "https://www.google.com/maps/dir/?api=1&destination=6943+2781+King+Abdullah+Branch+Rd,+Shadhah,+Madinah+42361,+Saudi+Arabia"
+            "title": "SNEAKERS CAMPAIGN SS26",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg",
+            "badge_text": "STORIES",
+            "link": "/collections/all"
           }
         },
-        "store_3": {
-          "type": "store",
+        "story_3": {
+          "type": "story",
           "settings": {
-            "name": "LIU.JO | Solitaire Mall",
-            "type": "",
-            "city": "Riyadh",
-            "address": "Ground Floor, Imam Saud Bin Faisal Branch Road, As Sahafa, Riyadh",
-            "postal_code": "11564",
-            "phone": "+966 56 516 2563",
-            "email": "",
-            "hours": "<p>Sun – Wed: 10:00 AM – 11:00 PM</p><p>Thu – Sat: 10:00 AM – 12:00 AM</p><p>Fri: 3:00 PM – 12:00 AM</p>",
-            "latitude": "24.8016597",
-            "longitude": "46.6510967",
-            "map_link": "https://www.google.com/maps/place/Solitaire/@24.8016597,46.6485164,17z"
+            "title": "LIU JO ORA",
+            "overlay_text": "EXPRESSION",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
+            "badge_text": "STORIES",
+            "link": "/collections/all"
+          }
+        },
+        "story_4": {
+          "type": "story",
+          "settings": {
+            "title": "ADV CAMPAIGN FW25 WOMAN",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg",
+            "badge_text": "STORIES",
+            "link": "/collections/all"
+          }
+        },
+        "story_5": {
+          "type": "story",
+          "settings": {
+            "title": "ADV CAMPAIGN FW25",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg",
+            "badge_text": "STORIES",
+            "link": "/collections/all"
           }
         }
       },
       "block_order": [
-        "store_1",
-        "store_2",
-        "store_3"
+        "story_1",
+        "story_2",
+        "story_3",
+        "story_4",
+        "story_5"
       ],
       "settings": {
-        "only_on_pages": "new-store-locator, store-locator",
-        "hide_page_section": true,
-        "title": "Store Locator",
+        "heading": "STORIES",
         "subtitle": "",
-        "search_placeholder": "Search by store, street or city",
-        "near_label": "Near you",
-        "count_label": "stores found",
-        "city_label": "All cities",
-        "find_label": "Find stores",
-        "phone_label": "Mobile:",
-        "hours_label": "Opening hours",
-        "directions_label": "Show on Google Map",
-        "empty_label": "No stores match your search.",
-        "map_title": "Store map",
-        "show_radius": true,
-        "radius_label": "Radius",
-        "radius_1": 30,
-        "radius_2": 50,
-        "radius_3": 100,
-        "map_zoom": 15,
-        "padding_bottom": 60
+        "heading_align": "left",
+        "cards_desktop": "4",
+        "cards_mobile": "peek",
+        "card_aspect_ratio": "portrait",
+        "card_gap_desktop": 20,
+        "card_gap_mobile": 12,
+        "show_vertical_badge": true,
+        "badge_default_text": "STORIES",
+        "show_progress_bar": true,
+        "show_arrows": true,
+        "padding_top": 48,
+        "padding_bottom": 56,
+        "bg_color": "#ffffff"
       }
     }
   },
   "order": [
-    "main",
-    "store_locator"
+    "stories_carousel"
   ]
 }
