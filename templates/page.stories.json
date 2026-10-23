@@ -9,41 +9,6 @@
  */
 {
   "sections": {
-    "boutique_services": {
-      "type": "liujo-services-bar",
-      "blocks": {
-        "s1": {
-          "type": "service",
-          "settings": {
-            "icon": "shipping",
-            "title": "Orders & Shipments",
-            "description": "Complimentary delivery on orders over €150"
-          }
-        },
-        "s2": {
-          "type": "service",
-          "settings": {
-            "icon": "support",
-            "title": "Boutique Assistance",
-            "description": "Monday to Friday, 9:00 to 18:00 CET"
-          }
-        },
-        "s3": {
-          "type": "service",
-          "settings": {
-            "icon": "returns",
-            "title": "Easy Returns",
-            "description": "30 days for complimentary returns & exchanges"
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3"
-      ],
-      "settings": {}
-    },
     "stories_carousel_9DTWDP": {
       "type": "Stories-carousel",
       "blocks": {
@@ -100,10 +65,25 @@
         "mobile_padding_top": 20,
         "mobile_padding_bottom": 8
       }
+    },
+    "stories_hero_dyRfza": {
+      "type": "stories-hero",
+      "name": "Stories hero",
+      "settings": {
+        "image_position": "center center",
+        "heading": "Stories",
+        "subheading": "Liu Jo Summer Club",
+        "description": "<p>Liu Jo Summer Club journeyed through Taormina, Cannes and Ibiza, transforming three iconic destinations into an experience to be lived and shared. Blending wellness, creativity, music and flavour, each event offered a new way to experience summer—where time slows down and every detail invites you to rediscover the beauty of life's most authentic moments.</p>",
+        "desktop_height": 100,
+        "mobile_height": 90,
+        "overlay_opacity": 25,
+        "text_color": "#ffffff",
+        "show_scroll_cue": true
+      }
     }
   },
   "order": [
-    "boutique_services",
+    "stories_hero_dyRfza",
     "stories_carousel_9DTWDP"
   ]
 }
