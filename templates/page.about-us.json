@@ -11,95 +11,72 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
     },
-    "store_locator": {
-      "type": "liujo-store-locator",
+    "stories_hero_npjnaU": {
+      "type": "stories-hero",
+      "name": "Stories hero",
+      "settings": {
+        "image_position": "center center",
+        "heading": "Stories",
+        "subheading": "Liu Jo Summer Club",
+        "description": "<p>Liu Jo Summer Club journeyed through Taormina, Cannes and Ibiza, transforming three iconic destinations into an experience to be lived and shared. Blending wellness, creativity, music and flavour, each event offered a new way to experience summer—where time slows down and every detail invites you to rediscover the beauty of life's most authentic moments.</p>",
+        "desktop_height": 100,
+        "mobile_height": 90,
+        "overlay_opacity": 25,
+        "text_color": "#ffffff",
+        "show_scroll_cue": true
+      }
+    },
+    "history_timeline_yBAUhp": {
+      "type": "history-timeline",
       "blocks": {
-        "store_1": {
-          "type": "store",
+        "milestone_jPP7gz": {
+          "type": "milestone",
           "settings": {
-            "name": "LIU.JO | Red Sea Mall",
-            "type": "",
-            "city": "Jeddah",
-            "address": "Red Sea Mall, King Abdulaziz Road, First Floor, Jeddah, K.S.A.",
-            "postal_code": "22230",
-            "phone": "+966 59 301 8751",
-            "email": "",
-            "hours": "<p>Saturday to Thursday: 09:00 AM – 11:00 PM</p><p>Friday: 3:00 PM – 11:00 PM</p>",
-            "latitude": "21.6289161",
-            "longitude": "39.1120399",
-            "map_link": "https://www.google.com/maps/place/Red+Sea+Mall/@21.6289694,39.1101857,17.5z"
+            "year": "1995",
+            "description": "<p>Entrepreneurs and brothers Marco and Vannis Marchi founded Liu Jo back in 1995 in Carpi, a renowned manufacturing hub situated in the province of Modena. The brand soon gained momentum on both domestic and international markets with its collections of apparel, and its jeans would go on to become one of its iconic categories.</p>"
           }
         },
-        "store_2": {
-          "type": "store",
+        "milestone_mDJYhR": {
+          "type": "milestone",
           "settings": {
-            "name": "LIU.JO | Al Rashid Mall",
-            "type": "",
-            "city": "Madina",
-            "address": "Al Rashid Mall, King Abdullah Ring Road, Ground Floor, Madina, K.S.A.",
-            "postal_code": "26411",
-            "phone": "+966 59 301 8737",
-            "email": "",
-            "hours": "<p>Saturday to Thursday: 10:00 AM – 11:00 PM</p><p>Friday: 3:00 PM – 11:00 PM</p>",
-            "latitude": "",
-            "longitude": "",
-            "map_link": "https://www.google.com/maps/dir/?api=1&destination=6943+2781+King+Abdullah+Branch+Rd,+Shadhah,+Madinah+42361,+Saudi+Arabia"
+            "year": "2000-2006",
+            "description": "<p>The Liu Jo style concept evolves to create a total look, the natural evolution of a brand born to enhance all aspects of femininity. Accessory lines are born, collections dedicated to the world of kidswear and the first concessions are signed.</p>"
           }
         },
-        "store_3": {
-          "type": "store",
+        "milestone_txz6Ah": {
+          "type": "milestone",
           "settings": {
-            "name": "LIU.JO | Solitaire Mall",
-            "type": "",
-            "city": "Riyadh",
-            "address": "Ground Floor, Imam Saud Bin Faisal Branch Road, As Sahafa, Riyadh",
-            "postal_code": "11564",
-            "phone": "+966 56 516 2563",
-            "email": "",
-            "hours": "<p>Sun – Wed: 10:00 AM – 11:00 PM</p><p>Thu – Sat: 10:00 AM – 12:00 AM</p><p>Fri: 3:00 PM – 12:00 AM</p>",
-            "latitude": "24.8016597",
-            "longitude": "46.6510967",
-            "map_link": "https://www.google.com/maps/place/Solitaire/@24.8016597,46.6485164,17z"
+            "year": "2007-2012",
+            "description": "<p>Add the next chapter in your brand story here.</p>"
           }
         }
       },
       "block_order": [
-        "store_1",
-        "store_2",
-        "store_3"
+        "milestone_jPP7gz",
+        "milestone_mDJYhR",
+        "milestone_txz6Ah"
       ],
+      "name": "History timeline",
       "settings": {
-        "only_on_pages": "new-store-locator, store-locator",
-        "hide_page_section": true,
-        "title": "Store Locator",
-        "subtitle": "",
-        "search_placeholder": "Search by store, street or city",
-        "near_label": "Near you",
-        "count_label": "stores found",
-        "city_label": "All cities",
-        "find_label": "Find stores",
-        "phone_label": "Mobile:",
-        "hours_label": "Opening hours",
-        "directions_label": "Show on Google Map",
-        "empty_label": "No stores match your search.",
-        "map_title": "Store map",
-        "show_radius": true,
-        "radius_label": "Radius",
-        "radius_1": 30,
-        "radius_2": 50,
-        "radius_3": 100,
-        "map_zoom": 15,
-        "padding_bottom": 60
+        "background": "#ffffff",
+        "foreground": "#111111",
+        "image_height": 560,
+        "padding_top": 40,
+        "padding_bottom": 60,
+        "mobile_padding_top": 24,
+        "mobile_padding_bottom": 32
       }
     }
   },
   "order": [
     "main",
-    "store_locator"
+    "stories_hero_npjnaU",
+    "history_timeline_yBAUhp"
   ]
 }
