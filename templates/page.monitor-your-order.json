@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
@@ -73,6 +74,7 @@
         "store_2",
         "store_3"
       ],
+      "disabled": true,
       "settings": {
         "only_on_pages": "new-store-locator, store-locator",
         "hide_page_section": true,
@@ -96,10 +98,92 @@
         "map_zoom": 15,
         "padding_bottom": 60
       }
+    },
+    "section_order_tracking_ay8ga3": {
+      "type": "section-order-tracking",
+      "blocks": {
+        "tab_XFd3Df": {
+          "type": "tab",
+          "settings": {
+            "group": "profile",
+            "label": "Log in",
+            "page": "",
+            "custom_url": "/account/login"
+          }
+        },
+        "tab_9L98hC": {
+          "type": "tab",
+          "settings": {
+            "group": "profile",
+            "label": "Create account",
+            "page": "",
+            "custom_url": "/account/register"
+          }
+        },
+        "tab_MWN7x9": {
+          "type": "tab",
+          "settings": {
+            "group": "care",
+            "label": "Monitor your order",
+            "page": "",
+            "custom_url": ""
+          }
+        },
+        "tab_eTJrh8": {
+          "type": "tab",
+          "settings": {
+            "group": "care",
+            "label": "Online exchanges and returns",
+            "page": "",
+            "custom_url": ""
+          }
+        },
+        "tab_DEKfNa": {
+          "type": "tab",
+          "settings": {
+            "group": "care",
+            "label": "Wishlist",
+            "page": "",
+            "custom_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "tab_XFd3Df",
+        "tab_9L98hC",
+        "tab_MWN7x9",
+        "tab_eTJrh8",
+        "tab_DEKfNa"
+      ],
+      "name": "Customer care - Monitor your order",
+      "settings": {
+        "legal_menu": "",
+        "show_contact": true,
+        "contact_heading": "Can we help you?",
+        "phone": "+44 330 8087718",
+        "email": "hello@example.com",
+        "email_link_label": "Send us an e-mail",
+        "legal_heading": "Privacy information",
+        "profile_heading": "Your profile",
+        "care_heading": "Customer care",
+        "content_heading": "MONITOR YOUR ORDER",
+        "description": "<p>Monitor your order, even if you are not a registered user. Enter the order number and email address used to place it.</p>",
+        "service_url": "",
+        "portal_note": "Add your returns portal URL in this section's settings to enable the return form.",
+        "order_label": "Order number",
+        "email_label": "Order email",
+        "order_param": "order",
+        "email_param": "email",
+        "submit_label": "Submit",
+        "wishlist_key": "wishlist",
+        "empty_message": "There are no products",
+        "max_width": 1500
+      }
     }
   },
   "order": [
     "main",
-    "store_locator"
+    "store_locator",
+    "section_order_tracking_ay8ga3"
   ]
 }
