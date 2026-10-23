@@ -1,0 +1,85 @@
+{% comment %} Editorial Stories carousel. Add this file to your theme's sections folder. {% endcomment %}
+<section id="Stories-{{ section.id }}" class="stories" data-stories-section style="--stories-bg: {{ section.settings.background }}; --stories-fg: {{ section.settings.foreground }}; --stories-gap: {{ section.settings.card_gap }}px; --stories-width: {{ section.settings.card_width }}px;">
+  <div class="stories__inner">
+    {% if section.settings.heading != blank %}<h2 class="stories__heading">{{ section.settings.heading | escape }}</h2>{% endif %}
+    <div class="stories__viewport" data-stories-viewport aria-label="{{ section.settings.heading | default: 'Stories' | escape }}">
+      <div class="stories__track">
+        {% for block in section.blocks %}
+          <article class="stories__card" data-stories-card {{ block.shopify_attributes }}>
+            {% if block.settings.link != blank %}<a class="stories__link" href="{{ block.settings.link }}" aria-label="{{ block.settings.title | escape }}">{% endif %}
+              <div class="stories__media">
+                {% if block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 1400 | image_tag: class: 'stories__image', loading: 'lazy', widths: '360, 540, 720, 960, 1200, 1400', sizes: '(min-width: 1400px) 22vw, (min-width: 750px) 34vw, 78vw', alt: block.settings.image.alt | default: block.settings.title | escape }}
+                {% else %}{{ 'collection-1' | placeholder_svg_tag: 'stories__image stories__placeholder' }}{% endif %}
+                {% if block.settings.overlay_text != blank %}<span class="stories__overlay">{{ block.settings.overlay_text | escape }}</span>{% endif %}
+              </div>
+              <span class="stories__title">{{ block.settings.title | escape }}</span>
+            {% if block.settings.link != blank %}</a>{% endif %}
+            {% unless forloop.last %}<span class="stories__side-label" aria-hidden="true">{{ section.settings.side_label | escape }}</span>{% endunless %}
+          </article>
+        {% else %}
+          {% for i in (1..4) %}<article class="stories__card"><div class="stories__media">{{ 'collection-1' | placeholder_svg_tag: 'stories__image stories__placeholder' }}</div><span class="stories__title">Add a story in the theme editor</span></article>{% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+    {% if section.blocks.size > 1 %}<div class="stories__pagination" data-stories-pagination aria-label="Choose a story">{% for block in section.blocks %}<button class="stories__page{% if forloop.first %} is-active{% endif %}" type="button" data-stories-page="{{ forloop.index0 }}" aria-label="Show story {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>{% endfor %}</div>{% endif %}
+  </div>
+</section>
+<style>
+  #Stories-{{ section.id }}{background:var(--stories-bg);color:var(--stories-fg);overflow:hidden}
+  #Stories-{{ section.id }} .stories__inner{padding:{{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px {{ section.settings.side_padding }}px}
+  #Stories-{{ section.id }} .stories__heading{margin:0 0 26px;font-size:clamp(20px,1.3vw,28px);line-height:1.15;font-weight:500;letter-spacing:-.035em;text-transform:uppercase}
+  #Stories-{{ section.id }} .stories__viewport{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-behavior:smooth}
+  #Stories-{{ section.id }} .stories__viewport::-webkit-scrollbar{display:none}
+  #Stories-{{ section.id }} .stories__track{display:flex;align-items:flex-start;gap:var(--stories-gap);padding-right:{{ section.settings.side_padding }}px}
+  #Stories-{{ section.id }} .stories__card{flex:0 0 var(--stories-width);min-width:0;position:relative;scroll-snap-align:start}
+  #Stories-{{ section.id }} .stories__link{display:block;color:inherit;text-decoration:none}
+  #Stories-{{ section.id }} .stories__media{width:100%;aspect-ratio:.8;position:relative;overflow:hidden;background:#e7e7e7}
+  #Stories-{{ section.id }} .stories__image{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  #Stories-{{ section.id }} .stories__link:hover .stories__image{transform:scale(1.025)}
+  #Stories-{{ section.id }} .stories__placeholder{fill:#aaa}
+  #Stories-{{ section.id }} .stories__title{display:block;padding-top:12px;font-size:15px;line-height:1.3;font-weight:500;text-transform:uppercase}
+  #Stories-{{ section.id }} .stories__overlay{position:absolute;inset:0;display:grid;place-items:center;padding:20px;color:#fff;font-size:clamp(20px,2vw,32px);line-height:1;text-align:center;text-transform:uppercase;text-shadow:0 1px 10px rgb(0 0 0 / .2)}
+  #Stories-{{ section.id }} .stories__side-label{position:absolute;z-index:1;top:72px;right:calc(var(--stories-gap)*-.52);transform:translateX(100%) rotate(180deg);writing-mode:vertical-rl;font-size:9px;line-height:1;text-transform:uppercase}
+  #Stories-{{ section.id }} .stories__pagination{display:flex;gap:10px;width:min(446px,calc(100% - 40px));margin-top:38px}
+  #Stories-{{ section.id }} .stories__page{appearance:none;flex:1;height:3px;padding:0;border:0;border-radius:0;background:#b9bdc1;cursor:pointer;transition:background-color .2s}
+  #Stories-{{ section.id }} .stories__page.is-active{background:var(--stories-fg)}
+  @media(max-width:749px){#Stories-{{ section.id }} .stories__inner{padding-top:{{ section.settings.mobile_padding_top }}px;padding-bottom:{{ section.settings.mobile_padding_bottom }}px;padding-left:20px}#Stories-{{ section.id }} .stories__heading{margin-bottom:18px}#Stories-{{ section.id }} .stories__track{gap:22px;padding-right:20px}#Stories-{{ section.id }} .stories__card{flex-basis:min(78vw,360px)}#Stories-{{ section.id }} .stories__title{padding-top:10px;font-size:13px}#Stories-{{ section.id }} .stories__side-label{top:48px;right:-11px;font-size:8px}#Stories-{{ section.id }} .stories__pagination{margin-top:25px}}
+  @media(prefers-reduced-motion:reduce){#Stories-{{ section.id }} .stories__viewport{scroll-behavior:auto}#Stories-{{ section.id }} .stories__image{transition:none}}
+</style>
+<script>
+(()=>{const section=document.getElementById('Stories-{{ section.id }}');if(!section||section.dataset.initialized)return;section.dataset.initialized='true';const viewport=section.querySelector('[data-stories-viewport]'),cards=[...section.querySelectorAll('[data-stories-card]')],pages=[...section.querySelectorAll('[data-stories-page]')];if(!viewport||!cards.length||!pages.length)return;const setActive=i=>pages.forEach((p,n)=>{p.classList.toggle('is-active',n===i);p.setAttribute('aria-current',n===i?'true':'false')});pages.forEach(p=>p.addEventListener('click',()=>{const card=cards[Number(p.dataset.storiesPage)];if(card)viewport.scrollTo({left:card.offsetLeft-cards[0].offsetLeft,behavior:'smooth'});setActive(Number(p.dataset.storiesPage))}));let scheduled=false;viewport.addEventListener('scroll',()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{const center=viewport.scrollLeft+viewport.clientWidth*.3;let nearest=0;cards.forEach((card,i)=>{if(card.offsetLeft-cards[0].offsetLeft<=center)nearest=i});setActive(Math.min(nearest,pages.length-1));scheduled=false})},{passive:true})})();
+</script>
+{% schema %}
+{
+  "name":"Stories carousel",
+  "tag":"section",
+  "class":"section-stories-carousel",
+  "max_blocks":12,
+  "settings":[
+    {"type":"text","id":"heading","label":"Heading","default":"Stories"},
+    {"type":"text","id":"side_label","label":"Vertical image label","default":"Stories"},
+    {"type":"color","id":"background","label":"Background","default":"#ffffff"},
+    {"type":"color","id":"foreground","label":"Text and active bar","default":"#080808"},
+    {"type":"range","id":"card_width","label":"Card width (desktop)","min":260,"max":560,"step":10,"unit":"px","default":390},
+    {"type":"range","id":"card_gap","label":"Card gap (desktop)","min":24,"max":100,"step":4,"unit":"px","default":56},
+    {"type":"range","id":"side_padding","label":"Side padding","min":16,"max":100,"step":4,"unit":"px","default":40},
+    {"type":"range","id":"padding_top","label":"Top padding (desktop)","min":0,"max":100,"step":4,"unit":"px","default":20},
+    {"type":"range","id":"padding_bottom","label":"Bottom padding (desktop)","min":0,"max":100,"step":4,"unit":"px","default":8},
+    {"type":"range","id":"mobile_padding_top","label":"Top padding (mobile)","min":0,"max":80,"step":4,"unit":"px","default":20},
+    {"type":"range","id":"mobile_padding_bottom","label":"Bottom padding (mobile)","min":0,"max":80,"step":4,"unit":"px","default":8}
+  ],
+  "blocks":[{"type":"story","name":"Story","settings":[
+    {"type":"image_picker","id":"image","label":"Image"},
+    {"type":"text","id":"title","label":"Card title","default":"ADV Campaign SS26"},
+    {"type":"text","id":"overlay_text","label":"Text over image","info":"Optional. Leave blank to show no overlay."},
+    {"type":"url","id":"link","label":"Story link"}
+  ]}],
+  "presets":[{"name":"Stories carousel","blocks":[
+    {"type":"story","settings":{"title":"ADV Campaign SS26"}},
+    {"type":"story","settings":{"title":"Sneakers Campaign SS26"}},
+    {"type":"story","settings":{"title":"Liu Jo Ora","overlay_text":"Expression"}},
+    {"type":"story","settings":{"title":"ADV Campaign FW25 Woman"}}
+  ]}]
+}
+{% endschema %}
