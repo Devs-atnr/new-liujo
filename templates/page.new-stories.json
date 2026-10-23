@@ -15,7 +15,7 @@
         "story_1": {
           "type": "story",
           "settings": {
-            "title": "ADV CAMPAIGN SS24 - THE NEW GLAM",
+            "title": "ADV CAMPAIGN SS26",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg",
             "badge_text": "STORIES",
             "link": "/collections/all"
@@ -24,8 +24,8 @@
         "story_2": {
           "type": "story",
           "settings": {
-            "title": "EDITORIAL DENIM SS24",
-            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
+            "title": "SNEAKERS CAMPAIGN SS26",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg",
             "badge_text": "STORIES",
             "link": "/collections/all"
           }
@@ -33,8 +33,9 @@
         "story_3": {
           "type": "story",
           "settings": {
-            "title": "SPOT SNEAKERS SS24",
-            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg",
+            "title": "LIU JO ORA",
+            "overlay_text": "EXPRESSION",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
             "badge_text": "STORIES",
             "link": "/collections/all"
           }
@@ -42,7 +43,7 @@
         "story_4": {
           "type": "story",
           "settings": {
-            "title": "XMAS PROJECT - LIU JO LAPUFFY",
+            "title": "ADV CAMPAIGN FW25 WOMAN",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg",
             "badge_text": "STORIES",
             "link": "/collections/all"
@@ -51,7 +52,7 @@
         "story_5": {
           "type": "story",
           "settings": {
-            "title": "MODERN TAILORING & HERITAGE",
+            "title": "ADV CAMPAIGN FW25",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg",
             "badge_text": "STORIES",
             "link": "/collections/all"
@@ -78,8 +79,8 @@
         "badge_default_text": "STORIES",
         "show_progress_bar": true,
         "show_arrows": true,
-        "padding_top": 50,
-        "padding_bottom": 60,
+        "padding_top": 48,
+        "padding_bottom": 56,
         "bg_color": "#ffffff"
       }
     }

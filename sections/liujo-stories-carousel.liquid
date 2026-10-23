@@ -1,20 +1,21 @@
 {% comment %}
   LIU JO STORIES CAROUSEL SECTION
   Replicates the high-fashion editorial horizontal stories carousel from Liu Jo.
-  Features:
-  - Draggable & swipeable continuous carousel track
-  - Vertical rotated "STORIES" editorial badge on each card
-  - Segmented progress bar navigation indicator
+  Matches the exact reference with:
+  - Draggable & touch-swipeable continuous carousel track
+  - Vertical rotated "STORIES" badge on right border of each card
+  - Center image overlay text support (e.g. "EXPRESSION")
+  - Segmented line progress bar navigation indicator
   - Prev / Next navigation arrows
   - Full Shopify Theme Editor integration (live block selection & updates)
 {% endcomment %}
 
 {%- assign s_id = section.id -%}
 {%- assign ratio = '4 / 5' -%}
-{%- if section.settings.card_aspect_ratio == 'tall' -%}
-  {%- assign ratio = '3 / 4' -%}
-{%- elsif section.settings.card_aspect_ratio == 'square' -%}
+{%- if section.settings.card_aspect_ratio == 'square' -%}
   {%- assign ratio = '1 / 1' -%}
+{%- elsif section.settings.card_aspect_ratio == 'tall' -%}
+  {%- assign ratio = '3 / 4' -%}
 {%- elsif section.settings.card_aspect_ratio == 'landscape' -%}
   {%- assign ratio = '16 / 9' -%}
 {%- endif -%}
@@ -35,8 +36,8 @@
   <style>
     .liujo-stories--{{ s_id }} {
       background-color: {{ section.settings.bg_color | default: '#ffffff' }};
-      padding-top: {{ section.settings.padding_top | default: 50 }}px;
-      padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px;
+      padding-top: {{ section.settings.padding_top | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | default: 56 }}px;
       overflow: hidden;
       position: relative;
     }
@@ -49,8 +50,8 @@
       {% else %}
         max-width: var(--liujo-container-max, 1680px);
         margin: 0 auto;
-        padding-left: 24px;
-        padding-right: 24px;
+        padding-left: 28px;
+        padding-right: 28px;
       {% endif %}
     }
 
@@ -67,7 +68,7 @@
 
     .liujo-stories--{{ s_id }} .liujo-stories-title {
       font-family: var(--font-heading-family, inherit);
-      font-size: {{ section.settings.heading_size_desktop | default: 28 }}px;
+      font-size: {{ section.settings.heading_size_desktop | default: 26 }}px;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -154,6 +155,24 @@
       transform: scale(1.04);
     }
 
+    /* Centered Image Text Overlay (e.g. "EXPRESSION") */
+    .liujo-stories--{{ s_id }} .liujo-story-overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-heading-family, inherit);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      width: 85%;
+    }
+
     /* Vertical Rotated "STORIES" Badge */
     .liujo-stories--{{ s_id }} .liujo-story-vertical-badge {
       position: absolute;
@@ -222,12 +241,12 @@
     .liujo-stories--{{ s_id }} .liujo-stories-progress-bar {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .liujo-stories--{{ s_id }} .liujo-stories-progress-segment {
-      height: 2px;
-      width: 72px;
+      height: 2.5px;
+      width: 90px;
       background-color: #d2d2d2;
       border: none;
       padding: 0;
@@ -241,8 +260,8 @@
     .liujo-stories--{{ s_id }} .liujo-stories-progress-segment::after {
       content: '';
       position: absolute;
-      top: -10px;
-      bottom: -10px;
+      top: -12px;
+      bottom: -12px;
       left: 0;
       right: 0;
     }
@@ -253,7 +272,7 @@
 
     .liujo-stories--{{ s_id }} .liujo-stories-progress-segment.is-active {
       background-color: #000000;
-      height: 2.5px;
+      height: 3px;
     }
 
     /* Navigation Arrows */
@@ -302,14 +321,14 @@
         gap: 16px;
       }
       .liujo-stories--{{ s_id }} .liujo-stories-progress-segment {
-        width: 50px;
+        width: 60px;
       }
     }
 
     @media (max-width: 767px) {
       .liujo-stories--{{ s_id }} {
-        padding-top: {{ section.settings.padding_top | default: 50 | divided_by: 1.4 | round }}px;
-        padding-bottom: {{ section.settings.padding_bottom | default: 60 | divided_by: 1.4 | round }}px;
+        padding-top: {{ section.settings.padding_top | default: 48 | divided_by: 1.4 | round }}px;
+        padding-bottom: {{ section.settings.padding_bottom | default: 56 | divided_by: 1.4 | round }}px;
       }
       .liujo-stories--{{ s_id }} .liujo-stories-inner {
         padding-left: 16px;
@@ -326,6 +345,9 @@
         flex: 0 0 calc((100% - 20px) / {{ cols_m }});
         min-width: 200px;
       }
+      .liujo-stories--{{ s_id }} .liujo-story-overlay-text {
+        font-size: 16px;
+      }
       .liujo-stories--{{ s_id }} .liujo-story-vertical-badge {
         font-size: 8px;
         letter-spacing: 0.18em;
@@ -335,7 +357,7 @@
         font-size: 12px;
       }
       .liujo-stories--{{ s_id }} .liujo-stories-progress-segment {
-        width: 36px;
+        width: 44px;
       }
       .liujo-stories--{{ s_id }} .liujo-stories-footer-controls {
         margin-top: 18px;
@@ -401,6 +423,15 @@
                     {{ 'lifestyle-1' | placeholder_svg_tag: 'liujo-story-img' }}
                   {%- endif -%}
 
+                  {%- if block.settings.overlay_text != blank -%}
+                    <div
+                      class="liujo-story-overlay-text"
+                      style="color: {{ block.settings.overlay_color | default: '#ffffff' }};"
+                    >
+                      {{ block.settings.overlay_text }}
+                    </div>
+                  {%- endif -%}
+
                   {%- if section.settings.show_vertical_badge -%}
                     <span class="liujo-story-vertical-badge">
                       {{ block.settings.badge_text | default: section.settings.badge_default_text | default: 'STORIES' }}
@@ -425,9 +456,9 @@
             </div>
           {%- endfor -%}
         {%- else -%}
-          <!-- Default Fallback Editorial Stories Matching Liu Jo Catalog -->
-          {%- assign demo_titles = "ADV CAMPAIGN SS24 - THE NEW GLAM|EDITORIAL DENIM SS24|SPOT SNEAKERS SS24|XMAS PROJECT - LIU JO LAPUFFY|MODERN TAILORING & HERITAGE" | split: "|" -%}
-          {%- assign demo_images = "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg|https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg|https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg|https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg|https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg" | split: "|" -%}
+          <!-- Exact Fallback Stories Matching Reference -->
+          {%- assign demo_titles = "ADV CAMPAIGN SS26|SNEAKERS CAMPAIGN SS26|LIU JO ORA|ADV CAMPAIGN FW25 WOMAN|ADV CAMPAIGN FW25" | split: "|" -%}
+          {%- assign demo_images = "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg|https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg|https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg|https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg|https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg" | split: "|" -%}
 
           {%- for title in demo_titles -%}
             {%- assign img_src = demo_images[forloop.index0] -%}
@@ -435,6 +466,11 @@
               <div class="liujo-story-card">
                 <a href="/collections/all" class="liujo-story-media-wrap">
                   <img src="{{ img_src }}" alt="{{ title }}" class="liujo-story-img" loading="lazy">
+                  {%- if forloop.index == 3 -%}
+                    <div class="liujo-story-overlay-text" style="color: #ffffff;">
+                      EXPRESSION
+                    </div>
+                  {%- endif -%}
                   {%- if section.settings.show_vertical_badge -%}
                     <span class="liujo-story-vertical-badge">
                       {{ section.settings.badge_default_text | default: 'STORIES' }}
@@ -502,7 +538,7 @@
 
         if (!track || slides.length === 0) return;
 
-        // Build Segmented Progress Bars
+        // Build Segmented Progress Bars (Matching 3-segment style)
         function updateProgressSegments() {
           if (!progressBar) return;
           progressBar.innerHTML = '';
@@ -510,7 +546,7 @@
           const trackWidth = track.clientWidth;
           const slideWidth = slides[0].getBoundingClientRect().width + (parseFloat(window.getComputedStyle(track).gap) || 20);
           const visibleCount = Math.max(1, Math.round(trackWidth / slideWidth));
-          const totalPages = Math.max(1, slides.length - visibleCount + 1);
+          const totalPages = Math.max(1, Math.min(slides.length, Math.ceil(slides.length / visibleCount) + 1));
 
           for (let i = 0; i < totalPages; i++) {
             const seg = document.createElement('button');
@@ -518,7 +554,8 @@
             seg.className = 'liujo-stories-progress-segment' + (i === 0 ? ' is-active' : '');
             seg.setAttribute('aria-label', 'Go to story page ' + (i + 1));
             seg.addEventListener('click', () => {
-              const targetSlide = slides[i];
+              const targetIdx = Math.min(slides.length - 1, i * visibleCount);
+              const targetSlide = slides[targetIdx];
               if (targetSlide) {
                 track.scrollTo({
                   left: targetSlide.offsetLeft - track.offsetLeft,
@@ -694,7 +731,7 @@
       "step": 2,
       "unit": "px",
       "label": "Desktop Heading Size",
-      "default": 28
+      "default": 26
     },
     {
       "type": "range",
@@ -733,8 +770,8 @@
       "label": "Card Image Aspect Ratio",
       "options": [
         { "value": "portrait", "label": "Portrait (4:5)" },
-        { "value": "tall", "label": "Tall (3:4)" },
         { "value": "square", "label": "Square (1:1)" },
+        { "value": "tall", "label": "Tall (3:4)" },
         { "value": "landscape", "label": "Landscape (16:9)" }
       ],
       "default": "portrait"
@@ -853,7 +890,7 @@
       "step": 5,
       "unit": "px",
       "label": "Padding Top",
-      "default": 50
+      "default": 48
     },
     {
       "type": "range",
@@ -863,7 +900,7 @@
       "step": 5,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 60
+      "default": 56
     }
   ],
   "blocks": [
@@ -875,7 +912,7 @@
           "type": "text",
           "id": "title",
           "label": "Story Title",
-          "default": "ADV CAMPAIGN SS24 - THE NEW GLAM"
+          "default": "ADV CAMPAIGN SS26"
         },
         {
           "type": "image_picker",
@@ -886,6 +923,18 @@
           "type": "text",
           "id": "demo_image_url",
           "label": "External / Default Image URL"
+        },
+        {
+          "type": "text",
+          "id": "overlay_text",
+          "label": "Center Overlay Text on Image (e.g. EXPRESSION)",
+          "default": ""
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay Text Color",
+          "default": "#ffffff"
         },
         {
           "type": "text",
@@ -920,7 +969,7 @@
         {
           "type": "story",
           "settings": {
-            "title": "ADV CAMPAIGN SS24 - THE NEW GLAM",
+            "title": "ADV CAMPAIGN SS26",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg",
             "link": "/collections/all"
           }
@@ -928,15 +977,7 @@
         {
           "type": "story",
           "settings": {
-            "title": "EDITORIAL DENIM SS24",
-            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
-            "link": "/collections/all"
-          }
-        },
-        {
-          "type": "story",
-          "settings": {
-            "title": "SPOT SNEAKERS SS24",
+            "title": "SNEAKERS CAMPAIGN SS26",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg",
             "link": "/collections/all"
           }
@@ -944,7 +985,16 @@
         {
           "type": "story",
           "settings": {
-            "title": "XMAS PROJECT - LIU JO LAPUFFY",
+            "title": "LIU JO ORA",
+            "overlay_text": "EXPRESSION",
+            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
+            "link": "/collections/all"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "title": "ADV CAMPAIGN FW25 WOMAN",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg",
             "link": "/collections/all"
           }
@@ -952,7 +1002,7 @@
         {
           "type": "story",
           "settings": {
-            "title": "ITALIAN HERITAGE & ATELIER",
+            "title": "ADV CAMPAIGN FW25",
             "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg",
             "link": "/collections/all"
           }
