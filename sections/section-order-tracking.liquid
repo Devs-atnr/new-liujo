@@ -1,43 +1,108 @@
-<section id="CustomerCare-{{ section.id }}" class="care-tabs">
-  <div class="care-tabs__layout">
-    <aside class="care-tabs__side" aria-label="Customer care navigation">
-      <div class="care-tabs__group"><h2>{{ section.settings.profile_heading | escape }}</h2><nav>
-        <a class="care-tabs__link" href="{{ routes.account_login_url }}"><span>LOG IN</span><span aria-hidden="true">→</span></a>
-        <a class="care-tabs__link" href="{{ routes.account_register_url }}"><span>CREATE ACCOUNT</span><span aria-hidden="true">→</span></a>
-        {% if section.settings.order_page != blank %}<a class="care-tabs__link {% if page.handle == section.settings.order_page.handle %}is-active{% endif %}" href="{{ section.settings.order_page.url }}"><span>MONITOR YOUR ORDER</span><span aria-hidden="true">→</span></a>{% endif %}
-        {% if section.settings.returns_page != blank %}<a class="care-tabs__link {% if page.handle == section.settings.returns_page.handle %}is-active{% endif %}" href="{{ section.settings.returns_page.url }}"><span>ONLINE EXCHANGES AND RETURNS</span><span aria-hidden="true">→</span></a>{% endif %}
-        {% if section.settings.wishlist_page != blank %}<a class="care-tabs__link {% if page.handle == section.settings.wishlist_page.handle %}is-active{% endif %}" href="{{ section.settings.wishlist_page.url }}"><span>WISHLIST</span><span aria-hidden="true">→</span></a>{% endif %}
-      </nav></div>
-      <div class="care-tabs__group"><h2>{{ section.settings.care_heading | escape }}</h2><nav>
-                {% if section.settings.care_menu != blank %}{% for link in section.settings.care_menu.links %}<a class="care-tabs__link {% if link.active %}is-active{% endif %}" href="{{ link.url }}"><span>{{ link.title | escape }}</span><span aria-hidden="true">→</span></a>{% endfor %}{% endif %}
-        {% for block in section.blocks %}
-          {% assign tab_url = block.settings.page.url | default: block.settings.custom_url %}
-          {% assign tab_active = false %}
-          {% if block.settings.page != blank and page.handle == block.settings.page.handle %}{% assign tab_active = true %}{% elsif request.path == tab_url %}{% assign tab_active = true %}{% endif %}
-          {% if block.settings.label != blank %}<a class="care-tabs__link {% if tab_active %}is-active{% endif %}" href="{{ tab_url | default: '#' }}" {{ block.shopify_attributes }}><span>{{ block.settings.label | escape }}</span><span aria-hidden="true">→</span></a>{% endif %}
-        {% endfor %}
-      </nav></div>
-      {% if section.settings.show_contact %}<div class="care-tabs__contact"><h2>{{ section.settings.contact_heading | escape }}</h2>{% if section.settings.phone != blank %}<a href="tel:{{ section.settings.phone | remove: ' ' | escape }}">☎ <span>{{ section.settings.phone | escape }}</span></a>{% endif %}{% if section.settings.email != blank %}<a href="mailto:{{ section.settings.email | escape }}">✉ <span>{{ section.settings.email_label | escape }}</span></a>{% endif %}</div>{% endif %}
-      {% if section.settings.legal_menu != blank %}<div class="care-tabs__contact"><h2>{{ section.settings.legal_heading | escape }}</h2>{% for link in section.settings.legal_menu.links %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% endfor %}</div>{% endif %}
-    </aside>
-    <main class="care-tabs__main"><header class="care-tabs__banner"><h1>{{ section.settings.content_heading | escape }}</h1></header>
-      <h2>{{ section.settings.content_heading | escape }}</h2><div class="care-tabs__body rte">{{ section.settings.description }}</div>
-      <form class="care-tabs__form" action="{{ section.settings.service_url | default: routes.root_url }}" method="get">
-        <label>{{ section.settings.order_label | escape }}<input name="{{ section.settings.order_param | escape }}" required autocomplete="off"></label>
-        <label>{{ section.settings.email_label | escape }}<input type="email" name="{{ section.settings.email_param | escape }}" required autocomplete="email"></label>
-        <button type="submit">{{ section.settings.submit_label | escape }}</button>
-      </form>
-    </main>
-  </div>
-</section>
-<style>
-#CustomerCare-{{ section.id }}{color:#090909}.care-tabs__layout{display:grid;grid-template-columns:minmax(240px,.82fr) minmax(0,1.6fr);gap:clamp(24px,3.6vw,48px);max-width:{{ section.settings.max_width }}px;margin:auto;padding:40px 24px}.care-tabs__group h2{margin:0;padding:12px 20px;background:#4b4b4b;color:#fff;font-size:15px;text-transform:uppercase}.care-tabs__group nav{border:1px solid #dedede;border-top:0}.care-tabs__link{width:100%;min-height:51px;padding:12px 18px 12px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;border-bottom:1px solid #dedede;background:#fff;color:#080808;text-decoration:none;font-size:14px;font-weight:600;text-transform:uppercase}.care-tabs__link:last-child{border-bottom:0}.care-tabs__link:hover,.care-tabs__link.is-active{background:#000;color:#fff}.care-tabs__link span+span{font-size:25px;font-weight:300}.care-tabs__contact{margin:30px 0}.care-tabs__contact h2{margin:0 0 24px;padding-left:20px;font-size:15px;text-transform:uppercase}.care-tabs__contact a{display:block;padding:15px 20px;border-top:1px solid #dedede;color:inherit;text-decoration:none}.care-tabs__banner{display:flex;align-items:center;justify-content:center;min-height:140px;margin-bottom:26px;padding:24px;background:#f6f7f8;text-align:center}.care-tabs__banner h1{margin:0;font-size:clamp(22px,2vw,28px);font-weight:500;text-transform:uppercase}.care-tabs__main h2{font-size:16px;text-transform:uppercase}.care-tabs__body{font-size:14px;line-height:1.55}.care-tabs__form{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:18px 14px}.care-tabs__form label{display:grid;gap:8px;font-size:12px;text-transform:uppercase}.care-tabs__form input{height:50px;border:1px solid #d5d5d5;padding:10px;font:inherit}.care-tabs__form button{grid-column:1;min-height:52px;margin-top:10px;border:0;background:#000;color:#fff;font:inherit;font-weight:600;text-transform:uppercase;cursor:pointer}.care-tabs__notice{padding:16px;background:#f6f7f8}.care-tabs__wishlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px}.care-tabs__product{color:inherit;text-decoration:none}.care-tabs__product img{width:100%;height:auto;display:block;margin-bottom:10px}.care-tabs__product strong,.care-tabs__product span{display:block;margin-top:5px}@media(max-width:749px){.care-tabs__layout{grid-template-columns:1fr;gap:28px;padding:24px 16px}.care-tabs__banner{min-height:100px}.care-tabs__form{grid-template-columns:1fr}.care-tabs__form button{grid-column:1}}
-</style>
-
-{% schema %}
-{"name":"Monitor your order","settings":[{"type":"page","id":"order_page","label":"Order tracking page"},{"type":"page","id":"returns_page","label":"Exchanges and returns page"},{"type":"page","id":"wishlist_page","label":"Wishlist page"},{"type":"link_list","id":"care_menu","label":"Customer care menu"},{"type":"link_list","id":"legal_menu","label":"Privacy and legal menu"},{"type":"checkbox","id":"show_contact","label":"Show contact details","default":true},{"type":"text","id":"contact_heading","label":"Contact heading","default":"Can we help you?"},{"type":"text","id":"phone","label":"Phone","default":"+44 330 8087718"},{"type":"text","id":"email","label":"Email","default":"hello@example.com"},{"type":"text","id":"email_link_label","label":"Email link text","default":"Send us an e-mail"},{"type":"text","id":"legal_heading","label":"Legal heading","default":"Privacy information"},{"type":"text","id":"profile_heading","label":"Profile menu heading","default":"Your profile"},{"type":"text","id":"care_heading","label":"Customer care menu heading","default":"Customer care"},{"type":"text","id":"content_heading","label":"Content heading","default":"MONITOR YOUR ORDER"},{"type":"richtext","id":"description","label":"Description","default":"<p>Monitor your order, even if you are not a registered user. Enter the order number and email address used to place it.</p>"},{"type":"url","id":"service_url","label":"Tracking or returns service URL"},{"type":"text","id":"portal_note","label":"Returns portal note","default":"Add your returns portal URL in this section's settings to enable the return form."},{"type":"text","id":"order_label","label":"Order field label","default":"Order number"},{"type":"text","id":"email_label","label":"Email field label","default":"Order email"},{"type":"text","id":"order_param","label":"Order query parameter","default":"order"},{"type":"text","id":"email_param","label":"Email query parameter","default":"email"},{"type":"text","id":"submit_label","label":"Submit button","default":"Submit"},{"type":"text","id":"wishlist_key","label":"Wishlist local storage key","default":"wishlist"},{"type":"text","id":"empty_message","label":"Empty wishlist message","default":"There are no products"},{"type":"range","id":"max_width","label":"Content width","min":900,"max":1800,"step":50,"unit":"px","default":1500}],"blocks":[{"type":"tab","name":"Tab","settings":[{"type":"text","id":"label","label":"Tab name","default":"Orders and shipments"},{"type":"page","id":"page","label":"Page to open"},{"type":"url","id":"custom_url","label":"Custom link (optional)"}]}],"presets":[{"name":"Customer care - Monitor your order"}]}
-{% endschema %}
-
-
-
-
+{
+  "sections": {
+    "main": {
+      "blocks": {
+        "login": {
+          "type": "tab",
+          "settings": {
+            "label": "Log in",
+            "group": "profile",
+            "custom_url": "/account/login"
+          }
+        },
+        "create_account": {
+          "type": "tab",
+          "settings": {
+            "label": "Create account",
+            "group": "profile",
+            "custom_url": "/account/register"
+          }
+        },
+        "order_tracking": {
+          "type": "tab",
+          "settings": {
+            "label": "Monitor your order",
+            "group": "profile",
+            "custom_url": "/pages/monitor-your-order"
+          }
+        },
+        "returns": {
+          "type": "tab",
+          "settings": {
+            "label": "Online exchanges and returns",
+            "group": "profile",
+            "custom_url": "/pages/online-exchanges-and-returns"
+          }
+        },
+        "wishlist": {
+          "type": "tab",
+          "settings": {
+            "label": "Wishlist",
+            "group": "profile",
+            "custom_url": "/pages/wishlist"
+          }
+        },
+        "orders_shipments": {
+          "type": "tab",
+          "settings": {
+            "label": "Orders and shipments",
+            "group": "care",
+            "custom_url": "/pages/orders-and-shipments"
+          }
+        },
+        "payments": {
+          "type": "tab",
+          "settings": {
+            "label": "Payments",
+            "group": "care",
+            "custom_url": "/pages/payments"
+          }
+        },
+        "refunds_returns": {
+          "type": "tab",
+          "settings": {
+            "label": "Refunds and returns",
+            "group": "care",
+            "custom_url": "/pages/refunds-and-returns"
+          }
+        },
+        "size_guide": {
+          "type": "tab",
+          "settings": {
+            "label": "Size guide",
+            "group": "care",
+            "custom_url": "/pages/size-guide"
+          }
+        },
+        "faq": {
+          "type": "tab",
+          "settings": {
+            "label": "FAQ",
+            "group": "care",
+            "custom_url": "/pages/faq"
+          }
+        }
+      },
+      "block_order": [
+        "login",
+        "create_account",
+        "order_tracking",
+        "returns",
+        "wishlist",
+        "orders_shipments",
+        "payments",
+        "refunds_returns",
+        "size_guide",
+        "faq"
+      ],
+      "settings": {
+        "description": "<p>Monitor your order, even if you are not a registered user. Enter the order number and email address used to place it.</p>",
+        "content_heading": "MONITOR YOUR ORDER"
+      },
+      "type": "section-order-tracking"
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
