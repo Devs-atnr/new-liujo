@@ -23,11 +23,78 @@
         "heading_azWUP9": {
           "type": "heading",
           "settings": {
-            "title": "Customer care",
+            "title": "profile",
             "style": "dark"
           }
         },
         "tab_YXQNLV": {
+          "type": "tab",
+          "settings": {
+            "title": "Log in",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_tJfy84": {
+          "type": "tab",
+          "settings": {
+            "title": "create acount",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_RFdLdg": {
+          "type": "tab",
+          "settings": {
+            "title": "Monitor your order",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_6tnwja": {
+          "type": "tab",
+          "settings": {
+            "title": "Online exchanges and returns",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "heading_mrp3MV": {
+          "type": "heading",
+          "settings": {
+            "title": "Customer care",
+            "style": "dark"
+          }
+        },
+        "tab_4VYgGM": {
           "type": "tab",
           "settings": {
             "title": "Orders and shipments",
@@ -215,6 +282,11 @@
       "block_order": [
         "heading_azWUP9",
         "tab_YXQNLV",
+        "tab_tJfy84",
+        "tab_RFdLdg",
+        "tab_6tnwja",
+        "heading_mrp3MV",
+        "tab_4VYgGM",
         "tab_JDBWAN",
         "tab_L6XBC6",
         "tab_3wWAea",
@@ -231,6 +303,8 @@
       ],
       "name": "Liu Jo Info Tabs",
       "settings": {
+        "only_on_pages": "",
+        "hide_page_section": true,
         "nav_label": "Customer care",
         "accent_color": "#000000",
         "accent_text_color": "#ffffff",
