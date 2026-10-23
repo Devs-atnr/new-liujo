@@ -1,0 +1,89 @@
+{% comment %} Brand history timeline carousel. Add timeline entries as blocks in the theme editor. {% endcomment %}
+<section id="History-{{ section.id }}" class="history" data-history style="--history-bg: {{ section.settings.background }}; --history-fg: {{ section.settings.foreground }}; --history-height: {{ section.settings.image_height }}px;">
+  <div class="history__viewport" data-history-viewport>
+    <div class="history__track" data-history-track>
+      {% for block in section.blocks %}
+        <article class="history__slide" data-history-slide {{ block.shopify_attributes }}>
+          <div class="history__year">{{ block.settings.year | escape | newline_to_br }}</div>
+          <div class="history__photo">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 1800 | image_tag: class: 'history__image', loading: 'lazy', widths: '600, 900, 1200, 1500, 1800', sizes: '(min-width: 750px) 44vw, 84vw', alt: block.settings.image.alt | default: block.settings.year | escape }}
+            {% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'history__image history__placeholder' }}{% endif %}
+          </div>
+          <div class="history__copy">{{ block.settings.description }}</div>
+        </article>
+      {% else %}
+        <article class="history__slide"><div class="history__year">1995</div><div class="history__photo">{{ 'lifestyle-1' | placeholder_svg_tag: 'history__image history__placeholder' }}</div><div class="history__copy"><p>Add timeline entries in the theme editor.</p></div></article>
+      {% endfor %}
+    </div>
+  </div>
+  {% if section.blocks.size > 1 %}
+    <button class="history__arrow history__arrow--prev" type="button" data-history-prev aria-label="Previous milestone">‹</button>
+    <button class="history__arrow history__arrow--next" type="button" data-history-next aria-label="Next milestone">›</button>
+    <div class="history__pagination" data-history-pagination aria-label="Timeline position">
+      {% for block in section.blocks %}<button class="history__bar{% if forloop.first %} is-active{% endif %}" type="button" data-history-page="{{ forloop.index0 }}" aria-label="Show {{ block.settings.year | escape }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>{% endfor %}
+    </div>
+  {% endif %}
+</section>
+<style>
+  #History-{{ section.id }}{position:relative;overflow:hidden;background:var(--history-bg);color:var(--history-fg);padding:{{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px}
+  #History-{{ section.id }} .history__viewport{overflow:hidden;width:100%;}
+  #History-{{ section.id }} .history__track{display:flex;align-items:center;gap:0;transition:transform .65s cubic-bezier(.2,.7,.2,1);will-change:transform;}
+  #History-{{ section.id }} .history__slide{position:relative;flex:0 0 68vw;width:68vw;min-height:var(--history-height);display:grid;grid-template-columns:26vw 43vw 25vw;align-items:center;}
+  #History-{{ section.id }} .history__year{grid-column:1;grid-row:1;justify-self:end;padding-right:22px;font-size:clamp(30px,3vw,56px);line-height:.92;letter-spacing:-.045em;font-weight:400;white-space:normal;}
+  #History-{{ section.id }} .history__photo{grid-column:2;grid-row:1;width:100%;aspect-ratio:1.66;overflow:hidden;background:#eee;}
+  #History-{{ section.id }} .history__image{display:block;width:100%;height:100%;object-fit:cover;}
+  #History-{{ section.id }} .history__placeholder{fill:#aaa;}
+  #History-{{ section.id }} .history__copy{grid-column:3;grid-row:1;max-width:260px;padding:0 22px 0 5vw;font-size:14px;line-height:1.42;text-align:justify;}
+  #History-{{ section.id }} .history__copy p{margin:0;}
+  #History-{{ section.id }} .history__arrow{position:absolute;z-index:2;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:42px;height:48px;padding:0;border:0;background:transparent;color:var(--history-fg);font:300 40px/1 Arial,sans-serif;cursor:pointer;}
+  #History-{{ section.id }} .history__arrow:disabled{opacity:0;pointer-events:none;}
+  #History-{{ section.id }} .history__arrow--prev{left:9.5vw;}
+  #History-{{ section.id }} .history__arrow--next{left:calc(26vw + 43vw + 19vw);}
+  #History-{{ section.id }} .history__pagination{position:relative;z-index:2;display:flex;justify-content:center;gap:0;width:min(304px,70vw);height:3px;margin:14px auto 0;}
+  #History-{{ section.id }} .history__bar{position:relative;flex:1;padding:0;border:0;background:#d3d3d3;cursor:pointer;}
+  #History-{{ section.id }} .history__bar.is-active{background:linear-gradient(to right,#111 0 34%,#d3d3d3 34% 100%);}
+  @media(max-width:749px){
+    #History-{{ section.id }}{padding:{{ section.settings.mobile_padding_top }}px 0 {{ section.settings.mobile_padding_bottom }}px}
+    #History-{{ section.id }} .history__track{align-items:stretch}
+    #History-{{ section.id }} .history__slide{flex-basis:88vw;width:88vw;min-height:0;grid-template-columns:84vw;grid-template-rows:auto auto auto;gap:14px;padding:0 4vw;}
+    #History-{{ section.id }} .history__year{grid-column:1;grid-row:1;justify-self:start;padding:0;font-size:34px;}
+    #History-{{ section.id }} .history__photo{grid-column:1;grid-row:2;width:100%;aspect-ratio:1.25;}
+    #History-{{ section.id }} .history__copy{grid-column:1;grid-row:3;max-width:none;padding:0 8px;font-size:13px;text-align:left;}
+    #History-{{ section.id }} .history__arrow{top:auto;bottom:30%;width:36px;font-size:34px;}
+    #History-{{ section.id }} .history__arrow--prev{left:1vw;}
+    #History-{{ section.id }} .history__arrow--next{left:auto;right:1vw;}
+    #History-{{ section.id }} .history__pagination{margin-top:22px;}
+  }
+  @media(prefers-reduced-motion:reduce){#History-{{ section.id }} .history__track{transition:none}}
+</style>
+<script>
+(()=>{const root=document.getElementById('History-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='true';const track=root.querySelector('[data-history-track]'),slides=[...root.querySelectorAll('[data-history-slide]')],pages=[...root.querySelectorAll('[data-history-page]')],prev=root.querySelector('[data-history-prev]'),next=root.querySelector('[data-history-next]');if(!track||slides.length<2)return;let index=0;const update=()=>{const mobile=matchMedia('(max-width: 749px)').matches;const pitch=mobile?slides[0].getBoundingClientRect().width:window.innerWidth*.68;track.style.transform=`translate3d(${-index*pitch}px,0,0)`;pages.forEach((page,i)=>{page.classList.toggle('is-active',i===index);page.setAttribute('aria-current',i===index?'true':'false')});if(prev)prev.disabled=index===0;if(next)next.disabled=index===slides.length-1};const go=i=>{index=Math.max(0,Math.min(i,slides.length-1));update()};prev?.addEventListener('click',()=>go(index-1));next?.addEventListener('click',()=>go(index+1));pages.forEach((page,i)=>page.addEventListener('click',()=>go(i)));let startX=0;root.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});root.addEventListener('touchend',e=>{const delta=e.changedTouches[0].clientX-startX;if(Math.abs(delta)>45)go(index+(delta<0?1:-1))},{passive:true});window.addEventListener('resize',update);update()})();
+</script>
+{% schema %}
+{
+  "name":"History timeline",
+  "tag":"section",
+  "class":"section-history-timeline",
+  "max_blocks":10,
+  "settings":[
+    {"type":"color","id":"background","label":"Background","default":"#ffffff"},
+    {"type":"color","id":"foreground","label":"Text and arrows","default":"#111111"},
+    {"type":"range","id":"image_height","label":"Slide height (desktop)","min":360,"max":760,"step":20,"unit":"px","default":560},
+    {"type":"range","id":"padding_top","label":"Top padding","min":0,"max":120,"step":4,"unit":"px","default":40},
+    {"type":"range","id":"padding_bottom","label":"Bottom padding","min":0,"max":120,"step":4,"unit":"px","default":60},
+    {"type":"range","id":"mobile_padding_top","label":"Top padding (mobile)","min":0,"max":80,"step":4,"unit":"px","default":24},
+    {"type":"range","id":"mobile_padding_bottom","label":"Bottom padding (mobile)","min":0,"max":80,"step":4,"unit":"px","default":32}
+  ],
+  "blocks":[{"type":"milestone","name":"Timeline entry","settings":[
+    {"type":"text","id":"year","label":"Year or period","default":"1995"},
+    {"type":"image_picker","id":"image","label":"Image"},
+    {"type":"richtext","id":"description","label":"Description","default":"<p>Write a short story about this moment in your brand's history.</p>"}
+  ]}],
+  "presets":[{"name":"History timeline","blocks":[
+    {"type":"milestone","settings":{"year":"1995","description":"<p>Entrepreneurs and brothers Marco and Vannis Marchi founded Liu Jo back in 1995 in Carpi, a renowned manufacturing hub situated in the province of Modena. The brand soon gained momentum on both domestic and international markets with its collections of apparel, and its jeans would go on to become one of its iconic categories.</p>"}},
+    {"type":"milestone","settings":{"year":"2000-2006","description":"<p>The Liu Jo style concept evolves to create a total look, the natural evolution of a brand born to enhance all aspects of femininity. Accessory lines are born, collections dedicated to the world of kidswear and the first concessions are signed.</p>"}},
+    {"type":"milestone","settings":{"year":"2007-2012","description":"<p>Add the next chapter in your brand story here.</p>"}}
+  ]}]
+}
+{% endschema %}
