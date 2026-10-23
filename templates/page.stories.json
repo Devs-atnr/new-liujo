@@ -9,83 +9,101 @@
  */
 {
   "sections": {
-    "dynamic_story_slider": {
-      "type": "liujo-stories-carousel",
+    "boutique_services": {
+      "type": "liujo-services-bar",
       "blocks": {
-        "story_1": {
-          "type": "story",
+        "s1": {
+          "type": "service",
           "settings": {
-            "title": "ADV CAMPAIGN SS26",
-            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw0e286574/the-gigi-hadid-edit/drop1/HP/Hero-2-desk.jpg",
-            "badge_text": "STORIES",
-            "link": "/collections/all"
+            "icon": "shipping",
+            "title": "Orders & Shipments",
+            "description": "Complimentary delivery on orders over €150"
           }
         },
-        "story_2": {
-          "type": "story",
+        "s2": {
+          "type": "service",
           "settings": {
-            "title": "SNEAKERS CAMPAIGN SS26",
-            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwefa31552/the-gigi-hadid-edit/drop1/HP/shoes.jpg",
-            "badge_text": "STORIES",
-            "link": "/collections/all"
+            "icon": "support",
+            "title": "Boutique Assistance",
+            "description": "Monday to Friday, 9:00 to 18:00 CET"
           }
         },
-        "story_3": {
-          "type": "story",
+        "s3": {
+          "type": "service",
           "settings": {
-            "title": "LIU JO ORA",
-            "overlay_text": "EXPRESSION",
-            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwf89ea3b3/the-gigi-hadid-edit/drop1/HP/jeans.jpg",
-            "badge_text": "STORIES",
-            "link": "/collections/all"
-          }
-        },
-        "story_4": {
-          "type": "story",
-          "settings": {
-            "title": "ADV CAMPAIGN FW25 WOMAN",
-            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dwb43c3548/the-gigi-hadid-edit/drop1/HP/jackets.jpg",
-            "badge_text": "STORIES",
-            "link": "/collections/all"
-          }
-        },
-        "story_5": {
-          "type": "story",
-          "settings": {
-            "title": "ADV CAMPAIGN FW25",
-            "demo_image_url": "https://www.liujo.com/dw/image/v2/BDNR_PRD/on/demandware.static/-/Library-Sites-LiuJoSharedLibrary/default/dw4278e299/the-gigi-hadid-edit/drop1/HP/Shirts.jpg",
-            "badge_text": "STORIES",
-            "link": "/collections/all"
+            "icon": "returns",
+            "title": "Easy Returns",
+            "description": "30 days for complimentary returns & exchanges"
           }
         }
       },
       "block_order": [
-        "story_1",
-        "story_2",
-        "story_3",
-        "story_4",
-        "story_5"
+        "s1",
+        "s2",
+        "s3"
       ],
+      "settings": {}
+    },
+    "stories_carousel_9DTWDP": {
+      "type": "Stories-carousel",
+      "blocks": {
+        "story_K6tFKb": {
+          "type": "story",
+          "settings": {
+            "title": "ADV Campaign SS26",
+            "overlay_text": "",
+            "link": ""
+          }
+        },
+        "story_Jfj9d9": {
+          "type": "story",
+          "settings": {
+            "title": "Sneakers Campaign SS26",
+            "overlay_text": "",
+            "link": ""
+          }
+        },
+        "story_Qrcaz9": {
+          "type": "story",
+          "settings": {
+            "title": "Liu Jo Ora",
+            "overlay_text": "Expression",
+            "link": ""
+          }
+        },
+        "story_mr8jzx": {
+          "type": "story",
+          "settings": {
+            "title": "ADV Campaign FW25 Woman",
+            "overlay_text": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "story_K6tFKb",
+        "story_Jfj9d9",
+        "story_Qrcaz9",
+        "story_mr8jzx"
+      ],
+      "name": "Stories carousel",
       "settings": {
-        "heading": "STORIES",
-        "subtitle": "",
-        "heading_align": "left",
-        "cards_desktop": "4",
-        "cards_mobile": "peek",
-        "card_aspect_ratio": "portrait",
-        "card_gap_desktop": 20,
-        "card_gap_mobile": 12,
-        "show_vertical_badge": true,
-        "badge_default_text": "STORIES",
-        "show_progress_bar": true,
-        "show_arrows": true,
-        "padding_top": 48,
-        "padding_bottom": 56,
-        "bg_color": "#ffffff"
+        "heading": "Stories",
+        "side_label": "Stories",
+        "background": "#ffffff",
+        "foreground": "#080808",
+        "card_width": 390,
+        "card_gap": 56,
+        "side_padding": 40,
+        "padding_top": 20,
+        "padding_bottom": 8,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 8
       }
     }
   },
   "order": [
-    "dynamic_story_slider"
+    "boutique_services",
+    "stories_carousel_9DTWDP"
   ]
 }
