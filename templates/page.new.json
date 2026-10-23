@@ -42,6 +42,28 @@
             "button_link": ""
           }
         },
+        "heading_rxqYfC": {
+          "type": "heading",
+          "settings": {
+            "title": "Customer care",
+            "style": "dark"
+          }
+        },
+        "tab_GtUxnb": {
+          "type": "tab",
+          "settings": {
+            "title": "Orders and shipments",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": false,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
         "tab_JDBWAN": {
           "type": "tab",
           "settings": {
@@ -215,6 +237,8 @@
       "block_order": [
         "heading_azWUP9",
         "tab_YXQNLV",
+        "heading_rxqYfC",
+        "tab_GtUxnb",
         "tab_JDBWAN",
         "tab_L6XBC6",
         "tab_3wWAea",
@@ -241,171 +265,10 @@
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 40
       }
-    },
-    "customer_care_tabs_BcDkgE": {
-      "type": "customer-care-tabs",
-      "blocks": {
-        "tab_aEfhBy": {
-          "type": "tab",
-          "settings": {
-            "group": "profile",
-            "label": "Log in",
-            "title": "Log in",
-            "banner": false,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": false,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_nzCNCb": {
-          "type": "tab",
-          "settings": {
-            "group": "profile",
-            "label": "Create account",
-            "title": "Create account",
-            "banner": false,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": false,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_JAfGDr": {
-          "type": "tab",
-          "settings": {
-            "group": "profile",
-            "label": "Monitor your order",
-            "title": "Monitor your order",
-            "banner": true,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": true,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_HWWkAh": {
-          "type": "tab",
-          "settings": {
-            "group": "profile",
-            "label": "Online exchanges and returns",
-            "title": "Online exchanges and returns",
-            "banner": true,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": true,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_zRx4RP": {
-          "type": "tab",
-          "settings": {
-            "group": "profile",
-            "label": "Wishlist",
-            "title": "Wishlist",
-            "banner": false,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": false,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_BjRijV": {
-          "type": "tab",
-          "settings": {
-            "group": "care",
-            "label": "Orders and shipments",
-            "title": "Orders and shipments",
-            "banner": true,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": false,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_fxji9x": {
-          "type": "tab",
-          "settings": {
-            "group": "care",
-            "label": "Payments",
-            "title": "Payments",
-            "banner": true,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": false,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_QhcEfE": {
-          "type": "tab",
-          "settings": {
-            "group": "care",
-            "label": "Refunds and returns",
-            "title": "Refunds and returns",
-            "banner": true,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": false,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_GWf8gf": {
-          "type": "tab",
-          "settings": {
-            "group": "care",
-            "label": "Size guide",
-            "title": "Size guide",
-            "banner": true,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": false,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        },
-        "tab_9Fmn4A": {
-          "type": "tab",
-          "settings": {
-            "group": "care",
-            "label": "FAQ",
-            "title": "Frequently asked questions",
-            "banner": true,
-            "body": "<p>Write this tab's page content here.</p>",
-            "order_form": false,
-            "form_action": "",
-            "submit_label": "Submit"
-          }
-        }
-      },
-      "block_order": [
-        "tab_aEfhBy",
-        "tab_nzCNCb",
-        "tab_JAfGDr",
-        "tab_HWWkAh",
-        "tab_zRx4RP",
-        "tab_BjRijV",
-        "tab_fxji9x",
-        "tab_QhcEfE",
-        "tab_GWf8gf",
-        "tab_9Fmn4A"
-      ],
-      "name": "Customer care tabs",
-      "settings": {
-        "profile_heading": "Your profile",
-        "care_heading": "Customer care",
-        "show_contact": true,
-        "contact_heading": "Can we help you?",
-        "phone": "+44 330 8087718",
-        "email": "hello@example.com",
-        "email_label": "Send us an e-mail",
-        "max_width": 1500,
-        "top": 40,
-        "bottom": 40
-      }
     }
   },
   "order": [
     "main",
-    "liujo_info_tabs_nc8Ck6",
-    "customer_care_tabs_BcDkgE"
+    "liujo_info_tabs_nc8Ck6"
   ]
 }
