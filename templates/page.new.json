@@ -23,20 +23,80 @@
         "heading_azWUP9": {
           "type": "heading",
           "settings": {
-            "title": "Customer care",
+            "title": "Your profile",
             "style": "dark"
           }
         },
         "tab_YXQNLV": {
           "type": "tab",
           "settings": {
-            "title": "Orders and shipments",
+            "title": "Log In",
             "handle": "",
             "row_style": "box",
             "link": "",
-            "new_window": false,
+            "new_window": true,
             "show_title": true,
             "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_bUCaef": {
+          "type": "tab",
+          "settings": {
+            "title": "create  acount",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": true,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_JywBz4": {
+          "type": "tab",
+          "settings": {
+            "title": "Monitor your order",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": true,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_8cXJCJ": {
+          "type": "tab",
+          "settings": {
+            "title": "Online exchanges and returns",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": true,
+            "show_title": true,
+            "content": "<p>Write the content for this tab here.</p>",
+            "page": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "tab_QJJPDf": {
+          "type": "tab",
+          "settings": {
+            "title": "Wishlist",
+            "handle": "",
+            "row_style": "box",
+            "link": "",
+            "new_window": true,
+            "show_title": true,
+            "content": "<p><br/>&nbsp;There are no products&nbsp;<br/><br/></p>",
             "page": "",
             "button_label": "",
             "button_link": ""
@@ -237,6 +297,10 @@
       "block_order": [
         "heading_azWUP9",
         "tab_YXQNLV",
+        "tab_bUCaef",
+        "tab_JywBz4",
+        "tab_8cXJCJ",
+        "tab_QJJPDf",
         "heading_rxqYfC",
         "tab_GtUxnb",
         "tab_JDBWAN",
