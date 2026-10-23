@@ -49,6 +49,10 @@
   #History-{{ section.id }} .history__pagination{position:relative;z-index:2;display:flex;justify-content:center;gap:0;width:min(304px,70vw);height:3px;margin:14px auto 0;}
   #History-{{ section.id }} .history__bar{position:relative;flex:1;padding:0;border:0;background:#d3d3d3;cursor:pointer;}
   #History-{{ section.id }} .history__bar.is-active{background:linear-gradient(to right,#111 0 34%,#d3d3d3 34% 100%);}
+  #History-{{ section.id }} .history__pagination{position:relative;z-index:2;display:flex;justify-content:stretch;gap:0;width:min(304px,70vw);height:3px;margin:14px auto 0;background:#d3d3d3;}
+  #History-{{ section.id }} .history__pagination::before{content:"";position:absolute;top:0;left:var(--history-progress,0px);width:48px;height:100%;background:#111;transition:left .45s cubic-bezier(.2,.7,.2,1);pointer-events:none;}
+  #History-{{ section.id }} .history__bar{position:relative;z-index:1;flex:1;min-width:0;padding:0;border:0;background:transparent;cursor:pointer;}
+
   @media(max-width:749px){
     #History-{{ section.id }}{padding:{{ section.settings.mobile_padding_top }}px 0 {{ section.settings.mobile_padding_bottom }}px}
     #History-{{ section.id }} .history__track{align-items:stretch}
@@ -62,11 +66,11 @@
     #History-{{ section.id }} .history__pagination{margin-top:22px;}
   }
   @media(prefers-reduced-motion:reduce){#History-{{ section.id }} .history__track{transition:none}}
-  @media(prefers-reduced-motion:reduce){#History-{{ section.id }} .history__track,#History-{{ section.id }} .history__year,#History-{{ section.id }} .history__copy{transition:none}}
+  @media(prefers-reduced-motion:reduce){#History-{{ section.id }} .history__track,#History-{{ section.id }} .history__year,#History-{{ section.id }} .history__copy,#History-{{ section.id }} .history__pagination::before{transition:none}}
 </style>
 <script>
 (()=>{const root=document.getElementById('History-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='true';const track=root.querySelector('[data-history-track]'),slides=[...root.querySelectorAll('[data-history-slide]')],pages=[...root.querySelectorAll('[data-history-page]')],prev=root.querySelector('[data-history-prev]'),next=root.querySelector('[data-history-next]');if(!track||slides.length<2)return;let index=0;const update=()=>{const mobile=matchMedia('(max-width: 749px)').matches;const pitch=mobile?slides[0].getBoundingClientRect().width:window.innerWidth*.68;track.style.transform=`translate3d(${-index*pitch}px,0,0)`;pages.forEach((page,i)=>{page.classList.toggle('is-active',i===index);page.setAttribute('aria-current',i===index?'true':'false')});if(prev)prev.disabled=index===0;if(next)next.disabled=index===slides.length-1};const go=i=>{index=Math.max(0,Math.min(i,slides.length-1));update()};prev?.addEventListener('click',()=>go(index-1));next?.addEventListener('click',()=>go(index+1));pages.forEach((page,i)=>page.addEventListener('click',()=>go(i)));let startX=0;root.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});root.addEventListener('touchend',e=>{const delta=e.changedTouches[0].clientX-startX;if(Math.abs(delta)>45)go(index+(delta<0?1:-1))},{passive:true});window.addEventListener('resize',update);update()})();
-(()=>{const root=document.getElementById('History-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='true';const track=root.querySelector('[data-history-track]'),slides=[...root.querySelectorAll('[data-history-slide]')],pages=[...root.querySelectorAll('[data-history-page]')],prev=root.querySelector('[data-history-prev]'),next=root.querySelector('[data-history-next]');if(!track||slides.length<2)return;let index=0;const update=()=>{const mobile=matchMedia('(max-width: 749px)').matches;const pitch=mobile?slides[0].getBoundingClientRect().width:window.innerWidth*.68;track.style.transform=`translate3d(${-index*pitch}px,0,0)`;slides.forEach((slide,i)=>{slide.classList.toggle('is-active',i===index);slide.setAttribute('aria-hidden',i===index?'false':'true')});pages.forEach((page,i)=>{page.classList.toggle('is-active',i===index);page.setAttribute('aria-current',i===index?'true':'false')});if(prev)prev.disabled=index===0;if(next)next.disabled=index===slides.length-1};const go=i=>{index=Math.max(0,Math.min(i,slides.length-1));update()};prev?.addEventListener('click',()=>go(index-1));next?.addEventListener('click',()=>go(index+1));pages.forEach((page,i)=>page.addEventListener('click',()=>go(i)));let startX=0;root.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});root.addEventListener('touchend',e=>{const delta=e.changedTouches[0].clientX-startX;if(Math.abs(delta)>45)go(index+(delta<0?1:-1))},{passive:true});window.addEventListener('resize',update);update()})();
+(()=>{const root=document.getElementById('History-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='true';const track=root.querySelector('[data-history-track]'),slides=[...root.querySelectorAll('[data-history-slide]')],pages=[...root.querySelectorAll('[data-history-page]')],prev=root.querySelector('[data-history-prev]'),next=root.querySelector('[data-history-next]');if(!track||slides.length<2)return;let index=0;const update=()=>{const mobile=matchMedia('(max-width: 749px)').matches;const pitch=mobile?slides[0].getBoundingClientRect().width:window.innerWidth*.68;track.style.transform=`translate3d(${-index*pitch}px,0,0)`;root.style.setProperty('--history-progress',pages.length>1?(((root.querySelector('[data-history-pagination]')?.clientWidth||304)-48)*index/(pages.length-1))+'px':'0px');slides.forEach((slide,i)=>{slide.classList.toggle('is-active',i===index);slide.setAttribute('aria-hidden',i===index?'false':'true')});pages.forEach((page,i)=>{page.classList.toggle('is-active',i===index);page.setAttribute('aria-current',i===index?'true':'false')});if(prev)prev.disabled=index===0;if(next)next.disabled=index===slides.length-1};const go=i=>{index=Math.max(0,Math.min(i,slides.length-1));update()};prev?.addEventListener('click',()=>go(index-1));next?.addEventListener('click',()=>go(index+1));pages.forEach((page,i)=>page.addEventListener('click',()=>go(i)));let startX=0;root.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});root.addEventListener('touchend',e=>{const delta=e.changedTouches[0].clientX-startX;if(Math.abs(delta)>45)go(index+(delta<0?1:-1))},{passive:true});window.addEventListener('resize',update);update()})();
 </script>
 {% schema %}
 {
@@ -95,5 +99,8 @@
   ]}]
 }
 {% endschema %}
+
+
+
 
 
