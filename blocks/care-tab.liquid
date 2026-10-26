@@ -1,0 +1,14 @@
+{% liquid
+assign care_url = block.settings.custom_url
+if block.settings.page != blank
+ assign care_url = block.settings.page.url
+endif
+if care_url == blank
+ assign care_url = '#'
+endif
+%}
+<div class="care-hub__tab" {{ block.shopify_attributes }}><a class="care-hub__tab-link" data-care-link data-panel-id="CarePanel-{{ block.id }}" data-default-active="{% if block.settings.default_active %}true{% else %}false{% endif %}" href="{{ care_url }}"><span>{{ block.settings.name | escape }}</span><span aria-hidden="true">→</span></a>
+<div class="care-hub__panel" id="CarePanel-{{ block.id }}" data-care-panel data-content-type="{{ block.settings.content_type }}">{% if block.settings.banner_heading != blank %}<header class="care-hub__banner"><h1>{{ block.settings.banner_heading | escape }}</h1></header>{% endif %}{% if block.settings.content_heading != blank %}<h2>{{ block.settings.content_heading | escape }}</h2>{% endif %}{% if block.settings.description != blank %}<div>{{ block.settings.description }}</div>{% endif %}{% content_for 'blocks' %}</div></div>
+{% schema %}
+{"name":"Care tab","settings":[{"type":"text","id":"name","label":"Tab name","default":"New tab"},{"type":"page","id":"page","label":"Page to open"},{"type":"url","id":"custom_url","label":"Custom URL (optional)"},{"type":"checkbox","id":"default_active","label":"Default active tab","default":false},{"type":"select","id":"content_type","label":"Right-side content type","default":"custom","options":[{"value":"order","label":"Order tracking"},{"value":"returns","label":"Returns and exchanges"},{"value":"wishlist","label":"Wishlist"},{"value":"faq","label":"FAQ"},{"value":"size","label":"Size guide"},{"value":"custom","label":"Custom content"}]},{"type":"text","id":"banner_heading","label":"Banner heading"},{"type":"text","id":"content_heading","label":"Content heading"},{"type":"richtext","id":"description","label":"Description","default":"<p>Add your content here.</p>"}],"blocks":[{"type":"care-order-form"},{"type":"care-accordion"},{"type":"care-size-category"},{"type":"care-wishlist-product"},{"type":"care-html"}],"presets":[{"name":"Care tab"}]}
+{% endschema %}
