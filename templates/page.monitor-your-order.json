@@ -111,6 +111,20 @@
             "custom_url": "/account/login"
           }
         },
+        "returns_accordion_VNGUk6": {
+          "type": "returns_accordion",
+          "settings": {
+            "title": "Return and size exchange procedure",
+            "content": ""
+          }
+        },
+        "size_category_TVW8Un": {
+          "type": "size_category",
+          "settings": {
+            "category": "Woman",
+            "content": ""
+          }
+        },
         "tab_9L98hC": {
           "type": "tab",
           "settings": {
@@ -125,6 +139,15 @@
           "settings": {
             "group": "care",
             "label": "Monitor your order",
+            "page": "",
+            "custom_url": ""
+          }
+        },
+        "tab_THabR6": {
+          "type": "tab",
+          "settings": {
+            "group": "care",
+            "label": "New tab",
             "page": "",
             "custom_url": ""
           }
@@ -150,32 +173,32 @@
       },
       "block_order": [
         "tab_XFd3Df",
+        "returns_accordion_VNGUk6",
+        "size_category_TVW8Un",
         "tab_9L98hC",
         "tab_MWN7x9",
+        "tab_THabR6",
         "tab_eTJrh8",
         "tab_DEKfNa"
       ],
       "name": "Customer care - Monitor your order",
       "settings": {
-        "legal_menu": "",
+        "profile_heading": "Your profile",
+        "care_heading": "Customer care",
         "show_contact": true,
         "contact_heading": "Can we help you?",
         "phone": "+44 330 8087718",
         "email": "hello@example.com",
         "email_link_label": "Send us an e-mail",
+        "legal_menu": "",
         "legal_heading": "Privacy information",
-        "profile_heading": "Your profile",
-        "care_heading": "Customer care",
         "content_heading": "MONITOR YOUR ORDER",
         "description": "<p>Monitor your order, even if you are not a registered user. Enter the order number and email address used to place it.</p>",
-        "service_url": "",
-        "portal_note": "Add your returns portal URL in this section's settings to enable the return form.",
         "order_label": "Order number",
-        "email_label": "Order email",
         "order_param": "order",
+        "email_label": "Order email",
         "email_param": "email",
         "submit_label": "Submit",
-        "wishlist_key": "wishlist",
         "empty_message": "There are no products",
         "max_width": 1500
       }
