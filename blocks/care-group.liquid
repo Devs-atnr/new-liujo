@@ -1,2 +1,26 @@
-<div class="care-hub__group" {{ block.shopify_attributes }}><h2 class="care-hub__group-title">{{ block.settings.heading | escape }}</h2><nav aria-label="{{ block.settings.heading | escape }}">{% content_for 'blocks' %}</nav></div>
-{% schema %}{"name":"Menu group","settings":[{"type":"text","id":"heading","label":"Group heading","default":"Customer care"}],"blocks":[{"type":"care-tab"}],"presets":[{"name":"Menu group"}]}{% endschema %}
+<div class="care-hub__group" {{ block.shopify_attributes }}>
+  <h2 class="care-hub__group-title">{{ block.settings.heading | escape }}</h2>
+  <nav aria-label="{{ block.settings.heading | escape }}">
+    {% content_for 'blocks' %}
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "Menu group",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Group heading",
+      "default": "Customer care"
+    }
+  ],
+  "blocks": [
+    { "type": "care-tab" }
+  ],
+  "presets": [
+    { "name": "Menu group" }
+  ]
+}
+{% endschema %}
